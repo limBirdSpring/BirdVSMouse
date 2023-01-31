@@ -38,10 +38,10 @@ public class PlayerEntry : MonoBehaviour
         object isPlayerReady;
         if (!PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(GameData.PLAYER_READY, out isPlayerReady))
             isPlayerReady = false;
-
+      
         bool ready = (bool)isPlayerReady;
         SetPlayerReady(!ready);
-
+      
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable() { { GameData.PLAYER_READY, !ready } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.Playables;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -89,10 +90,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         roomPanel.UpdateRoomState();
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-    {
-        roomPanel.UpdateRoomState();
-    }
+   public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+   {
+       roomPanel.UpdateRoomState();
+   }
 
     public override void OnJoinedLobby()
     {
@@ -119,6 +120,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void AddMessage(string message)
     {
-        StatePanel.Instance.AddMessage(message);
+        //StatePanel.Instance.AddMessage(message);
     }
 }

@@ -7,30 +7,25 @@ using UnityEngine;
 public class InConnectPanel : MonoBehaviour
 {
     [SerializeField]
-    private GameObject menuPanel;
-    [SerializeField]
     private GameObject createRoomPanel;
 
     [SerializeField]
     private TMP_InputField roomNameInputField;
-    [SerializeField]
-    private TMP_InputField maxPlayerInputField;
+   
 
-    private void OnEnable()
-    {
-        menuPanel.SetActive(true);
-        createRoomPanel.SetActive(false);
-    }
+
+   private void OnEnable()
+   {
+       createRoomPanel.SetActive(false);
+   }
 
     public void OnCreateRoomButtonClicked()
     {
-        menuPanel.SetActive(false);
         createRoomPanel.SetActive(true);
     }
 
     public void OnCreateRoomCancelButtonClicked()
     {
-        menuPanel.SetActive(true);
         createRoomPanel.SetActive(false);
     }
 
@@ -40,8 +35,7 @@ public class InConnectPanel : MonoBehaviour
         if (roomName == "")
             roomName = string.Format("Room{0}", Random.Range(1000, 10000));
 
-        int maxPlayer = maxPlayerInputField.text == "" ? 8 : int.Parse(maxPlayerInputField.text);
-        maxPlayer = Mathf.Clamp(maxPlayer, 1, 8);
+        int maxPlayer = 12;
 
         RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayer };
         PhotonNetwork.CreateRoom(roomName, options, null);
@@ -51,6 +45,9 @@ public class InConnectPanel : MonoBehaviour
     {
         PhotonNetwork.JoinRandomRoom();
     }
+
+
+    //-------------------------------------------------
 
     public void OnLobbyButtonClicked()
     {

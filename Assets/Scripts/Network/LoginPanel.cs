@@ -27,4 +27,9 @@ public class LoginPanel : MonoBehaviour
         PhotonNetwork.LocalPlayer.NickName = playerID;
         PhotonNetwork.ConnectUsingSettings();
     }
+
+    public void OnBadgeButtonClicked()
+    {
+        //뱃지를 선택해서 장착할 수 있음
+    }
 }
