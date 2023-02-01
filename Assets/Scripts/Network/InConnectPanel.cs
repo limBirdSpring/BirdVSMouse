@@ -1,7 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
-using UnityEditor.XR;
 using UnityEngine;
 
 public class InConnectPanel : MonoBehaviour
