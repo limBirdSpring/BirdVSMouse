@@ -65,3 +65,9 @@ TagManager:
   - name: Mission
     uniqueID: 2400122251
     locked: 0
+  - name: Player
+    uniqueID: 781335679
+    locked: 0
+  - name: Front
+    uniqueID: 331202453
+    locked: 0
