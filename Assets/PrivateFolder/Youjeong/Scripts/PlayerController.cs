@@ -60,16 +60,16 @@ public class PlayerController : MonoBehaviour
         anim.SetTrigger("isDeath");
     }
 
-        /*private void OnTriggerEnter2D(Collider2D collision)
-        {
-            Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
-            Saebom.MissionButton.Instance.MissionButtonOn();
-        }
-
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-
-            Saebom.MissionButton.Instance.MissionButtonOff();
-
-        }*/
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
+        Saebom.MissionButton.Instance.MissionButtonOn();
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+
+        Saebom.MissionButton.Instance.MissionButtonOff();
+
+    }
+}
