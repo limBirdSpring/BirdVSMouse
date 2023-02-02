@@ -7,6 +7,9 @@ public class InterActionAdapter : MonoBehaviour
 {
     public UnityEvent OnInterAction = null;
 
+    [HideInInspector]
+    public bool isActive = false;
+
     public void Interaction()
     {
         OnInterAction?.Invoke();
