@@ -5,16 +5,26 @@ using UnityEngine.UIElements;
 
 public class Inventory : SingleTon<Inventory>
 {
-    private ItemData curSetItem;
-
     [SerializeField]
     private Image itemImage;
+
+    [SerializeField]
+    private List<ItemData> itemDatas = new List<ItemData>();
+
+    private ItemData curSetItem;
+
 
     public void SetItem(ItemData item)
     {
         curSetItem = item;
 
         UpdateItemGFX();
+    }
+
+    public void DeleteItem()
+    {
+        curSetItem = null;
+        itemImage.SetEnabled(false);
     }
 
     private void UpdateItemGFX()
@@ -25,6 +35,11 @@ public class Inventory : SingleTon<Inventory>
     //해당 아이템이 장착되어있는지 확인하기
     public bool isItemSet(string name)
     {
+        foreach (ItemData item in itemDatas)
+        {
+            if (item.itemName == name)
+                return true;
+        }
         return false;
     }
 }
