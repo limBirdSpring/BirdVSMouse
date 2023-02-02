@@ -13,8 +13,8 @@ public class MissionOn : MonoBehaviour
 
     public void MissionWindowOn()
     {
-        gameObject.GetComponent<InterActionAdapter>().isActive = true;
         missionWindow.SetActive(true);
+        gameObject.GetComponent<InterActionAdapter>().isActive = true;
     }
 
     public void MissionWindowOff()

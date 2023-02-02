@@ -12,8 +12,6 @@ namespace Saebom
         [SerializeField]
         private Button missionButton;
 
-        [SerializeField]
-        private Button missionButtonGray;
 
         [HideInInspector]
         public InterActionAdapter inter;
@@ -22,12 +20,20 @@ namespace Saebom
         public void MissionButtonOn()
         {
             if (!inter.isActive)
+            {
                 missionButton.gameObject.SetActive(true);
+                inter.OutLineOn();
+            }
         }
 
         public void MissionButtonOff()
         {
-            missionButton.gameObject.SetActive(false);
+            if (missionButton.gameObject.activeSelf == true)
+            {
+                inter.OutLineOff();
+                inter = null;
+                missionButton.gameObject.SetActive(false);
+            }
         }
 
         public void OnMissionButtonClicked()
@@ -37,18 +43,7 @@ namespace Saebom
 
 
         //플레이어
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
-            Saebom.MissionButton.Instance.MissionButtonOn();
-        }
 
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            Saebom.MissionButton.Instance.inter = null;
-            Saebom.MissionButton.Instance.MissionButtonOff();
-
-        }
 
     }
 }

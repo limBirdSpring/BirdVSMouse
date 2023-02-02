@@ -6,12 +6,12 @@ using UnityEngine.UIElements;
 public class Inventory : SingleTon<Inventory>
 {
     [SerializeField]
+    private Image itemImage;
+
+    [SerializeField]
     private List<ItemData> itemDatas = new List<ItemData>();
 
     private ItemData curSetItem;
-
-    [SerializeField]
-    private Image itemImage;
 
     public void SetItem(ItemData item)
     {
