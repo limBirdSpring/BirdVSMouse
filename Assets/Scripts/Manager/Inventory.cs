@@ -13,11 +13,18 @@ public class Inventory : SingleTon<Inventory>
 
     private ItemData curSetItem;
 
+
     public void SetItem(ItemData item)
     {
         curSetItem = item;
 
         UpdateItemGFX();
+    }
+
+    public void DeleteItem()
+    {
+        curSetItem = null;
+        itemImage.SetEnabled(false);
     }
 
     private void UpdateItemGFX()

@@ -23,12 +23,12 @@ public class InterActionAdapter : MonoBehaviour
 
     public void OutLineOn()
     {
-        outLine.SetActive(true);
+        outLine?.SetActive(true);
     }
 
 
     public void OutLineOff()
     {
-        outLine.SetActive(false);
+        outLine?.SetActive(false);
     }
 }
