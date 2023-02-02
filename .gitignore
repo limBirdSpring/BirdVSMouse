@@ -58,11 +58,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-/Assets/Import
-<<<<<<< HEAD
-*.json
-*.dwlt
-*.asset
+/Assets/Import/
 /UserSettings/
-=======
->>>>>>> parent of a7256c5 (Merge pull request #11 from limBirdSpring/Saebom/20230201)
