@@ -71,3 +71,6 @@ TagManager:
   - name: Front
     uniqueID: 331202453
     locked: 0
+  - name: Collider
+    uniqueID: 1408917023
+    locked: 0
