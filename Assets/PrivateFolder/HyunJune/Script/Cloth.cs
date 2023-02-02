@@ -39,19 +39,14 @@ namespace HyunJune
             Init();
         }
 
-        private void Update()
-        {
-            cloth.color = dicColor[curColor];
-        }
-
         private void Init()
         {
-            dicColor.Add(CurColor.None, new Color32(255, 255, 255, 255));
+            dicColor.Add(CurColor.None, new Color32(224, 216, 192, 255));
 
             dicColor.Add(CurColor.White, new Color32(255, 255, 255, 255));
             dicColor.Add(CurColor.Red, new Color32(255, 0, 0, 255));
-            dicColor.Add(CurColor.Blue, new Color32(0, 0, 255, 255));
-            dicColor.Add(CurColor.Yellow, new Color32(255, 255, 0, 255));
+            dicColor.Add(CurColor.Blue, new Color32(46, 86, 227, 255));
+            dicColor.Add(CurColor.Yellow, new Color32(255, 237, 40, 255));
             
             dicColor.Add(CurColor.Red | CurColor.White, new Color32(253, 168, 225, 255));
             dicColor.Add(CurColor.Blue | CurColor.White, new Color32(167, 140, 255, 255));
