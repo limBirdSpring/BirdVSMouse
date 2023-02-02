@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Joystick : MonoBehaviour,IDragHandler, IPointerDownHandler
+public class Joystick : MonoBehaviour,IDragHandler, IPointerDownHandler,IPointerUpHandler
 {
     [SerializeField]
-    private Vector2 range = new Vector2(270,280);
+    private Vector2 range = new Vector2(80,80);
 
     public Vector2 inputVec { get; private set; }
     private Vector2 inputDir;
@@ -36,9 +36,12 @@ public class Joystick : MonoBehaviour,IDragHandler, IPointerDownHandler
         inputDir = eventData.position - center;
         inputDir.x = Mathf.Clamp( inputDir.x / range.x,-1,1);
         inputDir.y = Mathf.Clamp(inputDir.y / range.y, -1, 1);
-        inputVec = inputDir;
-        Debug.Log(string.Format("x: {0}, y : {1}", inputVec.x, inputVec.y));
         
+        inputVec = inputDir.sqrMagnitude>1?  inputDir.normalized: inputDir;
     }
 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        inputVec = Vector2.zero;
+    }
 }
