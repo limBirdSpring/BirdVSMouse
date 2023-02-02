@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
         anim.SetTrigger("isDeath");
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+   /* private void OnTriggerEnter2D(Collider2D collision)
     {
         Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
         Saebom.MissionButton.Instance.MissionButtonOn();
@@ -71,5 +71,5 @@ public class PlayerController : MonoBehaviour
 
         Saebom.MissionButton.Instance.MissionButtonOff();
 
-    }
+    }*/
 }
