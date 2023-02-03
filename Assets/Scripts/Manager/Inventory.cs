@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Inventory : SingleTon<Inventory>
 {
@@ -24,7 +24,7 @@ public class Inventory : SingleTon<Inventory>
     public void DeleteItem()
     {
         curSetItem = null;
-        itemImage.SetEnabled(false);
+        itemImage.enabled = false;
     }
 
     private void UpdateItemGFX()
