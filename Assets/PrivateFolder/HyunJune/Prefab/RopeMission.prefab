@@ -1993,7 +1993,7 @@ GameObject:
   - component: {fileID: 7219595257097950079}
   - component: {fileID: 5555644422399012533}
   m_Layer: 5
-  m_Name: GameRope (9)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2345,7 +2345,7 @@ GameObject:
   - component: {fileID: 4478309092308616905}
   - component: {fileID: 6965012531542613262}
   m_Layer: 5
-  m_Name: GameRope (3)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2876,7 +2876,7 @@ GameObject:
   - component: {fileID: 4323692037531721886}
   - component: {fileID: 864160703839491418}
   m_Layer: 5
-  m_Name: GameRope (2)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3148,7 +3148,7 @@ GameObject:
   - component: {fileID: 1099924654}
   - component: {fileID: 1099924655}
   m_Layer: 5
-  m_Name: GameRope
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3463,7 +3463,7 @@ GameObject:
   - component: {fileID: 1019699189239470516}
   - component: {fileID: 3124195212619213984}
   m_Layer: 5
-  m_Name: GameRope (5)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3900,7 +3900,7 @@ GameObject:
   - component: {fileID: 8581331017421693415}
   - component: {fileID: 692169587880817710}
   m_Layer: 5
-  m_Name: GameRope (8)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5041,7 +5041,7 @@ GameObject:
   - component: {fileID: 7509360189779545332}
   - component: {fileID: 1626257648646703489}
   m_Layer: 5
-  m_Name: GameRope (7)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5212,7 +5212,7 @@ GameObject:
   - component: {fileID: 5499936774900635889}
   - component: {fileID: 6092733579704962490}
   m_Layer: 5
-  m_Name: GameRope (1)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5739,7 +5739,7 @@ GameObject:
   - component: {fileID: 9062245356206884172}
   - component: {fileID: 5500440675696650622}
   m_Layer: 5
-  m_Name: GameRope (10)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5982,8 +5982,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6281162482509695736}
+  - component: {fileID: 7603277285812282783}
   m_Layer: 5
-  m_Name: GameRopes
+  m_Name: RopeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6020,6 +6021,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7603277285812282783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7119162172594603784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e2fd253deb71245aded7e35d9e42b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7401153389248074211
 GameObject:
   m_ObjectHideFlags: 0
@@ -6111,7 +6124,7 @@ GameObject:
   - component: {fileID: 6068588840235393671}
   - component: {fileID: 2799727075811359084}
   m_Layer: 5
-  m_Name: GameRope (4)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6720,7 +6733,7 @@ GameObject:
   - component: {fileID: 3262228531593886603}
   - component: {fileID: 3593946268746889431}
   m_Layer: 5
-  m_Name: GameRope (6)
+  m_Name: RopeGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
