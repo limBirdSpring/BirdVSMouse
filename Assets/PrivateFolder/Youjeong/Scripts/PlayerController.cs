@@ -60,16 +60,29 @@ public class PlayerController : MonoBehaviour
         anim.SetTrigger("isDeath");
     }
 
-   /* private void OnTriggerEnter2D(Collider2D collision)
+    public void OnInactive()
     {
-        Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
-        Saebom.MissionButton.Instance.MissionButtonOn();
+        //TODO :  비활성화 시간대에 할일 넣기
+        anim.SetTrigger("IsInactive");
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void OnActive()
     {
+        //TODO :  활성화 시간대에 할일 넣기
+        anim.SetTrigger("IsActive");
+    }
 
-        Saebom.MissionButton.Instance.MissionButtonOff();
 
-    }*/
+    /* private void OnTriggerEnter2D(Collider2D collision)
+     {
+         Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
+         Saebom.MissionButton.Instance.MissionButtonOn();
+     }
+
+     private void OnTriggerExit2D(Collider2D collision)
+     {
+
+         Saebom.MissionButton.Instance.MissionButtonOff();
+
+     }*/
 }
