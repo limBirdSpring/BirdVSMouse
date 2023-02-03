@@ -2,14 +2,17 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 namespace Saebom
 {
     [Serializable]
     struct PlayerState
     {
+        public string name;
         
         public GameObject playerPrefab;
 
@@ -24,10 +27,10 @@ namespace Saebom
     public class PlayGameManager : MonoBehaviour
     {
         [SerializeField]
-        private List<GameObject> mousePlayerList = new List<GameObject> ();
+        private List<PlayerState> mousePlayerList = new List<PlayerState> ();
 
         [SerializeField]
-        private List<GameObject> birdPlayerList = new List<GameObject>();
+        private List<PlayerState> birdPlayerList = new List<PlayerState>();
 
         private List<PlayerState> playerList = new List<PlayerState>();
 
@@ -47,6 +50,24 @@ namespace Saebom
 
 
         private PhotonView photonView;
+
+
+        //===============
+
+        [SerializeField]
+        private GameObject readyScene;
+
+        [SerializeField]
+        private TextMeshProUGUI readyJobText;
+
+        [SerializeField]
+        private Image readyPlayerImage;
+
+        //===============
+
+        //방장만 업데이트
+        private TimeManager time;
+
 
         //게임 시작할 때 초기화
 
@@ -76,7 +97,7 @@ namespace Saebom
                 SetPlayer();
             }
 
-            MakePlayer();
+            SetReadyScene();
 
         }
 
@@ -88,10 +109,7 @@ namespace Saebom
             for (int i=0;i<teamSum;i++)
             {
                 int random = Random.Range(0, birdPlayerList.Count);
-                PlayerState state = new PlayerState();
-                state.playerPrefab = birdPlayerList[random];
-                state.isBird = true;
-                playerList.Add(state);
+                playerList.Add(birdPlayerList[random]);
 
                 birdPlayerList.RemoveAt(random);
             }
@@ -100,9 +118,7 @@ namespace Saebom
             {
                 int random = Random.Range(0, mousePlayerList.Count);
                 PlayerState state = new PlayerState();
-                state.playerPrefab = mousePlayerList[random];
-                state.isBird = false;
-                playerList.Add(state);
+                playerList.Add(mousePlayerList[random]);
 
                 mousePlayerList.RemoveAt(random);
             }
@@ -123,6 +139,53 @@ namespace Saebom
 
         }
 
+        private void SetReadyScene()
+        {
+            readyScene.SetActive(true);
+
+            if (!myPlayerState.isSpy)
+            {
+                readyJobText.text = "당신은 " + myPlayerState.name + " 입니다.";
+                readyPlayerImage.sprite = myPlayerState.playerPrefab.GetComponent<SpriteRenderer>().sprite;
+            }
+            else
+            {
+                string team;
+                if (myPlayerState.isBird)
+                    team = "쥐팀";
+                else
+                    team = "새팀";
+                    
+                readyJobText.text = "당신은 " + myPlayerState.name + "로 위장한 " + team + "스파이입니다.";
+                readyPlayerImage.sprite = myPlayerState.playerPrefab.GetComponent<SpriteRenderer>().sprite;
+            }
+
+            readyJobText.gameObject.SetActive(true);
+            readyPlayerImage.gameObject.SetActive(true);
+
+            StartCoroutine(SetReadySceneCor());
+        }
+
+        private IEnumerator SetReadySceneCor()
+        {
+            yield return new WaitForSeconds(3f);
+            MakePlayer();
+            readyScene.SetActive(false);
+        }
+
+        //본인 캐릭터 받아와서 초기화
+        [PunRPC]
+        private void MyPlayerSet(List<PlayerState> playerList)
+        {
+            myPlayerState.playerPrefab = playerList[PhotonNetwork.LocalPlayer.ActorNumber].playerPrefab;
+
+            if (PhotonNetwork.LocalPlayer.ActorNumber < PhotonNetwork.PlayerList.Length / 2)
+            {
+                myPlayerState.isBird = true;
+            }
+
+        }
+
         //플레이어 생성 : 스파이일 경우 킬버튼 활성화
         private void MakePlayer()
         {
@@ -136,17 +199,5 @@ namespace Saebom
         }
 
 
-        //본인 캐릭터 받아와서 초기화
-        [PunRPC]
-        private void MyPlayerSet(List<PlayerState> playerList)
-        {
-            myPlayerState.playerPrefab = playerList[PhotonNetwork.LocalPlayer.ActorNumber].playerPrefab;
-            
-            if (PhotonNetwork.LocalPlayer.ActorNumber < PhotonNetwork.PlayerList.Length / 2)
-            {
-                myPlayerState.isBird = true;
-            }
-
-        }
     }
 }
