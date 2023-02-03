@@ -12,14 +12,16 @@ namespace Saebom
         private float curTime;
 
         [SerializeField]
-        private float maxTime = 180f;//3분
+        private float maxTime = 10000f;
         //전체 시간
 
         [SerializeField]
-        private Image imgSlide;
+        private Slider imgSlide;
 
         [SerializeField]
         private Image handle;
+
+        public bool timeAdd = true;
 
 
         [SerializeField]
@@ -39,8 +41,8 @@ namespace Saebom
             //점수 합산시간에 시간 멈추기
 
             //거점이동시간에 효과 넣기
-
-            TimeUpdate();
+            if (timeAdd)
+                TimeUpdate();
 
             if (curTime > dangerTime)
                 redScreenUi.gameObject.SetActive(true);
@@ -50,8 +52,9 @@ namespace Saebom
 
         private void TimeUpdate()
         {
-            if (curTime < maxTime)
-                curTime += Time.deltaTime;
+            curTime += Time.deltaTime;
+
+            imgSlide.value = curTime/maxTime * 100;
         }
 
         private void TimeOver()

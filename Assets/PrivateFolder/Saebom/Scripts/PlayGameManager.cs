@@ -12,6 +12,8 @@ namespace Saebom
     [Serializable]
     struct PlayerState
     {
+        public int num;
+
         public string name;
         
         public GameObject playerPrefab;
@@ -27,10 +29,10 @@ namespace Saebom
     public class PlayGameManager : MonoBehaviour
     {
         [SerializeField]
-        private List<PlayerState> mousePlayerList = new List<PlayerState> ();
+        private List<PlayerState> mouseJobList = new List<PlayerState> ();
 
         [SerializeField]
-        private List<PlayerState> birdPlayerList = new List<PlayerState>();
+        private List<PlayerState> birdJobList = new List<PlayerState>();
 
         private List<PlayerState> playerList = new List<PlayerState>();
 
@@ -84,10 +86,19 @@ namespace Saebom
             photonView = GetComponent<PhotonView>();
         }
 
-        private void OnEnable()
+       // private void OnEnable()
+       // {
+       //     //리스트 초기화
+       //     GameStart();
+       // }
+
+        private void Update()
         {
-            //리스트 초기화
-            GameStart();
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                //리스트 초기화
+                GameStart();
+            }
         }
 
         public void GameStart()
@@ -97,8 +108,14 @@ namespace Saebom
                 SetPlayer();
             }
 
-            SetReadyScene();
 
+            StartCoroutine(GameStartCor());
+        }
+
+        private IEnumerator GameStartCor()
+        {
+            yield return new WaitForSeconds(2f);
+            SetReadyScene();
         }
 
         //방장이 모든 플레이어에게 랜덤으로 역할 부여, playerList 가지고 있기
@@ -108,19 +125,16 @@ namespace Saebom
 
             for (int i=0;i<teamSum;i++)
             {
-                int random = Random.Range(0, birdPlayerList.Count);
-                playerList.Add(birdPlayerList[random]);
-
-                birdPlayerList.RemoveAt(random);
+                int random = Random.Range(0, mouseJobList.Count);
+                playerList[i] = mouseJobList[random];
+                mouseJobList.RemoveAt(random);
             }
 
             for (int i=teamSum;i<teamSum*2;i++)
             {
-                int random = Random.Range(0, mousePlayerList.Count);
-                PlayerState state = new PlayerState();
-                playerList.Add(mousePlayerList[random]);
-
-                mousePlayerList.RemoveAt(random);
+                int random = Random.Range(0, birdJobList.Count);
+                playerList[i] = mouseJobList[random];
+                mouseJobList.RemoveAt(random);
             }
 
             int birdSpy = Random.Range(0, teamSum);
@@ -135,8 +149,10 @@ namespace Saebom
             playerList[mouseSpy] = bird;
 
             //각자의 펀 함수 소환
-            photonView.RPC("MyPlayerSet", RpcTarget.All, (playerList));
-
+            for (int i = 0; i < playerList.Count; i++)
+            {
+                photonView.RPC("MyPlayerSet", RpcTarget.All, (i, playerList[i].num, playerList[i].isBird, playerList[i].isSpy));
+            }
         }
 
         private void SetReadyScene()
@@ -146,7 +162,7 @@ namespace Saebom
             if (!myPlayerState.isSpy)
             {
                 readyJobText.text = "당신은 " + myPlayerState.name + " 입니다.";
-                readyPlayerImage.sprite = myPlayerState.playerPrefab.GetComponent<SpriteRenderer>().sprite;
+               // readyPlayerImage.sprite = myPlayerState.playerPrefab.GetComponent<SpriteRenderer>().sprite;
             }
             else
             {
@@ -157,7 +173,7 @@ namespace Saebom
                     team = "새팀";
                     
                 readyJobText.text = "당신은 " + myPlayerState.name + "로 위장한 " + team + "스파이입니다.";
-                readyPlayerImage.sprite = myPlayerState.playerPrefab.GetComponent<SpriteRenderer>().sprite;
+               // readyPlayerImage.sprite = myPlayerState.playerPrefab.GetComponent<SpriteRenderer>().sprite;
             }
 
             readyJobText.gameObject.SetActive(true);
@@ -175,13 +191,21 @@ namespace Saebom
 
         //본인 캐릭터 받아와서 초기화
         [PunRPC]
-        private void MyPlayerSet(List<PlayerState> playerList)
+        private void MyPlayerSet(int i, int jobNum, bool isBird, bool isSpy)
         {
-            myPlayerState.playerPrefab = playerList[PhotonNetwork.LocalPlayer.ActorNumber].playerPrefab;
+            if (photonView.Owner.ActorNumber != i)
+                return;
 
-            if (PhotonNetwork.LocalPlayer.ActorNumber < PhotonNetwork.PlayerList.Length / 2)
+            Debug.Log("개인 플레이어 세팅");
+            if (isBird)
             {
-                myPlayerState.isBird = true;
+                myPlayerState = birdJobList[jobNum];
+                myPlayerState.isSpy = isSpy;
+            }
+            else
+            {
+                myPlayerState = mouseJobList[jobNum];
+                myPlayerState.isSpy = isSpy;
             }
 
         }
