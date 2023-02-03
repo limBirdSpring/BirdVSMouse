@@ -11,10 +11,12 @@ public class ItemGet : MonoBehaviour
 {
     //해당 장소에서 얻을 아이템
     [SerializeField]
-    private ItemData item;
+    private ItemData itemData;
 
     public void GetItem()
     {
+        Item item = new Item();
+        item.data = itemData;
         Inventory.Instance.SetItem(item);
     }
 }

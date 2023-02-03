@@ -9,12 +9,12 @@ public class Inventory : SingleTon<Inventory>
     private Image itemImage;
 
     [SerializeField]
-    private List<ItemData> itemDatas = new List<ItemData>();
+    private List<Item> itemDatas = new List<Item>();
 
-    private ItemData curSetItem;
+    private Item curSetItem;
 
 
-    public void SetItem(ItemData item)
+    public void SetItem(Item item)
     {
         curSetItem = item;
 
@@ -29,15 +29,15 @@ public class Inventory : SingleTon<Inventory>
 
     private void UpdateItemGFX()
     {
-        itemImage.sprite = curSetItem.itemIcon;
+        itemImage.sprite = curSetItem.data.itemIcon;
     }
 
     //해당 아이템이 장착되어있는지 확인하기
     public bool isItemSet(string name)
     {
-        foreach (ItemData item in itemDatas)
+        foreach (Item item in itemDatas)
         {
-            if (item.itemName == name)
+            if (item.data.itemName == name)
                 return true;
         }
         return false;
