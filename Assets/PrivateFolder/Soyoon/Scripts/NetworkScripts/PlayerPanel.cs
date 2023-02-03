@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SoYoon
 {
@@ -40,9 +39,16 @@ namespace SoYoon
             playerBadge2.gameObject.SetActive(false);
 
             myInfo.lastChosenName = playerName.text;
+            PhotonNetwork.LocalPlayer.NickName = myInfo.lastChosenName;
             myInfo.lastChosenCharacter = playerImg.sprite;
             myInfo.lastChosenBadge1 = null;
             myInfo.lastChosenBadge2 = null;
+
+            Hashtable props = new Hashtable()
+            {
+                { "CharNum", DataManager.Instance.FindCharSpriteNum(myInfo.lastChosenCharacter) },
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
         public void InitializePlayerPanel()
@@ -86,7 +92,5 @@ namespace SoYoon
             myInfo.lastChosenBadge2 = playerBadge2.sprite;
         }
         #endregion
-
-
     }
 }

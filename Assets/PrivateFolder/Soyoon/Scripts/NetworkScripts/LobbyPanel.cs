@@ -35,9 +35,12 @@ namespace SoYoon
 
             foreach (RoomInfo room in roomList)
             {
-                RoomEntry entry = Instantiate(roomEntryPrefab, roomContent);
-                entry.Initialized(room.Name, room.PlayerCount, room.MaxPlayers);
-                roomEntries.Add(entry);
+                if (room.PlayerCount != 0)
+                {
+                    RoomEntry entry = Instantiate(roomEntryPrefab, roomContent);
+                    entry.Initialized(room.Name, room.PlayerCount, room.MaxPlayers);
+                    roomEntries.Add(entry);
+                }
             }
         }
     }
