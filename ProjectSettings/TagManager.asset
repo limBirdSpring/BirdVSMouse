@@ -74,3 +74,6 @@ TagManager:
   - name: Collider
     uniqueID: 1408917023
     locked: 0
+  - name: NightFilter
+    uniqueID: 120594663
+    locked: 0

@@ -9,11 +9,23 @@ namespace Saebom
 {
     public class TimeManager : MonoBehaviour
     {
+        //============수정불가 시간관련============
+
         private float curTime;
 
         [SerializeField]
-        private float maxTime = 10000f;
+        private static float maxTime = 360f;
         //전체 시간
+
+        private static float halfTime;
+
+        private static float dangerTime;
+
+        private static float dangerTime2;
+
+        //===================================
+
+        //==============이미지들==============
 
         [SerializeField]
         private Slider imgSlide;
@@ -21,45 +33,133 @@ namespace Saebom
         [SerializeField]
         private Image handle;
 
-        public bool timeAdd = true;
-
-
         [SerializeField]
         private Image redScreenUi;
 
+        [SerializeField]
+        private SpriteRenderer nightFilter;
 
-        private float dangerTime;
+        //===================================
+
+
+        private bool timeOn = true;
+
+        public bool isCurNight { get; private set; } = false;
+
+
+
+
+
+
 
         private void Start()
         {
-            dangerTime = maxTime - 30f;
+            dangerTime = halfTime - 30f;
+            dangerTime2 = maxTime - 30f;
+            halfTime = maxTime / 2;
+        }
+
+        public void TimeOn()
+        {
+            //시작 텍스트 출력
+            timeOn = true;
+        }
+
+        public void TimeOff()
+        {
+            //종료 텍스트 출력
+            timeOn = false;
+
+            if (!isCurNight)
+            {
+                curTime = halfTime;
+            }
+            else
+            {
+                curTime = maxTime;
+            }
+            TimeSlideUpdate();
         }
 
 
         private void Update()
         {
-            //점수 합산시간에 시간 멈추기
+            //점수 합산시간에 시간 멈추기 - 플레이매니저에서 조정
 
-            //거점이동시간에 효과 넣기
-            if (timeAdd)
+            if (timeOn)
                 TimeUpdate();
 
-            if (curTime > dangerTime)
-                redScreenUi.gameObject.SetActive(true);
-            if (curTime > maxTime)
-                TimeOver();
+            if (!isCurNight)
+            {
+                if (curTime > dangerTime)
+                    DangerScreenOn();
+                if (curTime > halfTime-1)
+                    TimeOver();
+            }
+            else
+            {
+                if (curTime > dangerTime2)
+                    DangerScreenOn();
+                if (curTime > maxTime-1)
+                    TimeOver();
+            }
         }
 
         private void TimeUpdate()
         {
             curTime += Time.deltaTime;
+            TimeSlideUpdate();
 
-            imgSlide.value = curTime/maxTime * 100;
+            if (curTime < halfTime)
+                isCurNight = false;
+            else
+                isCurNight=true;   
         }
+
+        private void TimeSlideUpdate()
+        {
+            imgSlide.value = curTime / maxTime;
+
+           
+        }
+
+        private void DangerScreenOn()
+        {
+            redScreenUi.gameObject.SetActive(true);
+
+            //필터 이미지 업데이트
+
+            FilterUpdate(30);
+        }
+
+        private void FilterUpdate(float sec)
+        {
+            //현재시간에 따라 화면색 바뀌도록 수정필요
+
+            if (!isCurNight)
+            {
+                float alpha = 1f / sec * Time.deltaTime;
+                nightFilter.color = new Color(255, 255, 255, nightFilter.color.a + alpha);
+            }
+            else
+            {
+                float alpha = 1f / sec * Time.deltaTime;
+                nightFilter.color = new Color(255, 255, 255, nightFilter.color.a - alpha);
+            }
+        }
+
 
         private void TimeOver()
         {
+            timeOn = false;
+            redScreenUi.gameObject.SetActive(false);
             //시간초과 텍스트 출력
+
+
+            //2초 뒤 점수 확인 출력
+
+
+            //점수확인 끝난 후 TimeOn
         }
         
     }
