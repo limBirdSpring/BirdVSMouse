@@ -37,6 +37,7 @@ namespace Saebom
         [SerializeField]
         private List<PlayerState> birdJobList = new List<PlayerState>();
 
+        [SerializeField]
         //방장이 가지고있는 플레이어리스트로 몇번플레이어가 무슨역할인지, 죽었는지 모두 알수있다. (위임기능 필요)
         private List<PlayerState> playerList = new List<PlayerState>();
 
@@ -91,20 +92,20 @@ namespace Saebom
             photonView = GetComponent<PhotonView>();
         }
 
-        // private void OnEnable()
-        // {
-        //     //리스트 초기화
-        //     GameStart();
-        // }
+         private void OnEnable()
+         {
+             //리스트 초기화
+             GameStart();
+         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                //리스트 초기화
-                GameStart();
-            }
-        }
+        //private void Update()
+        //{
+        //    if (Input.GetKeyDown(KeyCode.F1))
+        //    {
+        //        //리스트 초기화
+        //        GameStart();
+        //    }
+        //}
 
         public void GameStart()
         {
@@ -113,14 +114,14 @@ namespace Saebom
                 SetPlayer();
             }
 
-
+            SetReadyScene();
             StartCoroutine(GameStartCor());
         }
 
         private IEnumerator GameStartCor()
         {
             yield return new WaitForSeconds(2f);
-            SetReadyScene();
+            
         }
 
         //방장이 모든 플레이어에게 랜덤으로 역할 부여, playerList 가지고 있기
@@ -159,11 +160,14 @@ namespace Saebom
                 playerList[i] = player;
             }
 
+             //photonView.RPC("MyPlayerSet", RpcTarget.All, (0, 0, true, true));
+           // MyPlayerSet(0, 0, true, true);
 
-            //각자의 펀 함수 소환
+           // //각자의 펀 함수 소환
             for (int i = 0; i < playerList.Count; i++)
             {
-                photonView.RPC("MyPlayerSet", RpcTarget.All, (i, playerList[i].num, playerList[i].isBird, playerList[i].isSpy));
+                photonView.RPC("MyPlayerSet", RpcTarget.All, i, playerList[i].num, playerList[i].isBird, playerList[i].isSpy);
+                
             }
         }
 
@@ -203,12 +207,14 @@ namespace Saebom
 
         //본인 캐릭터 받아와서 초기화
         [PunRPC]
-        private void MyPlayerSet(int i, int jobNum, bool isBird, bool isSpy)
+        public void MyPlayerSet(int i, int jobNum, bool isBird, bool isSpy)
         {
+            Debug.Log("개인 플레이어 세팅");
+
             if (photonView.Owner.ActorNumber != i)
                 return;
 
-            Debug.Log("개인 플레이어 세팅");
+
             if (isBird)
             {
                 myPlayerState = birdJobList[jobNum];

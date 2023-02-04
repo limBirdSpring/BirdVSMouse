@@ -9222,10 +9222,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 3000, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -20295,7 +20295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseJobList:
   - num: 0
-    name: "\uB3C5\uC218\uB9AC"
+    name: "\uAF43\uBC2D\uC950"
     playerPrefab: {fileID: 8050943514685066984, guid: 18e06be244e1c2e4d840f847e0b79040, type: 3}
     sprite: {fileID: 21300000, guid: 1cf2376a35125cc45af3e6c2387e0c29, type: 3}
     isBird: 0
@@ -20309,6 +20309,7 @@ MonoBehaviour:
     isBird: 1
     isSpy: 0
     isDie: 0
+  playerList: []
   myPlayerState:
     num: 0
     name: 
@@ -39846,10 +39847,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 3000, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
