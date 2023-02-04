@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
@@ -49,11 +50,21 @@ namespace Saebom
 
         public bool isCurNight { get; private set; } = false;
 
+        //=============================
 
+        [HideInInspector]
+        public int curRound = 0;
 
+        [SerializeField]
+        private TextMeshProUGUI roundUI;
 
+        //=============================
 
+        [SerializeField]
+        private GameObject endText;
 
+        [SerializeField]
+        private GameObject startText;
 
         private void Start()
         {
@@ -78,14 +89,14 @@ namespace Saebom
             {
                 if (curTime > dangerTime)
                     DangerScreenOn();
-                if (curTime > halfTime - 1)
+                if (curTime > halfTime - 1 && curTime < halfTime)
                     TimeOver();
             }
             else
             {
                 if (curTime > dangerTime2)
                     DangerScreenOn();
-                if (curTime > maxTime - 1)
+                if (curTime > maxTime - 1 && curTime < maxTime)
                     TimeOver();
             }
         }
@@ -106,11 +117,20 @@ namespace Saebom
             curTime += sec;
         }
 
+        private void SetCurRound()
+        {
+            curRound++;
+            roundUI.text = "Round " + curRound.ToString();
+        }
 
-        public void TimeOn()
+
+        private void TimeOn()
         {
             //시작 텍스트 출력
+            startText.SetActive(true);
 
+            if (curTime == 0)
+                SetCurRound();
 
             timeOn = true;
         }
@@ -121,7 +141,7 @@ namespace Saebom
             timeOn = false;
 
             //종료 텍스트 출력
-
+            endText.SetActive(true);
 
             if (!isCurNight)
             {
@@ -135,14 +155,15 @@ namespace Saebom
             }
             TimeSlideUpdate();
             FilterUpdate(1f);
+            
 
         }
 
         private void TimeOver()
         {
+            redScreenUi.gameObject.SetActive(false);
             TimeOff();
 
-            redScreenUi.gameObject.SetActive(false);
 
             //시간초과 텍스트 출력
 
@@ -150,8 +171,19 @@ namespace Saebom
             //2초 뒤 점수 확인 출력
 
 
-            //점수확인 끝난 후 TimeOn
+
         }
+
+        public void FinishScoreTimeSet()
+        {
+            //점수확인 끝난 후 만약 밤이면 curTime = 0, TimeOn()
+            if (isCurNight)
+            {
+                curTime = 0;
+            }
+            TimeOn();
+        }
+
 
         private void TimeSlideUpdate()
         {
