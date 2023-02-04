@@ -15,8 +15,6 @@ public class ItemGet : MonoBehaviour
 
     public void GetItem()
     {
-        Item item = new Item();
-        item.data = itemData;
-        Inventory.Instance.SetItem(item);
+        Inventory.Instance.SetItem(itemData);
     }
 }
