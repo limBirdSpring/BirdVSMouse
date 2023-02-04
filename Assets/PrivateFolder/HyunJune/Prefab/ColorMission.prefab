@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 4667797122412900759}
   - component: {fileID: 4667797122412900757}
   - component: {fileID: 4667797122412900756}
+  - component: {fileID: 1939753025}
   m_Layer: 5
   m_Name: Cloth
   m_TagString: Untagged
@@ -308,6 +309,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1939753025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4667797122412900758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce254a8a87ba31040b4a2132d8df5a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curColor: 0
 --- !u!1 &7506882819455962341
 GameObject:
   m_ObjectHideFlags: 0

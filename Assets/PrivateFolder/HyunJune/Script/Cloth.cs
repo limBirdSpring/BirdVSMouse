@@ -84,6 +84,18 @@ namespace HyunJune
             cloth.color = dicColor[curColor];
         }
 
+        public void CheckSuccess(CurColor color)
+        {
+            if (curColor == color)
+            {
+                // TODO : 미션 성공
+            }
+            else
+            {
+                // 미션 실패
+            }
+        }
+
         public void OnDrop(PointerEventData eventData)
         {
             ItemData item = eventData.pointerDrag.GetComponent<ItemData>();
