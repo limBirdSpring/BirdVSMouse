@@ -11,22 +11,43 @@ namespace SoYoon
         public UnityEvent OnBeginSaw;
         public UnityEvent OnEndSaw;
 
+        private bool isBakMissionComplete;
+        private bool isClicked;
+
+        private void Start()
+        {
+            isBakMissionComplete = false;
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            OnBeginSaw?.Invoke();
+            if (!isBakMissionComplete && !isClicked)
+            {
+                isClicked = true;
+                OnBeginSaw?.Invoke();
 
-            HashTable props = new HashTable();
-            props.Add("IsBakMission", true);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                HashTable props = new HashTable();
+                props.Add("IsBakMission", true);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            OnEndSaw?.Invoke();
+            if (!isBakMissionComplete && isClicked)
+            {
+                isClicked = false;
+                OnEndSaw?.Invoke();
 
-            HashTable props = new HashTable();
-            props.Add("IsBakMission", false);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                HashTable props = new HashTable();
+                props.Add("IsBakMission", false);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            }
+        }
+
+        public void BakMissionComplete()
+        {
+            isBakMissionComplete = true;
         }
     }
 }

@@ -43,18 +43,24 @@ namespace SoYoon
             int count = BakMissionManager.Instance.CurBakPlayerCount;
             Debug.Log(string.Format("현재 박타기를 플레이하고 있는 명 수 : {0}", count));
 
-            if (count >= 1)
-                boostPercent = onePersonBoostPercent;
+            if (count >= 3)
+                boostPercent = threePersonBoostPercent;
             else if (count >= 2)
                 boostPercent = twoPersonBoostPercent;
-            else if (count >= 3)
-                boostPercent = threePersonBoostPercent;
+            else if (count >= 1)
+                boostPercent = onePersonBoostPercent;
         }
 
         public float UpdateProgress()
         {
             Debug.Log(string.Format("개인 {0} * 부스터 {1} 의 속도로 박 자르는 중", singleProgressPerDeltaTime, boostPercent));
             return singleProgressPerDeltaTime * boostPercent * Time.deltaTime;
+        }
+
+        public void BakMissionComplete()
+        {
+            normalSaw.SetActive(true);
+            activeSaw.SetActive(false);
         }
     }
 }
