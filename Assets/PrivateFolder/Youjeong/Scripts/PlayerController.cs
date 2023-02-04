@@ -16,10 +16,15 @@ public class PlayerController : MonoBehaviour
     private Joystick joystick;
     [SerializeField]
     private float moveSpeed=10;
+
+    [Header("Ghost")]
     [SerializeField]
     private GameObject death;
     [SerializeField]
     private Collider2D colli;
+    [SerializeField]
+    private Vector3 namePosition = new Vector3(0, 2, 0);
+    private RectTransform nameTransform;
 
     private Vector2 inputVec;
     public PlayerState state { get; private set; } = PlayerState.Active;
@@ -29,6 +34,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer=GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+        nameTransform = GetComponentInChildren<RectTransform>();
         SetPlayerState(PlayerState.Active);
     }
 
@@ -65,12 +71,18 @@ public class PlayerController : MonoBehaviour
         Instantiate(death, transform.position, death.transform.rotation);
         anim.SetTrigger("isDeath");
         SetPlayerState(PlayerState.Ghost);
-        colli.enabled = false; // ÄÝ¶óÀÌ´õ ºñÈ°¼ºÈ­
+        colli.enabled = false; // ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+        SetNamePosition();
+    }
+
+    private void SetNamePosition()
+    {
+        nameTransform.anchoredPosition = namePosition;
     }
 
     public void OnInactive()
     {
-        //TODO :  ºñÈ°¼ºÈ­ ½Ã°£´ë¿¡ ÇÒÀÏ ³Ö±â
+        //TODO :  ï¿½ï¿½È°ï¿½ï¿½È­ ï¿½Ã°ï¿½ï¿½ë¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
         anim.SetTrigger("IsInactive");
         SetPlayerState(PlayerState.Inactive);
 
@@ -78,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnActive()
     {
-        //TODO :  È°¼ºÈ­ ½Ã°£´ë¿¡ ÇÒÀÏ ³Ö±â
+        //TODO :  È°ï¿½ï¿½È­ ï¿½Ã°ï¿½ï¿½ë¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
         anim.SetTrigger("IsActive");
         SetPlayerState(PlayerState.Active);
     }

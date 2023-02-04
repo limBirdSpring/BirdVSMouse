@@ -71,7 +71,8 @@ MonoBehaviour:
   joystick: {fileID: 0}
   moveSpeed: 10
   death: {fileID: 6617898661040866409, guid: a5804a25d2846d94d80305d998b71ce3, type: 3}
-  colli: {fileID: 0}
+  colli: {fileID: 4015257986130039877}
+  namePosition: {x: -0.03, y: 2, z: 0}
 --- !u!70 &4015257986130039877
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
