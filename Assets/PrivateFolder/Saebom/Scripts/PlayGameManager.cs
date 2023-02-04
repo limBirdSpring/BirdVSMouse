@@ -6,11 +6,12 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
+using Photon.Pun.Demo.Cockpit;
 
 namespace Saebom
 {
     [Serializable]
-    struct PlayerState
+    public struct PlayerState
     {
         public int num;
 
@@ -39,7 +40,8 @@ namespace Saebom
         private List<PlayerState> playerList = new List<PlayerState>();
 
         //===개인의 정보===
-        private PlayerState myPlayerState;
+        public PlayerState myPlayerState;
+        //해당 struct를 통해 나의 직업 및 상태 판단 가능
 
         //================
 
@@ -127,16 +129,12 @@ namespace Saebom
 
             for (int i = 0; i < teamSum; i++)
             {
-                int random = Random.Range(0, mouseJobList.Count);
-                playerList[i] = mouseJobList[random];
-                mouseJobList.RemoveAt(random);
+                playerList[i] = mouseJobList[i];
             }
 
             for (int i = teamSum; i < teamSum * 2; i++)
             {
-                int random = Random.Range(0, birdJobList.Count);
-                playerList[i] = mouseJobList[random];
-                mouseJobList.RemoveAt(random);
+                playerList[i] = birdJobList[i];
             }
 
             int birdSpy = Random.Range(0, teamSum);
@@ -149,6 +147,17 @@ namespace Saebom
             PlayerState mouse = playerList[mouseSpy];
             mouse.isSpy = true;
             playerList[mouseSpy] = bird;
+
+
+            for (int i = 0; i < teamSum*2; i++)
+            {
+                //셔플
+                int random = Random.Range(0, playerList.Count);
+                PlayerState player = playerList[random];
+                playerList[random] = playerList[i];
+                playerList[i] = player;
+            }
+
 
             //각자의 펀 함수 소환
             for (int i = 0; i < playerList.Count; i++)
