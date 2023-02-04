@@ -165,8 +165,6 @@ namespace Saebom
             TimeOff();
 
 
-            //시간초과 텍스트 출력
-
 
             //2초 뒤 점수 확인 출력
 
