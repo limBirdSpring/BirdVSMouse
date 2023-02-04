@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEditor.UI;
-using UnityEditor.U2D;
-using Unity.VisualScripting;
 
 public class InterActionAdapter : MonoBehaviour
 {
@@ -14,7 +11,7 @@ public class InterActionAdapter : MonoBehaviour
     public bool isActive = false;
 
     [SerializeField]
-    private GameObject outLine;
+    private GameObject outLine = null;
 
     public void Interaction()
     {
@@ -23,12 +20,14 @@ public class InterActionAdapter : MonoBehaviour
 
     public void OutLineOn()
     {
-        outLine?.SetActive(true);
+        if (outLine != null)
+            outLine.SetActive(true);
     }
 
 
     public void OutLineOff()
     {
-        outLine?.SetActive(false);
+        if (outLine != null)
+            outLine.SetActive(false);
     }
 }

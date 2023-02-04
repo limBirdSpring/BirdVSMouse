@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - MiniGameUI
-  - ItemUI
-  - 
+  - Player
+  - Ghost
+  - Wall
   - 
   - 
   - 
@@ -73,4 +73,7 @@ TagManager:
     locked: 0
   - name: Collider
     uniqueID: 1408917023
+    locked: 0
+  - name: Filter
+    uniqueID: 2115571963
     locked: 0

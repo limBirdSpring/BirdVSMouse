@@ -146,4 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc2d3bf1cf720948bc8e821c7be6f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: {x: 270, y: 280}
+  range: {x: 80, y: 80}

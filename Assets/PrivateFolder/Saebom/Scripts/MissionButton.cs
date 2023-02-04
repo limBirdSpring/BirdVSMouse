@@ -14,12 +14,12 @@ namespace Saebom
 
 
         [HideInInspector]
-        public InterActionAdapter inter;
+        public InterActionAdapter inter= null;
 
 
         public void MissionButtonOn()
         {
-            if (!inter.isActive)
+            if (inter !=null &&!inter.isActive)
             {
                 missionButton.gameObject.SetActive(true);
                 inter.OutLineOn();
@@ -42,8 +42,7 @@ namespace Saebom
         }
 
 
-        //플레이어
-
+     
 
     }
 }
