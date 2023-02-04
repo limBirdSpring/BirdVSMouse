@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Saebom
 {
-    public class MissionManager : SingleTon<MissionManager>
+    public class MissionButton : SingleTon<MissionButton>
     {
 
         //==============미션을 저장하는 struct==================

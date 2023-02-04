@@ -38,7 +38,7 @@ namespace Saebom
         private List<PlayerState> birdJobList = new List<PlayerState>();
 
         [SerializeField]
-        //방장이 가지고있는 플레이어리스트로 몇번플레이어가 무슨역할인지, 죽었는지 모두 알수있다. (위임기능 필요)
+        //방장이 가지고있는 플레이어리스트로 몇번플레이어가 무슨역할인지, 죽었는지 모두 알수있다.
         private List<PlayerState> playerList = new List<PlayerState>();
 
         //===개인의 정보===
@@ -92,11 +92,11 @@ namespace Saebom
             photonView = GetComponent<PhotonView>();
         }
 
-         private void OnEnable()
-         {
-             //리스트 초기화
-             GameStart();
-         }
+        //private void OnEnable()
+        //{
+        //    //리스트 초기화
+        //    GameStart();
+        //}
 
         //private void Update()
         //{
@@ -211,6 +211,19 @@ namespace Saebom
         {
             Debug.Log("개인 플레이어 세팅");
 
+            if (isBird)
+            {
+                PlayerState playerState = birdJobList[jobNum];
+                playerState.isSpy = isSpy;
+                playerList.Add(playerState);
+            }
+            else
+            {
+                PlayerState playerState = mouseJobList[jobNum];
+                playerState.isSpy = isSpy;
+                playerList.Add(playerState);
+            }
+
             if (photonView.Owner.ActorNumber != i)
                 return;
 
@@ -240,6 +253,61 @@ namespace Saebom
                 killButtonGray.SetActive(true);
         }
 
+
+        //플레이어가 죽었을 경우 이 함수를 호출해줌
+        public void PlayerDie()
+        {
+            photonView.RPC("PlayerDieAndMasterPlayerListUpdate", RpcTarget.MasterClient, photonView.Owner.ActorNumber);
+        }
+
+        [PunRPC]
+        public void PlayerDieAndMasterPlayerListUpdate(int index)
+        {
+            PlayerState player = playerList[index];
+            player.isDie = true;
+            playerList[index]= player;
+
+            for (int i = 0; i < playerList.Count; i++)
+            {
+                //갱신된 플레이어 전달
+                photonView.RPC("PlayerListSet", RpcTarget.All, i, playerList[i].num, playerList[i].isBird, playerList[i].isSpy);
+            }
+        }
+
+        [PunRPC]
+        public void PlayerListSet(int i, int jobNum, bool isBird, bool isSpy)
+        {
+            Debug.Log("개인 플레이어 세팅");
+
+            if (isBird)
+            {
+                PlayerState playerState = birdJobList[jobNum];
+                playerState.isSpy = isSpy;
+                playerList[i] = playerState;
+            }
+            else
+            {
+                PlayerState playerState = mouseJobList[jobNum];
+                playerState.isSpy = isSpy;
+                playerList[i] = playerState;
+            }
+
+            if (photonView.Owner.ActorNumber != i)
+                return;
+
+
+            if (isBird)
+            {
+                myPlayerState = birdJobList[jobNum];
+                myPlayerState.isSpy = isSpy;
+            }
+            else
+            {
+                myPlayerState = mouseJobList[jobNum];
+                myPlayerState.isSpy = isSpy;
+            }
+
+        }
 
     }
 }

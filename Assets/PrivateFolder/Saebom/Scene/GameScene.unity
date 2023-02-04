@@ -39625,7 +39625,7 @@ GameObject:
   - component: {fileID: 1733616063}
   - component: {fileID: 1733616062}
   m_Layer: 5
-  m_Name: MissionButtonManager
+  m_Name: MissionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -23,6 +25,8 @@ namespace Saebom
         private List<Mission> missions;
 
 
+        //점수합산 구현, 각 팀별로 점수 및 스파이 죽음여부, 남은사람들 수 저장
+
         private int birdScore;
 
         private int mouseScore;
@@ -34,17 +38,64 @@ namespace Saebom
         private bool isBirdSpyDie;
 
         private bool isMouseSpyDie;
-       
-        //점수합산 구현, 각 팀별로 점수 및 스파이 죽음여부, 남은사람들 수 저장
+
+
+        [SerializeField]
+        private TextMeshProUGUI scoreUI;
+
 
         public void CallScoreResultWindow()
         {
             //방장이 합산해서 공유해줌
-           // bool result = missions[0].Result();
+
+
+            StartCoroutine(CallScoreResultWindowCor());
+
+
+
+            
+            
+        }
+
+        private IEnumerator CallScoreResultWindowCor()
+        {
+            yield return new WaitForSeconds(2f);
+
+            //모시옷 점수 출력
+
+            //항아리 점수 출력
+
+            //외양간 점수 출력
+
+            //동아줄 점수 출력
+
+            //박 점수 출력
+
+            yield return new WaitForSeconds(2f);
+
 
 
             //점수계산이 끝난 후 각 변수에 현재상황 저장
+            if(PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerController>().state == global::PlayerState.Ghost);
+
+
+            //스코어 UI 변경
+            //점수 갱신 위에 효과 애니메이션 및 효과음 추가
+
+            scoreUI.text = birdScore.ToString() + "  :  " + mouseScore.ToString();
+
+            //승패 여부 계산
+            TurnResult();
+
+
+
         }
+
+        private void MasterCurUpdate()
+        {
+
+        }
+
 
         public void ActiveTimeOverNow()//활동시간이 즉시 종료되는 경우
         {
@@ -167,6 +218,10 @@ namespace Saebom
                 else if (!(birdCount == 1 && !isBirdSpyDie) && (mouseCount == 1 && !isMouseSpyDie))
                     EndGame(Win.MouseWin);
             }
+            else //승패를 결정짓는 경우가 아니면 게임 재개
+                TimeManager.Instance.FinishScoreTimeSet();
+
+            
         }
 
         public void EndGame(Win win)
@@ -191,6 +246,8 @@ namespace Saebom
             }
 
             //이긴 팀, 스파이 정체 공개 후 방으로 이동
+
+            
         }
 
 
