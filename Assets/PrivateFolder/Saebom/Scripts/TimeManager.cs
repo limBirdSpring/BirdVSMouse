@@ -39,6 +39,9 @@ namespace Saebom
         [SerializeField]
         private SpriteRenderer nightFilter;
 
+        [SerializeField]
+        private GameObject nightSky;
+
         //===================================
 
 
@@ -54,37 +57,49 @@ namespace Saebom
 
         private void Start()
         {
+            halfTime = maxTime / 2;
             dangerTime = halfTime - 30f;
             dangerTime2 = maxTime - 30f;
-            halfTime = maxTime / 2;
         }
 
         public void TimeOn()
         {
             //시작 텍스트 출력
+
+
             timeOn = true;
         }
 
         public void TimeOff()
         {
-            //종료 텍스트 출력
+
             timeOn = false;
+
+            //종료 텍스트 출력
+
 
             if (!isCurNight)
             {
                 curTime = halfTime;
+                nightSky.SetActive(true);
             }
             else
             {
                 curTime = maxTime;
+                nightSky.SetActive(false);
             }
             TimeSlideUpdate();
+            FilterUpdate(1f);
+            
         }
 
 
         private void Update()
         {
             //점수 합산시간에 시간 멈추기 - 플레이매니저에서 조정
+
+            if (Input.GetKeyDown(KeyCode.F2))
+                AddTime(10);
 
             if (timeOn)
                 TimeUpdate();
@@ -116,6 +131,11 @@ namespace Saebom
                 isCurNight=true;   
         }
 
+        public void AddTime(float sec)
+        {
+            curTime += sec;
+        }
+
         private void TimeSlideUpdate()
         {
             imgSlide.value = curTime / maxTime;
@@ -128,22 +148,20 @@ namespace Saebom
             redScreenUi.gameObject.SetActive(true);
 
             //필터 이미지 업데이트
-
             FilterUpdate(30);
         }
 
         private void FilterUpdate(float sec)
         {
-            //현재시간에 따라 화면색 바뀌도록 수정필요
 
             if (!isCurNight)
             {
-                float alpha = 1f / sec * Time.deltaTime;
+                float alpha = (1 / sec * Time.deltaTime);
                 nightFilter.color = new Color(255, 255, 255, nightFilter.color.a + alpha);
             }
             else
             {
-                float alpha = 1f / sec * Time.deltaTime;
+                float alpha = (1 / sec * Time.deltaTime);
                 nightFilter.color = new Color(255, 255, 255, nightFilter.color.a - alpha);
             }
         }
@@ -151,8 +169,10 @@ namespace Saebom
 
         private void TimeOver()
         {
-            timeOn = false;
+            TimeOff();
+
             redScreenUi.gameObject.SetActive(false);
+
             //시간초과 텍스트 출력
 
 
