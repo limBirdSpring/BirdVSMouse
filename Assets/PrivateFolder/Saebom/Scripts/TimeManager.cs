@@ -58,7 +58,13 @@ namespace Saebom
         [SerializeField]
         private TextMeshProUGUI roundUI;
 
+        //=============================
 
+        [SerializeField]
+        private GameObject endText;
+
+        [SerializeField]
+        private GameObject startText;
 
         private void Start()
         {
@@ -83,14 +89,14 @@ namespace Saebom
             {
                 if (curTime > dangerTime)
                     DangerScreenOn();
-                if (curTime > halfTime - 1)
+                if (curTime > halfTime - 1 && curTime < halfTime)
                     TimeOver();
             }
             else
             {
                 if (curTime > dangerTime2)
                     DangerScreenOn();
-                if (curTime > maxTime - 1)
+                if (curTime > maxTime - 1 && curTime < maxTime)
                     TimeOver();
             }
         }
@@ -121,6 +127,8 @@ namespace Saebom
         private void TimeOn()
         {
             //시작 텍스트 출력
+            startText.SetActive(true);
+
             if (curTime == 0)
                 SetCurRound();
 
@@ -133,7 +141,7 @@ namespace Saebom
             timeOn = false;
 
             //종료 텍스트 출력
-
+            endText.SetActive(true);
 
             if (!isCurNight)
             {
@@ -147,14 +155,15 @@ namespace Saebom
             }
             TimeSlideUpdate();
             FilterUpdate(1f);
+            
 
         }
 
         private void TimeOver()
         {
+            redScreenUi.gameObject.SetActive(false);
             TimeOff();
 
-            redScreenUi.gameObject.SetActive(false);
 
             //시간초과 텍스트 출력
 
@@ -162,7 +171,7 @@ namespace Saebom
             //2초 뒤 점수 확인 출력
 
 
-  
+
         }
 
         public void FinishScoreTimeSet()

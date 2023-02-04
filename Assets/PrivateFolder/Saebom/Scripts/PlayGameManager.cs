@@ -29,7 +29,7 @@ namespace Saebom
 
     }
 
-    public class PlayGameManager : MonoBehaviour
+    public class PlayGameManager : SingleTon<PlayGameManager>
     {
         [SerializeField]
         private List<PlayerState> mouseJobList = new List<PlayerState>();
@@ -37,6 +37,7 @@ namespace Saebom
         [SerializeField]
         private List<PlayerState> birdJobList = new List<PlayerState>();
 
+        //방장이 가지고있는 플레이어리스트로 몇번플레이어가 무슨역할인지, 죽었는지 모두 알수있다. (위임기능 필요)
         private List<PlayerState> playerList = new List<PlayerState>();
 
         //===개인의 정보===
@@ -129,12 +130,12 @@ namespace Saebom
 
             for (int i = 0; i < teamSum; i++)
             {
-                playerList[i] = mouseJobList[i];
+                playerList.Add(mouseJobList[i]);
             }
 
             for (int i = teamSum; i < teamSum * 2; i++)
             {
-                playerList[i] = birdJobList[i];
+                playerList.Add(birdJobList[i-teamSum]);
             }
 
             int birdSpy = Random.Range(0, teamSum);
