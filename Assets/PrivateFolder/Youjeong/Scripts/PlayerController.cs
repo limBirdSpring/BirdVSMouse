@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Saebom;
 
+public enum PlayerState { Active, Inactive, Ghost}
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
@@ -14,16 +16,26 @@ public class PlayerController : MonoBehaviour
     private Joystick joystick;
     [SerializeField]
     private float moveSpeed=10;
+
+    [Header("Ghost")]
     [SerializeField]
     private GameObject death;
+    [SerializeField]
+    private Collider2D colli;
+    [SerializeField]
+    private Vector3 namePosition = new Vector3(0, 2, 0);
+    private RectTransform nameTransform;
 
     private Vector2 inputVec;
+    public PlayerState state { get; private set; } = PlayerState.Active;
 
     private void Awake()
     {
         spriteRenderer=GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+        nameTransform = GetComponentInChildren<RectTransform>();
+        SetPlayerState(PlayerState.Active);
     }
 
     private void Update()
@@ -58,31 +70,67 @@ public class PlayerController : MonoBehaviour
     {
         Instantiate(death, transform.position, death.transform.rotation);
         anim.SetTrigger("isDeath");
+        SetPlayerState(PlayerState.Ghost);
+        colli.enabled = false; // ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+        SetNamePosition();
+    }
+
+    private void SetNamePosition()
+    {
+        nameTransform.anchoredPosition = namePosition;
     }
 
     public void OnInactive()
     {
-        //TODO :  ºñÈ°¼ºÈ­ ½Ã°£´ë¿¡ ÇÒÀÏ ³Ö±â
+        //TODO :  ï¿½ï¿½È°ï¿½ï¿½È­ ï¿½Ã°ï¿½ï¿½ë¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
         anim.SetTrigger("IsInactive");
+        SetPlayerState(PlayerState.Inactive);
+
     }
 
     public void OnActive()
     {
-        //TODO :  È°¼ºÈ­ ½Ã°£´ë¿¡ ÇÒÀÏ ³Ö±â
+        //TODO :  È°ï¿½ï¿½È­ ï¿½Ã°ï¿½ï¿½ë¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½
         anim.SetTrigger("IsActive");
+        SetPlayerState(PlayerState.Active);
     }
 
+    private void SetPlayerState(PlayerState playerState)
+    {
+        state = playerState;
+        switch(state)
+        {
+            case PlayerState.Active:
+                SetLayer(LayerMask.NameToLayer("Player"));
+                break;
+            case PlayerState.Inactive:
+                SetLayer(LayerMask.NameToLayer("Ghost"));
+                break;
+            case PlayerState.Ghost:
+                SetLayer(LayerMask.NameToLayer("Ghost"));
+                break;
+        }
+        
+    }
+    private void SetLayer(LayerMask layer)
+    {
+        gameObject.layer = layer;
+        foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
+        {
+            child.gameObject.layer = layer;
+        }
+    }
 
-    /* private void OnTriggerEnter2D(Collider2D collision)
-     {
-         Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
-         Saebom.MissionButton.Instance.MissionButtonOn();
-     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
+        Saebom.MissionButton.Instance.MissionButtonOn();
+    }
 
-     private void OnTriggerExit2D(Collider2D collision)
-     {
+    private void OnTriggerExit2D(Collider2D collision)
+    {
 
-         Saebom.MissionButton.Instance.MissionButtonOff();
+        Saebom.MissionButton.Instance.MissionButtonOff();
 
-     }*/
+    }
 }
