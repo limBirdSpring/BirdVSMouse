@@ -7,15 +7,15 @@ using UnityEngine.UI;
 
 namespace Saebom
 {
-    public class TimeManager : MonoBehaviour
+    public class TimeManager : SingleTon<TimeManager>
     {
         //============수정불가 시간관련============
 
         private float curTime;
 
-        [SerializeField]
-        private static float maxTime = 360f;
         //전체 시간
+        private static float maxTime = 360f;
+        
 
         private static float halfTime;
 
@@ -62,36 +62,6 @@ namespace Saebom
             dangerTime2 = maxTime - 30f;
         }
 
-        public void TimeOn()
-        {
-            //시작 텍스트 출력
-
-
-            timeOn = true;
-        }
-
-        public void TimeOff()
-        {
-
-            timeOn = false;
-
-            //종료 텍스트 출력
-
-
-            if (!isCurNight)
-            {
-                curTime = halfTime;
-                nightSky.SetActive(true);
-            }
-            else
-            {
-                curTime = maxTime;
-                nightSky.SetActive(false);
-            }
-            TimeSlideUpdate();
-            FilterUpdate(1f);
-            
-        }
 
 
         private void Update()
@@ -136,6 +106,53 @@ namespace Saebom
             curTime += sec;
         }
 
+
+        public void TimeOn()
+        {
+            //시작 텍스트 출력
+
+
+            timeOn = true;
+        }
+
+        private void TimeOff()
+        {
+
+            timeOn = false;
+
+            //종료 텍스트 출력
+
+
+            if (!isCurNight)
+            {
+                curTime = halfTime;
+                nightSky.SetActive(true);
+            }
+            else
+            {
+                curTime = maxTime;
+                nightSky.SetActive(false);
+            }
+            TimeSlideUpdate();
+            FilterUpdate(1f);
+
+        }
+
+        private void TimeOver()
+        {
+            TimeOff();
+
+            redScreenUi.gameObject.SetActive(false);
+
+            //시간초과 텍스트 출력
+
+
+            //2초 뒤 점수 확인 출력
+
+
+            //점수확인 끝난 후 TimeOn
+        }
+
         private void TimeSlideUpdate()
         {
             imgSlide.value = curTime / maxTime;
@@ -167,20 +184,7 @@ namespace Saebom
         }
 
 
-        private void TimeOver()
-        {
-            TimeOff();
 
-            redScreenUi.gameObject.SetActive(false);
-
-            //시간초과 텍스트 출력
-
-
-            //2초 뒤 점수 확인 출력
-
-
-            //점수확인 끝난 후 TimeOn
-        }
         
     }
 }

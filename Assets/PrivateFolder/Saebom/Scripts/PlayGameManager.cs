@@ -18,6 +18,8 @@ namespace Saebom
         
         public GameObject playerPrefab;
 
+        public Sprite sprite;
+
         public bool isBird;
 
         public bool isSpy;
@@ -162,7 +164,7 @@ namespace Saebom
             if (!myPlayerState.isSpy)
             {
                 readyJobText.text = "당신은 " + myPlayerState.name + " 입니다.";
-               // readyPlayerImage.sprite = myPlayerState.playerPrefab.GetComponent<SpriteRenderer>().sprite;
+                readyPlayerImage.sprite = myPlayerState.sprite;
             }
             else
             {
@@ -173,7 +175,7 @@ namespace Saebom
                     team = "새팀";
                     
                 readyJobText.text = "당신은 " + myPlayerState.name + "로 위장한 " + team + "스파이입니다.";
-               // readyPlayerImage.sprite = myPlayerState.playerPrefab.GetComponent<SpriteRenderer>().sprite;
+                readyPlayerImage.sprite = myPlayerState.sprite;
             }
 
             readyJobText.gameObject.SetActive(true);

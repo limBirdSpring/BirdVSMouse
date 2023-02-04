@@ -12895,6 +12895,7 @@ MonoBehaviour:
   handle: {fileID: 408763191}
   redScreenUi: {fileID: 1700656453}
   nightFilter: {fileID: 1143708083}
+  nightSky: {fileID: 1859739590}
 --- !u!4 &515241484
 Transform:
   m_ObjectHideFlags: 0
@@ -36480,6 +36481,14 @@ MonoBehaviour:
   - num: 0
     name: "\uACF0\uC950"
     playerPrefab: {fileID: 8328723551655918155, guid: 54cb0df205dde464481eec6ea2924a7d, type: 3}
+    sprite: {fileID: 21300000, guid: 92241176044153543acc59fd91beeb47, type: 3}
+    isBird: 0
+    isSpy: 0
+    isDie: 0
+  - num: 0
+    name: "\uACF0\uC950"
+    playerPrefab: {fileID: 8328723551655918155, guid: 54cb0df205dde464481eec6ea2924a7d, type: 3}
+    sprite: {fileID: 0}
     isBird: 0
     isSpy: 0
     isDie: 0
@@ -36487,6 +36496,14 @@ MonoBehaviour:
   - num: 0
     name: "\uBC41\uC0C8"
     playerPrefab: {fileID: 8226553048623478662, guid: 48e2a3ee7867b5d4abf3037aa22ebc93, type: 3}
+    sprite: {fileID: 21300000, guid: cb8652e5b402c51468e136c28aae44bb, type: 3}
+    isBird: 1
+    isSpy: 0
+    isDie: 0
+  - num: 0
+    name: "\uBC41\uC0C8"
+    playerPrefab: {fileID: 8226553048623478662, guid: 48e2a3ee7867b5d4abf3037aa22ebc93, type: 3}
+    sprite: {fileID: 0}
     isBird: 1
     isSpy: 0
     isDie: 0
@@ -48020,7 +48037,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1859739591
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -59308,6 +59325,10 @@ PrefabInstance:
     - target: {fileID: 5375054525232305788, guid: 285858f8693c6304eb602b0995ed04cb, type: 3}
       propertyPath: m_Name
       value: RedScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5375054525232305788, guid: 285858f8693c6304eb602b0995ed04cb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5375054525232305791, guid: 285858f8693c6304eb602b0995ed04cb, type: 3}
       propertyPath: m_Pivot.x
