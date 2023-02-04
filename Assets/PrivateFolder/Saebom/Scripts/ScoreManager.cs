@@ -41,6 +41,9 @@ namespace Saebom
         {
             //방장이 합산해서 공유해줌
            // bool result = missions[0].Result();
+
+
+            //점수계산이 끝난 후 각 변수에 현재상황 저장
         }
 
         public void ActiveTimeOverNow()//활동시간이 즉시 종료되는 경우
