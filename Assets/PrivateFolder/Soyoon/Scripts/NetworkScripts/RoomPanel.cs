@@ -87,18 +87,6 @@ namespace SoYoon
 
             foreach (Player player in PhotonNetwork.PlayerList)
             {
-                //// 추가 전 강퇴된 유저들 처리
-                //object isKicked;
-                //if (!player.CustomProperties.TryGetValue("IsKicked", out isKicked))
-                //    isKicked = false;
-                //if((bool)isKicked && player == PhotonNetwork.LocalPlayer)
-                //{
-                //    PhotonNetwork.LeaveRoom();
-                //    Hashtable props = new Hashtable();
-                //    props.Add("IsKicked", false);
-                //    player.SetCustomProperties(props);
-                //}    
-
                 // 플레이어들 다시 추가
                 PlayerEntry entry = Instantiate(playerEntryPrefab, playerContent);
                 object charNum;

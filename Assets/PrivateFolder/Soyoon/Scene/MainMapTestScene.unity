@@ -18378,7 +18378,6 @@ GameObject:
   m_Component:
   - component: {fileID: 798259765}
   - component: {fileID: 798259764}
-  - component: {fileID: 798259763}
   - component: {fileID: 798259762}
   - component: {fileID: 798259766}
   m_Layer: 0
@@ -18409,18 +18408,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &798259763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798259761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfb6753b4940ad2428de587c666df3d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &798259764
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21712,7 +21699,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSaw: {fileID: 5743453443879549269}
   activeSaw: {fileID: 7319367910151677004}
-  singleProgressPerDeltaTime: 0
+  onePersonBoostPercent: 1
+  twoPersonBoostPercent: 1.2
+  threePersonBoostPercent: 1.3
+  singleProgressPerDeltaTime: 1
 --- !u!1 &928478297
 GameObject:
   m_ObjectHideFlags: 0
@@ -57474,6 +57464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minY: -430
   maxY: 320
+  sawingBound: 0
 --- !u!224 &7371983646623782368
 RectTransform:
   m_ObjectHideFlags: 0

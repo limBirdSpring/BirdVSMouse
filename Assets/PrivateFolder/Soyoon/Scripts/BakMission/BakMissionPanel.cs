@@ -16,7 +16,7 @@ namespace SoYoon
             OnBeginSaw?.Invoke();
 
             HashTable props = new HashTable();
-            props.Add("isBakMission", true);
+            props.Add("IsBakMission", true);
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
 
@@ -25,7 +25,7 @@ namespace SoYoon
             OnEndSaw?.Invoke();
 
             HashTable props = new HashTable();
-            props.Add("isBakMission", false);
+            props.Add("IsBakMission", false);
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         }
     }
