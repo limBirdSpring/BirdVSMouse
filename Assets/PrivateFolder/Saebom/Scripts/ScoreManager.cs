@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,20 +44,25 @@ namespace Saebom
         [SerializeField]
         private TextMeshProUGUI scoreUI;
 
+        private PhotonView photonView;
 
+        private void Awake()
+        {
+            photonView = GetComponent<PhotonView>();
+        }
+        private void OnEnable()
+        {
+            birdCount = mouseCount = PhotonNetwork.CountOfPlayers / 2 - 1;
+        }
+
+
+        //각 턴이 끝나고 해당 함수를 호출하면 점수를 출력해줌
         public void CallScoreResultWindow()
         {
             //방장이 합산해서 공유해줌
-
-
             StartCoroutine(CallScoreResultWindowCor());
 
-
-
-            
-            
         }
-
         private IEnumerator CallScoreResultWindowCor()
         {
             yield return new WaitForSeconds(2f);
@@ -73,11 +79,11 @@ namespace Saebom
 
             yield return new WaitForSeconds(2f);
 
-
+            //점수 계산
 
             //점수계산이 끝난 후 각 변수에 현재상황 저장
-            if(PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerController>().state == global::PlayerState.Ghost);
-
+            if (PhotonNetwork.IsMasterClient)
+                photonView.RPC("PrivatePlayerStateUpdate", RpcTarget.All, birdScore, mouseScore, birdCount, mouseCount, isBirdSpyDie, isMouseSpyDie);
 
             //스코어 UI 변경
             //점수 갱신 위에 효과 애니메이션 및 효과음 추가
@@ -91,17 +97,78 @@ namespace Saebom
 
         }
 
-        private void MasterCurUpdate()
+        //플레이어가 죽었을 때 방장이 대표로 플레이어 상태를 갱신함 
+        public void MasterCurPlayerStateUpdate()
         {
+            //활동시간이 즉시 종료되는 경우
 
-        }
-
-
-        public void ActiveTimeOverNow()//활동시간이 즉시 종료되는 경우
-        {
             //1. 투표를 해서 잡은 사람이 스파이일때
 
             //2. 스파이가 시민1명을 남기고 모든 사람을 죽였을때
+            bool activeTimeOver = false;
+
+            foreach (PlayerState state in PlayGameManager.Instance.playerList)
+            {
+                if (state.isBird)
+                {
+                    if (state.isDie && !state.isSpy)
+                        birdCount--;
+                    else if (state.isDie && state.isSpy)
+                    {
+                        isBirdSpyDie = true;
+                        if (!TimeManager.Instance.isCurNight)
+                            activeTimeOver = true;
+                    }
+
+                    if (birdCount == 1 && !TimeManager.Instance.isCurNight)
+                        activeTimeOver = true;
+                }
+                else
+                {
+                    if (state.isDie && !state.isSpy)
+                        mouseCount--;
+                    else if (state.isDie && state.isSpy)
+                    {
+                        isMouseSpyDie = true;
+                        if (TimeManager.Instance.isCurNight)
+                            activeTimeOver = true;
+                    }
+
+                    if (mouseCount == 1 && TimeManager.Instance.isCurNight)
+                        activeTimeOver = true;
+                }
+            }
+
+            photonView.RPC("PrivatePlayerStateUpdate", RpcTarget.All, birdScore, mouseScore, birdCount, mouseCount, isBirdSpyDie, isMouseSpyDie);
+
+
+            if (activeTimeOver)
+                ActiveTimeOverNow();
+
+        }
+
+        //방장이 상태를 갱신한 후 나머지 플레이어들에게 전달
+        [PunRPC]
+        public void PrivatePlayerStateUpdate(int birdScore, int mouseScore, int birdCount, int mouseCount, bool isBirdSpyDie, bool isMouseSpyDie)
+        {
+            this.birdScore = birdScore;
+
+            this.mouseScore = mouseScore;
+
+            this.birdCount = birdCount;
+
+            this.mouseCount = mouseCount;
+
+            this.isBirdSpyDie = isBirdSpyDie;
+
+            this.isMouseSpyDie = isMouseSpyDie;
+        }
+
+
+        //활동시간 즉시 종료
+        public void ActiveTimeOverNow()
+        {
+            //즉시 활동시간이 끝난 경우에는 거점으로 이동하지 않아도 죽지 않고, 자동으로 거점으로 이동되도록 구현
 
         }
 

@@ -37,9 +37,8 @@ namespace Saebom
         [SerializeField]
         private List<PlayerState> birdJobList = new List<PlayerState>();
 
-        [SerializeField]
         //방장이 가지고있는 플레이어리스트로 몇번플레이어가 무슨역할인지, 죽었는지 모두 알수있다.
-        private List<PlayerState> playerList = new List<PlayerState>();
+        public List<PlayerState> playerList = new List<PlayerState>();
 
         //===개인의 정보===
         public PlayerState myPlayerState;
@@ -258,6 +257,9 @@ namespace Saebom
         public void PlayerDie()
         {
             photonView.RPC("PlayerDieAndMasterPlayerListUpdate", RpcTarget.MasterClient, photonView.Owner.ActorNumber);
+
+            if (PhotonNetwork.IsMasterClient)
+                ScoreManager.Instance.MasterCurPlayerStateUpdate();
         }
 
         [PunRPC]
