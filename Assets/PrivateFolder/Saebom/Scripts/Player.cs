@@ -25,14 +25,14 @@ namespace Saebom
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
-            Saebom.MissionButton.Instance.MissionButtonOn();
+            Saebom.MissionManager.Instance.inter = collision.GetComponent<InterActionAdapter>();
+            Saebom.MissionManager.Instance.MissionButtonOn();
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
             
-            Saebom.MissionButton.Instance.MissionButtonOff();
+            Saebom.MissionManager.Instance.MissionButtonOff();
 
         }
     }
