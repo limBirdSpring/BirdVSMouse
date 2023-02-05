@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Saebom;
+using Photon.Pun;
+
+public enum PlayerState { Active, Inactive, Ghost}
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -9,28 +12,44 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigid;
     private SpriteRenderer spriteRenderer;
     private Animator anim;
+    private PhotonView photonView;
 
     [SerializeField]
     private Joystick joystick;
     [SerializeField]
     private float moveSpeed=10;
     [SerializeField]
-    private GameObject death;
+    private CullingMaskController cullingMask;
+
+    [Header("Ghost")]
+    [SerializeField]
+    private Collider2D colli;
+    [SerializeField]
+    private Vector3 namePosition = new Vector3(0, 2, 0);
+    private RectTransform nameTransform;
 
     private Vector2 inputVec;
+    public PlayerState state { get; private set; } = PlayerState.Active;
 
     private void Awake()
     {
+        photonView = GetComponent<PhotonView>();
         spriteRenderer=GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+        nameTransform = GetComponentInChildren<RectTransform>();
+        SetPlayerState(state);
     }
 
     private void Update()
     {
-        Move();
+        if(photonView.IsMine)
+        {
+            Move();
 
-        AnimatorUpdate();
+            AnimatorUpdate();
+        }
+        
     }
 
     private void Move()
@@ -56,33 +75,77 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        Instantiate(death, transform.position, death.transform.rotation);
         anim.SetTrigger("isDeath");
+        SetPlayerState(PlayerState.Ghost);
+        //Saebom.PlayGameManager.Instance.PlayerDie;
+    }
+
+    private void SetNamePosition()
+    {
+        nameTransform.anchoredPosition = namePosition;
     }
 
     public void OnInactive()
     {
-        //TODO :  비활성화 시간대에 할일 넣기
+        
         anim.SetTrigger("IsInactive");
+        SetPlayerState(PlayerState.Inactive);
+
     }
 
     public void OnActive()
     {
-        //TODO :  활성화 시간대에 할일 넣기
+        
         anim.SetTrigger("IsActive");
+        SetPlayerState(PlayerState.Active);
     }
 
+    private void SetPlayerState(PlayerState playerState)
+    {
+        state = playerState;
+        switch(state)
+        {
+            case PlayerState.Active:
+                SetLayer(LayerMask.NameToLayer("Player"));
+                cullingMask.OffLayerMask(LayerMask.NameToLayer("InActive"));
+                cullingMask.OffLayerMask(LayerMask.NameToLayer("Ghost"));
+                cullingMask.OffLayerMask(LayerMask.NameToLayer("Shadow"));
 
-    /* private void OnTriggerEnter2D(Collider2D collision)
-     {
-         Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
-         Saebom.MissionButton.Instance.MissionButtonOn();
-     }
+                break;
+            case PlayerState.Inactive:
+                SetLayer(LayerMask.NameToLayer("InActive"));
+                cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
+                break;
+            case PlayerState.Ghost:
+                SetLayer(LayerMask.NameToLayer("Ghost"));
+                colli.enabled = false;
+                SetNamePosition();
+                cullingMask.OnLayerMask(LayerMask.NameToLayer("Ghost"));
+                cullingMask.OnLayerMask(LayerMask.NameToLayer("Shadow"));
+                cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
+                break;
+        }
+        
+    }
+    private void SetLayer(LayerMask layer)
+    {
+        gameObject.layer = layer;
+        foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
+        {
+            child.gameObject.layer = layer;
+        }
+    }
 
-     private void OnTriggerExit2D(Collider2D collision)
-     {
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
+        Saebom.MissionButton.Instance.MissionButtonOn();
+    }
 
-         Saebom.MissionButton.Instance.MissionButtonOff();
+    private void OnTriggerExit2D(Collider2D collision)
+    {
 
-     }*/
+        Saebom.MissionButton.Instance.MissionButtonOff();
+
+    }
 }

@@ -77,7 +77,6 @@ namespace Saebom
 
         private void Update()
         {
-            //점수 합산시간에 시간 멈추기 - 플레이매니저에서 조정
 
             if (Input.GetKeyDown(KeyCode.F2))
                 AddTime(10);
@@ -164,9 +163,8 @@ namespace Saebom
             redScreenUi.gameObject.SetActive(false);
             TimeOff();
 
-
-
             //2초 뒤 점수 확인 출력
+            ScoreManager.Instance.CallScoreResultWindow();
 
 
 
