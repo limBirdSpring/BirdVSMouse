@@ -35,8 +35,9 @@ namespace HyunJune
 
         private void Start()
         {
-            curColor = CurColor.None;
+            curColor = CurColor.None;       
             Init();
+            cloth.color = dicColor[curColor];
         }
 
         private void Init()
