@@ -22,9 +22,6 @@ namespace Saebom
 
     public class ScoreManager : SingleTon<ScoreManager>
     {
-        [SerializeField]
-        private List<Mission> missions;
-
 
         //점수합산 구현, 각 팀별로 점수 및 스파이 죽음여부, 남은사람들 수 저장
 
@@ -45,6 +42,40 @@ namespace Saebom
         private TextMeshProUGUI scoreUI;
 
         private PhotonView photonView;
+
+        //============승리화면===================
+
+        [SerializeField]
+        private GameObject canvas;
+
+        [SerializeField]
+        private Image birdSpyImg;
+
+        [SerializeField]
+        private Image mouseSpyImg;
+
+        [SerializeField]
+        private GameObject birdBackgroundImg;
+
+        [SerializeField]
+        private GameObject mouseBackgroundImg;
+
+        [SerializeField]
+        private GameObject drawBackgroundImg;
+
+        [SerializeField]
+        private GameObject birdHouseImg;
+
+        [SerializeField]
+        private GameObject mouseHouseImg;
+
+        [SerializeField]
+        private TextMeshProUGUI winText;
+
+        [SerializeField]
+        private GameObject exitButton;
+
+        //=======================================
 
         private void Awake()
         {
@@ -305,19 +336,47 @@ namespace Saebom
                 case Win.BirdWin:
                     //개인 승수 +1
                     //개인 패수 +1
+                    birdBackgroundImg.SetActive(true);
+                    birdHouseImg.SetActive(true);
+                    winText.text = "새팀 승리!";
+
                     break;
                 case Win.MouseWin:
                     //개인 승수 +1
                     //개인 패수 +1
+                    mouseBackgroundImg.SetActive(true);
+                    mouseHouseImg.SetActive(true);
+                    winText.text = "쥐팀 승리!";
+
                     break;
                 case Win.Draw:
                     //개인 무승부수 +1
+                    drawBackgroundImg.SetActive(true);
+                    winText.text = "무승부!";
+
+
                     break;
             }
 
             //이긴 팀, 스파이 정체 공개 후 방으로 이동
+            foreach (PlayerState state in PlayGameManager.Instance.playerList)
+            {
+                if (state.isBird && state.isSpy)
+                    birdSpyImg.sprite = state.sprite;
+                else if (!state.isBird && state.isSpy)
+                    mouseSpyImg.sprite = state.sprite;
+            }
 
-            
+
+            //나가기 버튼 생성
+            StartCoroutine(EndCor());
+        }
+
+        private IEnumerator EndCor()
+        {
+            yield return new WaitForSeconds(3f);
+            exitButton.SetActive(true);
+
         }
 
 
