@@ -22,9 +22,6 @@ namespace Saebom
 
     public class ScoreManager : SingleTon<ScoreManager>
     {
-        [SerializeField]
-        private List<Mission> missions;
-
 
         //점수합산 구현, 각 팀별로 점수 및 스파이 죽음여부, 남은사람들 수 저장
 
