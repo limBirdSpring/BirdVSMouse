@@ -159,8 +159,6 @@ namespace Saebom
                 playerList[i] = player;
             }
 
-             //photonView.RPC("MyPlayerSet", RpcTarget.All, (0, 0, true, true));
-           // MyPlayerSet(0, 0, true, true);
 
            // //각자의 펀 함수 소환
             for (int i = 0; i < playerList.Count; i++)
@@ -193,6 +191,9 @@ namespace Saebom
 
             readyJobText.gameObject.SetActive(true);
             readyPlayerImage.gameObject.SetActive(true);
+
+            //미션 나눠주기
+            MissionButton.Instance.MissionShare();
 
             StartCoroutine(SetReadySceneCor());
         }

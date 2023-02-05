@@ -28,9 +28,9 @@ namespace Saebom
 
         //점수합산 구현, 각 팀별로 점수 및 스파이 죽음여부, 남은사람들 수 저장
 
-        private int birdScore;
+        private int birdScore=0;
 
-        private int mouseScore;
+        private int mouseScore=0;
 
         private int birdCount;
 
@@ -52,7 +52,9 @@ namespace Saebom
         }
         private void OnEnable()
         {
+            birdScore = mouseScore = 0;
             birdCount = mouseCount = PhotonNetwork.CountOfPlayers / 2 - 1;
+            isBirdSpyDie = isMouseSpyDie = false;
         }
 
 
@@ -90,8 +92,9 @@ namespace Saebom
 
             scoreUI.text = birdScore.ToString() + "  :  " + mouseScore.ToString();
 
-            //승패 여부 계산
-            TurnResult();
+            //턴이 끝났을 경우에만 승패 여부 계산
+            if (TimeManager.Instance.isCurNight)
+                TurnResult();
 
 
 
@@ -174,7 +177,7 @@ namespace Saebom
 
 
         //턴이 끝났을 때 결과가 나왔다면 누가 이겼는지 구현
-        public void TurnResult()
+        private void TurnResult()
         {
             //1. 한쪽의 점수가 6점을 넘겼을때 (점수가 더 큰 사람이 이김)
             if (birdScore >= 6 || mouseScore >= 6)
@@ -291,7 +294,7 @@ namespace Saebom
             
         }
 
-        public void EndGame(Win win)
+        private void EndGame(Win win)
         {
             //누가 이겼는지 나타내고 개인 승률에 반영함
 
