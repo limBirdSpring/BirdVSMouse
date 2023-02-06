@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using Photon.Pun.Demo.Cockpit;
 using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
 
 namespace Saebom
 {
@@ -39,7 +40,7 @@ namespace Saebom
         private List<PlayerState> birdJobList = new List<PlayerState>();
 
         //방장이 가지고있는 플레이어리스트로 몇번플레이어가 무슨역할인지, 죽었는지 모두 알수있다.
-        public List<PlayerState> playerList { get; private set; } = new List<PlayerState>();
+        public List<PlayerState> playerList= new List<PlayerState>();
 
         //===개인의 정보===
         public PlayerState myPlayerState;
@@ -92,20 +93,20 @@ namespace Saebom
             photonView = GetComponent<PhotonView>();
         }
 
-        //private void OnEnable()
-        //{
-        //    //리스트 초기화
-        //    GameStart();
-        //}
-
-        private void Update()
+        private void OnEnable()
         {
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                //리스트 초기화
-                GameStart();
-            }
+            //리스트 초기화
+            GameStart();
         }
+
+        //private void Update()
+        //{
+        //    if (Input.GetKeyDown(KeyCode.F1))
+        //    {
+        //        //리스트 초기화
+        //        GameStart();
+        //    }
+        //}
 
         public void GameStart()
         {
@@ -114,14 +115,14 @@ namespace Saebom
                 SetPlayer();
             }
 
-            SetReadyScene();
+            
             StartCoroutine(GameStartCor());
         }
 
         private IEnumerator GameStartCor()
         {
             yield return new WaitForSeconds(2f);
-            
+            SetReadyScene();
         }
 
         //방장이 모든 플레이어에게 랜덤으로 역할 부여, playerList 가지고 있기
@@ -194,7 +195,7 @@ namespace Saebom
             readyPlayerImage.gameObject.SetActive(true);
 
             //미션 나눠주기
-            MissionButton.Instance.MissionShare();
+            //MissionButton.Instance.MissionShare();
 
             StartCoroutine(SetReadySceneCor());
         }
@@ -212,20 +213,23 @@ namespace Saebom
         {
             Debug.Log("개인 플레이어 세팅");
 
-            if (isBird)
+            if (!PhotonNetwork.IsMasterClient)
             {
-                PlayerState playerState = birdJobList[jobNum];
-                playerState.isSpy = isSpy;
-                playerList.Add(playerState);
-            }
-            else
-            {
-                PlayerState playerState = mouseJobList[jobNum];
-                playerState.isSpy = isSpy;
-                playerList.Add(playerState);
+                if (isBird)
+                {
+                    PlayerState playerState = birdJobList[jobNum];
+                    playerState.isSpy = isSpy;
+                    playerList.Add(playerState);
+                }
+                else
+                {
+                    PlayerState playerState = mouseJobList[jobNum];
+                    playerState.isSpy = isSpy;
+                    playerList.Add(playerState);
+                }
             }
 
-            if (photonView.Owner.ActorNumber != i)
+            if (photonView.Owner.GetPlayerNumber() != i)
                 return;
 
 
@@ -296,7 +300,7 @@ namespace Saebom
                 playerList[i] = playerState;
             }
 
-            if (photonView.Owner.ActorNumber != i)
+            if (photonView.Owner.GetPlayerNumber() != i)
                 return;
 
 

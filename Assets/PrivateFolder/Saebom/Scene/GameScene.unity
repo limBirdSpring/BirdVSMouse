@@ -40720,6 +40720,7 @@ MonoBehaviour:
     water: 0
     isBird: 0
   missionText: {fileID: 0}
+  missionList: []
   missionButton: {fileID: 171811548}
   inter: {fileID: 0}
 --- !u!224 &1733616063
