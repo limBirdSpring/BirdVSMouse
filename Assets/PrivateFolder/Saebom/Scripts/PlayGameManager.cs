@@ -93,20 +93,20 @@ namespace Saebom
             photonView = GetComponent<PhotonView>();
         }
 
-        private void OnEnable()
-        {
-            //리스트 초기화
-            GameStart();
-        }
+       // private void OnEnable()
+       // {
+       //     //리스트 초기화
+       //     GameStart();
+       // }
 
-        //private void Update()
-        //{
-        //    if (Input.GetKeyDown(KeyCode.F1))
-        //    {
-        //        //리스트 초기화
-        //        GameStart();
-        //    }
-        //}
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                //리스트 초기화
+                GameStart();
+            }
+        }
 
         public void GameStart()
         {
@@ -195,7 +195,7 @@ namespace Saebom
             readyPlayerImage.gameObject.SetActive(true);
 
             //미션 나눠주기
-            //MissionButton.Instance.MissionShare();
+            MissionButton.Instance.MissionShare();
 
             StartCoroutine(SetReadySceneCor());
         }
