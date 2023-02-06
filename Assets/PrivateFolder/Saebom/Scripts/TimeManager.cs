@@ -50,6 +50,8 @@ namespace Saebom
 
         private bool timeOn = true;
 
+        public bool isHouseTime { get; private set; } = false;
+
         public bool isCurNight { get; private set; } = false;
 
         //=============================
@@ -91,8 +93,9 @@ namespace Saebom
             if (Input.GetKeyDown(KeyCode.F2))
                 AddTime(10);
 
-            if (timeOn && PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
                 MasterTimeUpdate();
+
 
             if (!isCurNight)
             {
@@ -110,9 +113,20 @@ namespace Saebom
             }
         }
 
+        public void TimeStop()
+        {
+            timeOn = false;
+        }
+
+        public void TimeResume()
+        {
+            timeOn = true;
+        }
+
         private void MasterTimeUpdate()
         {
-            curTime += Time.deltaTime;
+            if (timeOn)
+                curTime += Time.deltaTime;
 
             photonView.RPC("PrivateTimeUpdate", RpcTarget.All, curTime);
 
@@ -182,10 +196,12 @@ namespace Saebom
 
         }
 
-        private void TimeOver()
+        public void TimeOver()
         {
             redScreenUi.gameObject.SetActive(false);
             TimeOff();
+
+            //만약에 살아있는 캐릭터중 거점 밖에 있는 캐릭터가 있으면 강제 사망함
 
             //2초 뒤 점수 확인 출력
             ScoreManager.Instance.CallScoreResultWindow();
