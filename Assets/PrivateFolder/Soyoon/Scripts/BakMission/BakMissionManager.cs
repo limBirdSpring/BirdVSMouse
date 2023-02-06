@@ -40,22 +40,22 @@ namespace SoYoon
         {
             curBakProgress = 0;
             progressText.text = "0 %";
-            if (!PhotonNetwork.InRoom)
-            {
-                PhotonNetwork.ConnectUsingSettings();
-            }
+            //if (!PhotonNetwork.InRoom)
+            //{
+            //    PhotonNetwork.ConnectUsingSettings();
+            //}
         }
-        public override void OnConnectedToMaster()
-        {
-            Debug.Log("Connected to Master");
-            PhotonNetwork.JoinOrCreateRoom("TestRoom", new RoomOptions() { MaxPlayers = 12 }, null);
-        }
-
-        public override void OnJoinedRoom()
-        {
-            Debug.Log("Joined room");
-            CreatePlayer(); // 임시
-        }
+        //public override void OnConnectedToMaster()
+        //{
+        //    Debug.Log("Connected to Master");
+        //    PhotonNetwork.JoinOrCreateRoom("TestRoom", new RoomOptions() { MaxPlayers = 12 }, null);
+        //}
+        //
+        //public override void OnJoinedRoom()
+        //{
+        //    Debug.Log("Joined room");
+        //    CreatePlayer(); // 임시
+        //}
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
         {
@@ -81,11 +81,11 @@ namespace SoYoon
             }
         }
 
-        private void CreatePlayer()
-        {
-            // 임시
-            PhotonNetwork.Instantiate("Player", new Vector3(40, 30, 0), Quaternion.identity);
-        }
+        //private void CreatePlayer()
+        //{
+        //    // 임시
+        //    PhotonNetwork.Instantiate("Player", new Vector3(40, 30, 0), Quaternion.identity);
+        //}
 
         private void Update()
         {
