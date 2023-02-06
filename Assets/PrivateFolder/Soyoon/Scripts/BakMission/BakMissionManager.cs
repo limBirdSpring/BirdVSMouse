@@ -54,6 +54,7 @@ namespace SoYoon
         public override void OnJoinedRoom()
         {
             Debug.Log("Joined room");
+            CreatePlayer(); // 임시
         }
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
@@ -78,6 +79,12 @@ namespace SoYoon
                     bakMission.UpdatePercentage();
                 }
             }
+        }
+
+        private void CreatePlayer()
+        {
+            // 임시
+            PhotonNetwork.Instantiate("Player", new Vector3(40, 30, 0), Quaternion.identity);
         }
 
         private void Update()
