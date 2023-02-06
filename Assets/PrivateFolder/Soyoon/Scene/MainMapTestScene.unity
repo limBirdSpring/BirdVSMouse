@@ -4831,6 +4831,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &198190085 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8980796042432145334, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
+  m_PrefabInstance: {fileID: 1375240385}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &210512444
 GameObject:
   m_ObjectHideFlags: 0
@@ -11558,6 +11563,8 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -11665,6 +11672,52 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2770ae76e635f2141bc642fbf9654b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 519420031}
 --- !u!1 &521790254
 GameObject:
   m_ObjectHideFlags: 0
@@ -32529,6 +32582,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 741738260}
     m_Modifications:
+    - target: {fileID: 8980796042432145332, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8980796042432145332, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8980796042432145332, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1375240390}
+    - target: {fileID: 8980796042432145332, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8980796042432145332, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickedKillButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8980796042432145332, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SoYoon.KillButton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8980796042432145332, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8980796042432145333, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -32619,7 +32700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8980796042432145334, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
@@ -32628,6 +32709,19 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8980796042432145333, guid: 289d707adec7a1f49a7c514a434cb7ed, type: 3}
   m_PrefabInstance: {fileID: 1375240385}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1375240390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198190085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767e0bdcc55fb9d45849af016f7a8e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &1379207761
 GameObject:
   m_ObjectHideFlags: 0
@@ -33511,7 +33605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1420700127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33547,7 +33641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseJobList:
-  - num: 0
+  - jobNum: 0
     name: "\uAF43\uBC2D\uC950"
     playerPrefab: {fileID: 8050943514685066984, guid: 18e06be244e1c2e4d840f847e0b79040, type: 3}
     sprite: {fileID: 21300000, guid: 1cf2376a35125cc45af3e6c2387e0c29, type: 3}
@@ -33555,16 +33649,15 @@ MonoBehaviour:
     isSpy: 0
     isDie: 0
   birdJobList:
-  - num: 0
+  - jobNum: 0
     name: "\uD559"
     playerPrefab: {fileID: 8050943514685066984, guid: 18e06be244e1c2e4d840f847e0b79040, type: 3}
     sprite: {fileID: 21300000, guid: 6f76a8caa970f54488c032b89800a663, type: 3}
     isBird: 1
     isSpy: 0
     isDie: 0
-  playerList: []
   myPlayerState:
-    num: 0
+    jobNum: 0
     name: 
     playerPrefab: {fileID: 0}
     sprite: {fileID: 0}
@@ -40842,6 +40935,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826615caabb510a4d8bcb5d9b5a79d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myMission:
+    color: 0
+    water: 0
+    isBird: 0
+  missionText: {fileID: 0}
+  missionList: []
   missionButton: {fileID: 171811548}
   inter: {fileID: 0}
 --- !u!224 &1733616063

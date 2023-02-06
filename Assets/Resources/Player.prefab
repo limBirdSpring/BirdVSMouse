@@ -177,6 +177,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 7974288745161295513}
   - {fileID: 7974288745161295512}
+  - {fileID: 3995542578373505779}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -225,8 +226,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  death: {fileID: 6617898661040866409, guid: a5804a25d2846d94d80305d998b71ce3, type: 3}
   colli: {fileID: 7974288745161295515}
+  death: {fileID: 6617898661040866409, guid: a5804a25d2846d94d80305d998b71ce3, type: 3}
   namePosition: {x: -0.03, y: 2, z: 0}
   killRangeCollider: {fileID: 6433962446484679113}
 --- !u!1001 &6433962446953065178
@@ -286,6 +287,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
+--- !u!114 &3995542578373505779 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -1280990353411696599, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
+  m_PrefabInstance: {fileID: 6433962446953065178}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8778546955882491179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2349101317745625073, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}

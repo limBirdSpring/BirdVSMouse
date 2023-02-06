@@ -5,6 +5,7 @@ using Saebom;
 using Photon.Pun;
 using Cinemachine;
 using Photon.Realtime;
+using System.Drawing;
 
 //public enum PlayerState { Active, Inactive, Ghost }
 
@@ -22,6 +23,8 @@ namespace SoYoon
 
         [Header("Ghost")]
         [SerializeField]
+        private Collider2D colli;
+        [SerializeField]
         private GameObject death;
         [SerializeField]
         private Vector3 namePosition = new Vector3(0, 2, 0);
@@ -32,6 +35,7 @@ namespace SoYoon
         private Collider2D killRangeCollider;
 
         private Joystick joystick;
+        private CullingMaskController cullingMask;
         private GameObject killButtonGray; // юс╫ц
         private GameObject killButton;
         private GameObject targetPlayer;
@@ -47,6 +51,7 @@ namespace SoYoon
             nameTransform = GetComponentInChildren<RectTransform>();
             Transform uiCanvas = GameObject.Find("UICanvas").transform;
             joystick = uiCanvas.GetChild(9).GetComponent<Joystick>();
+            cullingMask = Camera.main.GetComponent<CullingMaskController>();
             killButtonGray = uiCanvas.GetChild(10).gameObject;
             killButton = uiCanvas.GetChild(11).gameObject;
         }
@@ -60,7 +65,7 @@ namespace SoYoon
                 playerCam.LookAt = this.transform;
                 targetPlayer = null;
                 //if(PlayGameManager.Instance.myPlayerState.isSpy)
-                    //killButtonGray.SetActive(true);
+                    killButtonGray.SetActive(true);
             }
             SetPlayerState(PlayerState.Active);
         }
@@ -100,7 +105,7 @@ namespace SoYoon
             Instantiate(death, transform.position, death.transform.rotation);
             anim.SetTrigger("isDeath");
             SetPlayerState(PlayerState.Ghost);
-            SetNamePosition();
+            Saebom.PlayGameManager.Instance.PlayerDie();
         }
 
         private void SetNamePosition()
@@ -130,14 +135,23 @@ namespace SoYoon
             {
                 case PlayerState.Active:
                     SetLayer(LayerMask.NameToLayer("Player"));
+                    cullingMask.OffLayerMask(LayerMask.NameToLayer("InActive"));
+                    cullingMask.OffLayerMask(LayerMask.NameToLayer("Ghost"));
+                    cullingMask.OffLayerMask(LayerMask.NameToLayer("Shadow"));
                     SetKillRange();
                     break;
                 case PlayerState.Inactive:
-                    SetLayer(LayerMask.NameToLayer("Ghost"));
+                    SetLayer(LayerMask.NameToLayer("InActive"));
+                    cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
                     SetKillRange();
                     break;
                 case PlayerState.Ghost:
                     SetLayer(LayerMask.NameToLayer("Ghost"));
+                    colli.enabled = false;
+                    SetNamePosition();
+                    cullingMask.OnLayerMask(LayerMask.NameToLayer("Ghost"));
+                    cullingMask.OnLayerMask(LayerMask.NameToLayer("Shadow"));
+                    cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
                     SetKillRange();
                     break;
             }
@@ -171,12 +185,15 @@ namespace SoYoon
                 {
                     killButton.SetActive(true);
                     targetPlayer = collision.gameObject;
-                    killButton.GetComponent<KillButton>().target = targetPlayer;
+                    killButton.GetComponent<KillButton>().target = targetPlayer.transform.parent.gameObject;
                     return;
                 }
-                Debug.Log("enter" + collision.gameObject.name);
-                Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
-                Saebom.MissionButton.Instance.MissionButtonOn();
+                else if (collision.gameObject.layer != LayerMask.NameToLayer("KillRange"))
+                {
+                    Debug.Log("enter" + collision.gameObject.name);
+                    Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
+                    Saebom.MissionButton.Instance.MissionButtonOn();
+                }
             }
 
             //if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
@@ -191,7 +208,7 @@ namespace SoYoon
             //    }
             //}
         }
-
+        
         private void OnTriggerExit2D(Collider2D collision)
         {
             if (photonView.IsMine)
@@ -201,8 +218,11 @@ namespace SoYoon
                     killButton.SetActive(false);
                     return;
                 }
-                Debug.Log("exit" + collision.gameObject.name);
-                Saebom.MissionButton.Instance.MissionButtonOff();
+                else if (collision.gameObject.layer != LayerMask.NameToLayer("KillRange"))
+                {
+                    Debug.Log("exit" + collision.gameObject.name);
+                    Saebom.MissionButton.Instance.MissionButtonOff();
+                }
             }
         }
     }

@@ -4773,8 +4773,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerImg: {fileID: 406393907}
   playerName: {fileID: 611798169}
-  playerBadge1: {fileID: 0}
-  playerBadge2: {fileID: 0}
+  playerBadge1: {fileID: 1771324947}
+  playerBadge2: {fileID: 711526432}
   myInfo: {fileID: 11400000, guid: c91681561fdf0904d8d197033ba3bbd4, type: 2}
   initializeNames: {fileID: 11400000, guid: 6bfb88b30ede49a4795e984d25ffe961, type: 2}
 --- !u!1 &1186451518
