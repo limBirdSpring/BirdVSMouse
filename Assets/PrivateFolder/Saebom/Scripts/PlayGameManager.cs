@@ -93,20 +93,20 @@ namespace Saebom
             photonView = GetComponent<PhotonView>();
         }
 
-       // private void OnEnable()
-       // {
-       //     //리스트 초기화
-       //     GameStart();
-       // }
+       private void OnEnable()
+       {
+           //리스트 초기화
+           GameStart();
+       }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                //리스트 초기화
-                GameStart();
-            }
-        }
+       //private void Update()
+       //{
+       //    if (Input.GetKeyDown(KeyCode.F1))
+       //    {
+       //        //리스트 초기화
+       //        GameStart();
+       //    }
+       //}
 
         public void GameStart()
         {

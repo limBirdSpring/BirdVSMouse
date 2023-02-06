@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 7974288745161295513}
   - component: {fileID: 7974288745161295512}
   - component: {fileID: 7974288745161295511}
+  - component: {fileID: -1949787451322054881}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -230,6 +231,23 @@ MonoBehaviour:
   death: {fileID: 6617898661040866409, guid: a5804a25d2846d94d80305d998b71ce3, type: 3}
   namePosition: {x: -0.03, y: 2, z: 0}
   killRangeCollider: {fileID: 6433962446484679113}
+--- !u!114 &-1949787451322054881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779854282490936959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5340fd86c9297e24c98187875af274cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  colli: {fileID: 0}
+  death: {fileID: 0}
+  namePosition: {x: 0, y: 2, z: 0}
+  killRangeCollider: {fileID: 0}
 --- !u!1001 &6433962446953065178
 PrefabInstance:
   m_ObjectHideFlags: 0
