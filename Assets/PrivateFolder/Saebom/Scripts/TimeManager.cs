@@ -77,7 +77,6 @@ namespace Saebom
 
         private void Update()
         {
-            //점수 합산시간에 시간 멈추기 - 플레이매니저에서 조정
 
             if (Input.GetKeyDown(KeyCode.F2))
                 AddTime(10);
@@ -87,14 +86,14 @@ namespace Saebom
 
             if (!isCurNight)
             {
-                if (curTime > dangerTime)
+                if (curTime > dangerTime && curTime < halfTime-1)
                     DangerScreenOn();
                 if (curTime > halfTime - 1 && curTime < halfTime)
                     TimeOver();
             }
             else
             {
-                if (curTime > dangerTime2)
+                if (curTime > dangerTime2 && curTime < maxTime - 1)
                     DangerScreenOn();
                 if (curTime > maxTime - 1 && curTime < maxTime)
                     TimeOver();
@@ -164,9 +163,8 @@ namespace Saebom
             redScreenUi.gameObject.SetActive(false);
             TimeOff();
 
-
-
             //2초 뒤 점수 확인 출력
+            ScoreManager.Instance.CallScoreResultWindow();
 
 
 
