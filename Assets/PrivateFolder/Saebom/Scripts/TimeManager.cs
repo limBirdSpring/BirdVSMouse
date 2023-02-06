@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -43,6 +44,7 @@ namespace Saebom
         [SerializeField]
         private GameObject nightSky;
 
+
         //===================================
 
 
@@ -66,6 +68,14 @@ namespace Saebom
         [SerializeField]
         private GameObject startText;
 
+
+        private PhotonView photonView;
+
+        private void Awake()
+        {
+            photonView = GetComponent<PhotonView>();
+        }
+
         private void Start()
         {
             halfTime = maxTime / 2;
@@ -81,12 +91,12 @@ namespace Saebom
             if (Input.GetKeyDown(KeyCode.F2))
                 AddTime(10);
 
-            if (timeOn)
-                TimeUpdate();
+            if (timeOn && PhotonNetwork.IsMasterClient)
+                MasterTimeUpdate();
 
             if (!isCurNight)
             {
-                if (curTime > dangerTime && curTime < halfTime-1)
+                if (curTime > dangerTime && curTime < halfTime - 1)
                     DangerScreenOn();
                 if (curTime > halfTime - 1 && curTime < halfTime)
                     TimeOver();
@@ -100,9 +110,19 @@ namespace Saebom
             }
         }
 
-        private void TimeUpdate()
+        private void MasterTimeUpdate()
         {
             curTime += Time.deltaTime;
+
+            photonView.RPC("PrivateTimeUpdate", RpcTarget.All, curTime);
+
+        }
+
+        [PunRPC]
+        public void PrivateTimeUpdate(float masterCurTime)
+        {
+            curTime = masterCurTime;
+
             TimeSlideUpdate();
 
             if (curTime < halfTime)
@@ -113,7 +133,11 @@ namespace Saebom
 
         public void AddTime(float sec)
         {
-            curTime += sec;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                curTime += sec;
+                photonView.RPC("PrivateTimeUpdate", RpcTarget.All, curTime);
+            }
         }
 
         private void SetCurRound()
