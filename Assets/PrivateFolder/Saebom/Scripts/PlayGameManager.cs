@@ -7,13 +7,15 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using Photon.Pun.Demo.Cockpit;
+using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
 
 namespace Saebom
 {
     [Serializable]
     public struct PlayerState
     {
-        public int num;
+        public int jobNum;
 
         public string name;
 
@@ -38,7 +40,7 @@ namespace Saebom
         private List<PlayerState> birdJobList = new List<PlayerState>();
 
         //방장이 가지고있는 플레이어리스트로 몇번플레이어가 무슨역할인지, 죽었는지 모두 알수있다.
-        public List<PlayerState> playerList = new List<PlayerState>();
+        public List<PlayerState> playerList= new List<PlayerState>();
 
         //===개인의 정보===
         public PlayerState myPlayerState;
@@ -91,20 +93,20 @@ namespace Saebom
             photonView = GetComponent<PhotonView>();
         }
 
-        //private void OnEnable()
-        //{
-        //    //리스트 초기화
-        //    GameStart();
-        //}
+       // private void OnEnable()
+       // {
+       //     //리스트 초기화
+       //     GameStart();
+       // }
 
-        //private void Update()
-        //{
-        //    if (Input.GetKeyDown(KeyCode.F1))
-        //    {
-        //        //리스트 초기화
-        //        GameStart();
-        //    }
-        //}
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                //리스트 초기화
+                GameStart();
+            }
+        }
 
         public void GameStart()
         {
@@ -113,14 +115,14 @@ namespace Saebom
                 SetPlayer();
             }
 
-            SetReadyScene();
+            
             StartCoroutine(GameStartCor());
         }
 
         private IEnumerator GameStartCor()
         {
             yield return new WaitForSeconds(2f);
-            
+            SetReadyScene();
         }
 
         //방장이 모든 플레이어에게 랜덤으로 역할 부여, playerList 가지고 있기
@@ -147,13 +149,13 @@ namespace Saebom
 
             PlayerState mouse = playerList[mouseSpy];
             mouse.isSpy = true;
-            playerList[mouseSpy] = bird;
+            playerList[mouseSpy] = mouse;
 
 
             for (int i = 0; i < teamSum*2; i++)
             {
                 //셔플
-                int random = Random.Range(0, playerList.Count);
+                int random = Random.Range(i, playerList.Count);
                 PlayerState player = playerList[random];
                 playerList[random] = playerList[i];
                 playerList[i] = player;
@@ -163,7 +165,7 @@ namespace Saebom
            // //각자의 펀 함수 소환
             for (int i = 0; i < playerList.Count; i++)
             {
-                photonView.RPC("MyPlayerSet", RpcTarget.All, i, playerList[i].num, playerList[i].isBird, playerList[i].isSpy);
+                photonView.RPC("MyPlayerSet", RpcTarget.All, i, playerList[i].jobNum, playerList[i].isBird, playerList[i].isSpy);
                 
             }
         }
@@ -211,20 +213,25 @@ namespace Saebom
         {
             Debug.Log("개인 플레이어 세팅");
 
-            if (isBird)
+            if (!PhotonNetwork.IsMasterClient)
             {
-                PlayerState playerState = birdJobList[jobNum];
-                playerState.isSpy = isSpy;
-                playerList.Add(playerState);
-            }
-            else
-            {
-                PlayerState playerState = mouseJobList[jobNum];
-                playerState.isSpy = isSpy;
-                playerList.Add(playerState);
+                if (isBird)
+                {
+                    PlayerState playerState = birdJobList[jobNum];
+                    playerState.isSpy = isSpy;
+                    playerList.Add(playerState);
+                }
+                else
+                {
+                    PlayerState playerState = mouseJobList[jobNum];
+                    playerState.isSpy = isSpy;
+                    playerList.Add(playerState);
+                }
             }
 
-            if (photonView.Owner.ActorNumber != i)
+            Debug.LogError(PhotonNetwork.LocalPlayer.GetPlayerNumber());
+
+            if (PhotonNetwork.LocalPlayer.GetPlayerNumber() != i)
                 return;
 
 
@@ -273,7 +280,7 @@ namespace Saebom
             for (int i = 0; i < playerList.Count; i++)
             {
                 //갱신된 플레이어 전달
-                photonView.RPC("PlayerListSet", RpcTarget.All, i, playerList[i].num, playerList[i].isBird, playerList[i].isSpy);
+                photonView.RPC("PlayerListSet", RpcTarget.All, i, playerList[i].jobNum, playerList[i].isBird, playerList[i].isSpy);
             }
         }
 
@@ -295,7 +302,7 @@ namespace Saebom
                 playerList[i] = playerState;
             }
 
-            if (photonView.Owner.ActorNumber != i)
+            if (PhotonNetwork.LocalPlayer.GetPlayerNumber() != i)
                 return;
 
 
