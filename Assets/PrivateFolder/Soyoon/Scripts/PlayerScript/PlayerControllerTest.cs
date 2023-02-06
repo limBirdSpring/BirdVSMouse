@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Saebom;
-using Photon.Pun;
 using Cinemachine;
-using Photon.Realtime;
-using System.Drawing;
+using Photon.Pun;
+using UnityEngine;
 
 //public enum PlayerState { Active, Inactive, Ghost }
 
@@ -36,7 +31,7 @@ namespace SoYoon
 
         private Joystick joystick;
         private CullingMaskController cullingMask;
-        private GameObject killButtonGray; // юс╫ц
+        private GameObject killButtonGray;
         private GameObject killButton;
         private GameObject targetPlayer;
 
@@ -65,7 +60,7 @@ namespace SoYoon
                 playerCam.LookAt = this.transform;
                 targetPlayer = null;
                 //if(PlayGameManager.Instance.myPlayerState.isSpy)
-                    killButtonGray.SetActive(true);
+                //    killButtonGray.SetActive(true);
             }
             SetPlayerState(PlayerState.Active);
         }

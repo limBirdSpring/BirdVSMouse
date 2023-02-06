@@ -1,14 +1,15 @@
 using Photon.Pun;
-using Photon.Realtime;
+using Saebom;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using HashTable = ExitGames.Client.Photon.Hashtable;
+using Player = Photon.Realtime.Player;
 
 namespace SoYoon
 {
-    public class BakMissionManager : MonoBehaviourPunCallbacks
+    public class BakMissionManager : Mission
     {
         [SerializeField]
         private BakMission bakMission;
@@ -129,6 +130,14 @@ namespace SoYoon
                 progressText.text = string.Format("100 %", (int)curBakProgress);
             }
             Debug.Log(CurBakProgress);
+        }
+
+        public override bool GetScore()
+        {
+            if (curBakProgress >= 100)
+                return true;
+            else
+                return false;
         }
     }
 }
