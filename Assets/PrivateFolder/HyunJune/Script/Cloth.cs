@@ -1,9 +1,11 @@
+using Saebom;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Photon.Pun;
 
 namespace HyunJune
 {
@@ -18,13 +20,13 @@ namespace HyunJune
         Black   = White | Red | Blue | Yellow
     }
 
+    
 
-
-    public class Cloth : MonoBehaviour, IDropHandler
+    public class Cloth : Mission, IDropHandler
     {
         private Image cloth;
         Dictionary<CurColor, Color32> dicColor;
-
+        
         public CurColor curColor;
 
         private void Awake()
@@ -38,6 +40,23 @@ namespace HyunJune
             curColor = CurColor.None;       
             Init();
             cloth.color = dicColor[curColor];
+        }
+
+        public override void GraphicUpdate()
+        {
+            cloth.color = dicColor[curColor];
+        }
+
+        public override void PlayerUpdateCurMission()
+        {
+            photonView.RPC("ClothCurColorRPC", RpcTarget.All, curColor);
+        }
+
+
+        [PunRPC]
+        public void ClothCurColorRPC(CurColor curColor)
+        {
+            this.curColor = curColor;
         }
 
         private void Init()
