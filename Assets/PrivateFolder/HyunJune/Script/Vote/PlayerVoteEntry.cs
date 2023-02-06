@@ -25,6 +25,11 @@ public class PlayerVoteEntry : MonoBehaviourPun
 
     private int voteCount;
 
+    public int VoteCount
+    {
+        get { return voteCount; }
+    }
+
     private void Awake()
     {
         voteButton = GetComponent<Button>();
@@ -58,11 +63,20 @@ public class PlayerVoteEntry : MonoBehaviourPun
         }
             
     }
+
+    [PunRPC]
     public void AddVoteCount()
     {
         voteCount++;
         voteCountUI.text = voteCount.ToString();
     }
+
+    public void DeadSetting()
+    {
+        // 흑백 또는 X표시로 사망 표시 및 투표 불가
+        ToggleButton(false);
+    }
+
     public void CompleteVote()
     {
         voteComplete.enabled = true;
