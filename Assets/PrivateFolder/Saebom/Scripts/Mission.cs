@@ -13,8 +13,14 @@ namespace Saebom
             return false;
         }
 
+        public virtual void GraphicUpdate()
+        {
+            //OnEnable()에서 호출
+        }
+
         public virtual void PlayerUpdateCurMission()
         {
+            //OnDisable()에서 호출
             //미션창을 닫는 그 순간 모두에게 미션 현재상황을 업데이트해줌
             //박빼고
         }
