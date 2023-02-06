@@ -20939,6 +20939,7 @@ MonoBehaviour:
     isBird: 1
     isSpy: 0
     isDie: 0
+  playerList: []
   myPlayerState:
     jobNum: 0
     name: 

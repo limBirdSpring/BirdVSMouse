@@ -149,13 +149,13 @@ namespace Saebom
 
             PlayerState mouse = playerList[mouseSpy];
             mouse.isSpy = true;
-            playerList[mouseSpy] = bird;
+            playerList[mouseSpy] = mouse;
 
 
             for (int i = 0; i < teamSum*2; i++)
             {
                 //¼ÅÇÃ
-                int random = Random.Range(0, playerList.Count);
+                int random = Random.Range(i, playerList.Count);
                 PlayerState player = playerList[random];
                 playerList[random] = playerList[i];
                 playerList[i] = player;
@@ -229,7 +229,9 @@ namespace Saebom
                 }
             }
 
-            if (photonView.Owner.GetPlayerNumber() != i)
+            Debug.LogError(PhotonNetwork.LocalPlayer.GetPlayerNumber());
+
+            if (PhotonNetwork.LocalPlayer.GetPlayerNumber() != i)
                 return;
 
 
@@ -300,7 +302,7 @@ namespace Saebom
                 playerList[i] = playerState;
             }
 
-            if (photonView.Owner.GetPlayerNumber() != i)
+            if (PhotonNetwork.LocalPlayer.GetPlayerNumber() != i)
                 return;
 
 
