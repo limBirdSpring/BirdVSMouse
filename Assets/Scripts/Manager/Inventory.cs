@@ -35,6 +35,8 @@ public class Inventory : SingleTon<Inventory>
     //해당 아이템이 장착되어있는지 확인하기
     public bool isItemSet(string name)
     {
+        if (curSetItem == null)
+            return false;
         if (curSetItem.itemName == name)
             return true;
 

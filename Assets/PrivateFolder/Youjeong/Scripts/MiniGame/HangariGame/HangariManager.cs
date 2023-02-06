@@ -18,6 +18,11 @@ namespace Youjeong
             photon = GetComponent<PhotonView>();
         }
 
+        public void ResetGame()
+        {
+            waterAmount= 0;
+        }
+
         public override bool GetScore()
         {
            /* if (!TimeManager.Instance.isCurNight && MissionButton.Instance.birdMission.water == waterAmount)
