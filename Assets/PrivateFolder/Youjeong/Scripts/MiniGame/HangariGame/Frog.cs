@@ -11,43 +11,66 @@ namespace Youjeong
         [SerializeField]
         private HagnariGame game;
         [SerializeField]
+        private HangariManager manager;
+        [SerializeField]
         private GameObject sprayWater;
-
-        private RectTransform rectTransform;
         
+        private float delay;
+        private RectTransform rectTransform;
+        private bool isOutHangari = false;
+        private Coroutine spray;
+        private Vector3 originPosition;
 
         private void Start()
         {
             rectTransform = GetComponent<RectTransform>();
+            originPosition = rectTransform.position;
+            delay = game.delay;
+        }
+       
+        private void OnDisable()
+        {
+             Reset();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if(!game.isOutHangari&& PlayGameManager.Instance.myPlayerState.isSpy)
+            if(!isOutHangari&& PlayGameManager.Instance.myPlayerState.isSpy&&manager.waterAmount>0)
             {
-                game.isOutHangari = true;
+                isOutHangari = true;
                 game.MinusWater();
                 sprayWater.SetActive(true);
+                spray = StartCoroutine("SprayWaterCoroutine");
                 OutFrog();
             }
-            else if(game.isOutHangari)
-            {
-                game.isOutHangari = false;
-                sprayWater.SetActive(false);
-                InFrog();
-            }
         }
 
-        private void OutFrog()
+        public void OutFrog()
         {
-            rectTransform.position += new Vector3(600, 0, 0);
+            rectTransform.position += new Vector3(200, 0, 0);
         }
 
-        private void InFrog()
+        public void InFrog()
         {
-            rectTransform.position -= new Vector3(600, 0, 0);
+            rectTransform.position = originPosition;
         }
-       
+
+        private IEnumerator SprayWaterCoroutine()
+        {
+            yield return new WaitForSeconds(delay);
+            Reset();
+
+        }
+
+        private void Reset()
+        {
+            InFrog();
+            if (spray != null)
+                StopCoroutine(spray);
+            isOutHangari = false;
+            sprayWater.SetActive(false);
+        }
+
     }
 }
 

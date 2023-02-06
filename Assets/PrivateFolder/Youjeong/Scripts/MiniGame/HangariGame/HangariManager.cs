@@ -6,30 +6,44 @@ using Saebom;
 
 namespace Youjeong
 {
+    [RequireComponent(typeof(PhotonView))]
     public class HangariManager : Mission
     {
-        private HagnariGame game;
-        private float waterAmount; 
+        private PhotonView photon;
 
-
+        public float waterAmount=0;
+    
         private void Awake()
         {
-            game = GetComponent<HagnariGame>();
+            photon = GetComponent<PhotonView>();
         }
 
         public override bool GetScore()
         {
-            return true;
+           /* if (!TimeManager.Instance.isCurNight && MissionButton.Instance.birdMission.water == waterAmount)
+                return true;
+            else if (TimeManager.Instance.isCurNight && MissionButton.Instance.mouseMission.water == waterAmount)
+                return true;*/
+
+            return false;
+
         }
 
         public override void GraphicUpdate()
         {
-
+            
         }
 
         public override void PlayerUpdateCurMission()
         {
-            waterAmount = game.amount;
+            photon.RPC("MissionUpdate", RpcTarget.All, waterAmount);
+            
+        }
+
+        [PunRPC]
+        public void MissionUpdate(float water)
+        {
+            waterAmount = water;
         }
     }
 }

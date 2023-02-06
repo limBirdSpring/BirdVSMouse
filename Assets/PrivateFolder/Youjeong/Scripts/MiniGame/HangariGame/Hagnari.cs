@@ -18,7 +18,6 @@ namespace Youjeong
         public void OnDrop(PointerEventData eventData)
         {
             isWater = inventory.isItemSet("Water");
-            Debug.Log(isWater);
             if (!isWater)
                 return;
             inventory.DeleteItem();

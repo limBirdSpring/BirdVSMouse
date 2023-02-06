@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,29 +9,31 @@ namespace Youjeong
     [RequireComponent(typeof(HangariManager))]
     public class HagnariGame : MonoBehaviour
     {
-        private HangariManager hangariManager;
-        public float amount = 0;
-        public bool isOutHangari = false;
-
         [SerializeField]
         private InWater inWater;
 
+        public float delay { get; private set; } = 3f;
+
+        private HangariManager hangariManager;
+
         public void PlusWater()
         {
-            amount += 10;
-            inWater.FillWater(amount);
+            hangariManager.waterAmount += 20;
+            inWater.ChangeWater(hangariManager.waterAmount);
+
         }
 
         public void MinusWater()
         {
-            if(amount==0)
+            if(hangariManager.waterAmount == 0)
                 return;
-            amount -= 10;
-            inWater.FillWater(amount);
+            hangariManager.waterAmount -= 10;
+            inWater.ChangeWater(hangariManager.waterAmount);
         }
 
         private void Awake()
         {
+            //GetComponent<AudioSource>().Play();
             hangariManager = GetComponent<HangariManager>();
         }
 
