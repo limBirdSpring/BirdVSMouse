@@ -50,6 +50,9 @@ namespace Saebom
         [SerializeField]
         private TextMeshProUGUI missionText;
 
+        [SerializeField]
+        private List<Mission> missionList;
+
         
 
         private void Awake()
