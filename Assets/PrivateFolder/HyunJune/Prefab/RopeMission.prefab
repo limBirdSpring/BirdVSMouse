@@ -1955,10 +1955,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5975326048130583194}
+  - {fileID: 8318372084798540155}
   - {fileID: 6133996051427656721}
   - {fileID: 6937693309982294004}
-  - {fileID: 8960061115839490579}
+  - {fileID: 9097085248690742008}
   m_Father: {fileID: 3714933895854488849}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2106,6 +2106,43 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 25, y: 25}
   m_EdgeRadius: 0
+--- !u!1 &2310087648711683426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8318372084798540155}
+  m_Layer: 5
+  m_Name: SunPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8318372084798540155
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310087648711683426}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5975326048130583194}
+  m_Father: {fileID: 2086958824500778210}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -415, y: 491.85}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2551414766422849575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2171,6 +2208,7 @@ MonoBehaviour:
   goodRope: {fileID: 4484307203221066549}
   badRope: {fileID: 1916560879793506186}
   dropPoint: {fileID: 8113022703689543393}
+  rope: {fileID: 0}
 --- !u!114 &5555644422399012533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2431,7 +2469,7 @@ GameObject:
   - component: {fileID: 8960061115839490579}
   - component: {fileID: 1490440840741085555}
   m_Layer: 5
-  m_Name: 4_SunOrMoon
+  m_Name: Moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2451,12 +2489,12 @@ RectTransform:
   m_Children:
   - {fileID: 5771517332220561499}
   - {fileID: 5771517331714906944}
-  m_Father: {fileID: 2086958824500778210}
-  m_RootOrder: 3
+  m_Father: {fileID: 9097085248690742008}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 416, y: 491.85}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1490440840741085555
@@ -2474,6 +2512,7 @@ MonoBehaviour:
   sun: {fileID: 3870876887064125634}
   moon: {fileID: 6665675534615405390}
   moveSpeed: 200
+  originalPos: {fileID: 9097085248690742008}
   identity: 1
 --- !u!1 &2895651514079101460
 GameObject:
@@ -2540,6 +2579,7 @@ MonoBehaviour:
   goodRope: {fileID: 6680768370582667189}
   badRope: {fileID: 2466663419692966599}
   dropPoint: {fileID: 5907155297432597727}
+  rope: {fileID: 0}
 --- !u!114 &6965012531542613262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3071,6 +3111,7 @@ MonoBehaviour:
   goodRope: {fileID: 3409769891057869973}
   badRope: {fileID: 7213388021642246786}
   dropPoint: {fileID: 514928645295550536}
+  rope: {fileID: 0}
 --- !u!114 &864160703839491418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3344,6 +3385,7 @@ MonoBehaviour:
   goodRope: {fileID: 4055136901691448837}
   badRope: {fileID: 6271527225886253324}
   dropPoint: {fileID: 2056599381}
+  rope: {fileID: 0}
 --- !u!114 &1099924655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3659,6 +3701,7 @@ MonoBehaviour:
   goodRope: {fileID: 7744108359886119701}
   badRope: {fileID: 4450028523704395647}
   dropPoint: {fileID: 3090509399934508393}
+  rope: {fileID: 0}
 --- !u!114 &3124195212619213984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4096,6 +4139,7 @@ MonoBehaviour:
   goodRope: {fileID: 6526709727077354729}
   badRope: {fileID: 2468441536999796719}
   dropPoint: {fileID: 2918527692979056442}
+  rope: {fileID: 0}
 --- !u!114 &692169587880817710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4433,7 +4477,7 @@ GameObject:
   - component: {fileID: 286775286}
   - component: {fileID: 286775287}
   m_Layer: 5
-  m_Name: 1_SunOrMoon
+  m_Name: Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4453,12 +4497,12 @@ RectTransform:
   m_Children:
   - {fileID: 8801492404305005041}
   - {fileID: 1909862416979770909}
-  m_Father: {fileID: 2086958824500778210}
+  m_Father: {fileID: 8318372084798540155}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -415, y: 491.85}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &286775286
@@ -4502,6 +4546,7 @@ MonoBehaviour:
   sun: {fileID: 3870876887064125634}
   moon: {fileID: 6665675534615405390}
   moveSpeed: 200
+  originalPos: {fileID: 8318372084798540155}
   identity: 0
 --- !u!1 &5497484013462851282
 GameObject:
@@ -5281,6 +5326,7 @@ MonoBehaviour:
   goodRope: {fileID: 3045599479130311451}
   badRope: {fileID: 863518930289680170}
   dropPoint: {fileID: 5340965746151889852}
+  rope: {fileID: 0}
 --- !u!114 &1626257648646703489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5452,6 +5498,7 @@ MonoBehaviour:
   goodRope: {fileID: 99455081353279951}
   badRope: {fileID: 1591763215086955656}
   dropPoint: {fileID: 5694910016973948310}
+  rope: {fileID: 0}
 --- !u!114 &6092733579704962490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5980,6 +6027,7 @@ MonoBehaviour:
   goodRope: {fileID: 1365028873726374306}
   badRope: {fileID: 4288680012934967696}
   dropPoint: {fileID: 8849487292068513731}
+  rope: {fileID: 0}
 --- !u!114 &5500440675696650622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6222,6 +6270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e2fd253deb71245aded7e35d9e42b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sun: {fileID: 286775287}
+  moon: {fileID: 1490440840741085555}
 --- !u!1 &7401153389248074211
 GameObject:
   m_ObjectHideFlags: 0
@@ -6365,6 +6415,7 @@ MonoBehaviour:
   goodRope: {fileID: 7309140784187248918}
   badRope: {fileID: 2939760749531623975}
   dropPoint: {fileID: 1538714727804077108}
+  rope: {fileID: 0}
 --- !u!114 &2799727075811359084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6974,6 +7025,7 @@ MonoBehaviour:
   goodRope: {fileID: 3070679362891483215}
   badRope: {fileID: 3559604707834050244}
   dropPoint: {fileID: 2854110154599075700}
+  rope: {fileID: 0}
 --- !u!114 &3593946268746889431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7396,3 +7448,40 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &9152780345418974852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9097085248690742008}
+  m_Layer: 5
+  m_Name: MoonPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &9097085248690742008
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9152780345418974852}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8960061115839490579}
+  m_Father: {fileID: 2086958824500778210}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 416, y: 491.85}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
