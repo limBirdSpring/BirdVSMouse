@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Saebom;
-using Photon.Pun;
 using Cinemachine;
-using Photon.Realtime;
-using System.Drawing;
+using Photon.Pun;
+using UnityEngine;
 
 //public enum PlayerState { Active, Inactive, Ghost }
 
@@ -30,15 +25,12 @@ namespace SoYoon
         private Vector3 namePosition = new Vector3(0, 2, 0);
         private RectTransform nameTransform;
 
-        [Header("IsSpy")]
-        [SerializeField]
-        private Collider2D killRangeCollider;
-
         private Joystick joystick;
         private CullingMaskController cullingMask;
-        private GameObject killButtonGray; // 임시
+        private GameObject killButtonGray;
         private GameObject killButton;
         private GameObject targetPlayer;
+        private Collider2D killRangeCollider;
 
         private Vector2 inputVec;
         public PlayerState state { get; private set; } = PlayerState.Active;
@@ -54,6 +46,8 @@ namespace SoYoon
             cullingMask = Camera.main.GetComponent<CullingMaskController>();
             killButtonGray = uiCanvas.GetChild(10).gameObject;
             killButton = uiCanvas.GetChild(11).gameObject;
+            killRangeCollider = gameObject.transform.GetChild(1).GetComponent<Collider2D>();
+            //Debug.Log(killRangeCollider.name);
         }
 
         private void Start()
@@ -65,8 +59,9 @@ namespace SoYoon
                 playerCam.LookAt = this.transform;
                 targetPlayer = null;
                 //if(PlayGameManager.Instance.myPlayerState.isSpy)
-                    killButtonGray.SetActive(true);
+                //    killButtonGray.SetActive(true);
             }
+
             SetPlayerState(PlayerState.Active);
         }
 
@@ -115,7 +110,7 @@ namespace SoYoon
 
         public void OnInactive()
         {
-            //TODO :  ?????? ?ð??뿡 ???? ???
+            // 비활동시기(내 활동시간이 아닐경우)
             anim.SetTrigger("IsInactive");
             SetPlayerState(PlayerState.Inactive);
 
@@ -123,7 +118,7 @@ namespace SoYoon
 
         public void OnActive()
         {
-            //TODO :  ???? ?ð??뿡 ???? ???
+            // 활동시기
             anim.SetTrigger("IsActive");
             SetPlayerState(PlayerState.Active);
         }
@@ -163,16 +158,16 @@ namespace SoYoon
             foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
             {
                 child.gameObject.layer = layer;
+                if (child.gameObject.name == "KillRangeCollider")
+                    child.gameObject.layer = LayerMask.NameToLayer("KillRange");
             }
         }
 
         private void SetKillRange()
         {
+            Debug.Log("SetKillRange");
             if (state == PlayerState.Active)
-            {
                 killRangeCollider.gameObject.SetActive(true);
-                killRangeCollider.gameObject.layer = LayerMask.NameToLayer("KillRange");
-            }
             else
                 killRangeCollider.gameObject.SetActive(false);
         }
