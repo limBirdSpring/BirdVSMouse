@@ -77,6 +77,8 @@ namespace Saebom
 
         //=======================================
 
+        private int masterCheck = 0;
+
         private void Awake()
         {
             photonView = GetComponent<PhotonView>();
@@ -110,9 +112,18 @@ namespace Saebom
 
             //박 점수 출력
 
+            StartCoroutine(MissionButton.Instance.MissionCheckCor());
+
+
+            int score = MissionButton.Instance.MissionResultCheck();
+
             yield return new WaitForSeconds(2f);
 
             //점수 계산
+            if (!TimeManager.Instance.isCurNight)
+                birdScore += score;
+            else
+                mouseScore += score;
 
             //점수계산이 끝난 후 각 변수에 현재상황 저장
             if (PhotonNetwork.IsMasterClient)
@@ -127,9 +138,26 @@ namespace Saebom
             if (TimeManager.Instance.isCurNight)
                 TurnResult();
 
+            photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
 
 
         }
+
+        [PunRPC]
+        public void PrivateScoreCheckFinish(int check)
+        {
+            masterCheck += check;
+
+            if (masterCheck == PhotonNetwork.PlayerList.Length)
+            {
+                TimeManager.Instance.FinishScoreTimeSet();
+                masterCheck = 0;
+            }
+        }
+
+
+
+
 
         //플레이어가 죽었을 때 방장이 대표로 플레이어 상태를 갱신함 
         public void MasterCurPlayerStateUpdate()
@@ -203,6 +231,13 @@ namespace Saebom
         public void ActiveTimeOverNow()
         {
             //즉시 활동시간이 끝난 경우에는 거점으로 이동하지 않아도 죽지 않고, 자동으로 거점으로 이동되도록 구현
+
+
+            //플레이어를 모두 거점으로 강제이동
+
+
+            //활동시간끝내기
+            TimeManager.Instance.TimeOver();
 
         }
 

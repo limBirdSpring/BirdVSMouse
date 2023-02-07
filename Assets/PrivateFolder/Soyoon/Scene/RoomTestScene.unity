@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceaf4244a7082be4683811f4b3113e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEntryPrefab: {fileID: 7027482271179837593, guid: b7d209c3bf2a3e949b24244a46dbbdf4, type: 3}
+  playerEntryPrefab: {fileID: 7027482271179837593, guid: 7ad26b49cc55eab4b89128da924c15df, type: 3}
   playerContent: {fileID: 1270018230}
   startButton: {fileID: 1780520981}
   readyButton: {fileID: 3903472}
