@@ -11,8 +11,8 @@ namespace Youjeong
     {
         [SerializeField]
         private InWater inWater;
-
-        public float delay { get; private set; } = 3f;
+    
+        public float delay=1.5f;
 
         private HangariManager hangariManager;
 
