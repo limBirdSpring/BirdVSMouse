@@ -38,9 +38,11 @@ namespace Saebom
         //==============미션을 저장하는 struct==================
         private Dictionary<int, CurColor> colorMissionData = new Dictionary<int, CurColor>();
 
-        private MissionData birdMission;
+        [HideInInspector]
+        public MissionData birdMission;
 
-        private MissionData mouseMission;
+        [HideInInspector]
+        public MissionData mouseMission;
 
         public MissionData myMission;
 
