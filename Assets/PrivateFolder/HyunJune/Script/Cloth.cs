@@ -1,9 +1,11 @@
+using Saebom;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Photon.Pun;
 
 namespace HyunJune
 {
@@ -18,13 +20,13 @@ namespace HyunJune
         Black   = White | Red | Blue | Yellow
     }
 
+    
 
-
-    public class Cloth : MonoBehaviour, IDropHandler
+    public class Cloth : Mission, IDropHandler
     {
         private Image cloth;
         Dictionary<CurColor, Color32> dicColor;
-
+        
         public CurColor curColor;
 
         private void Awake()
@@ -35,8 +37,26 @@ namespace HyunJune
 
         private void Start()
         {
-            curColor = CurColor.None;
+            curColor = CurColor.None;       
             Init();
+            cloth.color = dicColor[curColor];
+        }
+
+        public override void GraphicUpdate()
+        {
+            cloth.color = dicColor[curColor];
+        }
+
+        public override void PlayerUpdateCurMission()
+        {
+            photonView.RPC("ClothCurColorRPC", RpcTarget.All, curColor);
+        }
+
+
+        [PunRPC]
+        public void ClothCurColorRPC(CurColor curColor)
+        {
+            this.curColor = curColor;
         }
 
         private void Init()
@@ -82,6 +102,18 @@ namespace HyunJune
             yield return new WaitForSeconds(3);
             curColor = CurColor.None;
             cloth.color = dicColor[curColor];
+        }
+
+        public void CheckSuccess(CurColor color)
+        {
+            if (curColor == color)
+            {
+                // TODO : 미션 성공
+            }
+            else
+            {
+                // 미션 실패
+            }
         }
 
         public void OnDrop(PointerEventData eventData)
