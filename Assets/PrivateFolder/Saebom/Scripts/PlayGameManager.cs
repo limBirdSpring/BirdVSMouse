@@ -94,6 +94,7 @@ namespace Saebom
         private void Awake()
         {
             photonView = GetComponent<PhotonView>();
+            Destroy(GameObject.Find("LobbyManager"));
         }
 
       private void OnEnable()
