@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using Photon.Pun.Demo.Cockpit;
 using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
+using SoYoon;
 
 namespace Saebom
 {
@@ -41,6 +42,8 @@ namespace Saebom
 
         //방장이 가지고있는 플레이어리스트로 몇번플레이어가 무슨역할인지, 죽었는지 모두 알수있다.
         public List<PlayerState> playerList= new List<PlayerState>();
+
+        public List<PlayerControllerTest> playerController = new List<PlayerControllerTest>();
 
         //===개인의 정보===
         public PlayerState myPlayerState;
@@ -261,10 +264,21 @@ namespace Saebom
         }
 
 
-        //플레이어가 죽었을 경우 이 함수를 호출해줌
+
+
+        //플레이어가 킬로 죽었을 경우 이 함수를 호출해줌
         public void PlayerDie()
         {
-            photonView.RPC("PlayerDieAndMasterPlayerListUpdate", RpcTarget.MasterClient, photonView.Owner.ActorNumber);
+            photonView.RPC("PlayerDieAndMasterPlayerListUpdate", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.GetPlayerNumber());
+
+            if (PhotonNetwork.IsMasterClient)
+                ScoreManager.Instance.MasterCurPlayerStateUpdate();
+        }
+
+        //플레이어가 투표로 죽었을 때 호출할 함수
+        public void PlayerDie(int index)
+        {
+            photonView.RPC("PlayerDieAndMasterPlayerListUpdate", RpcTarget.MasterClient, index);
 
             if (PhotonNetwork.IsMasterClient)
                 ScoreManager.Instance.MasterCurPlayerStateUpdate();
@@ -280,44 +294,32 @@ namespace Saebom
             for (int i = 0; i < playerList.Count; i++)
             {
                 //갱신된 플레이어 전달
-                photonView.RPC("PlayerListSet", RpcTarget.All, i, playerList[i].jobNum, playerList[i].isBird, playerList[i].isSpy);
+                photonView.RPC("PlayerListSet", RpcTarget.All, i, playerList[i].jobNum, playerList[i].isBird, playerList[i].isDie);
             }
         }
 
         [PunRPC]
-        public void PlayerListSet(int i, int jobNum, bool isBird, bool isSpy)
+        public void PlayerListSet(int i, int jobNum, bool isBird, bool isDie)
         {
             Debug.Log("개인 플레이어 세팅");
 
-            if (isBird)
+            if (isDie)
             {
-                PlayerState playerState = birdJobList[jobNum];
-                playerState.isSpy = isSpy;
-                playerList[i] = playerState;
-            }
-            else
-            {
-                PlayerState playerState = mouseJobList[jobNum];
-                playerState.isSpy = isSpy;
-                playerList[i] = playerState;
+                PlayerState state = playerList[i];
+                state.isDie = true;
+                playerList[i] = state;
             }
 
             if (PhotonNetwork.LocalPlayer.GetPlayerNumber() != i)
                 return;
 
 
-            if (isBird)
-            {
-                myPlayerState = birdJobList[jobNum];
-                myPlayerState.isSpy = isSpy;
-            }
-            else
-            {
-                myPlayerState = mouseJobList[jobNum];
-                myPlayerState.isSpy = isSpy;
-            }
+            myPlayerState = playerList[i];
 
         }
+
+
+
 
     }
 }
