@@ -4,42 +4,93 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
+using Saebom;
 
-public class CowHouse : MonoBehaviour,IDropHandler
+namespace Youjeong
 {
-    private CowManager manager;
-
-    [SerializeField]
-    private bool isBrid;
-    [SerializeField]
-    private Inventory inventory;
-
-    public bool isBridHouse { get; private set; }
-    private Cow[] Cows;
-    private bool isCow;
-
-    private void Awake()
+    public class CowHouse : MonoBehaviour, IDropHandler
     {
-        isBridHouse = isBrid;
-        Cows = GetComponentsInChildren<Cow>();
-        manager=GetComponentInParent<CowManager>();
-    }
+        private CowManager manager;
 
-    public void OnDrop(PointerEventData eventData)
-    {
-        isCow = inventory.isItemSet("Cow");
-        if (!isCow)
-            return;
-        for(int i=0;i<Cows.Length;i++) 
+        [SerializeField]
+        private bool isBrid;
+        [SerializeField]
+        private Inventory inventory;
+        [SerializeField]
+        private Button plusButton;
+
+        public bool isBirdHouse { get; private set; }
+        public bool isClicked { get; private set; } = false;
+
+        public Cow[] Cows;
+        private bool isCow;
+
+        private void Awake()
         {
-            if (!Cows[i].gameObject.activeSelf)
+            isBirdHouse = isBrid;
+            manager = GetComponentInParent<CowManager>();
+        }
+
+        private void OnEnable()
+        {
+            if (isBirdHouse == TimeManager.Instance.isCurNight)
+                plusButton.gameObject.SetActive(true);
+            else 
+                plusButton.gameObject.SetActive(false);
+            manager.GetCowActive(isBirdHouse, Cows);
+        }
+
+        private void OnDisable()
+        {
+            if(isClicked && manager.GetCowCount(isBirdHouse)==1)
             {
-                Cows[i].gameObject.SetActive(true);
-                manager.AddCow(isBridHouse);
-                inventory.DeleteItem();
-                return;
+                isClicked = false;
+                manager.DeleteCow(isBirdHouse);
+                foreach (Cow cow in Cows)
+                    cow.gameObject.SetActive(false);
             }
 
+            manager.SetCowsActive(isBirdHouse, Cows);
+        }
+
+        public void PlusCowButtonClick()
+        {
+            if (manager.GetCowCount(isBirdHouse) != 0 )
+                return;
+            if (inventory.isItemSet("Cow"))
+                return;
+            isClicked = true;
+            OneMoreCow();
+        }
+
+        public void OneMoreCow()
+        {
+            for (int i = 0; i < Cows.Length; i++)
+            {
+                if (!Cows[i].gameObject.activeSelf)
+                {
+                    Cows[i].gameObject.SetActive(true);
+                    manager.AddCow(isBirdHouse);
+                    return;
+                }
+            }
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            if (manager.GetCowCount(isBirdHouse) == 4)
+                return;
+            if (!(isBirdHouse == PlayGameManager.Instance.myPlayerState.isBird) && !PlayGameManager.Instance.myPlayerState.isSpy)
+                return;
+
+            isCow = inventory.isItemSet("Cow");
+            if (!isCow)
+                return;
+            inventory.DeleteItem();
+            OneMoreCow();
         }
     }
 }
+
+
