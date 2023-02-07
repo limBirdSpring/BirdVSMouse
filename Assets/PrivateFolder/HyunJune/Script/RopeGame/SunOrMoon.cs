@@ -33,6 +33,13 @@ public class SunOrMoon : MonoBehaviour
     [SerializeField]
     private Identity identity;
 
+    private bool missionSuccess = false;
+
+    public bool MissionSuccess
+    {
+        get { return missionSuccess; }
+    }
+
     private void Start()
     {
         curState = SunOrMoonState.None;
@@ -82,6 +89,7 @@ public class SunOrMoon : MonoBehaviour
             {
                 Debug.Log("固记 己傍");
                 // TODO: 固记 己傍
+                missionSuccess = true;
             }
         }
         
@@ -91,6 +99,7 @@ public class SunOrMoon : MonoBehaviour
             if (identity == Identity.Moon)
             {
                 // TODO: 固记 己傍
+                missionSuccess = true;
             }
         }
     }

@@ -14,6 +14,8 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     [SerializeField]
     private Image dropPoint;
 
+    public Rope rope = null;
+
     private bool itemIsOn;
 
     private void Start()
@@ -29,12 +31,31 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         if (rope.isRotted != true)
         {
             goodRope.gameObject.SetActive(true);
+            this.rope = rope;
             itemIsOn = true;
         }
         else
         {
             badRope.gameObject.SetActive(true);
+            this.rope = rope;
             itemIsOn = true;
+        }
+    }
+
+    public void UpdateUI()
+    {
+        if (rope == null)
+            return;
+
+        // ¾È½â¾úÀ¸¸é
+        if (rope.isRotted != true)
+        {
+            goodRope.gameObject.SetActive(true);
+        }
+        // ½â¾úÀ¸¸é
+        else
+        {
+            badRope.gameObject.SetActive(true);
         }
     }
 
@@ -43,6 +64,7 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         goodRope.gameObject.SetActive(false);
         badRope.gameObject.SetActive(false);
         itemIsOn = false;
+        rope = null;
     }
 
     public void OnDrop(PointerEventData eventData)
