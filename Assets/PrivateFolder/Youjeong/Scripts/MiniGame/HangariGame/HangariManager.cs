@@ -25,10 +25,10 @@ namespace Youjeong
 
         public override bool GetScore()
         {
-           /* if (!TimeManager.Instance.isCurNight && MissionButton.Instance.birdMission.water == waterAmount)
+            if (!TimeManager.Instance.isCurNight && MissionButton.Instance.birdMission.water == waterAmount)
                 return true;
             else if (TimeManager.Instance.isCurNight && MissionButton.Instance.mouseMission.water == waterAmount)
-                return true;*/
+                return true;
 
             return false;
 
@@ -41,12 +41,12 @@ namespace Youjeong
 
         public override void PlayerUpdateCurMission()
         {
-            photon.RPC("MissionUpdate", RpcTarget.All, waterAmount);
+            photon.RPC("HangariMissionUpdate", RpcTarget.All, waterAmount);
             
         }
 
         [PunRPC]
-        public void MissionUpdate(float water)
+        public void HangariMissionUpdate(float water)
         {
             waterAmount = water;
         }

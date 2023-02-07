@@ -35,7 +35,7 @@ namespace Youjeong
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if(!isOutHangari&& PlayGameManager.Instance.myPlayerState.isSpy&&manager.waterAmount>0)
+            if(!isOutHangari&&manager.waterAmount>0)
             {
                 isOutHangari = true;
                 game.MinusWater();
@@ -47,7 +47,7 @@ namespace Youjeong
 
         public void OutFrog()
         {
-            rectTransform.position += new Vector3(200, 0, 0);
+            rectTransform.position += new Vector3(600, 0, 0);
         }
 
         public void InFrog()
