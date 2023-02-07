@@ -1,5 +1,7 @@
+using SoYoon;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
@@ -62,6 +64,9 @@ public class FieldOfView : MonoBehaviour
         foreach (Transform child in target.GetComponentsInChildren<Transform>())
         {
             child.gameObject.layer = layer;
+
+            if (child.gameObject.name == "KillRangeCollider")
+                child.gameObject.layer = LayerMask.NameToLayer("KillRange");
         }
     }
 }

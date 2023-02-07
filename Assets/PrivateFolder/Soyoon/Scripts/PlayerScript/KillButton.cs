@@ -8,6 +8,7 @@ namespace SoYoon
 {
     public class KillButton : MonoBehaviour
     {
+        [HideInInspector]
         public GameObject target;
 
         public void OnClickedKillButton()
