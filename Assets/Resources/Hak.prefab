@@ -145,10 +145,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  colli: {fileID: 0}
-  death: {fileID: 0}
+  colli: {fileID: 4292339155410868487}
+  death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
-  killRangeCollider: {fileID: 0}
+  killRangeCollider: {fileID: 7687901154876968479}
+  killRangeLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &3234534608523408734
 GameObject:
   m_ObjectHideFlags: 0

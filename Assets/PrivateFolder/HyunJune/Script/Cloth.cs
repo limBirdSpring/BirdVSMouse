@@ -104,15 +104,35 @@ namespace HyunJune
             cloth.color = dicColor[curColor];
         }
 
-        public void CheckSuccess(CurColor color)
+        public override bool GetScore()
         {
-            if (curColor == color)
+            // 지금이 밤 일떄
+            if (TimeManager.Instance.isCurNight)
             {
-                // TODO : 미션 성공
+                if (curColor == MissionButton.Instance.mouseMission.color)
+                {
+                    // 미션 성공
+                    return true;
+                }
+                else
+                {
+                    // 미션 실패
+                    return false;
+                }
             }
+            // 낮일 때
             else
             {
-                // 미션 실패
+                if (curColor == MissionButton.Instance.birdMission.color)
+                {
+                    // 미션 성공
+                    return true;
+                }
+                else
+                {
+                    // 미션 실패
+                    return false;
+                }
             }
         }
 

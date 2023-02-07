@@ -45,9 +45,11 @@ public class InWater : MonoBehaviour
 
     public void ChangeWater(float amount)
     {
-       finalAmount = amount;
-       gapAmount = (finalAmount - curAmount);
-       fillWaterCoroutine = StartCoroutine("FillWater");
+        if (fillWaterCoroutine != null)
+            StopCoroutine(fillWaterCoroutine);
+        finalAmount = amount;
+        gapAmount = (finalAmount - curAmount);
+        fillWaterCoroutine = StartCoroutine("FillWater");
     }
 
     private IEnumerator FillWater()
@@ -55,7 +57,7 @@ public class InWater : MonoBehaviour
         cooltime = 0;
         while (cooltime< game.delay)
         {
-            yield return new WaitForSeconds(0.1f);
+            
             cooltime += 0.1f;
             curAmount += gapAmount * (0.1f / game.delay);
             curAmount = curAmount > 90 ? 90 : curAmount;
@@ -66,6 +68,7 @@ public class InWater : MonoBehaviour
             {
                 SetWaterImage();
             }
+            yield return new WaitForSeconds(0.1f);
         }
     }
     private void SetAmountText()
