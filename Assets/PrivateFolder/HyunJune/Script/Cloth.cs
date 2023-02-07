@@ -104,7 +104,7 @@ namespace HyunJune
             cloth.color = dicColor[curColor];
         }
 
-        public bool CheckSuccess()
+        public override bool GetScore()
         {
             // 지금이 밤 일떄
             if (TimeManager.Instance.isCurNight)
