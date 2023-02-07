@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
 
 public class RopeManager : Mission
 {
@@ -66,7 +67,7 @@ public class RopeManager : Mission
         }
     }
 
-    public bool IsMissionSuccess()
+    public override bool GetScore()
     {
         if (TimeManager.Instance.isCurNight)
         {
