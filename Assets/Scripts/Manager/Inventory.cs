@@ -35,11 +35,11 @@ public class Inventory : SingleTon<Inventory>
     //해당 아이템이 장착되어있는지 확인하기
     public bool isItemSet(string name)
     {
-        foreach (ItemData item in itemDatas)
-        {
-            if (item.itemName == name)
-                return true;
-        }
+        if (curSetItem == null)
+            return false;
+        if (curSetItem.itemName == name)
+            return true;
+
         return false;
     }
 }
