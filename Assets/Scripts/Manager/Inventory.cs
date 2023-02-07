@@ -17,7 +17,7 @@ public class Inventory : SingleTon<Inventory>
     public void SetItem(ItemData item)
     {
         curSetItem = item;
-
+        itemImage.enabled = true;
         UpdateItemGFX();
     }
 
