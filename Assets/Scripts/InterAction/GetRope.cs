@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Saebom;
 
 public class GetRope : MonoBehaviour
 {
@@ -22,27 +23,39 @@ public class GetRope : MonoBehaviour
     public void Get()
     {
         //만약 활동시간이라면
-        int random = Random.Range(0, max);
+        if ((PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight) ||
+            (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight))
+        {
+            int random = Random.Range(0, max);
 
-        if (random ==0)
-            Inventory.Instance.SetItem(normalRope);
-        else
-            Inventory.Instance.SetItem(rotRope);
+            if (random == 0)
+                Inventory.Instance.SetItem(normalRope);
+            else
+                Inventory.Instance.SetItem(rotRope);
+        }
 
         //만약 방해시간이라면
-
-        //내가 스파이일 경우엔 무조건 획득으로 도와줌
-
-        //내가 시민일 경우엔 방해
-        if (max ==2)
-            photonView.RPC("Hindrance", RpcTarget.All);
-
+        else
+        {
+            //내가 스파이일 경우엔 무조건 획득으로 도와줌
+            if (PlayGameManager.Instance.myPlayerState.isSpy)
+            {
+                if (max == 2)
+                    photonView.RPC("Hindrance", RpcTarget.All, 1);
+            }
+            //내가 시민일 경우엔 방해
+            else
+            {
+                if (max == 2)
+                    photonView.RPC("Hindrance", RpcTarget.All, 5);
+            }
+        }
     }
 
     [PunRPC]
-    public void Hindrance()
+    public void Hindrance(int max)
     {
-        max = 5;
+        this.max = max;
 
         StartCoroutine(HindCor());
     }
