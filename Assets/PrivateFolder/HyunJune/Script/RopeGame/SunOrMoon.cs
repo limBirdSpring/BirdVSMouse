@@ -18,7 +18,6 @@ public enum Identity
     Moon
 }
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class SunOrMoon : MonoBehaviour
 {
     [SerializeField]
