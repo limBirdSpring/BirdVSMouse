@@ -164,6 +164,49 @@ namespace Saebom
                 "미션4 : " + "항아리에 물 채우기" + "(" + myMission.water.ToString() + "L)" + "\n" +
                 "미션5 : " + team + "팀 거점에 소 가득 채우기";
         }
+        
+
+        public int MissionResultCheck()
+        {
+            int score=0;
+
+            foreach (Mission mission in missionList)
+            {
+                if (mission.GetScore())
+                    score++;
+            }
+
+            
+
+            return score;
+        }
+
+        public IEnumerator MissionCheckCor()
+        {
+            yield return new WaitForSeconds(1f);
+
+            foreach (Mission mission in missionList)
+            {
+                mission.gameObject.SetActive(true);
+                yield return new WaitForSeconds(1.5f);
+
+                //콤플리트 텍스트 띠우기
+                yield return new WaitForSeconds(1f);
+
+                mission.gameObject.SetActive(false);
+                yield return new WaitForSeconds(1f);
+            }
+           
+
+
+        }
+
+
+
+
+
+
+
 
 
         //======================================================
