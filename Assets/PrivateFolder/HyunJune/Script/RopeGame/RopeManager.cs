@@ -53,4 +53,39 @@ public class RopeManager : Mission
             ropeGames[i].rope = ropes[i].rope;
         }
     }
+
+    public void SunOrMoonStart()
+    {
+        if (TimeManager.Instance.isCurNight)
+        {
+            moon.StartMove();
+        }
+        else
+        {
+            sun.StartMove();
+        }
+    }
+
+    public bool IsMissionSuccess()
+    {
+        if (TimeManager.Instance.isCurNight)
+        {
+            moon.ResetPos();
+
+            if (moon.MissionSuccess)
+                return true;
+            else
+                return false;
+
+        }
+        else
+        {
+            sun.ResetPos();
+
+            if (sun.MissionSuccess)
+                return true;
+            else
+                return false;
+        }
+    }
 }

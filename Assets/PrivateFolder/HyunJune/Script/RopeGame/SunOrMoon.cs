@@ -27,6 +27,8 @@ public class SunOrMoon : MonoBehaviour
 
     [SerializeField]
     private float moveSpeed;
+    [SerializeField]
+    private Transform originalPos;
 
     private SunOrMoonState curState;
 
@@ -69,6 +71,11 @@ public class SunOrMoon : MonoBehaviour
         curState = SunOrMoonState.Down;
     }
 
+    public void ResetPos()
+    {
+        this.gameObject.transform.position = originalPos.transform.position;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name.Equals("Left"))
@@ -91,6 +98,10 @@ public class SunOrMoon : MonoBehaviour
                 // TODO: 固记 己傍
                 missionSuccess = true;
             }
+            else
+            {
+                missionSuccess = false;
+            }
         }
         
         if (collision.gameObject.name.Equals("ArriveMoon"))
@@ -100,6 +111,10 @@ public class SunOrMoon : MonoBehaviour
             {
                 // TODO: 固记 己傍
                 missionSuccess = true;
+            }
+            else
+            {
+                missionSuccess = false;
             }
         }
     }
