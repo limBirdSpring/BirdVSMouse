@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ghost")]
     [SerializeField]
-    private Collider2D colli;
-    [SerializeField]
     private Vector3 namePosition = new Vector3(0, 2, 0);
     private RectTransform nameTransform;
 
@@ -118,7 +116,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Ghost:
                 SetLayer(LayerMask.NameToLayer("Ghost"));
-                colli.enabled = false;
                 SetNamePosition();
                 cullingMask.OnLayerMask(LayerMask.NameToLayer("Ghost"));
                 cullingMask.OnLayerMask(LayerMask.NameToLayer("Shadow"));
