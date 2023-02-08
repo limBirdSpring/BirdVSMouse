@@ -144,18 +144,22 @@ namespace HyunJune
             if (Inventory.Instance.isItemSet("WhiteDye"))
             {
                 AddDye(CurColor.White);
+                Inventory.Instance.DeleteItem();
             }
             else if (Inventory.Instance.isItemSet("RedDye"))
             {
                 AddDye(CurColor.Red);
+                Inventory.Instance.DeleteItem();
             }
             else if (Inventory.Instance.isItemSet("YellowDye"))
             {
                 AddDye(CurColor.Yellow);
+                Inventory.Instance.DeleteItem();
             }
             else if (Inventory.Instance.isItemSet("BlueDye"))
             {
                 AddDye(CurColor.Blue);
+                Inventory.Instance.DeleteItem();
             }
             else
                 return;

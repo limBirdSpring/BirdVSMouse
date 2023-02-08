@@ -5,6 +5,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum RopeState
+{
+    None,
+    Rot,
+    Normal
+}
+
 public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
@@ -14,7 +21,7 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     [SerializeField]
     private Image dropPoint;
 
-    public Rope rope = null;
+    public RopeState curState = RopeState.None;
 
     private bool itemIsOn;
 
@@ -26,29 +33,29 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         itemIsOn = false;
     }
 
-    public void InstallRope(Rope rope)
+    public void InstallRope(RopeState state)
     {
-        if (rope.isRotted != true)
+        if (state == RopeState.Normal)
         {
             goodRope.gameObject.SetActive(true);
-            this.rope = rope;
+            curState = state;
             itemIsOn = true;
         }
         else
         {
             badRope.gameObject.SetActive(true);
-            this.rope = rope;
+            curState = state;
             itemIsOn = true;
         }
     }
 
     public void UpdateUI()
     {
-        if (rope == null)
+        if (curState == RopeState.None)
             return;
 
         // ¾È½â¾úÀ¸¸é
-        if (rope.isRotted != true)
+        if (curState == RopeState.Normal)
         {
             goodRope.gameObject.SetActive(true);
         }
@@ -64,20 +71,25 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         goodRope.gameObject.SetActive(false);
         badRope.gameObject.SetActive(false);
         itemIsOn = false;
-        rope = null;
+        curState = RopeState.None;
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        ItemData itemData = eventData.pointerDrag.GetComponent<ItemData>();
-        if (itemData == null)
+        if (Inventory.Instance.isItemSet("RotRope"))
+        {
+            InstallRope(RopeState.Rot);
+            Inventory.Instance.DeleteItem();
+        }
+        else if (Inventory.Instance.isItemSet("Rope"))
+        {
+            InstallRope(RopeState.Normal);
+            Inventory.Instance.DeleteItem();
+        }
+        else
+        {
             return;
-
-        if (!(itemData is Rope))
-            return;
-
-        Rope rope = itemData as Rope;
-        InstallRope(rope);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -57,7 +57,7 @@ public class RopeManager : Mission
 
         for (int i = 0; i < ropeGames.Length; i++)
         {
-            ropeGames[i].rope = ropes[i].rope;
+            ropeGames[i].curState = ropes[i].curState;
         }
     }
 
