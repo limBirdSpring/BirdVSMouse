@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Saebom;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,17 +15,25 @@ public class MissionOn : MonoBehaviourPun
 
     public void MissionWindowOn()
     {
-        missionWindow.SetActive(true);
-        gameObject.GetComponent<InterActionAdapter>().isActive = true;
-        photonView.RPC("MissionWindowActiveUpdate", RpcTarget.All, true);
+        if ((PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight) ||
+           (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight))
+        {
+            missionWindow.SetActive(true);
+            gameObject.GetComponent<InterActionAdapter>().isActive = true;
+            photonView.RPC("MissionWindowActiveUpdate", RpcTarget.All, true);
+        }
 
     }
 
     public void MissionWindowOff()
     {
-        missionWindow.SetActive(false);
-        gameObject.GetComponent<InterActionAdapter>().isActive = false;
-        photonView.RPC("MissionWindowActiveUpdate", RpcTarget.All, false);
+        if ((PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight) ||
+            (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight))
+        {
+            missionWindow.SetActive(false);
+            gameObject.GetComponent<InterActionAdapter>().isActive = false;
+            photonView.RPC("MissionWindowActiveUpdate", RpcTarget.All, false);
+        }
     }
 
     [PunRPC]

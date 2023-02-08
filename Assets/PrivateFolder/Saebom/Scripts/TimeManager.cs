@@ -139,7 +139,7 @@ namespace Saebom
 
             TimeSlideUpdate();
 
-            if (curTime < halfTime)
+            if (curTime <= halfTime)
                 isCurNight = false;
             else
                 isCurNight = true;

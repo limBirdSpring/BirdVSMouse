@@ -14,7 +14,7 @@ public class Nulttuigi : MonoBehaviourPun
 
     public void Jump()
     {
-        missionWindow.SetActive(true);
+         missionWindow.SetActive(true);
         gameObject.GetComponent<InterActionAdapter>().isActive = true;
         photonView.RPC("NulttuigiActiveUpdate", RpcTarget.All, true);
         cam.Priority = 30;
