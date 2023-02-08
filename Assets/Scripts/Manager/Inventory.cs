@@ -11,6 +11,7 @@ public class Inventory : SingleTon<Inventory>
     [SerializeField]
     private List<ItemData>itemDatas = new List<ItemData>();
 
+    [SerializeField]
     private ItemData curSetItem;
 
 
@@ -37,7 +38,7 @@ public class Inventory : SingleTon<Inventory>
     {
         if (curSetItem == null)
             return false;
-        if (curSetItem.itemName == name)
+        else if (curSetItem.itemName == name)
             return true;
 
         return false;
