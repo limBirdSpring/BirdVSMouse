@@ -1,10 +1,11 @@
+using Photon.Pun;
 using SoYoon;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FieldOfView : MonoBehaviour
+public class FieldOfView : MonoBehaviourPun
 {
     [SerializeField]
     private LayerMask wallLayer;
@@ -26,7 +27,8 @@ public class FieldOfView : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        FindTarget();
+        if(photonView.IsMine)
+            FindTarget();
     }
 
     private void FindTarget()
@@ -38,10 +40,13 @@ public class FieldOfView : MonoBehaviour
             Vector3 dirToTarget = (targets[i].transform.position - transform.position).normalized;
             float disToTarget = Vector3.Distance(transform.position, targets[i].transform.position);
 
-            if(Physics2D.Raycast(transform.position, dirToTarget, disToTarget, wallLayer))
+            if (Physics2D.Raycast(transform.position, dirToTarget, disToTarget, wallLayer))
             {
                 if (targets[i].gameObject == this.gameObject)
+                {
+                    SetTargetLayer(targets[i].gameObject, targets[i].gameObject.layer);
                     return;
+                }
                 SetTargetLayer(targets[i].gameObject, shadowLayer);
             }
             else
@@ -58,15 +63,28 @@ public class FieldOfView : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, size);
     }
 
-    private void SetTargetLayer(GameObject target,LayerMask layer)
+    private void SetTargetLayer(GameObject target, LayerMask layer)
     {
         target.layer = layer;
-        foreach (Transform child in target.GetComponentsInChildren<Transform>())
+        foreach (Transform child in target.GetComponentsInChildren<Transform>(true))
         {
             child.gameObject.layer = layer;
 
             if (child.gameObject.name == "KillRangeCollider")
+            {
                 child.gameObject.layer = LayerMask.NameToLayer("KillRange");
+
+                if (layer == shadowLayer) // 시야에 보이지 않을 경우 killRange꺼주기
+                {
+                    //Debug.Log("kill range off");
+                    child.gameObject.SetActive(false);
+                }
+                else
+                {
+                    //Debug.Log("kill range on");
+                    child.gameObject.SetActive(true);
+                }
+            }
         }
     }
 }

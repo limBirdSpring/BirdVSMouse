@@ -38,27 +38,11 @@ namespace SoYoon
             Instance = this;
             curBakPlayerList = new LinkedList<Player>();
         }
-
         private void Start()
         {
             curBakProgress = 0;
             progressText.text = "0 %";
-            //if (!PhotonNetwork.InRoom)
-            //{
-            //    PhotonNetwork.ConnectUsingSettings();
-            //}
         }
-        //public override void OnConnectedToMaster()
-        //{
-        //    Debug.Log("Connected to Master");
-        //    PhotonNetwork.JoinOrCreateRoom("TestRoom", new RoomOptions() { MaxPlayers = 12 }, null);
-        //}
-        //
-        //public override void OnJoinedRoom()
-        //{
-        //    Debug.Log("Joined room");
-        //    CreatePlayer(); // 임시
-        //}
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
         {
@@ -99,20 +83,10 @@ namespace SoYoon
             }
         }
 
-        //private void CreatePlayer()
-        //{
-        //    // 임시
-        //    PhotonNetwork.Instantiate("Player", new Vector3(40, 30, 0), Quaternion.identity);
-        //}
-
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F1))
-                curBakProgress = 99; // 나중에 없애기
-            if (Input.GetKeyDown(KeyCode.F2))
-                SceneManager.LoadScene("MainMapTestScene"); // 나중에 없애기
-            if (Input.GetKeyDown(KeyCode.F3)) // 나중에 없애기
-                BakMissionResetCalled(); // 나중에 리셋할 경우 불릴 함수
+            //if (Input.GetKeyDown(KeyCode.F3)) // 나중에 없애기
+            //    BakMissionResetCalled(); // 나중에 리셋할 경우 불릴 함수
             if (curBakProgress >= 100)
                 return;
             if (curBakPlayerCount == 0)

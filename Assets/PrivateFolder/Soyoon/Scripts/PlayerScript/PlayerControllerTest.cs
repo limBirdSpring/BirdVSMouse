@@ -1,5 +1,6 @@
 using Cinemachine;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
 //public enum PlayerState { Active, Inactive, Ghost }
@@ -17,8 +18,6 @@ namespace SoYoon
         private float moveSpeed = 10;
 
         [Header("Ghost")]
-        [SerializeField]
-        private Collider2D colli;
         [SerializeField]
         private GameObject death;
         [SerializeField]
@@ -53,7 +52,8 @@ namespace SoYoon
         private void Start()
         {
             if(photonView.IsMine)
-            {
+            {                
+                // ScoreManager.Instance.player = this;
                 CinemachineVirtualCamera playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
                 playerCam.Follow = this.transform;
                 playerCam.LookAt = this.transform;
@@ -95,12 +95,13 @@ namespace SoYoon
             anim.SetFloat("Speed", rigid.velocity.sqrMagnitude);
         }
 
+        [PunRPC]
         public void Die()
         {
-            Instantiate(death, transform.position, death.transform.rotation);
+            Instantiate(death, transform.position, Quaternion.identity);
             anim.SetTrigger("isDeath");
             SetPlayerState(PlayerState.Ghost);
-            Saebom.PlayGameManager.Instance.PlayerDie();
+            Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
         }
 
         private void SetNamePosition()
@@ -130,23 +131,31 @@ namespace SoYoon
             {
                 case PlayerState.Active:
                     SetLayer(LayerMask.NameToLayer("Player"));
-                    cullingMask.OffLayerMask(LayerMask.NameToLayer("InActive"));
-                    cullingMask.OffLayerMask(LayerMask.NameToLayer("Ghost"));
-                    cullingMask.OffLayerMask(LayerMask.NameToLayer("Shadow"));
+                    if (photonView.IsMine)
+                    {
+                        cullingMask.OffLayerMask(LayerMask.NameToLayer("InActive"));
+                        cullingMask.OffLayerMask(LayerMask.NameToLayer("Ghost"));
+                        cullingMask.OffLayerMask(LayerMask.NameToLayer("Shadow"));
+                    }
                     SetKillRange();
                     break;
                 case PlayerState.Inactive:
-                    SetLayer(LayerMask.NameToLayer("InActive"));
-                    cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
+                    if (photonView.IsMine)
+                    {
+                        SetLayer(LayerMask.NameToLayer("InActive"));
+                        cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
+                    }
                     SetKillRange();
                     break;
                 case PlayerState.Ghost:
                     SetLayer(LayerMask.NameToLayer("Ghost"));
-                    colli.enabled = false;
                     SetNamePosition();
-                    cullingMask.OnLayerMask(LayerMask.NameToLayer("Ghost"));
-                    cullingMask.OnLayerMask(LayerMask.NameToLayer("Shadow"));
-                    cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
+                    if (photonView.IsMine)
+                    {
+                        cullingMask.OnLayerMask(LayerMask.NameToLayer("Ghost"));
+                        cullingMask.OnLayerMask(LayerMask.NameToLayer("Shadow"));
+                        cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
+                    }
                     SetKillRange();
                     break;
             }

@@ -157,7 +157,7 @@ namespace Saebom
             for (int i = 0; i < teamSum*2; i++)
             {
                 //¼ÅÇÃ
-                int random = Random.Range(i, playerList.Count);
+                int random = Random.Range(0, playerList.Count);
                 PlayerState player = playerList[random];
                 playerList[random] = playerList[i];
                 playerList[i] = player;
