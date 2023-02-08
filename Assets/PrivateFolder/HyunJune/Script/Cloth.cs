@@ -33,11 +33,7 @@ namespace HyunJune
         {
             cloth = GetComponent<Image>();
             dicColor = new Dictionary<CurColor, Color32>();
-        }
-
-        private void Start()
-        {
-            curColor = CurColor.None;       
+            curColor = CurColor.None;
             Init();
             cloth.color = dicColor[curColor];
         }
@@ -144,16 +140,32 @@ namespace HyunJune
 
         public void OnDrop(PointerEventData eventData)
         {
-            ItemData item = eventData.pointerDrag.GetComponent<ItemData>();
-            if (item == null)
+            if (Inventory.Instance.isItemSet("WhiteDye"))
+            {
+                Dye white = new Dye();
+                white.color = CurColor.White;
+                AddDye(white);
+            }
+            else if (Inventory.Instance.isItemSet("RedDye"))
+            {
+                Dye red = new Dye();
+                red.color = CurColor.Red;
+                AddDye(red);
+            }
+            else if (Inventory.Instance.isItemSet("YellowDye"))
+            {
+                Dye yellow = new Dye();
+                yellow.color = CurColor.Yellow;
+                AddDye(yellow);
+            }
+            else if (Inventory.Instance.isItemSet("BlueDye"))
+            {
+                Dye blue = new Dye();
+                blue.color = CurColor.Blue;
+                AddDye(blue);
+            }
+            else
                 return;
-
-            if (!(item.itemName == "WhiteDye" || item.itemName == "RedDye" ||
-                item.itemName == "BlueDye" || item.itemName == "YellowDye"))
-                return;
-
-            Dye dye = item as Dye;
-            AddDye(dye);              
         }
     }    
 }
