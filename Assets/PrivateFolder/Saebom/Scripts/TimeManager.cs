@@ -202,7 +202,9 @@ namespace Saebom
             redScreenUi.gameObject.SetActive(false);
             TimeSlideUpdate();
             FilterUpdate(1f);
-            
+
+
+
 
         }
 
@@ -211,6 +213,13 @@ namespace Saebom
             TimeOff();
 
             //만약에 살아있는 캐릭터중 거점 밖에 있는 캐릭터가 있으면 강제 사망함
+            //만약 강제로 활동시간이 끝났다면 캐릭터 거점으로 강제이동
+            if (!isHouseTime)
+                PlayGameManager.Instance.PlayerGoHomeNow();
+            else
+            {
+                PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>(); //현재 거점에 있는지 확인 - 함수 추가
+            }
 
             //2초 뒤 점수 확인 출력
             ScoreManager.Instance.CallScoreResultWindow();

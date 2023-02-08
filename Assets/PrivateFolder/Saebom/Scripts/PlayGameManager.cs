@@ -334,6 +334,19 @@ namespace Saebom
         }
 
 
+        public void PlayerGoHomeNow()
+        {
+            if (myPlayerState.isBird)
+            {
+                myPlayerState.playerPrefab.gameObject.transform.position = birdHouse.position;
+            }
+            else
+            {
+                myPlayerState.playerPrefab.gameObject.transform.position = mouseHouse.position;
+            }
+        }
+
+
 
 
     }
