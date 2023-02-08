@@ -21,7 +21,7 @@ public struct UISound
     public AudioClip clip;
 }
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : SingleTon<SoundManager>
 {
     private AudioSource audio;
 

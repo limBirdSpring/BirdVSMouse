@@ -164,6 +164,7 @@ namespace Saebom
         private void TimeOn()
         {
             //시작 텍스트 출력
+            SoundManager.Instance.PlayUISound(UISFXName.Start);
             startText.SetActive(true);
 
             if (curTime == 0)
