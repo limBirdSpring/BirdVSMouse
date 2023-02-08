@@ -1,5 +1,6 @@
 using Cinemachine;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
 //public enum PlayerState { Active, Inactive, Ghost }
@@ -100,7 +101,7 @@ namespace SoYoon
             Instantiate(death, transform.position, Quaternion.identity);
             anim.SetTrigger("isDeath");
             SetPlayerState(PlayerState.Ghost);
-            Saebom.PlayGameManager.Instance.PlayerDie();
+            Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
         }
 
         private void SetNamePosition()
