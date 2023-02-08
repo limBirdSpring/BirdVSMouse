@@ -16,8 +16,6 @@ namespace Youjeong
         [SerializeField]
         private bool isBrid;
         [SerializeField]
-        private Inventory inventory;
-        [SerializeField]
         private Button plusButton;
 
         public bool isBirdHouse { get; private set; }
@@ -58,7 +56,7 @@ namespace Youjeong
         {
             if (manager.GetCowCount(isBirdHouse) != 0 )
                 return;
-            if (inventory.isItemSet("Cow"))
+            if (Inventory.Instance.isItemSet("Cow"))
                 return;
             isClicked = true;
             OneMoreCow();
@@ -84,10 +82,10 @@ namespace Youjeong
             if (!(isBirdHouse == PlayGameManager.Instance.myPlayerState.isBird) && !PlayGameManager.Instance.myPlayerState.isSpy)
                 return;
 
-            isCow = inventory.isItemSet("Cow");
+            isCow = Inventory.Instance.isItemSet("Cow");
             if (!isCow)
                 return;
-            inventory.DeleteItem();
+            Inventory.Instance.DeleteItem();
             OneMoreCow();
         }
     }
