@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/PrivateFolder/Saebom/Scene/GameScene.unity
     guid: 3210e95c147569e4c98323885663c0c2
+  - enabled: 0
+    path: Assets/PrivateFolder/Soyoon/Scene/GameScene.unity
+    guid: 7dc9e87a4c7b63a448998bde12a4dc0e
   m_configObjects: {}

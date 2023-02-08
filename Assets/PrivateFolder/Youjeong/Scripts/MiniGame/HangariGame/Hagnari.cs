@@ -10,17 +10,15 @@ namespace Youjeong
         [SerializeField]
         private HagnariGame game;
 
-        [SerializeField]
-        private Inventory inventory;
-
+       
         private bool isWater;
 
         public void OnDrop(PointerEventData eventData)
         {
-            isWater = inventory.isItemSet("Water");
+            isWater = Inventory.Instance.isItemSet("Water");
             if (!isWater)
                 return;
-            inventory.DeleteItem();
+            Inventory.Instance.DeleteItem();
             game.PlusWater();
         }
     }

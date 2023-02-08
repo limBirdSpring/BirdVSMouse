@@ -35,6 +35,9 @@ namespace SoYoon
                 whiteBar.color = Color.clear;
                 redBar.color = Color.white;
             }
+            whiteBar.fillAmount = 0;
+            redBar.fillAmount = 0;
+            miniBak.position = bakStartPos.position;
         }
 
         public void ChangedPlayerCount()
@@ -58,6 +61,24 @@ namespace SoYoon
             float progressToMiniBakPos = (BakMissionManager.Instance.CurBakProgress * 0.01f) * distanceDiff;
             miniBak.Translate(progressToMiniBakPos - prevBakProgress, 0, 0);
             prevBakProgress = progressToMiniBakPos;
+        }
+
+        public void BakMissionReset()
+        {
+            prevBakProgress = 0;
+            if (BakMissionManager.Instance.CurBakPlayerCount <= 1)
+            {
+                whiteBar.color = Color.white;
+                redBar.color = Color.clear;
+            }
+            else
+            {
+                whiteBar.color = Color.clear;
+                redBar.color = Color.white;
+            }
+            whiteBar.fillAmount = 0;
+            redBar.fillAmount = 0;
+            miniBak.position = bakStartPos.position;
         }
     }
 }

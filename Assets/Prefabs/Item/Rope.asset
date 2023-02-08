@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77a0c94dcc345ea4c96c8603c80451e4, type: 3}
+  m_Script: {fileID: 11500000, guid: e35b079940acf5a4db0cc0ba0c85d620, type: 3}
   m_Name: Rope
   m_EditorClassIdentifier: 
   itemName: Rope
   itemIcon: {fileID: -246614671, guid: 424bd9508ecb64345819dd004931d2e3, type: 3}
+  isRotted: 0

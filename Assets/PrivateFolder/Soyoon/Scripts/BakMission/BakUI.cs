@@ -22,5 +22,11 @@ namespace SoYoon
             openedBak.SetActive(true);
             closedBak.SetActive(false);
         }
+
+        public void BakMissionReset()
+        {
+            openedBak.SetActive(false);
+            closedBak.SetActive(true);
+        }
     }
 }
