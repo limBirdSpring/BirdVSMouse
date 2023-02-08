@@ -42,6 +42,12 @@ namespace HyunJune
             cloth.color = dicColor[curColor];
         }
 
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            GraphicUpdate();
+        }
+
         public override void GraphicUpdate()
         {
             cloth.color = dicColor[curColor];

@@ -23,6 +23,12 @@ public class RopeManager : Mission
             ropeGames[i].RopeReset();
         }
     }
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        GraphicUpdate();
+    }
+
     public override void GraphicUpdate()
     {
         photonView.RPC("LoadUIRPC", RpcTarget.All, null);
