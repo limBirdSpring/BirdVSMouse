@@ -209,6 +209,7 @@ namespace Saebom
             yield return new WaitForSeconds(3f);
             MakePlayer();
             readyScene.SetActive(false);
+            TimeManager.Instance.TimeOn();
         }
 
         //본인 캐릭터 받아와서 초기화

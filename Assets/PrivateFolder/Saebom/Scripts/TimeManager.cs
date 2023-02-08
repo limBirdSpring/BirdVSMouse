@@ -161,7 +161,7 @@ namespace Saebom
         }
 
 
-        private void TimeOn()
+        public void TimeOn()
         {
             //시작 텍스트 출력
             SoundManager.Instance.PlayUISound(UISFXName.Start);
