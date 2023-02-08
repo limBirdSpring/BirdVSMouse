@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using Saebom;
 using System.Collections.Generic;
 using TMPro;
@@ -80,6 +81,14 @@ namespace SoYoon
                     bakMission.UpdatePercentage();
                 }
             }
+
+            if (changedProps["BakMissionReset"] != null)
+            {
+                if ((bool)changedProps["BakMissionReset"])
+                {
+                    BakMissionReset();
+                }
+            }
         }
 
         //private void CreatePlayer()
@@ -94,12 +103,18 @@ namespace SoYoon
                 curBakProgress = 99; // 나중에 없애기
             if (Input.GetKeyDown(KeyCode.F2))
                 SceneManager.LoadScene("MainMapTestScene"); // 나중에 없애기
+            if(Input.GetKeyDown(KeyCode.F3)) // 나중에 없애기
+            {
+                HashTable props = new HashTable();
+                props.Add("BakMissionReset", true);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            }
             if (curBakProgress >= 100)
                 return;
             if (curBakPlayerCount == 0)
                 return;
 
-            foreach(Player player in curBakPlayerList)
+            foreach (Player player in curBakPlayerList)
             {
                 object isSawing;
                 if(!player.CustomProperties.TryGetValue("IsSawing", out isSawing))
@@ -127,17 +142,36 @@ namespace SoYoon
                 bakUI.BakMissionComplete();
                 BakMissionPanel.BakMissionComplete();
                 bakMission.BakMissionComplete();
-                progressText.text = string.Format("100 %", (int)curBakProgress);
+                progressText.text = "100 %";
             }
             Debug.Log(CurBakProgress);
         }
 
         public override bool GetScore()
         {
+            // 최종으로 확인할 경우에는 모든 플레이어의 GetScore함수를 호출한 뒤
+            // 한 명이라도 true를 반환하면 성공으로 처리
             if (curBakProgress >= 100)
                 return true;
             else
                 return false;
+        }
+
+        public void BakMissionReset()
+        {
+            // 프로퍼티를 처음 상태로 초기화
+            HashTable props = new HashTable();
+            props.Add("IsBakMission", false);
+            props.Add("IsSawing", false);
+            props.Add("BakMissionReset", false);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            curBakProgress = 0;
+            progressText.text = "0 %";
+            bakUI.BakMissionReset();
+            barUI.BakMissionReset();
+            BakMissionPanel.BakMissionReset();
+            bakMission.BakMissionReset();
         }
     }
 }
