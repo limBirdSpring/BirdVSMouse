@@ -139,6 +139,9 @@ namespace HyunJune
         public void OnDrop(PointerEventData eventData)
         {
             ItemData item = eventData.pointerDrag.GetComponent<ItemData>();
+            if (item == null)
+                return;
+
             if (!(item.itemName == "WhiteDye" || item.itemName == "RedDye" ||
                 item.itemName == "BlueDye" || item.itemName == "YellowDye"))
                 return;
