@@ -148,10 +148,6 @@ MonoBehaviour:
   colli: {fileID: 4292339155410868487}
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
-  killRangeCollider: {fileID: 4503493717775846611}
-  killRangeLayer:
-    serializedVersion: 2
-    m_Bits: 2048
 --- !u!1 &3234534608523408734
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,6 +278,26 @@ PrefabInstance:
     - target: {fileID: 3266022488896787551, guid: e998c74434ab9da41a2c71cb3712ddc2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143987291827473977, guid: e998c74434ab9da41a2c71cb3712ddc2, type: 3}
+      propertyPath: m_SynchronizeLayers.Array.data[0].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143987291827473977, guid: e998c74434ab9da41a2c71cb3712ddc2, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143987291827473977, guid: e998c74434ab9da41a2c71cb3712ddc2, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143987291827473977, guid: e998c74434ab9da41a2c71cb3712ddc2, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[2].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8143987291827473977, guid: e998c74434ab9da41a2c71cb3712ddc2, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].SynchronizeType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9037136643424543795, guid: e998c74434ab9da41a2c71cb3712ddc2, type: 3}
       propertyPath: m_Name

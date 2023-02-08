@@ -1,10 +1,12 @@
 using Photon.Pun;
+using SoYoon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 
@@ -22,6 +24,8 @@ namespace Saebom
 
     public class ScoreManager : SingleTon<ScoreManager>
     {
+        [HideInInspector]
+        public PlayerControllerTest player;
 
         //점수합산 구현, 각 팀별로 점수 및 스파이 죽음여부, 남은사람들 수 저장
 
@@ -102,22 +106,17 @@ namespace Saebom
         {
             yield return new WaitForSeconds(2f);
 
-            //모시옷 점수 출력
-
-            //항아리 점수 출력
-
-            //외양간 점수 출력
-
-            //동아줄 점수 출력
-
-            //박 점수 출력
+            
 
             StartCoroutine(MissionButton.Instance.MissionCheckCor());
 
+        }
+
+        public IEnumerator ScoreResultCalculate()
+        {
+            yield return null;
 
             int score = MissionButton.Instance.MissionResultCheck();
-
-            yield return new WaitForSeconds(2f);
 
             //점수 계산
             if (!TimeManager.Instance.isCurNight)
@@ -129,6 +128,15 @@ namespace Saebom
             if (PhotonNetwork.IsMasterClient)
                 photonView.RPC("PrivatePlayerStateUpdate", RpcTarget.All, birdScore, mouseScore, birdCount, mouseCount, isBirdSpyDie, isMouseSpyDie);
 
+
+            //캐릭터 거점으로 강제이동
+            if (PlayGameManager.Instance.myPlayerState.isBird)
+                player.gameObject.transform.position = PlayGameManager.Instance.birdHouse.position;
+            else
+                player.gameObject.transform.position = PlayGameManager.Instance.mouseHouse.position;
+
+
+            
             //스코어 UI 변경
             //점수 갱신 위에 효과 애니메이션 및 효과음 추가
 
@@ -141,6 +149,9 @@ namespace Saebom
             photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
 
 
+            Inventory.Instance.DeleteItem();//인벤토리 비우기
+            //박 100%일경우 0%로 초기화
+            //시체없애기
         }
 
         [PunRPC]
