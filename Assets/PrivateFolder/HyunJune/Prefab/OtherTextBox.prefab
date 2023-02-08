@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5706048456570082791}
   - component: {fileID: 2734734025589438301}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,6 +144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4471308135707918489}
+  - component: {fileID: 2437702017464955858}
   m_Layer: 5
   m_Name: OtherTextBox
   m_TagString: Untagged
@@ -174,6 +175,21 @@ RectTransform:
   m_AnchoredPosition: {x: 1020, y: -1185}
   m_SizeDelta: {x: 1875, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2437702017464955858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060394039567188406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37b272bb6dc2c3146a2c1741e6fe2a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerIcon: {fileID: 108731659773351072}
+  playerName: {fileID: 2734734025589438301}
+  playerMessage: {fileID: 8068005816599796038}
 --- !u!1 &4959651140077441875
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +202,7 @@ GameObject:
   - component: {fileID: 531299618938620130}
   - component: {fileID: 8068005816599796038}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
