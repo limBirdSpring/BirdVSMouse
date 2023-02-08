@@ -58,6 +58,10 @@ public class VoteManager : MonoBehaviourPun
     [SerializeField]
     private Transform chatContent;
 
+    [Header("VoteToDeathWindow")]
+    [SerializeField]
+    private VoteToDeath voteToDeathWindow;
+
     public bool deadBodyFinder = false;
     private bool voteComplete = false;
     private VoteRole myRole;
@@ -363,14 +367,32 @@ public class VoteManager : MonoBehaviourPun
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber)
             controller.Die();
+        
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            if (player.Value.ActorNumber != actorNumber)
+                continue;
 
-        // ªÁ∏¡ æ¿?
+            voteToDeathWindow.Init();
+            voteToDeathWindow.Setting(PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()]);
+        }
+
+
+        voteToDeathWindow.gameObject.SetActive(true);
+        StartCoroutine(VotingEnd());
+    }
+
+    public IEnumerator VotingEnd()
+    {
+        yield return new WaitForSeconds(10);
+        photonView.RPC("VotingEndRPC", RpcTarget.All, null);
     }
 
     [PunRPC]
-    private void VotingEnd()
+    private void VotingEndRPC()
     {
         // ≈ı«• ¡æ∑·
+        voteToDeathWindow.Init();
         deadBodyFinder = false;
         voteComplete = false;
         voteWindow.SetActive(false);
