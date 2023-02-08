@@ -254,15 +254,30 @@ namespace Saebom
         //플레이어 생성 : 스파이일 경우 킬버튼 활성화
         private void MakePlayer()
         {
+            GameObject player;
+
             if (myPlayerState.isBird)
-                PhotonNetwork.Instantiate(myPlayerState.playerPrefab.name, birdHouse.position, Quaternion.identity);
+                player = PhotonNetwork.Instantiate(myPlayerState.playerPrefab.name, birdHouse.position, Quaternion.identity);
             else
-                PhotonNetwork.Instantiate(myPlayerState.playerPrefab.name, mouseHouse.position, Quaternion.identity);
+                player = PhotonNetwork.Instantiate(myPlayerState.playerPrefab.name, mouseHouse.position, Quaternion.identity);
 
             if (myPlayerState.isSpy)
                 killButtonGray.SetActive(true);
+
+            myPlayerState.playerPrefab = player;
+
+            photonView.RPC("MakePlayerSaveToPlayerList", RpcTarget.All, player, PhotonNetwork.LocalPlayer.GetPlayerNumber());
+            
         }
 
+        //생성된 플레이어를 플레이어리스트에 저장
+        [PunRPC]
+        private void MakePlayerSaveToPlayerList(GameObject player, int index)
+        {
+            PlayerState state = playerList[index];
+            state.playerPrefab = player;
+            playerList[index] = state;
+        }
 
 
 
@@ -316,6 +331,19 @@ namespace Saebom
 
             myPlayerState = playerList[i];
 
+        }
+
+
+        public void PlayerGoHomeNow()
+        {
+            if (myPlayerState.isBird)
+            {
+                myPlayerState.playerPrefab.gameObject.transform.position = birdHouse.position;
+            }
+            else
+            {
+                myPlayerState.playerPrefab.gameObject.transform.position = mouseHouse.position;
+            }
         }
 
 
