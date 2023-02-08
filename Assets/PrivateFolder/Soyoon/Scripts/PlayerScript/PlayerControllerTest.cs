@@ -53,7 +53,8 @@ namespace SoYoon
         private void Start()
         {
             if(photonView.IsMine)
-            {
+            {                
+                // ScoreManager.Instance.player = this;
                 CinemachineVirtualCamera playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
                 playerCam.Follow = this.transform;
                 playerCam.LookAt = this.transform;
