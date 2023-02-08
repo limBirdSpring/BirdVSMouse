@@ -139,7 +139,7 @@ namespace Saebom
 
             TimeSlideUpdate();
 
-            if (curTime < halfTime)
+            if (curTime <= halfTime)
                 isCurNight = false;
             else
                 isCurNight = true;
@@ -161,9 +161,10 @@ namespace Saebom
         }
 
 
-        private void TimeOn()
+        public void TimeOn()
         {
             //시작 텍스트 출력
+            SoundManager.Instance.PlayUISound(UISFXName.Start);
             startText.SetActive(true);
 
             if (curTime == 0)

@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using Saebom;
 using System.Collections;
@@ -45,8 +46,8 @@ public class PlayerVoteEntry : MonoBehaviourPun
     public void Initialized(Photon.Realtime.Player player)
     {
         actorNumber = player.ActorNumber;
-        playerName.text = PlayGameManager.Instance.playerList[ActorNumber].name;
-        playerIcon.sprite = PlayGameManager.Instance.playerList[ActorNumber].sprite;
+        playerName.text = PlayGameManager.Instance.playerList[player.GetPlayerNumber()].name;
+        playerIcon.sprite = PlayGameManager.Instance.playerList[player.GetPlayerNumber()].sprite;
         voteCount = 0;
         voteCountUI.text = voteCount.ToString();
         finder.enabled = false;

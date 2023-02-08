@@ -7,11 +7,24 @@ using Saebom;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.UI;
 using Photon.Pun.UtilityScripts;
+using HyunJune;
+using TMPro;
+using UnityEditor.VersionControl;
+
+
+public enum VoteRole
+{
+    None,
+    Participant,
+    Spectator,
+    Dead
+}
 
 public class VoteManager : MonoBehaviourPun
 {
     public static VoteManager Instance;
 
+    [Header("Vote")]
     [SerializeField]
     private GameObject voteWindow;
 
@@ -36,13 +49,25 @@ public class VoteManager : MonoBehaviourPun
     [SerializeField]
     private PlayerController controller;
 
+    [Header("VoteChatting")]
+    [SerializeField]
+    private TextBox myTextBoxPrefab;
+    [SerializeField]
+    private TextBox otherTextBoxPrefab;
+    [SerializeField]
+    private TMP_InputField chatInputField;
+    [SerializeField]
+    private Transform chatContent;
+
     public bool deadBodyFinder = false;
     private bool voteComplete = false;
+    private VoteRole myRole;
 
     private void Awake()
     {
         Instance = this;
         //FindObjectsOfType<PlayerController>();
+        chatInputField.characterLimit = 30;
     }
 
     // 지워야 한다
@@ -52,6 +77,70 @@ public class VoteManager : MonoBehaviourPun
         {
             FindDeadBody();
         }       
+
+        if (Input.GetButtonDown("Submit"))
+        {
+            if (chatInputField.IsActive() && chatInputField.text != "")
+            {
+                photonView.RPC("SendMessage", RpcTarget.All, chatInputField.text, PhotonNetwork.LocalPlayer.ActorNumber);
+            }
+            else
+            {
+                chatInputField.ActivateInputField();
+            }
+                
+        }
+    }
+
+
+    [PunRPC]
+    private void SendMessage(string message, int actorNumeber)
+    {
+
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            // 채팅을 보내는 사람이 나라면 내 프리팹으로 바로 대화 생성
+            if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumeber)
+            {
+                TextBox text = Instantiate(myTextBoxPrefab, chatContent);
+                text.SetMessage(player.Value, message);
+                return;
+            }  
+        }
+
+        // 채팅을 보낸 사람이 내가 아니라면 나의 역할에 따라 채팅을 분별
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber != player.Value.ActorNumber)
+                return;
+
+            switch (myRole)
+            {
+                // 내가 참가자일 경우
+                case VoteRole.Participant:
+                    // 채팅 보낸 플레이어가 참가자일 경우만 받는다
+                    if (participantList.Contains(actorNumeber))
+                    {
+                        TextBox text = Instantiate(otherTextBoxPrefab, chatContent);
+                        text.SetMessage(player.Value, message);
+                    }
+                    break;
+                // 내가 관전자일 경우 참가자의 채팅
+                case VoteRole.Spectator:
+                    // 채팅 보낸 플레이어가 사망자 일 경우 안받는다
+                    if (deadList.Contains(actorNumeber))
+                        return;
+                             
+                    TextBox text2 = Instantiate(otherTextBoxPrefab, chatContent);
+                    text2.SetMessage(player.Value, message);
+                    break;
+                // 내가 사망자일 경우 모든 채팅을 받는다
+                case VoteRole.Dead:
+                    TextBox text3 = Instantiate(otherTextBoxPrefab, chatContent);
+                    text3.SetMessage(player.Value, message);
+                    break;
+            }
+        }
     }
 
     public void FindDeadBody()
@@ -68,8 +157,21 @@ public class VoteManager : MonoBehaviourPun
         // 긴급 보고
         SetUpPlayerState();
         AddAlivePlayerEntry();
+        SetRole();
 
         voteWindow.gameObject.SetActive(true);
+    }
+
+    public void SetRole()
+    {
+        if (participantList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
+            myRole = VoteRole.Participant;
+        else if (spectatorList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
+            myRole = VoteRole.Spectator;
+
+
+        if (deadList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
+            myRole = VoteRole.Dead;
     }
 
     public void SetUpPlayerState()

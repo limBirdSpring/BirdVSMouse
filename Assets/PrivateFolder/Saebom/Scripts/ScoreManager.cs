@@ -363,10 +363,10 @@ namespace Saebom
         private void EndGame(Win win)
         {
             //누가 이겼는지 나타내고 개인 승률에 반영함
-
+            SoundManager.Instance.PlayUISound(UISFXName.Ending);
             //개인 판수 +1
 
-            switch(win)
+            switch (win)
             {
                 case Win.BirdWin:
                     //개인 승수 +1

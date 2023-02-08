@@ -94,6 +94,7 @@ namespace Saebom
         private void Awake()
         {
             photonView = GetComponent<PhotonView>();
+            Destroy(GameObject.Find("LobbyManager"));
         }
 
       private void OnEnable()
@@ -208,6 +209,7 @@ namespace Saebom
             yield return new WaitForSeconds(3f);
             MakePlayer();
             readyScene.SetActive(false);
+            TimeManager.Instance.TimeOn();
         }
 
         //본인 캐릭터 받아와서 초기화
