@@ -691,6 +691,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9003729675452073649, guid: b0c6cce739c064d4c8460cadd233d346, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 35ba14d6ebacbcd45aab1601a2b4cd7e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0c6cce739c064d4c8460cadd233d346, type: 3}
 --- !u!224 &6751103223879861545 stripped
@@ -710,6 +714,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6523150506772800384}
     m_Modifications:
+    - target: {fileID: 2214285525516453322, guid: 9c1e7b377ec36ba4aac977883be7916d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a169b22613691f744b61e1e94e9fa7f3, type: 2}
     - target: {fileID: 4018630673627383819, guid: 9c1e7b377ec36ba4aac977883be7916d, type: 3}
       propertyPath: m_Name
       value: BlackMouse
