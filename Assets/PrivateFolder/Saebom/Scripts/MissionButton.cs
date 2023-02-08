@@ -198,8 +198,8 @@ namespace Saebom
                 mission.gameObject.SetActive(false);
                 yield return new WaitForSeconds(1f);
             }
-           
 
+            StartCoroutine(ScoreManager.Instance.ScoreResultCalculate());
 
         }
 

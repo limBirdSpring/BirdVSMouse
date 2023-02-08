@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 
@@ -102,22 +103,15 @@ namespace Saebom
         {
             yield return new WaitForSeconds(2f);
 
-            //모시옷 점수 출력
-
-            //항아리 점수 출력
-
-            //외양간 점수 출력
-
-            //동아줄 점수 출력
-
-            //박 점수 출력
-
             StartCoroutine(MissionButton.Instance.MissionCheckCor());
 
+        }
+
+        public IEnumerator ScoreResultCalculate()
+        {
+            yield return null;
 
             int score = MissionButton.Instance.MissionResultCheck();
-
-            yield return new WaitForSeconds(2f);
 
             //점수 계산
             if (!TimeManager.Instance.isCurNight)
@@ -141,6 +135,9 @@ namespace Saebom
             photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
 
 
+            Inventory.Instance.DeleteItem();//인벤토리 비우기
+            //박 100%일경우 0%로 초기화
+            //시체없애기
         }
 
         [PunRPC]
