@@ -1,4 +1,5 @@
 using Photon.Pun;
+using SoYoon;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -102,14 +103,20 @@ namespace Saebom
                 if (curTime > dangerTime && curTime < halfTime - 1)
                     DangerScreenOn();
                 if (curTime > halfTime - 1 && curTime < halfTime)
+                {
                     TimeOver();
+                    isHouseTime = true;
+                }
             }
             else
             {
                 if (curTime > dangerTime2 && curTime < maxTime - 1)
                     DangerScreenOn();
                 if (curTime > maxTime - 1 && curTime < maxTime)
+                {
                     TimeOver();
+                    isHouseTime = true;
+                }
             }
         }
 
@@ -163,6 +170,7 @@ namespace Saebom
 
         public void TimeOn()
         {
+            isHouseTime = false;
             //시작 텍스트 출력
             SoundManager.Instance.PlayUISound(UISFXName.Start);
             startText.SetActive(true);
@@ -207,7 +215,7 @@ namespace Saebom
             //2초 뒤 점수 확인 출력
             ScoreManager.Instance.CallScoreResultWindow();
 
-
+            
 
         }
 

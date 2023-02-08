@@ -1,4 +1,5 @@
 using Photon.Pun;
+using SoYoon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace Saebom
 
     public class ScoreManager : SingleTon<ScoreManager>
     {
+        [HideInInspector]
+        public PlayerControllerTest player;
 
         //점수합산 구현, 각 팀별로 점수 및 스파이 죽음여부, 남은사람들 수 저장
 
@@ -103,6 +106,8 @@ namespace Saebom
         {
             yield return new WaitForSeconds(2f);
 
+            
+
             StartCoroutine(MissionButton.Instance.MissionCheckCor());
 
         }
@@ -123,6 +128,15 @@ namespace Saebom
             if (PhotonNetwork.IsMasterClient)
                 photonView.RPC("PrivatePlayerStateUpdate", RpcTarget.All, birdScore, mouseScore, birdCount, mouseCount, isBirdSpyDie, isMouseSpyDie);
 
+
+            //캐릭터 거점으로 강제이동
+            if (PlayGameManager.Instance.myPlayerState.isBird)
+                player.gameObject.transform.position = PlayGameManager.Instance.birdHouse.position;
+            else
+                player.gameObject.transform.position = PlayGameManager.Instance.mouseHouse.position;
+
+
+            
             //스코어 UI 변경
             //점수 갱신 위에 효과 애니메이션 및 효과음 추가
 

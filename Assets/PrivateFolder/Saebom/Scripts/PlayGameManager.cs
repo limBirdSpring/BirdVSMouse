@@ -51,11 +51,9 @@ namespace Saebom
 
         //================
 
-        [SerializeField]
-        private Transform mouseHouse;
+        public Transform mouseHouse;
 
-        [SerializeField]
-        private Transform birdHouse;
+        public Transform birdHouse;
 
         [SerializeField]
         private GameObject killButtonGray;
