@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Saebom;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -89,6 +90,13 @@ namespace SoYoon
                     BakMissionReset();
                 }
             }
+            if (changedProps["BakMissionComplete"] != null)
+            {
+                if ((bool)changedProps["BakMissionComplete"])
+                {
+                    BakMissionComplete();
+                }
+            }
         }
 
         //private void CreatePlayer()
@@ -103,12 +111,8 @@ namespace SoYoon
                 curBakProgress = 99; // 나중에 없애기
             if (Input.GetKeyDown(KeyCode.F2))
                 SceneManager.LoadScene("MainMapTestScene"); // 나중에 없애기
-            if(Input.GetKeyDown(KeyCode.F3)) // 나중에 없애기
-            {
-                HashTable props = new HashTable();
-                props.Add("BakMissionReset", true);
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-            }
+            if (Input.GetKeyDown(KeyCode.F3)) // 나중에 없애기
+                BakMissionResetCalled(); // 나중에 리셋할 경우 불릴 함수
             if (curBakProgress >= 100)
                 return;
             if (curBakPlayerCount == 0)
@@ -133,16 +137,8 @@ namespace SoYoon
 
             if (curBakProgress >= 100)
             {
-                // 미션을 완료한 경우 
-                // 네트워크 상황이 달라서 진행률이 다를 경우 IsBakDone property 추가해서 모두 done이면 완료되도록 보완 가능
-                HashTable props = new HashTable();
-                props.Add("IsBakMission", false);
-                props.Add("IsSawing", false);
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-                bakUI.BakMissionComplete();
-                BakMissionPanel.BakMissionComplete();
-                bakMission.BakMissionComplete();
-                progressText.text = "100 %";
+                // 미션을 완료한 경우
+                BakMissionComplete();
             }
             Debug.Log(CurBakProgress);
         }
@@ -155,6 +151,35 @@ namespace SoYoon
                 return true;
             else
                 return false;
+        }
+
+        public void BakMissionCompleteCalled()
+        {
+            HashTable props = new HashTable();
+            props.Add("BakMissionComplete", true);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
+
+        public void BakMissionResetCalled()
+        {
+            HashTable props = new HashTable();
+            props.Add("BakMissionReset", true);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        }
+
+
+        public void BakMissionComplete()
+        {
+            curBakProgress = 100;
+            HashTable props = new HashTable();
+            props.Add("IsBakMission", false);
+            props.Add("IsSawing", false);
+            props.Add("BakMissionComplete", false);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            bakUI.BakMissionComplete();
+            BakMissionPanel.BakMissionComplete();
+            bakMission.BakMissionComplete();
+            progressText.text = "100 %";
         }
 
         public void BakMissionReset()
