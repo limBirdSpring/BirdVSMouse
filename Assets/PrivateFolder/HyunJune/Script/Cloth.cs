@@ -85,9 +85,9 @@ namespace HyunJune
             dicColor.Add(CurColor.Black, new Color32(67, 66, 63, 255));
         }
 
-        public void AddDye(Dye dye)
+        public void AddDye(CurColor color)
         {
-            curColor |= dye.color;
+            curColor |= color;
             UpdateColor();
         }
 
@@ -140,29 +140,22 @@ namespace HyunJune
 
         public void OnDrop(PointerEventData eventData)
         {
+            Inventory item = eventData.pointerDrag.GetComponent<Inventory>();
             if (Inventory.Instance.isItemSet("WhiteDye"))
             {
-                Dye white = new Dye();
-                white.color = CurColor.White;
-                AddDye(white);
+                AddDye(CurColor.White);
             }
             else if (Inventory.Instance.isItemSet("RedDye"))
             {
-                Dye red = new Dye();
-                red.color = CurColor.Red;
-                AddDye(red);
+                AddDye(CurColor.Red);
             }
             else if (Inventory.Instance.isItemSet("YellowDye"))
             {
-                Dye yellow = new Dye();
-                yellow.color = CurColor.Yellow;
-                AddDye(yellow);
+                AddDye(CurColor.Yellow);
             }
             else if (Inventory.Instance.isItemSet("BlueDye"))
             {
-                Dye blue = new Dye();
-                blue.color = CurColor.Blue;
-                AddDye(blue);
+                AddDye(CurColor.Blue);
             }
             else
                 return;
