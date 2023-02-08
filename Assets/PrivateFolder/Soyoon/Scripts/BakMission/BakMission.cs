@@ -62,5 +62,12 @@ namespace SoYoon
             normalSaw.SetActive(true);
             activeSaw.SetActive(false);
         }
+
+        public void BakMissionReset()
+        {
+            boostPercent = 1;
+            normalSaw.SetActive(true);
+            activeSaw.SetActive(false);
+        }
     }
 }

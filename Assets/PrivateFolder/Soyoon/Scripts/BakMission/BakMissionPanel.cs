@@ -49,5 +49,9 @@ namespace SoYoon
         {
             isBakMissionComplete = true;
         }
+        public void BakMissionReset()
+        {
+            isBakMissionComplete = false;
+        }
     }
 }
