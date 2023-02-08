@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 110e65a5e8e60be40ac71034ca3d805c, type: 2}
+  m_Motion: {fileID: 7400000, guid: 35d8e4affafc19a49a909e6f33670619, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -32,7 +32,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BlackBird
+  m_Name: BlackMouse 1
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:

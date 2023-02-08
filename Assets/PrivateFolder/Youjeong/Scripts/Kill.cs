@@ -21,15 +21,19 @@ public class Kill : MonoBehaviour
     private GameObject Black;
     private Animator anim;   
     private float timeReveal=0;
+    private float time = 0;
+
+    private bool isReveal=false;
+    private bool isDie = false;
 
     private void Start()
     {
-       /* Me.sprite = PlayGameManager.Instance.myPlayerState.sprite;
+        Me.sprite = PlayGameManager.Instance.myPlayerState.sprite;
         Me.SetNativeSize();
-        Spy.SetNativeSize();*/
         anim = Me.GetComponent<Animator>();
         isBrid = PlayGameManager.Instance.myPlayerState.isBird;
         FindSpy(isBrid);
+        Spy.SetNativeSize();
     }
 
     private void FindSpy(bool isBird)
@@ -38,31 +42,34 @@ public class Kill : MonoBehaviour
             Black = BlackMouse;
         else
             Black = BlackBird;
-        /*foreach (Saebom.PlayerState player in PlayGameManager.Instance.playerList)
+        foreach (Saebom.PlayerState player in PlayGameManager.Instance.playerList)
         {
             if (player.isSpy && isBird)
                 Spy.sprite = player.sprite;
-        }*/
+        }
     }
 
     private void FixedUpdate()
     {
-        timeReveal += Time.deltaTime*0.1f;
-        if (timeReveal == 0.4f)
+        timeReveal += Time.deltaTime;
+        if (timeReveal >= 0.7f&&!isReveal)
         {
             Black.SetActive(true);
+            isReveal = true;
         }
-        if ( timeReveal >0.4f&&timeReveal < 0.9f)
+        if ( timeReveal >0.7f&&timeReveal < 3.7f)
         {
-            Vector3 dir = new Vector3(timeReveal - 1.5f, 0.5f - timeReveal, 0).normalized;
+            time += Time.deltaTime;
+            Vector3 dir = new Vector3(time - 3.0f, 1.5f - time, 0).normalized;
             Spy.transform.transform.up = dir;
             Spy.transform.Translate(dir * speed, Space.World);
         }
-        else if (timeReveal == 0.9)
+        if (timeReveal >= 1.2f&&!isDie)
         {
             anim.SetTrigger("IsDie");
+            isDie = true;
         }
-        else if (timeReveal >= 2)
+        else if (timeReveal >= 2.2f)
             this.gameObject.SetActive(false);
     }
 }
