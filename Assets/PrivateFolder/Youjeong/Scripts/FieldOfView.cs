@@ -1,10 +1,11 @@
+using Photon.Pun;
 using SoYoon;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FieldOfView : MonoBehaviour
+public class FieldOfView : MonoBehaviourPun
 {
     [SerializeField]
     private LayerMask wallLayer;
@@ -26,7 +27,8 @@ public class FieldOfView : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        FindTarget();
+        if(photonView.IsMine)
+            FindTarget();
     }
 
     private void FindTarget()
@@ -74,12 +76,12 @@ public class FieldOfView : MonoBehaviour
 
                 if (layer == shadowLayer) // 시야에 보이지 않을 경우 killRange꺼주기
                 {
-                    Debug.Log("kill range off");
+                    //Debug.Log("kill range off");
                     child.gameObject.SetActive(false);
                 }
                 else
                 {
-                    Debug.Log("kill range on");
+                    //Debug.Log("kill range on");
                     child.gameObject.SetActive(true);
                 }
             }
