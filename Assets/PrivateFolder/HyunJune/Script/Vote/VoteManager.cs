@@ -99,7 +99,8 @@ public class VoteManager : MonoBehaviourPun
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             // 채팅을 보내는 사람이 나라면 내 프리팹으로 바로 대화 생성
-            if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumeber)
+            if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumeber &&
+                PhotonNetwork.LocalPlayer.ActorNumber == player.Value.ActorNumber)
             {
                 TextBox text = Instantiate(myTextBoxPrefab, chatContent);
                 text.SetMessage(player.Value, message);
