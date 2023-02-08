@@ -33,13 +33,15 @@ namespace HyunJune
         {
             cloth = GetComponent<Image>();
             dicColor = new Dictionary<CurColor, Color32>();
-        }
-
-        private void Start()
-        {
-            curColor = CurColor.None;       
+            curColor = CurColor.None;
             Init();
             cloth.color = dicColor[curColor];
+        }
+
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            GraphicUpdate();
         }
 
         public override void GraphicUpdate()
@@ -83,9 +85,9 @@ namespace HyunJune
             dicColor.Add(CurColor.Black, new Color32(67, 66, 63, 255));
         }
 
-        public void AddDye(Dye dye)
+        public void AddDye(CurColor color)
         {
-            curColor |= dye.color;
+            curColor |= color;
             UpdateColor();
         }
 
@@ -138,13 +140,29 @@ namespace HyunJune
 
         public void OnDrop(PointerEventData eventData)
         {
-            ItemData item = eventData.pointerDrag.GetComponent<ItemData>();
-            if (!(item.itemName == "WhiteDye" || item.itemName == "RedDye" ||
-                item.itemName == "BlueDye" || item.itemName == "YellowDye"))
+            Inventory item = eventData.pointerDrag.GetComponent<Inventory>();
+            if (Inventory.Instance.isItemSet("WhiteDye"))
+            {
+                AddDye(CurColor.White);
+                Inventory.Instance.DeleteItem();
+            }
+            else if (Inventory.Instance.isItemSet("RedDye"))
+            {
+                AddDye(CurColor.Red);
+                Inventory.Instance.DeleteItem();
+            }
+            else if (Inventory.Instance.isItemSet("YellowDye"))
+            {
+                AddDye(CurColor.Yellow);
+                Inventory.Instance.DeleteItem();
+            }
+            else if (Inventory.Instance.isItemSet("BlueDye"))
+            {
+                AddDye(CurColor.Blue);
+                Inventory.Instance.DeleteItem();
+            }
+            else
                 return;
-
-            Dye dye = item as Dye;
-            AddDye(dye);              
         }
     }    
 }

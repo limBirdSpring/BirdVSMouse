@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95a460113b4681c4b9e8f685faf0926c, type: 3}
-  m_Name: WhieDye
+  m_Script: {fileID: 11500000, guid: e35b079940acf5a4db0cc0ba0c85d620, type: 3}
+  m_Name: RotRope
   m_EditorClassIdentifier: 
-  itemName: WhiteDye
-  itemIcon: {fileID: 1806204706, guid: 424bd9508ecb64345819dd004931d2e3, type: 3}
-  color: 1
+  itemName: RotRope
+  itemIcon: {fileID: -206659629, guid: c46bebcd6f2634c4ba18f90e2998d10b, type: 3}
+  isRotted: 1
