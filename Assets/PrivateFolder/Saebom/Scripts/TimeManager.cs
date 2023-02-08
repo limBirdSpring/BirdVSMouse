@@ -191,6 +191,7 @@ namespace Saebom
                 curTime = maxTime;
                 nightSky.SetActive(false);
             }
+            redScreenUi.gameObject.SetActive(false);
             TimeSlideUpdate();
             FilterUpdate(1f);
             
@@ -199,7 +200,6 @@ namespace Saebom
 
         public void TimeOver()
         {
-            redScreenUi.gameObject.SetActive(false);
             TimeOff();
 
             //만약에 살아있는 캐릭터중 거점 밖에 있는 캐릭터가 있으면 강제 사망함
