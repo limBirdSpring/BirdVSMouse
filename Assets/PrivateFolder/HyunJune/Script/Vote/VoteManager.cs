@@ -64,6 +64,7 @@ public class VoteManager : MonoBehaviourPun
 
     public bool deadBodyFinder = false;
     private bool voteComplete = false;
+    private int participantCount;
     private VoteRole myRole;
 
     private void Awake()
@@ -276,6 +277,8 @@ public class VoteManager : MonoBehaviourPun
                 voteCompletePlayerList.Add(entry.ActorNumber);
             }
         }
+
+        VotingResult();
     }
 
     public void Vote(int target)
@@ -302,22 +305,6 @@ public class VoteManager : MonoBehaviourPun
     [PunRPC]
     public void VoteCheckRPC(int actorNumber, int target)
     {
-        int alivePlayerCount = 0;
-        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
-        {
-            // 관전자면 컨티뉴
-            if (spectatorList.Contains(player.Key))
-                continue;
-
-            // 죽었으면 컨티뉴
-            if (PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()].isDie)
-                continue;
-
-            alivePlayerCount++;
-        }
-
-        int participantCount = alivePlayerCount;
-
         foreach (PlayerVoteEntry entry in playerVoteEntries)
         {
             // 만약 투표한 사람의 액터넘버가 엔트리의 액터넘버랑 똑같다면 투표완료 업데이트
@@ -340,10 +327,37 @@ public class VoteManager : MonoBehaviourPun
             voteCompletePlayerList.Add(actorNumber);
         }
 
+        VotingResult();
+    }
 
+    public int CalculateAlivePlayer()
+    {
+        int alivePlayerCount = 0;
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            // 관전자면 컨티뉴
+            if (spectatorList.Contains(player.Key))
+                continue;
+
+            // 죽었으면 컨티뉴
+            if (PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()].isDie)
+                continue;
+
+            alivePlayerCount++;
+        }
+
+        participantCount = alivePlayerCount;
+
+        return participantCount;
+    }
+
+    public void VotingResult()
+    {
         // 방장이 아니라면 여기서 리턴
         if (!PhotonNetwork.IsMasterClient)
             return;
+
+        CalculateAlivePlayer();
 
         // 투표자 수가 참가자의 수보다 적으면 리턴
         if (voteCompletePlayerList.Count < participantCount)
