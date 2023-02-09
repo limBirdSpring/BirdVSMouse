@@ -44,6 +44,8 @@ public class VoteManager : MonoBehaviourPun
     private Button skipButton;
     [SerializeField]
     private SkipVote skipVote;
+    [SerializeField]
+    private TMP_Text timer;
 
     [SerializeField]
     private PlayerController controller;
@@ -72,6 +74,13 @@ public class VoteManager : MonoBehaviourPun
         Instance = this;
         //FindObjectsOfType<PlayerController>();
         chatInputField.characterLimit = 30;
+        skipButton.onClick.AddListener(VoteSkip);
+    }
+
+    private void OnEnable()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(StartTimer(99f));
     }
 
     // 지워야 한다
@@ -97,6 +106,41 @@ public class VoteManager : MonoBehaviourPun
         }
     }
 
+    private IEnumerator StartTimer(float time)
+    {
+        while (time < 0)
+        {
+            time -= Time.deltaTime;
+            timer.text = time.ToString("F0");
+            yield return null;
+        }
+
+        time = 0;
+        timer.text = time.ToString("F0");
+        photonView.RPC("FocedSkip", RpcTarget.All, null);
+    }
+
+    [PunRPC]
+    public void FocedSkip()
+    {
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            // 참가자면 리턴
+            if (spectatorList.Contains(player.Value.ActorNumber))
+                return;
+
+            // 사망자면 리턴
+            if (deadList.Contains(player.Value.ActorNumber))
+                return;
+
+            // 투표를 했으면 리턴
+            if (voteCompletePlayerList.Contains(player.Value.ActorNumber))
+                return;
+
+            // 강제 스킵 발동
+            VoteSkip();
+        }
+    }
 
     [PunRPC]
     private void SendMessage(string message, int actorNumeber)
@@ -161,6 +205,7 @@ public class VoteManager : MonoBehaviourPun
     public void EmergencyReport()
     {
         // 긴급 보고
+        TimeManager.Instance.TimeStop();
         SetUpPlayerState();
         AddAlivePlayerEntry();
         SetRole();
@@ -419,10 +464,58 @@ public class VoteManager : MonoBehaviourPun
     private void VotingEndRPC()
     {
         // 투표 종료
+        CheckGameOver();
+
+
+        voteWindow.SetActive(false);
         voteToDeathWindow.Init();
         deadBodyFinder = false;
         voteComplete = false;
-        voteWindow.SetActive(false);
+        myRole = VoteRole.None;
+        participantCount = 0;
+        voteToDeathWindow.gameObject.SetActive(false);
+        TimeManager.Instance.TimeResume();
+    }
+
+    public void CheckGameOver()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        int spy = 0;
+        int noneSpy = 0;
+
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            // 관전자 제외
+            if (spectatorList.Contains(player.Value.ActorNumber))
+                continue;
+
+            // 사망자 제외
+            if (PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()].isDie)
+                continue;
+
+            // 스파이면 스파이 증가
+            if (PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()].isSpy)
+                spy++;
+            // 일반 시민이면 시민 증가
+            else
+                noneSpy++;
+        }
+
+        //스파이가 없으면 시민 승리
+        if (spy == 0)
+        {
+            ScoreManager.Instance.ActiveTimeOverNow();
+        }
+        // 스파이와 시민이 같은 인원이면 스파이팀 승리
+        else if (spy == noneSpy)
+        {
+            ScoreManager.Instance.ActiveTimeOverNow();
+        }
+        // 둘다 아니면 게임 지속
+        else
+            return;
     }
 
     public void ToggleAllButton(bool toggle)
