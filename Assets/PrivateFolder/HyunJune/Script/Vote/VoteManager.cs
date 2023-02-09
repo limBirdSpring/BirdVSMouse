@@ -86,6 +86,7 @@ public class VoteManager : MonoBehaviourPun
             if (chatInputField.IsActive() && chatInputField.text != "")
             {
                 photonView.RPC("SendMessage", RpcTarget.All, chatInputField.text, PhotonNetwork.LocalPlayer.ActorNumber);
+                chatInputField.text = "";
             }
             else
             {
