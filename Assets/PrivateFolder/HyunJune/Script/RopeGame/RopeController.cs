@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 
-public class RopeManager : Mission
+public class RopeController : Mission
 {
     private RopeGame[] ropeGames;
 

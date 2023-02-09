@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 4667797120796771307}
   - component: {fileID: 4667797120796771306}
   - component: {fileID: 3913278387886380554}
+  - component: {fileID: 7946100995380493274}
   m_Layer: 5
   m_Name: ColorMission
   m_TagString: Untagged
@@ -170,6 +171,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cloth: {fileID: 1939753025}
+--- !u!114 &7946100995380493274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4667797120796771300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4667797120980209980
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +282,6 @@ GameObject:
   - component: {fileID: 4667797122412900756}
   - component: {fileID: 1939753025}
   - component: {fileID: 3390831340103947761}
-  - component: {fileID: 7233743361301593320}
   m_Layer: 5
   m_Name: Cloth
   m_TagString: Untagged
@@ -365,28 +387,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 850, y: 740}
   m_EdgeRadius: 0
---- !u!114 &7233743361301593320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4667797122412900758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &7506882819455962341
 GameObject:
   m_ObjectHideFlags: 0
