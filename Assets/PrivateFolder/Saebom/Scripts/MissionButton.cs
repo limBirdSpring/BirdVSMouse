@@ -220,6 +220,25 @@ namespace Saebom
 
 
 
+        public void Emergency()
+        {
+            if (PlayGameManager.Instance.myPlayerState.isBird)
+            {
+                photonView.RPC("EmergencyUsed", RpcTarget.All, birdEmergency-1, mouseEmergency);
+            }
+            else
+            {
+                photonView.RPC("EmergencyUsed", RpcTarget.All, birdEmergency, mouseEmergency-1);
+            }
+        }
+
+        [PunRPC]
+        private void EmergencyUsed(int birdE, int mouseE)
+        {
+            birdEmergency = birdE;
+            mouseEmergency = mouseE;
+        }
+
 
 
 
