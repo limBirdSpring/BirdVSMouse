@@ -5,37 +5,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Mathematics;
 
-public class RopeController : Mission
+public class RopeController : MonoBehaviour
 {
     private RopeGame[] ropeGames;
 
-    [SerializeField]
-    private SunOrMoon sun;
-    [SerializeField]
-    private SunOrMoon moon;
+    public SunOrMoon sun;
+    public SunOrMoon moon;
 
     public void ResetRope()
     {
         ropeGames = GetComponentsInChildren<RopeGame>();
-        
+
         for (int i = 0; i < ropeGames.Length; i++)
         {
             ropeGames[i].RopeReset();
         }
     }
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        GraphicUpdate();
-    }
 
-    public override void GraphicUpdate()
-    {
-        photonView.RPC("LoadUIRPC", RpcTarget.All, null);
-    }
-
-    [PunRPC]
-    private void LoadUIRPC()
+    public void LoadUIRPC()
     {
         ropeGames = GetComponentsInChildren<RopeGame>();
 
@@ -45,15 +32,7 @@ public class RopeController : Mission
         }
     }
 
-    public override void PlayerUpdateCurMission()
-    {
-        ropeGames = GetComponentsInChildren<RopeGame>();
-
-        photonView.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
-    }
-
-    [PunRPC]
-    private void SaveUIRPC(RopeGame[] ropes)
+    public void SaveUIRPC(RopeGame[] ropes)
     {
         ropeGames = GetComponentsInChildren<RopeGame>();
 
@@ -72,29 +51,6 @@ public class RopeController : Mission
         else
         {
             sun.StartMove();
-        }
-    }
-
-    public override bool GetScore()
-    {
-        if (TimeManager.Instance.isCurNight)
-        {
-            moon.ResetPos();
-
-            if (moon.MissionSuccess)
-                return true;
-            else
-                return false;
-
-        }
-        else
-        {
-            sun.ResetPos();
-
-            if (sun.MissionSuccess)
-                return true;
-            else
-                return false;
         }
     }
 }
