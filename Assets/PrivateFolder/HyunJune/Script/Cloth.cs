@@ -22,43 +22,22 @@ namespace HyunJune
 
     
 
-    public class Cloth : Mission, IDropHandler
+    public class Cloth : MonoBehaviour, IDropHandler
     {
-        private Image cloth;
-        Dictionary<CurColor, Color32> dicColor;
-        
+        [HideInInspector]
+        public Image clothImage;
+        public Dictionary<CurColor, Color32> dicColor;
+
+        [HideInInspector]
         public CurColor curColor;
 
         private void Awake()
         {
-            cloth = GetComponent<Image>();
+            clothImage = GetComponent<Image>();
             dicColor = new Dictionary<CurColor, Color32>();
             curColor = CurColor.None;
             Init();
-            cloth.color = dicColor[curColor];
-        }
-
-        public override void OnEnable()
-        {
-            base.OnEnable();
-            GraphicUpdate();
-        }
-
-        public override void GraphicUpdate()
-        {
-            cloth.color = dicColor[curColor];
-        }
-
-        public override void PlayerUpdateCurMission()
-        {
-            photonView.RPC("ClothCurColorRPC", RpcTarget.All, curColor);
-        }
-
-
-        [PunRPC]
-        public void ClothCurColorRPC(CurColor curColor)
-        {
-            this.curColor = curColor;
+            clothImage.color = dicColor[curColor];
         }
 
         private void Init()
@@ -93,7 +72,7 @@ namespace HyunJune
 
         public void UpdateColor()
         {
-            cloth.color = dicColor[curColor];
+            clothImage.color = dicColor[curColor];
 
             if (curColor == CurColor.Black)
                 StartCoroutine(SetDefault());
@@ -103,39 +82,7 @@ namespace HyunJune
         {
             yield return new WaitForSeconds(3);
             curColor = CurColor.None;
-            cloth.color = dicColor[curColor];
-        }
-
-        public override bool GetScore()
-        {
-            // 지금이 밤 일떄
-            if (TimeManager.Instance.isCurNight)
-            {
-                if (curColor == MissionButton.Instance.mouseMission.color)
-                {
-                    // 미션 성공
-                    return true;
-                }
-                else
-                {
-                    // 미션 실패
-                    return false;
-                }
-            }
-            // 낮일 때
-            else
-            {
-                if (curColor == MissionButton.Instance.birdMission.color)
-                {
-                    // 미션 성공
-                    return true;
-                }
-                else
-                {
-                    // 미션 실패
-                    return false;
-                }
-            }
+            clothImage.color = dicColor[curColor];
         }
 
         public void OnDrop(PointerEventData eventData)

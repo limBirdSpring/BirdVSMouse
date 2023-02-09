@@ -1,28 +1,38 @@
-using Saebom;
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Mathematics;
+using Saebom;
+using Photon.Pun;
+using Unity.VisualScripting;
 
 public class RopeManager : Mission
 {
-    private RopeGame[] ropeGames;
-
     [SerializeField]
-    private SunOrMoon sun;
-    [SerializeField]
-    private SunOrMoon moon;
+    private RopeController control;
 
-    public void ResetRope()
+    public override bool GetScore()
     {
-        ropeGames = GetComponentsInChildren<RopeGame>();
-        
-        for (int i = 0; i < ropeGames.Length; i++)
+        if (TimeManager.Instance.isCurNight)
         {
-            ropeGames[i].RopeReset();
+            control.moon.ResetPos();
+
+            if (control.moon.MissionSuccess)
+                return true;
+            else
+                return false;
+
+        }
+        else
+        {
+            control.sun.ResetPos();
+
+            if (control.sun.MissionSuccess)
+                return true;
+            else
+                return false;
         }
     }
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -37,17 +47,12 @@ public class RopeManager : Mission
     [PunRPC]
     private void LoadUIRPC()
     {
-        ropeGames = GetComponentsInChildren<RopeGame>();
-
-        for (int i = 0; i < ropeGames.Length; i++)
-        {
-            ropeGames[i].UpdateUI();
-        }
+        control.LoadUIRPC();
     }
 
     public override void PlayerUpdateCurMission()
     {
-        ropeGames = GetComponentsInChildren<RopeGame>();
+        RopeGame[] ropeGames = control.GetComponentsInChildren<RopeGame>();
 
         photonView.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
     }
@@ -55,46 +60,6 @@ public class RopeManager : Mission
     [PunRPC]
     private void SaveUIRPC(RopeGame[] ropes)
     {
-        ropeGames = GetComponentsInChildren<RopeGame>();
-
-        for (int i = 0; i < ropeGames.Length; i++)
-        {
-            ropeGames[i].curState = ropes[i].curState;
-        }
-    }
-
-    public void SunOrMoonStart()
-    {
-        if (TimeManager.Instance.isCurNight)
-        {
-            moon.StartMove();
-        }
-        else
-        {
-            sun.StartMove();
-        }
-    }
-
-    public override bool GetScore()
-    {
-        if (TimeManager.Instance.isCurNight)
-        {
-            moon.ResetPos();
-
-            if (moon.MissionSuccess)
-                return true;
-            else
-                return false;
-
-        }
-        else
-        {
-            sun.ResetPos();
-
-            if (sun.MissionSuccess)
-                return true;
-            else
-                return false;
-        }
+        control.SaveUIRPC(ropes);
     }
 }

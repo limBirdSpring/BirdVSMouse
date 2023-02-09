@@ -278,7 +278,7 @@ public class VoteManager : MonoBehaviourPun
         // playerVoteEntries √ ±‚»≠
         for (int i = 0; i < playerVoteEntries.Count; i++)
         {
-            Destroy(playerVoteEntries[0].gameObject);
+            Destroy(playerVoteEntries[i].gameObject);
         }
 
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
