@@ -143,7 +143,9 @@ namespace Saebom
 
             Inventory.Instance.DeleteItem();//인벤토리 비우기
             //박 100%일경우 0%로 초기화
+
             //시체없애기
+            GameObject.FindGameObjectsWithTag("Corpse");
         }
 
         [PunRPC]
