@@ -70,6 +70,6 @@ public class Kill : MonoBehaviour
             isDie = true;
         }
         else if (timeReveal >= 2.2f)
-            this.gameObject.SetActive(false);
+            this.transform.parent.gameObject.SetActive(false);
     }
 }
