@@ -11,7 +11,9 @@ public enum UISFXName
     Ending,
     GetJob,
     VoteDie,
-    Click
+    Click,
+    ScoreUp,
+    MissionComplete
 }
 
 [Serializable]
