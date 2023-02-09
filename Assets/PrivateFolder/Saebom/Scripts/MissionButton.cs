@@ -8,6 +8,7 @@ using Photon.Pun;
 using HyunJune;
 using System.Linq;
 using TMPro;
+using SoYoon;
 
 
 //방장이 미션을 뽑음
@@ -55,7 +56,15 @@ namespace Saebom
         [SerializeField]
         private List<Mission> missionList;
 
-        
+
+        [HideInInspector]
+        public int mouseEmergency = 3;
+
+        [HideInInspector]
+        public int birdEmergency = 3;
+
+
+
 
         private void Awake()
         {
@@ -204,9 +213,31 @@ namespace Saebom
         }
 
 
+        public void BakMissionReset()
+        {
+            missionList[0].gameObject.GetComponent<BakMissionManager>().BakMissionResetCalled();
+        }
 
 
 
+        public void Emergency()
+        {
+            if (PlayGameManager.Instance.myPlayerState.isBird)
+            {
+                photonView.RPC("EmergencyUsed", RpcTarget.All, birdEmergency-1, mouseEmergency);
+            }
+            else
+            {
+                photonView.RPC("EmergencyUsed", RpcTarget.All, birdEmergency, mouseEmergency-1);
+            }
+        }
+
+        [PunRPC]
+        private void EmergencyUsed(int birdE, int mouseE)
+        {
+            birdEmergency = birdE;
+            mouseEmergency = mouseE;
+        }
 
 
 
