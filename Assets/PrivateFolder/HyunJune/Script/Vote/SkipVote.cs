@@ -2,13 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkipVote : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text voteCountUI;
 
+    private Button voteButton;
+
     private int voteCount;
+
+    private void Awake()
+    {
+        voteButton = GetComponent<Button>();
+        voteButton.onClick.AddListener(OnSkipPressed);
+    }
 
     public int VoteCount
     {
@@ -19,6 +28,7 @@ public class SkipVote : MonoBehaviour
     {
         voteCount = 0;
         voteCountUI.text = voteCount.ToString();
+        voteButton.interactable = true;
     }
 
     public void AddSkipVoteCount()
@@ -30,5 +40,10 @@ public class SkipVote : MonoBehaviour
     public void OnSkipPressed()
     {
         VoteManager.Instance.VoteSkip();
+    }
+
+    public void ToggleButton(bool toggle)
+    {
+        voteButton.interactable = toggle;
     }
 }
