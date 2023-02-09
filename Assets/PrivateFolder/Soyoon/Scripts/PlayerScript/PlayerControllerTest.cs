@@ -63,7 +63,11 @@ namespace SoYoon
                 //    killButtonGray.SetActive(true);
             }
 
-            SetPlayerState(PlayerState.Active);
+            if (PlayGameManager.Instance.myPlayerState.isBird == false)
+                SetPlayerState(PlayerState.Inactive);
+            else
+                SetPlayerState(PlayerState.Active);
+            //SetPlayerState(PlayerState.Active);
         }
 
         private void Update()
@@ -116,7 +120,8 @@ namespace SoYoon
         [PunRPC]
         public void FoundCorpse()
         {
-            GameObject.Find("VoteCanvas").SetActive(true);
+            Saebom.MissionButton.Instance.MissionButtonOff();
+            GameObject.Find("VoteCanvas").transform.GetChild(0).gameObject.SetActive(true);
         }
 
         private void SetNamePosition()
@@ -155,9 +160,9 @@ namespace SoYoon
                     SetKillRange();
                     break;
                 case PlayerState.Inactive:
+                    SetLayer(LayerMask.NameToLayer("InActive"));
                     if (photonView.IsMine)
                     {
-                        SetLayer(LayerMask.NameToLayer("InActive"));
                         cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
                     }
                     SetKillRange();
@@ -167,9 +172,9 @@ namespace SoYoon
                     SetNamePosition();
                     if (photonView.IsMine)
                     {
+                        cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
                         cullingMask.OnLayerMask(LayerMask.NameToLayer("Ghost"));
                         cullingMask.OnLayerMask(LayerMask.NameToLayer("Shadow"));
-                        cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
                     }
                     SetKillRange();
                     break;
@@ -207,25 +212,12 @@ namespace SoYoon
                     killButton.GetComponent<KillButton>().target = targetPlayer.transform.parent.gameObject;
                     return;
                 }
-                else if (collision.gameObject.layer != LayerMask.NameToLayer("KillRange"))
+                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
                 {
                     Debug.Log("enter" + collision.gameObject.name);
                     Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
                     Saebom.MissionButton.Instance.MissionButtonOn();
                 }
-
-                //if(collision.tag == "Corpse")
-                //{
-                //    if (state == PlayerState.Active)
-                //    {
-                //        PhotonNetwork.Destroy(collision.gameObject);
-                //        FoundCorpse();
-                //    }
-                //    else if(state == PlayerState.Inactive)
-                //    {
-                //
-                //    }
-                //}
             }
         }
         
@@ -238,7 +230,7 @@ namespace SoYoon
                     killButton.SetActive(false);
                     return;
                 }
-                else if (collision.gameObject.layer != LayerMask.NameToLayer("KillRange"))
+                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
                 {
                     Debug.Log("exit" + collision.gameObject.name);
                     Saebom.MissionButton.Instance.MissionButtonOff();

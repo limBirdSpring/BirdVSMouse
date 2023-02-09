@@ -33,7 +33,8 @@ public class RopeManager : Mission
     {
         photonView.RPC("LoadUIRPC", RpcTarget.All, null);
     }
-    
+
+    [PunRPC]
     private void LoadUIRPC()
     {
         ropeGames = GetComponentsInChildren<RopeGame>();
@@ -51,6 +52,7 @@ public class RopeManager : Mission
         photonView.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
     }
 
+    [PunRPC]
     private void SaveUIRPC(RopeGame[] ropes)
     {
         ropeGames = GetComponentsInChildren<RopeGame>();
