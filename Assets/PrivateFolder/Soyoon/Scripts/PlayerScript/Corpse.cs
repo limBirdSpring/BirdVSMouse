@@ -1,35 +1,49 @@
 using Photon.Pun;
-using Saebom;
-using SoYoon;
 using UnityEngine;
 
-public class Corpse : MonoBehaviour
+namespace SoYoon
 {
-    public void DestroyCorpse()
+    public class Corpse : MonoBehaviourPun
     {
-        PhotonNetwork.Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange")) // active state
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            // 스파이일 경우 : 감지되지 않음, 스파이가 아닐 경우 감지됨
-            if (collision.GetComponentInParent<PlayerControllerTest>() != null)
+            // 활동시기인 동물들은 모두 발견 가능 -> 신고(투표창)
+            // 비활동시기인 동물들은 시체를 없애기 가능
+            //Debug.Log(collision.gameObject.name);
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || collision.gameObject.layer == LayerMask.NameToLayer("InActive"))
             {
-                PlayerControllerTest controller = collision.GetComponentInParent<PlayerControllerTest>();
-                PhotonView photonView = collision.GetComponentInParent<PhotonView>();
-                if (!PlayGameManager.Instance.myPlayerState.isSpy && photonView.IsMine)
-                    controller.FoundCorpse();
+                //Debug.Log("On Collision");
+                PlayerControllerTest controller = collision.GetComponent<PlayerControllerTest>();
+                PhotonView photonView = collision.GetComponent<PhotonView>();
+
+                if (photonView.IsMine)
+                {
+                    if (controller.state == PlayerState.Active)
+                    {
+                        //Debug.Log("On active Collision");
+                        InterActionAdapter adapter = gameObject.GetComponent<InterActionAdapter>();
+                        adapter.OnInterAction.RemoveAllListeners();
+                        adapter.OnInterAction.AddListener(controller.FoundCorpse);
+                        Saebom.MissionButton.Instance.inter = adapter;
+                        Saebom.MissionButton.Instance.MissionButtonOn();
+                    }
+                    else if(controller.state == PlayerState.Inactive)
+                    {
+                        //Debug.Log("On inactive Collision");
+                        InterActionAdapter adapter = gameObject.GetComponent<InterActionAdapter>();
+                        adapter.OnInterAction.RemoveAllListeners();
+                        adapter.OnInterAction.AddListener(DestroyCorpse);
+                        Saebom.MissionButton.Instance.inter = adapter;
+                        Saebom.MissionButton.Instance.MissionButtonOn();
+                    }
+                }
             }
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        public void DestroyCorpse()
         {
-            PlayerControllerTest controller = collision.GetComponent<PlayerControllerTest>();
-            PhotonView photonView = collision.GetComponent<PhotonView>();
-            if (controller.state != PlayerState.Inactive)
-                Saebom.MissionButton.Instance.MissionButtonOff();
+            PhotonNetwork.Destroy(this.gameObject);
+            Saebom.MissionButton.Instance.MissionButtonOff();
         }
     }
 }
