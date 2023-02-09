@@ -251,6 +251,12 @@ public class VoteManager : MonoBehaviourPun
         if (voteComplete)
             return;
 
+        if (spectatorList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
+            return;
+
+        if (deadList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
+            return;
+
         voteComplete = true;
         ToggleAllButton(false);
         photonView.RPC("SetSkipCount", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
@@ -276,6 +282,12 @@ public class VoteManager : MonoBehaviourPun
     {
         // 이미 투표를 했으면 리턴
         if (voteComplete)
+            return;
+
+        if (spectatorList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
+            return;
+
+        if (deadList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
             return;
 
         // 나 자신이면 리턴
