@@ -287,15 +287,6 @@ namespace Saebom
 
 
 
-        //플레이어가 킬로 죽었을 경우 이 함수를 호출해줌
-        public void PlayerDie()
-        {
-            photonView.RPC("PlayerDieAndMasterPlayerListUpdate", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.GetPlayerNumber());
-
-            if (PhotonNetwork.IsMasterClient)
-                ScoreManager.Instance.MasterCurPlayerStateUpdate();
-        }
-
         //플레이어가 투표로 죽었을 때 호출할 함수
         public void PlayerDie(int index)
         {
