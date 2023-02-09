@@ -75,15 +75,19 @@ public class FieldOfView : MonoBehaviourPun
                 child.gameObject.layer = LayerMask.NameToLayer("KillRange");
 
                 if (layer == shadowLayer) // 시야에 보이지 않을 경우 killRange꺼주기
-                {
-                    //Debug.Log("kill range off");
                     child.gameObject.SetActive(false);
-                }
                 else
-                {
-                    //Debug.Log("kill range on");
                     child.gameObject.SetActive(true);
-                }
+            }
+
+            if (child.gameObject.name == "CorpseRange")
+            {
+                child.gameObject.layer = LayerMask.NameToLayer("CorpseRange");
+
+                if (layer == shadowLayer) // 시야에 보이지 않을 경우 CorpseRange꺼주기
+                    child.gameObject.SetActive(false);
+                else
+                    child.gameObject.SetActive(true);
             }
         }
     }

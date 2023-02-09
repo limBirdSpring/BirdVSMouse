@@ -1,6 +1,7 @@
 using Cinemachine;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using Saebom;
 using UnityEngine;
 
 //public enum PlayerState { Active, Inactive, Ghost }
@@ -96,12 +97,26 @@ namespace SoYoon
         }
 
         [PunRPC]
-        public void Die()
+        public void Die() // 스파이에게 죽을 시 호출되는 함수
         {
-            Instantiate(death, transform.position, Quaternion.identity);
+            GameObject corpse = Instantiate(death, transform.position, Quaternion.identity);
+            corpse.name = "Corpse";
+            corpse.tag = corpse.name;
+            // TODO : 킬되는 화면 뜨는 것 구현
             anim.SetTrigger("isDeath");
             SetPlayerState(PlayerState.Ghost);
             Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
+        }
+
+        public void VoteDie() // 투표로 죽을 시 호출되는 함수
+        {
+
+        }
+
+        [PunRPC]
+        public void FoundCorpse()
+        {
+            GameObject.Find("VoteCanvas").SetActive(true);
         }
 
         private void SetNamePosition()
@@ -198,19 +213,20 @@ namespace SoYoon
                     Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
                     Saebom.MissionButton.Instance.MissionButtonOn();
                 }
-            }
 
-            //if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
-            //{
-            //    foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
-            //    {
-            //        if (player.ActorNumber == collision.gameObject.GetComponent<PlayerControllerTest>().photonView.Owner.ActorNumber)
-            //        {
-            //            targetPlayer = player;
-            //            break;
-            //        }
-            //    }
-            //}
+                //if(collision.tag == "Corpse")
+                //{
+                //    if (state == PlayerState.Active)
+                //    {
+                //        PhotonNetwork.Destroy(collision.gameObject);
+                //        FoundCorpse();
+                //    }
+                //    else if(state == PlayerState.Inactive)
+                //    {
+                //
+                //    }
+                //}
+            }
         }
         
         private void OnTriggerExit2D(Collider2D collision)
