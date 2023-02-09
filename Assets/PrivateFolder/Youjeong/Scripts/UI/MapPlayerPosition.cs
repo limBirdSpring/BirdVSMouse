@@ -10,10 +10,13 @@ public class MapPlayerPosition : MonoBehaviour
     [SerializeField]
     private Vector3 zeroPoint;
 
-    [SerializeField]
     private Transform player;
-
     private Vector3 playerPosition;
+
+    private void Awake()
+    {
+        player = PlayGameManager.Instance.myPlayerState.playerPrefab.transform;
+    }
 
     private void OnEnable()
     {
