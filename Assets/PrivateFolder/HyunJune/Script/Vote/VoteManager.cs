@@ -41,8 +41,6 @@ public class VoteManager : MonoBehaviourPun
     private List<int> voteCompletePlayerList = new List<int>();
 
     [SerializeField]
-    private Button skipButton;
-    [SerializeField]
     private SkipVote skipVote;
     [SerializeField]
     private TMP_Text timer;
@@ -74,7 +72,6 @@ public class VoteManager : MonoBehaviourPun
         Instance = this;
         //FindObjectsOfType<PlayerController>();
         chatInputField.characterLimit = 30;
-        skipButton.onClick.AddListener(VoteSkip);
     }
 
     private void OnEnable()
@@ -209,6 +206,7 @@ public class VoteManager : MonoBehaviourPun
         SetUpPlayerState();
         AddAlivePlayerEntry();
         SetRole();
+        skipVote.Initialized();
 
         voteWindow.gameObject.SetActive(true);
     }
@@ -520,7 +518,7 @@ public class VoteManager : MonoBehaviourPun
 
     public void ToggleAllButton(bool toggle)
     {
-        skipButton.interactable = toggle;
+        skipVote.ToggleButton(toggle); 
         foreach (PlayerVoteEntry entry in playerVoteEntries)
         {
             entry.ToggleButton(toggle);

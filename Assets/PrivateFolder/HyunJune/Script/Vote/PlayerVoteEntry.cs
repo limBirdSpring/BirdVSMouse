@@ -40,8 +40,6 @@ public class PlayerVoteEntry : MonoBehaviourPun
     public void OnVotePressed()
     {
         VoteManager.Instance.Vote(actorNumber);
-
-        photonView.RPC("AddVoteCount", RpcTarget.All, null);
     }
 
     public void Initialized(Photon.Realtime.Player player)
