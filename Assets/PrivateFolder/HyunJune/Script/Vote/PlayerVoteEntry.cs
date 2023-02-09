@@ -34,6 +34,7 @@ public class PlayerVoteEntry : MonoBehaviourPun
     private void Awake()
     {
         voteButton = GetComponent<Button>();
+        voteButton.onClick.AddListener(OnVotePressed);
     }
 
     public void OnVotePressed()
