@@ -63,6 +63,9 @@ TagManager:
   - name: MiddleObject3
     uniqueID: 3131527527
     locked: 0
+  - name: middleObject4
+    uniqueID: 1709656691
+    locked: 0
   - name: Mission
     uniqueID: 2400122251
     locked: 0
