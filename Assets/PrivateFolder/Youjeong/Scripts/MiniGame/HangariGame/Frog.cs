@@ -14,7 +14,15 @@ namespace Youjeong
         private HangariManager manager;
         [SerializeField]
         private GameObject sprayWater;
-        
+
+        [Header("Audio Source")]
+        [SerializeField]
+        private AudioSource sprayAudioSource;
+        [SerializeField]
+        private AudioSource inFrogAudioSource;
+        [SerializeField]
+        private AudioSource outFrogAudioSource;
+
         private float delay;
         private RectTransform rectTransform;
         private bool isOutHangari = false;
@@ -42,16 +50,19 @@ namespace Youjeong
                 sprayWater.SetActive(true);
                 spray = StartCoroutine("SprayWaterCoroutine");
                 OutFrog();
+                sprayAudioSource.Play();
             }
         }
 
         public void OutFrog()
         {
+            outFrogAudioSource.Play();
             rectTransform.position += new Vector3(600, 0, 0);
         }
 
         public void InFrog()
         {
+            inFrogAudioSource.Play();
             rectTransform.position = originPosition;
         }
 

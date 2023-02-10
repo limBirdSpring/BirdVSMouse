@@ -9,6 +9,8 @@ namespace Youjeong
     {
         [SerializeField]
         private HagnariGame game;
+        [SerializeField]
+        private AudioSource audioWaterDrop;
 
        
         private bool isWater;
@@ -20,6 +22,12 @@ namespace Youjeong
                 return;
             Inventory.Instance.DeleteItem();
             game.PlusWater();
+            AudioPlay();
+        }
+
+        private void AudioPlay()
+        {
+            audioWaterDrop.Play();
         }
     }
 }
