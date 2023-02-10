@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 1002580128338788242}
   - component: {fileID: 5773834229773680643}
   - component: {fileID: -4241371326484010385}
-  - component: {fileID: 2529496343061008670}
+  - component: {fileID: 2052310104612575978}
   m_Layer: 8
   m_Name: CheongseolMo
   m_TagString: Untagged
@@ -177,8 +177,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1002580128338788242}
-  - {fileID: 2529496343061008670}
-  - {fileID: 578738920148776483}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -197,7 +195,7 @@ MonoBehaviour:
   moveSpeed: 10
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
---- !u!114 &2529496343061008670
+--- !u!114 &2052310104612575978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -255,6 +253,46 @@ PrefabInstance:
     - target: {fileID: 226240813896140164, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
       propertyPath: m_Name
       value: CheongseolM
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].Name
+      value: Speed
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].Name
+      value: IsInactive
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].Type
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[2].Name
+      value: IsActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].Name
+      value: IsDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[2].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884759285461446471, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].SynchronizeType
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6630876002301007827, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
       propertyPath: m_RootOrder
@@ -318,7 +356,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 226240813896140164, guid: 6595ca4cc3934f948ad4631e7d7445ef, type: 3}
   m_PrefabInstance: {fileID: 1306067457754356068}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7226584621314603923
+--- !u!114 &7688909300800495980
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

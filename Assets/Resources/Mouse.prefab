@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 1002580128338788242}
   - component: {fileID: 5773834229773680643}
   - component: {fileID: 1733669018836506347}
-  - component: {fileID: 7674260675153114649}
+  - component: {fileID: 8208086017155389460}
   m_Layer: 8
   m_Name: Mouse
   m_TagString: Untagged
@@ -197,7 +197,7 @@ MonoBehaviour:
   moveSpeed: 10
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
---- !u!114 &7674260675153114649
+--- !u!114 &8208086017155389460
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,6 +296,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].Name
+      value: Speed
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].Name
+      value: IsInactive
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].Type
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[2].Name
+      value: IsActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].Name
+      value: IsDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[2].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6815091132046495039, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
       propertyPath: m_Name
       value: SaengM
@@ -307,7 +347,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6815091132046495039, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
   m_PrefabInstance: {fileID: 7169856733214761483}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4544401965175378332
+--- !u!114 &4328269339676015166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -325,8 +365,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 5627277735996367581}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

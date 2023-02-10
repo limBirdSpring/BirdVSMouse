@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1002580128338788242}
   - component: {fileID: 5773834229773680643}
   - component: {fileID: -6469756955006370252}
-  - component: {fileID: -2836064245718863217}
+  - component: {fileID: 5777106583912659312}
   m_Layer: 8
   m_Name: Eagle
   m_TagString: Untagged
@@ -149,7 +149,7 @@ MonoBehaviour:
   moveSpeed: 10
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
---- !u!114 &-2836064245718863217
+--- !u!114 &5777106583912659312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,6 +252,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3234534608523408801}
     m_Modifications:
+    - target: {fileID: -1280990353411696599, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].Name
+      value: IsInactive
+      objectReference: {fileID: 0}
+    - target: {fileID: -1280990353411696599, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[2].Name
+      value: IsActive
+      objectReference: {fileID: 0}
+    - target: {fileID: -1280990353411696599, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].Name
+      value: IsDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: -1280990353411696599, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1280990353411696599, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1280990353411696599, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[2].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1280990353411696599, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].SynchronizeType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2349101317745625073, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -318,7 +346,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2349101317745625074, guid: 56c5d50db27d35a42b507931a8fdbab0, type: 3}
   m_PrefabInstance: {fileID: 8959214820057866755}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3354877794327361549
+--- !u!114 &8599528614883918666
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
