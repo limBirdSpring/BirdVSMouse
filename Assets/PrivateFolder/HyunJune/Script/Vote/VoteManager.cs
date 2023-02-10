@@ -9,7 +9,6 @@ using UnityEngine.UI;
 using Photon.Pun.UtilityScripts;
 using HyunJune;
 using TMPro;
-using static System.Net.Mime.MediaTypeNames;
 
 
 public enum VoteRole
