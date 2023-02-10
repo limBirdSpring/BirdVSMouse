@@ -57,6 +57,10 @@ namespace Saebom
         private List<Mission> missionList;
 
 
+        [SerializeField]
+        private GameObject completeText;
+
+
         [HideInInspector]
         public int mouseEmergency = 3;
 
@@ -202,6 +206,11 @@ namespace Saebom
                 yield return new WaitForSeconds(1.5f);
 
                 //ÄÞÇÃ¸®Æ® ÅØ½ºÆ® ¶ì¿ì±â
+                if (mission.GetScore())
+                {
+                    SoundManager.Instance.PlayUISound(UISFXName.ScoreUp);
+                    completeText.SetActive(true);
+                }
                 yield return new WaitForSeconds(1f);
 
                 mission.gameObject.SetActive(false);
