@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1002580128338788242}
   - component: {fileID: 5773834229773680643}
   - component: {fileID: 6672191483411938713}
+  - component: {fileID: 2585763027578961453}
   m_Layer: 8
   m_Name: Bat
   m_TagString: Untagged
@@ -128,6 +129,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1002580128338788242}
+  - {fileID: 2585763027578961453}
   - {fileID: 8105091577967715586}
   sceneViewId: 0
   InstantiationId: 0
@@ -145,9 +147,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  colli: {fileID: 4292339155410868487}
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
+--- !u!114 &2585763027578961453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234534607771640291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &3234534608523408734
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,12 +307,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3221146532980500508, guid: aabcb21f2b3f0dd488493a3f8910d5a9, type: 3}
   m_PrefabInstance: {fileID: 1556629738396311570}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7354329326361942617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8328723551655918155, guid: aabcb21f2b3f0dd488493a3f8910d5a9, type: 3}
+  m_PrefabInstance: {fileID: 1556629738396311570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2250336895428883008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7354329326361942617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &8105091577967715586 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7341240844636996880, guid: aabcb21f2b3f0dd488493a3f8910d5a9, type: 3}
   m_PrefabInstance: {fileID: 1556629738396311570}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7354329326361942617}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}

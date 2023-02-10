@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1002580128338788242}
   - component: {fileID: 5773834229773680643}
   - component: {fileID: -4283259618678630045}
+  - component: {fileID: 3139217933809720400}
   m_Layer: 8
   m_Name: KKoung
   m_TagString: Untagged
@@ -128,6 +129,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1002580128338788242}
+  - {fileID: 3139217933809720400}
   - {fileID: 1240815206249386273}
   sceneViewId: 0
   InstantiationId: 0
@@ -145,13 +147,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  colli: {fileID: 4292339155410868487}
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
-  killRangeCollider: {fileID: 5293404041358606904}
-  killRangeLayer:
-    serializedVersion: 2
-    m_Bits: 2048
+--- !u!114 &3139217933809720400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234534607771640291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &3234534608523408734
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,12 +302,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60214e779829a3746802c8f9213ef855, type: 3}
+--- !u!1 &198171860785947137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7545019883352607836, guid: 60214e779829a3746802c8f9213ef855, type: 3}
+  m_PrefabInstance: {fileID: 7671116542811188829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4165320521482519040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198171860785947137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1240815206249386273}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &1240815206249386273 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -338608894785355908, guid: 60214e779829a3746802c8f9213ef855, type: 3}
   m_PrefabInstance: {fileID: 7671116542811188829}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 198171860785947137}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
