@@ -193,8 +193,13 @@ public class VoteManager : MonoBehaviourPun
     public void FindDeadBody()
     {
         // 시체 발견 해서 RPC로 모두에게 EmergencyReport 한다
-        deadBodyFinder = true;
-        photonView.RPC("EmergencyReport", RpcTarget.All, null);
+        if ((PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight) ||
+           (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight))
+        {
+            deadBodyFinder = true;
+            photonView.RPC("EmergencyReport", RpcTarget.All, null);
+            MissionButton.Instance.Emergency();
+        }
     }
 
 

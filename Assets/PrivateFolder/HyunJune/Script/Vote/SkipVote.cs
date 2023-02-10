@@ -9,13 +9,13 @@ public class SkipVote : MonoBehaviour
     [SerializeField]
     private TMP_Text voteCountUI;
 
+    [SerializeField]
     private Button voteButton;
 
     private int voteCount;
 
     private void Awake()
     {
-        voteButton = GetComponent<Button>();
         voteButton.onClick.AddListener(OnSkipPressed);
     }
 
