@@ -9,6 +9,7 @@ using HyunJune;
 using System.Linq;
 using TMPro;
 using SoYoon;
+using UnityEngine.SocialPlatforms.Impl;
 
 
 //방장이 미션을 뽑음
@@ -227,6 +228,13 @@ namespace Saebom
             missionList[0].gameObject.GetComponent<BakMissionManager>().BakMissionResetCalled();
         }
 
+        public void MissionScreenOff()
+        {
+            foreach (Mission mission in missionList)
+            {
+                mission.gameObject.SetActive(false);
+            }
+        }
 
 
         public void Emergency()
