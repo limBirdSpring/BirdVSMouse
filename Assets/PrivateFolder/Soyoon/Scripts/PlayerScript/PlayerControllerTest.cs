@@ -277,6 +277,9 @@ namespace SoYoon
         {
             if (photonView.IsMine)
             {
+                if (state == PlayerState.Ghost)
+                    return;
+
                 if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
                 {
                     killButton.SetActive(true);
@@ -284,7 +287,12 @@ namespace SoYoon
                     killButton.GetComponent<KillButton>().target = targetPlayer.transform.parent.gameObject;
                     return;
                 }
-                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange") && state == PlayerState.Active)
+                else if(state == PlayerState.Inactive && (collision.gameObject.name == "MouseCowHouse" || collision.gameObject.name == "BirdCowHouse"
+                    || collision.gameObject.name == "Hangari" || collision.gameObject.name == "Cloth" || collision.gameObject.name == "Rope" || collision.gameObject.name == "Bag"))
+                {
+                    // !Do Nothing
+                }
+                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
                 {
                     Debug.Log("enter" + collision.gameObject.name);
                     Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
@@ -304,9 +312,10 @@ namespace SoYoon
                 if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
                 {
                     killButton.SetActive(false);
+                    targetPlayer = null;
                     return;
                 }
-                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange") && state == PlayerState.Active)
+                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
                 {
                     Debug.Log("exit" + collision.gameObject.name);
                     Saebom.MissionButton.Instance.MissionButtonOff();
