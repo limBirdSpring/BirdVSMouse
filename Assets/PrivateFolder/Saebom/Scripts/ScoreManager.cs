@@ -152,6 +152,10 @@ namespace Saebom
                 Destroy(corpse[i]);
             }
 
+            //미션창 없애기
+            MissionButton.Instance.MissionScreenOff();
+
+
             //박 100%일경우 0%로 초기화
 
             MissionButton.Instance.BakMissionReset();
