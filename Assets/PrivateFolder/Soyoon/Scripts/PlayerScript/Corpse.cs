@@ -3,8 +3,13 @@ using UnityEngine;
 
 namespace SoYoon
 {
-    public class Corpse : MonoBehaviourPun
+    public class Corpse : MonoBehaviour
     {
+        [HideInInspector]
+        public int playerNum;
+
+        private PhotonView targetPhotonView = null;
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             // 활동시기인 동물들은 모두 발견 가능 -> 신고(투표창)
@@ -14,16 +19,16 @@ namespace SoYoon
             {
                 //Debug.Log("On Collision");
                 PlayerControllerTest controller = collision.GetComponent<PlayerControllerTest>();
-                PhotonView photonView = collision.GetComponent<PhotonView>();
+                targetPhotonView = collision.GetComponent<PhotonView>();
 
-                if (photonView.IsMine)
+                if (targetPhotonView.IsMine)
                 {
                     if (controller.state == PlayerState.Active)
                     {
                         //Debug.Log("On active Collision");
                         InterActionAdapter adapter = gameObject.GetComponent<InterActionAdapter>();
                         adapter.OnInterAction.RemoveAllListeners();
-                        adapter.OnInterAction.AddListener(controller.FoundCorpse);
+                        adapter.OnInterAction.AddListener(FoundCorpse);
                         Saebom.MissionButton.Instance.inter = adapter;
                         Saebom.MissionButton.Instance.MissionButtonOn();
                     }
@@ -40,9 +45,20 @@ namespace SoYoon
             }
         }
 
-        public void DestroyCorpse()
+        private void OnDestroy()
         {
-            PhotonNetwork.Destroy(this.gameObject);
+            Saebom.MissionButton.Instance.MissionButtonOff();
+        }
+
+        private void FoundCorpse()
+        {
+            targetPhotonView.RPC("FoundCorpse", RpcTarget.All, playerNum);
+            Saebom.MissionButton.Instance.MissionButtonOff();
+        }
+
+        private void DestroyCorpse()
+        {
+            targetPhotonView.RPC("DestroyCorpse", RpcTarget.All, playerNum);
             Saebom.MissionButton.Instance.MissionButtonOff();
         }
     }
