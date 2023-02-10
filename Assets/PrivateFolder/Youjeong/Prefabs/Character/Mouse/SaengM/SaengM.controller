@@ -232,7 +232,7 @@ AnimatorController:
   m_Name: SaengM
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: isDeath
+  - m_Name: IsDeath
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -463,7 +463,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isDeath
+    m_ConditionEvent: IsDeath
     m_EventTreshold: 0
   - m_ConditionMode: 3
     m_ConditionEvent: Speed
@@ -566,7 +566,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isDeath
+    m_ConditionEvent: IsDeath
     m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: Speed

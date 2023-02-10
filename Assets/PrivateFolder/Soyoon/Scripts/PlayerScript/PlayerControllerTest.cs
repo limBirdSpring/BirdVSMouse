@@ -76,6 +76,7 @@ namespace SoYoon
             if (photonView.IsMine)
             {
                 Move();
+                photonView.RPC("Flip", RpcTarget.All, rigid.velocity.x);
                 AnimatorUpdate();
             }
         }
@@ -85,12 +86,16 @@ namespace SoYoon
             inputVec = joystick.inputVec;
 
             rigid.velocity = inputVec * moveSpeed;
+        }
 
-            if (rigid.velocity.x > 0)
+        [PunRPC]
+        public void Flip(float velocity)
+        {
+            if (velocity > 0)
             {
                 spriteRenderer.flipX = true;
             }
-            else if (rigid.velocity.x < 0)
+            else if (velocity < 0)
             {
                 spriteRenderer.flipX = false;
             }
@@ -109,11 +114,11 @@ namespace SoYoon
             corpse.tag = corpse.name;
             Corpse targetCorpse = corpse.GetComponent<Corpse>();
             targetCorpse.playerNum = photonView.Owner.GetPlayerNumber();
-            anim.SetTrigger("isDeath");
             SetPlayerState(PlayerState.Ghost);
             // TODO : 킬되는 화면 뜨는 것 구현
             if (photonView.IsMine)
             {
+                anim.SetTrigger("IsDeath");
                 GameObject.Find("KillCanvas").transform.GetChild(0).gameObject.SetActive(true);
                 Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
             }
@@ -122,10 +127,12 @@ namespace SoYoon
         [PunRPC]
         public void VoteDie() // 투표로 죽을 시 호출되는 함수
         {
-            anim.SetTrigger("isDeath");
             SetPlayerState(PlayerState.Ghost);
             if (photonView.IsMine)
+            {
+                anim.SetTrigger("IsDeath");
                 Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
+            }
         }
 
         [PunRPC]
@@ -138,10 +145,12 @@ namespace SoYoon
                 corpse.tag = corpse.name;
                 Corpse targetCorpse = corpse.GetComponent<Corpse>();
                 targetCorpse.playerNum = photonView.Owner.GetPlayerNumber();
-                anim.SetTrigger("isDeath");
                 SetPlayerState(PlayerState.Ghost);
                 if (photonView.IsMine)
+                {
+                    anim.SetTrigger("IsDeath");
                     Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
+                }
             }
         }
 
@@ -190,7 +199,8 @@ namespace SoYoon
         {
             Debug.Log(photonView.Owner.GetPlayerNumber() + "비활성화");
             // 비활동시기(내 활동시간이 아닐경우)
-            anim.SetTrigger("IsInactive");
+            if(photonView.IsMine)
+                anim.SetTrigger("IsInactive");
             SetPlayerState(PlayerState.Inactive);
 
         }
@@ -199,7 +209,8 @@ namespace SoYoon
         {
             Debug.Log(photonView.Owner.GetPlayerNumber() + "활성화");
             // 활동시기
-            anim.SetTrigger("IsActive");
+            if (photonView.IsMine)
+                anim.SetTrigger("IsActive");
             SetPlayerState(PlayerState.Active);
         }
 
