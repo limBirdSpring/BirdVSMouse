@@ -45,6 +45,15 @@ namespace SoYoon
             }
         }
 
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || collision.gameObject.layer == LayerMask.NameToLayer("InActive"))
+            {
+                if (targetPhotonView.IsMine)
+                    Saebom.MissionButton.Instance.MissionButtonOff();
+            }
+        }
+
         private void OnDestroy()
         {
             Saebom.MissionButton.Instance.MissionButtonOff();
