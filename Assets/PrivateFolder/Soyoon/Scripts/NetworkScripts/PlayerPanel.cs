@@ -16,6 +16,10 @@ namespace SoYoon
         private Image playerBadge1;
         [SerializeField]
         private Image playerBadge2;
+        [SerializeField]
+        private GameObject photoWindow;
+        [SerializeField]
+        private GameObject badgeWindow;
 
         [SerializeField]
         private MyInfo myInfo;
@@ -93,6 +97,14 @@ namespace SoYoon
         }
         #endregion
 
+        public void PhotoButtonClicked()
+        {
+            photoWindow.SetActive(true);
+        }
 
+        public void BadgeButtonClicked()
+        {
+            badgeWindow.SetActive(true);
+        }
     }
 }
