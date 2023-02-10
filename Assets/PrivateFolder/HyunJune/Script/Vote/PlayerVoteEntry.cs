@@ -52,7 +52,7 @@ public class PlayerVoteEntry : MonoBehaviourPun
         finder.enabled = false;
         voteComplete.enabled = false;
 
-        if (PlayGameManager.Instance.playerList[ActorNumber].isDie)
+        if (PlayGameManager.Instance.playerList[player.GetPlayerNumber()].isDie)
         {
             ToggleButton(false);
         }
