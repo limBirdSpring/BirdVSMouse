@@ -92,5 +92,7 @@ namespace SoYoon
             myInfo.lastChosenBadge2 = playerBadge2.sprite;
         }
         #endregion
+
+
     }
 }
