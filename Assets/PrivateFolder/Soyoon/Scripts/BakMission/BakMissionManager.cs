@@ -1,17 +1,13 @@
 using Photon.Pun;
-using Photon.Realtime;
-using Saebom;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 using Player = Photon.Realtime.Player;
 
 namespace SoYoon
 {
-    public class BakMissionManager : Mission
+    public class BakMissionManager : MonoBehaviourPunCallbacks
     {
         [SerializeField]
         private BakMission bakMission;
@@ -115,16 +111,6 @@ namespace SoYoon
                 BakMissionComplete();
             }
             Debug.Log(CurBakProgress);
-        }
-
-        public override bool GetScore()
-        {
-            // 최종으로 확인할 경우에는 모든 플레이어의 GetScore함수를 호출한 뒤
-            // 한 명이라도 true를 반환하면 성공으로 처리
-            if (curBakProgress >= 100)
-                return true;
-            else
-                return false;
         }
 
         public void BakMissionCompleteCalled()
