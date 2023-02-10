@@ -81,7 +81,8 @@ public class VoteManager : MonoBehaviourPun
     {
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            FindDeadBody();
+            //FindDeadBody();
+            photonView.RPC("EmergencyReport", RpcTarget.All, null);
         }       
 
         if (Input.GetButtonDown("Submit"))
@@ -155,7 +156,7 @@ public class VoteManager : MonoBehaviourPun
         // 채팅을 보낸 사람이 내가 아니라면 나의 역할에 따라 채팅을 분별
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
         {
-            if (PhotonNetwork.LocalPlayer.ActorNumber != player.Value.ActorNumber)
+            if (actorNumeber != player.Value.ActorNumber)
                 return;
 
             switch (myRole)
@@ -280,6 +281,7 @@ public class VoteManager : MonoBehaviourPun
         {
             Destroy(playerVoteEntries[i].gameObject);
         }
+        playerVoteEntries.Clear();
 
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
         {
