@@ -33,6 +33,22 @@ public class VoteToDeath : MonoBehaviour
         Init();
     }
 
+    private void OnEnable()
+    {
+        if (state.isBird)
+        {
+            birdVote.enabled = true;
+            target.sprite = state.sprite;
+            target.enabled = true;
+        }
+        else
+        {
+            mouseVote.enabled = true;
+            target.sprite = state.sprite;
+            target.enabled = true;
+        }
+    }
+
     public void Init()
     {
         birdVote.enabled = false;
@@ -48,23 +64,6 @@ public class VoteToDeath : MonoBehaviour
     public void Setting(Saebom.PlayerState state)
     {
         this.state = state;
-        // 새냐
-        if (state.isBird)
-        {
-            Debug.Log("나는 새다");
-            Debug.Log(state.name);
-            birdVote.enabled = true;
-            target.sprite = state.sprite;
-            target.enabled = true;
-        }
-        // 쥐냐
-        else
-        {
-            Debug.Log("나는 쥐다");
-            mouseVote.enabled = true;
-            target.sprite = state.sprite;
-            target.enabled = true;
-        }
     }
 
     public void SwitchForm()
