@@ -34,13 +34,12 @@ public class PlayerVoteEntry : MonoBehaviourPun
     private void Awake()
     {
         voteButton = GetComponent<Button>();
+        voteButton.onClick.AddListener(OnVotePressed);
     }
 
     public void OnVotePressed()
     {
         VoteManager.Instance.Vote(actorNumber);
-
-        photonView.RPC("AddVoteCount", RpcTarget.All, null);
     }
 
     public void Initialized(Photon.Realtime.Player player)

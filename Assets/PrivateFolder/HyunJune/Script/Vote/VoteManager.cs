@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using Photon.Pun.UtilityScripts;
 using HyunJune;
 using TMPro;
+using static System.Net.Mime.MediaTypeNames;
 
 
 public enum VoteRole
@@ -41,9 +42,9 @@ public class VoteManager : MonoBehaviourPun
     private List<int> voteCompletePlayerList = new List<int>();
 
     [SerializeField]
-    private Button skipButton;
-    [SerializeField]
     private SkipVote skipVote;
+    [SerializeField]
+    private TMP_Text timer;
 
     [SerializeField]
     private PlayerController controller;
@@ -58,8 +59,15 @@ public class VoteManager : MonoBehaviourPun
     [SerializeField]
     private Transform chatContent;
 
+    private List<TextBox> textList = new List<TextBox>();
+
+    [Header("VoteToDeathWindow")]
+    [SerializeField]
+    private VoteToDeath voteToDeathWindow;
+
     public bool deadBodyFinder = false;
     private bool voteComplete = false;
+    private int participantCount;
     private VoteRole myRole;
 
     private void Awake()
@@ -67,6 +75,12 @@ public class VoteManager : MonoBehaviourPun
         Instance = this;
         //FindObjectsOfType<PlayerController>();
         chatInputField.characterLimit = 30;
+    }
+
+    private void OnEnable()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(StartTimer(99f));
     }
 
     // 지워야 한다
@@ -82,6 +96,7 @@ public class VoteManager : MonoBehaviourPun
             if (chatInputField.IsActive() && chatInputField.text != "")
             {
                 photonView.RPC("SendMessage", RpcTarget.All, chatInputField.text, PhotonNetwork.LocalPlayer.ActorNumber);
+                chatInputField.text = "";
             }
             else
             {
@@ -91,6 +106,41 @@ public class VoteManager : MonoBehaviourPun
         }
     }
 
+    private IEnumerator StartTimer(float time)
+    {
+        while (time < 0)
+        {
+            time -= Time.deltaTime;
+            timer.text = time.ToString("F0");
+            yield return null;
+        }
+
+        time = 0;
+        timer.text = time.ToString("F0");
+        photonView.RPC("FocedSkip", RpcTarget.All, null);
+    }
+
+    [PunRPC]
+    public void FocedSkip()
+    {
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            // 참가자면 리턴
+            if (spectatorList.Contains(player.Value.ActorNumber))
+                return;
+
+            // 사망자면 리턴
+            if (deadList.Contains(player.Value.ActorNumber))
+                return;
+
+            // 투표를 했으면 리턴
+            if (voteCompletePlayerList.Contains(player.Value.ActorNumber))
+                return;
+
+            // 강제 스킵 발동
+            VoteSkip();
+        }
+    }
 
     [PunRPC]
     private void SendMessage(string message, int actorNumeber)
@@ -99,10 +149,12 @@ public class VoteManager : MonoBehaviourPun
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             // 채팅을 보내는 사람이 나라면 내 프리팹으로 바로 대화 생성
-            if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumeber)
+            if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumeber &&
+                PhotonNetwork.LocalPlayer.ActorNumber == player.Value.ActorNumber)
             {
                 TextBox text = Instantiate(myTextBoxPrefab, chatContent);
                 text.SetMessage(player.Value, message);
+                textList.Add(text);
                 return;
             }  
         }
@@ -122,6 +174,7 @@ public class VoteManager : MonoBehaviourPun
                     {
                         TextBox text = Instantiate(otherTextBoxPrefab, chatContent);
                         text.SetMessage(player.Value, message);
+                        textList.Add(text);
                     }
                     break;
                 // 내가 관전자일 경우 참가자의 채팅
@@ -132,11 +185,13 @@ public class VoteManager : MonoBehaviourPun
                              
                     TextBox text2 = Instantiate(otherTextBoxPrefab, chatContent);
                     text2.SetMessage(player.Value, message);
+                    textList.Add(text2);
                     break;
                 // 내가 사망자일 경우 모든 채팅을 받는다
                 case VoteRole.Dead:
                     TextBox text3 = Instantiate(otherTextBoxPrefab, chatContent);
                     text3.SetMessage(player.Value, message);
+                    textList.Add(text3);
                     break;
             }
         }
@@ -154,9 +209,11 @@ public class VoteManager : MonoBehaviourPun
     public void EmergencyReport()
     {
         // 긴급 보고
+        TimeManager.Instance.TimeStop();
         SetUpPlayerState();
         AddAlivePlayerEntry();
         SetRole();
+        skipVote.Initialized();
 
         voteWindow.gameObject.SetActive(true);
     }
@@ -221,7 +278,7 @@ public class VoteManager : MonoBehaviourPun
         // playerVoteEntries 초기화
         for (int i = 0; i < playerVoteEntries.Count; i++)
         {
-            Destroy(playerVoteEntries[0].gameObject);
+            Destroy(playerVoteEntries[i].gameObject);
         }
 
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
@@ -245,6 +302,12 @@ public class VoteManager : MonoBehaviourPun
         if (voteComplete)
             return;
 
+        if (spectatorList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
+            return;
+
+        if (deadList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
+            return;
+
         voteComplete = true;
         ToggleAllButton(false);
         photonView.RPC("SetSkipCount", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
@@ -264,12 +327,20 @@ public class VoteManager : MonoBehaviourPun
                 voteCompletePlayerList.Add(entry.ActorNumber);
             }
         }
+
+        VotingResult();
     }
 
     public void Vote(int target)
     {
         // 이미 투표를 했으면 리턴
         if (voteComplete)
+            return;
+
+        if (spectatorList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
+            return;
+
+        if (deadList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
             return;
 
         // 나 자신이면 리턴
@@ -284,22 +355,6 @@ public class VoteManager : MonoBehaviourPun
     [PunRPC]
     public void VoteCheckRPC(int actorNumber, int target)
     {
-        int alivePlayerCount = 0;
-        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
-        {
-            // 관전자면 컨티뉴
-            if (spectatorList.Contains(player.Key))
-                continue;
-
-            // 죽었으면 컨티뉴
-            if (PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()].isDie)
-                continue;
-
-            alivePlayerCount++;
-        }
-
-        int participantCount = alivePlayerCount;
-
         foreach (PlayerVoteEntry entry in playerVoteEntries)
         {
             // 만약 투표한 사람의 액터넘버가 엔트리의 액터넘버랑 똑같다면 투표완료 업데이트
@@ -322,10 +377,37 @@ public class VoteManager : MonoBehaviourPun
             voteCompletePlayerList.Add(actorNumber);
         }
 
+        VotingResult();
+    }
 
+    public int CalculateAlivePlayer()
+    {
+        int alivePlayerCount = 0;
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            // 관전자면 컨티뉴
+            if (spectatorList.Contains(player.Key))
+                continue;
+
+            // 죽었으면 컨티뉴
+            if (PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()].isDie)
+                continue;
+
+            alivePlayerCount++;
+        }
+
+        participantCount = alivePlayerCount;
+
+        return participantCount;
+    }
+
+    public void VotingResult()
+    {
         // 방장이 아니라면 여기서 리턴
         if (!PhotonNetwork.IsMasterClient)
             return;
+
+        CalculateAlivePlayer();
 
         // 투표자 수가 참가자의 수보다 적으면 리턴
         if (voteCompletePlayerList.Count < participantCount)
@@ -362,22 +444,97 @@ public class VoteManager : MonoBehaviourPun
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber)
             controller.Die();
+        
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            if (player.Value.ActorNumber != actorNumber)
+                continue;
 
-        // 사망 씬?
+            voteToDeathWindow.Init();
+            voteToDeathWindow.Setting(PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()]);
+        }
+
+
+        voteToDeathWindow.gameObject.SetActive(true);
+        StartCoroutine(VotingEnd());
+    }
+
+    public IEnumerator VotingEnd()
+    {
+        yield return new WaitForSeconds(10);
+        photonView.RPC("VotingEndRPC", RpcTarget.All, null);
     }
 
     [PunRPC]
-    private void VotingEnd()
+    private void VotingEndRPC()
     {
         // 투표 종료
+        CheckGameOver();
+
+        ResetText();
+        voteWindow.SetActive(false);
+        voteToDeathWindow.Init();
         deadBodyFinder = false;
         voteComplete = false;
-        voteWindow.SetActive(false);
+        myRole = VoteRole.None;
+        participantCount = 0;
+        voteToDeathWindow.gameObject.SetActive(false);
+        TimeManager.Instance.TimeResume();
+    }
+
+    private void ResetText()
+    {
+        for(int i = 0; i < textList.Count; i++)
+        {
+            Destroy(textList[i].gameObject);
+        }
+        textList.Clear();
+    }
+
+    public void CheckGameOver()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
+        int spy = 0;
+        int noneSpy = 0;
+
+        foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            // 관전자 제외
+            if (spectatorList.Contains(player.Value.ActorNumber))
+                continue;
+
+            // 사망자 제외
+            if (PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()].isDie)
+                continue;
+
+            // 스파이면 스파이 증가
+            if (PlayGameManager.Instance.playerList[player.Value.GetPlayerNumber()].isSpy)
+                spy++;
+            // 일반 시민이면 시민 증가
+            else
+                noneSpy++;
+        }
+
+        //스파이가 없으면 시민 승리
+        if (spy == 0)
+        {
+            ScoreManager.Instance.ActiveTimeOverNow();
+        }
+        // 스파이와 시민이 같은 인원이면 스파이팀 승리
+        else if (spy == noneSpy)
+        {
+            ScoreManager.Instance.ActiveTimeOverNow();
+        }
+        // 둘다 아니면 게임 지속
+        else
+            return;
     }
 
     public void ToggleAllButton(bool toggle)
     {
-        skipButton.interactable = toggle;
+        skipVote.ToggleButton(toggle); 
         foreach (PlayerVoteEntry entry in playerVoteEntries)
         {
             entry.ToggleButton(toggle);

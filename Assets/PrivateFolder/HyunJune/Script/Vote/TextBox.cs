@@ -26,12 +26,12 @@ namespace HyunJune
             playerMessage.text = message;
 
             if (PlayGameManager.Instance.playerList[player.GetPlayerNumber()].isBird)
-                playerName.color = Color.red;
+                playerMessage.color = new Color32(255, 105, 105, 255);
             else
-                playerName.color = Color.blue;
+                playerMessage.color = new Color32(107, 201, 255, 255);
 
             if (PlayGameManager.Instance.playerList[player.GetPlayerNumber()].isDie)
-                playerName.color = Color.gray;
+                playerMessage.color = Color.gray;
         }
     }
 }
