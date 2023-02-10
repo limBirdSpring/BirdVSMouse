@@ -77,6 +77,9 @@ namespace Saebom
         [SerializeField]
         private GameObject exitButton;
 
+        [SerializeField]
+        private GameObject blockButton;
+
         //=======================================
 
         private int masterCheck = 0;
@@ -102,11 +105,12 @@ namespace Saebom
         }
         private IEnumerator CallScoreResultWindowCor()
         {
-
+            blockButton.SetActive(true);
 
 
             yield return new WaitForSeconds(2f);
 
+            
 
             StartCoroutine(MissionButton.Instance.MissionCheckCor());
 
@@ -138,9 +142,6 @@ namespace Saebom
             if (TimeManager.Instance.isCurNight)
                 TurnResult();
 
-            photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
-
-
             Inventory.Instance.DeleteItem();//인벤토리 비우기
 
             //시체없애기
@@ -154,6 +155,10 @@ namespace Saebom
             //박 100%일경우 0%로 초기화
 
             MissionButton.Instance.BakMissionReset();
+
+            blockButton.SetActive(false);
+
+            photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
 
         }
 
