@@ -33,7 +33,6 @@ namespace Youjeong
 
         private void Awake()
         {
-            //GetComponent<AudioSource>().Play();
             hangariManager = GetComponent<HangariManager>();
         }
 
