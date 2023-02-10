@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using Photon.Pun.UtilityScripts;
 using HyunJune;
 using TMPro;
+using static System.Net.Mime.MediaTypeNames;
 
 
 public enum VoteRole
@@ -41,8 +42,6 @@ public class VoteManager : MonoBehaviourPun
     private List<int> voteCompletePlayerList = new List<int>();
 
     [SerializeField]
-    private Button skipButton;
-    [SerializeField]
     private SkipVote skipVote;
     [SerializeField]
     private TMP_Text timer;
@@ -60,6 +59,8 @@ public class VoteManager : MonoBehaviourPun
     [SerializeField]
     private Transform chatContent;
 
+    private List<TextBox> textList = new List<TextBox>();
+
     [Header("VoteToDeathWindow")]
     [SerializeField]
     private VoteToDeath voteToDeathWindow;
@@ -74,7 +75,6 @@ public class VoteManager : MonoBehaviourPun
         Instance = this;
         //FindObjectsOfType<PlayerController>();
         chatInputField.characterLimit = 30;
-        skipButton.onClick.AddListener(VoteSkip);
     }
 
     private void OnEnable()
@@ -154,6 +154,7 @@ public class VoteManager : MonoBehaviourPun
             {
                 TextBox text = Instantiate(myTextBoxPrefab, chatContent);
                 text.SetMessage(player.Value, message);
+                textList.Add(text);
                 return;
             }  
         }
@@ -173,6 +174,7 @@ public class VoteManager : MonoBehaviourPun
                     {
                         TextBox text = Instantiate(otherTextBoxPrefab, chatContent);
                         text.SetMessage(player.Value, message);
+                        textList.Add(text);
                     }
                     break;
                 // 내가 관전자일 경우 참가자의 채팅
@@ -183,11 +185,13 @@ public class VoteManager : MonoBehaviourPun
                              
                     TextBox text2 = Instantiate(otherTextBoxPrefab, chatContent);
                     text2.SetMessage(player.Value, message);
+                    textList.Add(text2);
                     break;
                 // 내가 사망자일 경우 모든 채팅을 받는다
                 case VoteRole.Dead:
                     TextBox text3 = Instantiate(otherTextBoxPrefab, chatContent);
                     text3.SetMessage(player.Value, message);
+                    textList.Add(text3);
                     break;
             }
         }
@@ -209,6 +213,7 @@ public class VoteManager : MonoBehaviourPun
         SetUpPlayerState();
         AddAlivePlayerEntry();
         SetRole();
+        skipVote.Initialized();
 
         voteWindow.gameObject.SetActive(true);
     }
@@ -273,7 +278,7 @@ public class VoteManager : MonoBehaviourPun
         // playerVoteEntries 초기화
         for (int i = 0; i < playerVoteEntries.Count; i++)
         {
-            Destroy(playerVoteEntries[0].gameObject);
+            Destroy(playerVoteEntries[i].gameObject);
         }
 
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
@@ -466,7 +471,7 @@ public class VoteManager : MonoBehaviourPun
         // 투표 종료
         CheckGameOver();
 
-
+        ResetText();
         voteWindow.SetActive(false);
         voteToDeathWindow.Init();
         deadBodyFinder = false;
@@ -475,6 +480,15 @@ public class VoteManager : MonoBehaviourPun
         participantCount = 0;
         voteToDeathWindow.gameObject.SetActive(false);
         TimeManager.Instance.TimeResume();
+    }
+
+    private void ResetText()
+    {
+        for(int i = 0; i < textList.Count; i++)
+        {
+            Destroy(textList[i].gameObject);
+        }
+        textList.Clear();
     }
 
     public void CheckGameOver()
@@ -520,7 +534,7 @@ public class VoteManager : MonoBehaviourPun
 
     public void ToggleAllButton(bool toggle)
     {
-        skipButton.interactable = toggle;
+        skipVote.ToggleButton(toggle); 
         foreach (PlayerVoteEntry entry in playerVoteEntries)
         {
             entry.ToggleButton(toggle);
