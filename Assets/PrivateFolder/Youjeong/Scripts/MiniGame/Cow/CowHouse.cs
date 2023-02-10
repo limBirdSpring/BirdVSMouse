@@ -18,6 +18,9 @@ namespace Youjeong
         [SerializeField]
         private Button plusButton;
 
+        [SerializeField]
+        private AudioSource audioCowMoo;
+
         public bool isBirdHouse { get; private set; }
         public bool isClicked { get; private set; } = false;
 
@@ -58,7 +61,9 @@ namespace Youjeong
                 return;
             if (Inventory.Instance.isItemSet("Cow"))
                 return;
+            
             isClicked = true;
+            AudioPlay();
             OneMoreCow();
         }
 
@@ -86,7 +91,13 @@ namespace Youjeong
             if (!isCow)
                 return;
             Inventory.Instance.DeleteItem();
+            AudioPlay();
             OneMoreCow();
+        }
+
+        private void AudioPlay()
+        {
+            audioCowMoo.Play();
         }
     }
 }
