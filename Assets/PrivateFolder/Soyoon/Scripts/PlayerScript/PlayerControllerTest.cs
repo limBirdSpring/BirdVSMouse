@@ -277,6 +277,10 @@ namespace SoYoon
         {
             if (photonView.IsMine)
             {
+                if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
+                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
+                    isInHouse = true;
+
                 if (state == PlayerState.Ghost)
                     return;
 
@@ -298,10 +302,6 @@ namespace SoYoon
                     Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
                     Saebom.MissionButton.Instance.MissionButtonOn();
                 }
-
-                if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
-                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
-                    isInHouse = true;
             }
         }
         
