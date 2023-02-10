@@ -9,6 +9,7 @@ using HyunJune;
 using System.Linq;
 using TMPro;
 using SoYoon;
+using UnityEngine.SocialPlatforms.Impl;
 
 
 //방장이 미션을 뽑음
@@ -55,6 +56,10 @@ namespace Saebom
 
         [SerializeField]
         private List<Mission> missionList;
+
+
+        [SerializeField]
+        private GameObject completeText;
 
 
         [HideInInspector]
@@ -202,6 +207,11 @@ namespace Saebom
                 yield return new WaitForSeconds(1.5f);
 
                 //콤플리트 텍스트 띠우기
+                if (mission.GetScore())
+                {
+                    SoundManager.Instance.PlayUISound(UISFXName.ScoreUp);
+                    completeText.SetActive(true);
+                }
                 yield return new WaitForSeconds(1f);
 
                 mission.gameObject.SetActive(false);
@@ -218,6 +228,13 @@ namespace Saebom
             missionList[0].gameObject.GetComponent<BakMissionManager>().BakMissionResetCalled();
         }
 
+        public void MissionScreenOff()
+        {
+            foreach (Mission mission in missionList)
+            {
+                mission.gameObject.SetActive(false);
+            }
+        }
 
 
         public void Emergency()

@@ -9,7 +9,6 @@ using UnityEngine.UI;
 using Photon.Pun.UtilityScripts;
 using HyunJune;
 using TMPro;
-using static System.Net.Mime.MediaTypeNames;
 
 
 public enum VoteRole
@@ -75,12 +74,6 @@ public class VoteManager : MonoBehaviourPun
         Instance = this;
         //FindObjectsOfType<PlayerController>();
         chatInputField.characterLimit = 30;
-    }
-
-    private void OnEnable()
-    {
-        if (PhotonNetwork.IsMasterClient)
-            StartCoroutine(StartTimer(99f));
     }
 
     // 지워야 한다
@@ -200,8 +193,13 @@ public class VoteManager : MonoBehaviourPun
     public void FindDeadBody()
     {
         // 시체 발견 해서 RPC로 모두에게 EmergencyReport 한다
-        deadBodyFinder = true;
-        photonView.RPC("EmergencyReport", RpcTarget.All, null);
+        if ((PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight) ||
+           (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight))
+        {
+            deadBodyFinder = true;
+            photonView.RPC("EmergencyReport", RpcTarget.All, null);
+            MissionButton.Instance.Emergency();
+        }
     }
 
 
@@ -214,6 +212,8 @@ public class VoteManager : MonoBehaviourPun
         AddAlivePlayerEntry();
         SetRole();
         skipVote.Initialized();
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(StartTimer(99f));
 
         voteWindow.gameObject.SetActive(true);
     }

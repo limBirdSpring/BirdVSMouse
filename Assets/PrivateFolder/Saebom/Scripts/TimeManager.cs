@@ -224,8 +224,21 @@ namespace Saebom
             //2초 뒤 점수 확인 출력
             ScoreManager.Instance.CallScoreResultWindow();
 
-            
 
+            for (int i = 0; i < PlayGameManager.Instance.playerList.Count; i++)
+            {
+                PlayerControllerTest controller = PlayGameManager.Instance.playerList[i].playerPrefab.GetComponent<PlayerControllerTest>();
+                Debug.Log("player list count : " + PlayGameManager.Instance.playerList.Count);
+
+                if (curTime == halfTime)
+                {
+                    controller.SetActiveOrInactive(true);
+                }
+                else if (curTime == maxTime)
+                {
+                    controller.SetActiveOrInactive(false);
+                }
+            }
         }
 
         public void FinishScoreTimeSet()

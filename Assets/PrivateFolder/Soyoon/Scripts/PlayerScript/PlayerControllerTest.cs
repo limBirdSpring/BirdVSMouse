@@ -32,11 +32,14 @@ namespace SoYoon
         private GameObject targetPlayer;
         private Collider2D killRangeCollider;
 
+        private bool isInHouse;
+
         private Vector2 inputVec;
-        public PlayerState state { get; private set; } = PlayerState.Active;
+        public PlayerState state { get; private set; }
 
         private void Awake()
         {
+            // 변수 세팅
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             anim = GetComponentInChildren<Animator>();
             rigid = GetComponent<Rigidbody2D>();
@@ -47,27 +50,25 @@ namespace SoYoon
             killButtonGray = uiCanvas.GetChild(10).gameObject;
             killButton = uiCanvas.GetChild(11).gameObject;
             killRangeCollider = gameObject.transform.GetChild(1).GetComponent<Collider2D>();
-            //Debug.Log(killRangeCollider.name);
         }
 
         private void Start()
         {
-            if(photonView.IsMine)
-            {                
+            if (photonView.IsMine)
+            {
                 // ScoreManager.Instance.player = this;
                 CinemachineVirtualCamera playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
                 playerCam.Follow = this.transform;
                 playerCam.LookAt = this.transform;
                 targetPlayer = null;
-                //if(PlayGameManager.Instance.myPlayerState.isSpy)
-                //    killButtonGray.SetActive(true);
             }
 
-            if (PlayGameManager.Instance.myPlayerState.isBird == false)
-                SetPlayerState(PlayerState.Inactive);
+            isInHouse = false;
+
+            if (PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird)
+                OnActive();
             else
-                SetPlayerState(PlayerState.Active);
-            //SetPlayerState(PlayerState.Active);
+                OnInactive();
         }
 
         private void Update()
@@ -75,6 +76,7 @@ namespace SoYoon
             if (photonView.IsMine)
             {
                 Move();
+                photonView.RPC("Flip", RpcTarget.All, rigid.velocity.x);
                 AnimatorUpdate();
             }
         }
@@ -84,12 +86,16 @@ namespace SoYoon
             inputVec = joystick.inputVec;
 
             rigid.velocity = inputVec * moveSpeed;
+        }
 
-            if (rigid.velocity.x > 0)
+        [PunRPC]
+        public void Flip(float velocity)
+        {
+            if (velocity > 0)
             {
                 spriteRenderer.flipX = true;
             }
-            else if (rigid.velocity.x < 0)
+            else if (velocity < 0)
             {
                 spriteRenderer.flipX = false;
             }
@@ -106,22 +112,82 @@ namespace SoYoon
             GameObject corpse = Instantiate(death, transform.position, Quaternion.identity);
             corpse.name = "Corpse";
             corpse.tag = corpse.name;
-            // TODO : 킬되는 화면 뜨는 것 구현
-            anim.SetTrigger("isDeath");
+            Corpse targetCorpse = corpse.GetComponent<Corpse>();
+            targetCorpse.playerNum = photonView.Owner.GetPlayerNumber();
             SetPlayerState(PlayerState.Ghost);
-            Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
-        }
-
-        public void VoteDie() // 투표로 죽을 시 호출되는 함수
-        {
-
+            // TODO : 킬되는 화면 뜨는 것 구현
+            if (photonView.IsMine)
+            {
+                anim.SetTrigger("IsDeath");
+                GameObject.Find("KillCanvas").transform.GetChild(0).gameObject.SetActive(true);
+                Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
+            }
         }
 
         [PunRPC]
-        public void FoundCorpse()
+        public void VoteDie() // 투표로 죽을 시 호출되는 함수
         {
-            Saebom.MissionButton.Instance.MissionButtonOff();
+            SetPlayerState(PlayerState.Ghost);
+            if (photonView.IsMine)
+            {
+                anim.SetTrigger("IsDeath");
+                Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
+            }
+        }
+
+        [PunRPC]
+        public void CheckIfIsInHouse() // 제한 시간 내 집에 가지 못했을 시 호출되는 함수
+        {
+            if (!isInHouse && state == PlayerState.Active)
+            {
+                GameObject corpse = Instantiate(death, transform.position, Quaternion.identity);
+                corpse.name = "Corpse";
+                corpse.tag = corpse.name;
+                Corpse targetCorpse = corpse.GetComponent<Corpse>();
+                targetCorpse.playerNum = photonView.Owner.GetPlayerNumber();
+                SetPlayerState(PlayerState.Ghost);
+                if (photonView.IsMine)
+                {
+                    anim.SetTrigger("IsDeath");
+                    Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
+                }
+            }
+        }
+
+        [PunRPC]
+        public void FoundCorpse(int playerNum)
+        {
             GameObject.Find("VoteCanvas").transform.GetChild(0).gameObject.SetActive(true);
+        }
+
+        [PunRPC]
+        public void DestroyCorpse(int playerNum)
+        {
+            GameObject[] objs = GameObject.FindGameObjectsWithTag("Corpse");
+
+            foreach(GameObject obj in objs)
+            {
+                if (obj.GetComponent<Corpse>().playerNum == playerNum)
+                {
+                    Destroy(obj);
+                    return;
+                }
+            }
+        }
+
+        public void SetActiveOrInactive(bool turnToNight)
+        {
+            if (state == PlayerState.Ghost)
+                return;
+
+            Debug.Log("player num : " + photonView.Owner.GetPlayerNumber());
+            Debug.Log("is bird : " + PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird);
+            Debug.Log("turn to night : " + turnToNight);
+            if ((PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird && !turnToNight)
+                || (!PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird && turnToNight))
+                OnActive();
+            else
+                OnInactive();
         }
 
         private void SetNamePosition()
@@ -131,16 +197,20 @@ namespace SoYoon
 
         public void OnInactive()
         {
+            Debug.Log(photonView.Owner.GetPlayerNumber() + "비활성화");
             // 비활동시기(내 활동시간이 아닐경우)
-            anim.SetTrigger("IsInactive");
+            if(photonView.IsMine)
+                anim.SetTrigger("IsInactive");
             SetPlayerState(PlayerState.Inactive);
 
         }
 
         public void OnActive()
         {
+            Debug.Log(photonView.Owner.GetPlayerNumber() + "활성화");
             // 활동시기
-            anim.SetTrigger("IsActive");
+            if (photonView.IsMine)
+                anim.SetTrigger("IsActive");
             SetPlayerState(PlayerState.Active);
         }
 
@@ -164,6 +234,8 @@ namespace SoYoon
                     if (photonView.IsMine)
                     {
                         cullingMask.OnLayerMask(LayerMask.NameToLayer("InActive"));
+                        cullingMask.OffLayerMask(LayerMask.NameToLayer("Ghost"));
+                        cullingMask.OffLayerMask(LayerMask.NameToLayer("Shadow"));
                     }
                     SetKillRange();
                     break;
@@ -212,12 +284,16 @@ namespace SoYoon
                     killButton.GetComponent<KillButton>().target = targetPlayer.transform.parent.gameObject;
                     return;
                 }
-                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
+                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange") && state == PlayerState.Active)
                 {
                     Debug.Log("enter" + collision.gameObject.name);
                     Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
                     Saebom.MissionButton.Instance.MissionButtonOn();
                 }
+
+                if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
+                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
+                    isInHouse = true;
             }
         }
         
@@ -230,11 +306,15 @@ namespace SoYoon
                     killButton.SetActive(false);
                     return;
                 }
-                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
+                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange") && state == PlayerState.Active)
                 {
                     Debug.Log("exit" + collision.gameObject.name);
                     Saebom.MissionButton.Instance.MissionButtonOff();
                 }
+
+                if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
+                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
+                    isInHouse = false;
             }
         }
     }
