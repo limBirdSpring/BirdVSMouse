@@ -13,6 +13,6 @@ public class TitleSceneAnim : MonoBehaviour
     private void OnEnable()
     {
         bird.SetTrigger("Move");
-        mouse.SetTrigger("Move");
+        mouse.enabled = true;
     }
 }
