@@ -76,12 +76,6 @@ public class VoteManager : MonoBehaviourPun
         chatInputField.characterLimit = 30;
     }
 
-    private void OnEnable()
-    {
-        if (PhotonNetwork.IsMasterClient)
-            StartCoroutine(StartTimer(99f));
-    }
-
     // 지워야 한다
     private void Update()
     {
@@ -213,6 +207,8 @@ public class VoteManager : MonoBehaviourPun
         AddAlivePlayerEntry();
         SetRole();
         skipVote.Initialized();
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(StartTimer(99f));
 
         voteWindow.gameObject.SetActive(true);
     }
