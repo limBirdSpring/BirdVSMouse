@@ -11,8 +11,8 @@ namespace Youjeong
     {
         private PhotonView photon;
 
-        private int birdCowCount=2;
-        private int mouseCowCount=2;
+        public int birdCowCount { get; private set; } = 2;
+        public int mouseCowCount { get; private set; } = 2;
 
         private bool[] birdCowActive = new bool[4];
         private bool[] mouseCowActive = new bool[4];
@@ -24,16 +24,6 @@ namespace Youjeong
             birdCowActive[1] = true;
             mouseCowActive[0] = true;
             mouseCowActive[1] = true;
-        }
-
-        public override bool GetScore()
-        {
-            if (!TimeManager.Instance.isCurNight && birdCowCount==4)
-                return true;
-            else if (TimeManager.Instance.isCurNight && mouseCowCount==4)
-                return true;
-
-            return false;
         }
 
         public override void PlayerUpdateCurMission()

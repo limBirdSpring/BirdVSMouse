@@ -1422,7 +1422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3fd5dc8852d274e90d02bf7669b965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   cowData: {fileID: 11400000, guid: c5f0d2317bca9fd4d8b4336e5346b445, type: 2}
 --- !u!1 &5858278050088486696
 GameObject:
@@ -1435,6 +1434,7 @@ GameObject:
   - component: {fileID: 5858278050088486697}
   - component: {fileID: 5858278050088486703}
   - component: {fileID: 5858278050088486702}
+  - component: {fileID: 345199592565087338}
   m_Layer: 6
   m_Name: CowMissionBird
   m_TagString: Untagged
@@ -1505,6 +1505,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &345199592565087338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5858278050088486696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 709fa579a201ea94192bf655989e29e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 332359788482633233}
+  isBirdHouse: 1
 --- !u!1 &5858278050418803092
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,7 +1665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3fd5dc8852d274e90d02bf7669b965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   cowData: {fileID: 11400000, guid: c5f0d2317bca9fd4d8b4336e5346b445, type: 2}
 --- !u!1 &5858278050660926121
 GameObject:
@@ -1799,7 +1812,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3fd5dc8852d274e90d02bf7669b965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   cowData: {fileID: 11400000, guid: c5f0d2317bca9fd4d8b4336e5346b445, type: 2}
 --- !u!1 &5858278050792964025
 GameObject:
@@ -1896,7 +1908,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBrid: 1
-  inventory: {fileID: 0}
   plusButton: {fileID: 332359787653657545}
   Cows:
   - {fileID: 5858278049912766040}
@@ -2075,7 +2086,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3fd5dc8852d274e90d02bf7669b965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   cowData: {fileID: 11400000, guid: c5f0d2317bca9fd4d8b4336e5346b445, type: 2}
 --- !u!1 &5858278051555697800
 GameObject:
@@ -2375,7 +2385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3fd5dc8852d274e90d02bf7669b965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   cowData: {fileID: 11400000, guid: c5f0d2317bca9fd4d8b4336e5346b445, type: 2}
 --- !u!1 &6425046938739216130
 GameObject:
@@ -2472,7 +2481,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBrid: 0
-  inventory: {fileID: 0}
   plusButton: {fileID: 332359787811228037}
   Cows:
   - {fileID: 6425046939190527504}
@@ -2727,7 +2735,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3fd5dc8852d274e90d02bf7669b965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   cowData: {fileID: 11400000, guid: c5f0d2317bca9fd4d8b4336e5346b445, type: 2}
 --- !u!1 &6425046939190527507
 GameObject:
@@ -2875,7 +2882,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3fd5dc8852d274e90d02bf7669b965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   cowData: {fileID: 11400000, guid: c5f0d2317bca9fd4d8b4336e5346b445, type: 2}
 --- !u!1 &6425046939494253721
 GameObject:
@@ -3023,7 +3029,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3fd5dc8852d274e90d02bf7669b965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
   cowData: {fileID: 11400000, guid: c5f0d2317bca9fd4d8b4336e5346b445, type: 2}
 --- !u!1 &6425046939570268753
 GameObject:
@@ -3036,6 +3041,7 @@ GameObject:
   - component: {fileID: 6425046939570268754}
   - component: {fileID: 6425046939570268756}
   - component: {fileID: 6425046939570268755}
+  - component: {fileID: 426402302531391587}
   m_Layer: 6
   m_Name: CowMissionMouse
   m_TagString: Untagged
@@ -3106,6 +3112,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &426402302531391587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6425046939570268753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 709fa579a201ea94192bf655989e29e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 332359788482633233}
+  isBirdHouse: 0
 --- !u!1 &6827904080213601359
 GameObject:
   m_ObjectHideFlags: 0
