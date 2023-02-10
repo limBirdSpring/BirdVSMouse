@@ -257,15 +257,9 @@ namespace Saebom
             GameObject player;
 
             if (myPlayerState.isBird)
-            {
                 player = PhotonNetwork.Instantiate(myPlayerState.playerPrefab.name, birdHouse.position, Quaternion.identity);
-                player.name = myPlayerState.playerPrefab.name;
-            }
             else
-            {
                 player = PhotonNetwork.Instantiate(myPlayerState.playerPrefab.name, mouseHouse.position, Quaternion.identity);
-                player.name = myPlayerState.playerPrefab.name;
-            }
 
             if (myPlayerState.isSpy)
                 killButtonGray.SetActive(true);
