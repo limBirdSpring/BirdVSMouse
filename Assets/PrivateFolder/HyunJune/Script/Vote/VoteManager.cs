@@ -38,7 +38,7 @@ public class VoteManager : MonoBehaviourPun
     [SerializeField]
     private List<PlayerVoteEntry> playerVoteEntries = new List<PlayerVoteEntry>();
 
-    private List<int> voteCompletePlayerList = new List<int>();
+    public List<int> voteCompletePlayerList = new List<int>();
 
     [SerializeField]
     private SkipVote skipVote;
@@ -83,7 +83,13 @@ public class VoteManager : MonoBehaviourPun
         {
             //FindDeadBody();
             photonView.RPC("EmergencyReport", RpcTarget.All, null);
-        }       
+        }
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            //FindDeadBody();
+            photonView.RPC("PlayerKill", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+        }
 
         if (Input.GetButtonDown("Submit"))
         {
@@ -95,23 +101,28 @@ public class VoteManager : MonoBehaviourPun
             else
             {
                 chatInputField.ActivateInputField();
-            }
-                
+            }               
         }
     }
 
     private IEnumerator StartTimer(float time)
     {
-        while (time < 0)
+        while (time > 0)
         {
             time -= Time.deltaTime;
-            timer.text = time.ToString("F0");
+            photonView.RPC("UpdateTime", RpcTarget.All, time);
             yield return null;
         }
 
         time = 0;
         timer.text = time.ToString("F0");
         photonView.RPC("FocedSkip", RpcTarget.All, null);
+    }
+
+    [PunRPC]
+    public void UpdateTime(float time)
+    {
+        timer.text = time.ToString("F0");
     }
 
     [PunRPC]
@@ -157,7 +168,7 @@ public class VoteManager : MonoBehaviourPun
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             if (actorNumeber != player.Value.ActorNumber)
-                return;
+                continue;
 
             switch (myRole)
             {
@@ -213,7 +224,7 @@ public class VoteManager : MonoBehaviourPun
         AddAlivePlayerEntry();
         SetRole();
         skipVote.Initialized();
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
             StartCoroutine(StartTimer(99f));
 
         voteWindow.gameObject.SetActive(true);
@@ -310,6 +321,7 @@ public class VoteManager : MonoBehaviourPun
         if (deadList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
             return;
 
+        Debug.Log("½ºÅµ ¹ßµ¿");
         voteComplete = true;
         ToggleAllButton(false);
         photonView.RPC("SetSkipCount", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
@@ -437,7 +449,7 @@ public class VoteManager : MonoBehaviourPun
         else
         {
             // ¾Æ¸¶ ½ºÅµ
-            photonView.RPC("VotingEnd", RpcTarget.All, null);
+            photonView.RPC("VotingEndRPC", RpcTarget.All, null);
         }
     }
 

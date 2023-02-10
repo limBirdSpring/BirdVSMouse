@@ -51,14 +51,19 @@ public class VoteToDeath : MonoBehaviour
         // 새냐
         if (state.isBird)
         {
+            Debug.Log("나는 새다");
+            Debug.Log(state.name);
             birdVote.enabled = true;
             target.sprite = state.sprite;
+            target.enabled = true;
         }
         // 쥐냐
         else
         {
-            birdVote.enabled = true;
+            Debug.Log("나는 쥐다");
+            mouseVote.enabled = true;
             target.sprite = state.sprite;
+            target.enabled = true;
         }
     }
 
