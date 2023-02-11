@@ -193,11 +193,15 @@ namespace Saebom
             {
                 curTime = halfTime;
                 nightSky.SetActive(true);
+                SoundManager.Instance.bgm.clip = SoundManager.Instance.night;
+                SoundManager.Instance.bgm.Play();
             }
             else
             {
                 curTime = maxTime;
                 nightSky.SetActive(false);
+                SoundManager.Instance.bgm.clip = SoundManager.Instance.noon;
+                SoundManager.Instance.bgm.Play();
             }
             redScreenUi.gameObject.SetActive(false);
             TimeSlideUpdate();

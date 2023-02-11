@@ -18,6 +18,8 @@ public enum UISFXName
     Error,
     Shop,
     MissionOff,
+    ItemGet,
+    Vote,
 }
 
 [Serializable]
@@ -30,6 +32,12 @@ public struct UISound
 public class SoundManager : SingleTon<SoundManager>
 {
     private AudioSource audio;
+
+    public AudioSource bgm;
+
+    public AudioClip noon;
+
+    public AudioClip night;
 
     [SerializeField]
     private List<UISound> uiSounds = new List<UISound>();

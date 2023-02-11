@@ -10,7 +10,7 @@ using Photon.Pun;
 public class DyeManager : Mission
 {
     [SerializeField]
-    private Cloth cloth;
+    public Cloth cloth;
 
     public override bool GetScore()
     {
@@ -50,6 +50,12 @@ public class DyeManager : Mission
         GraphicUpdate();
     }
 
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PlayerUpdateCurMission();
+    }
+
     public override void GraphicUpdate()
     {
         cloth.clothImage.color = cloth.dicColor[cloth.curColor];
@@ -60,9 +66,4 @@ public class DyeManager : Mission
         photonView.RPC("ClothCurColorRPC", RpcTarget.All, cloth.curColor);
     }
 
-    [PunRPC]
-    public void ClothCurColorRPC(CurColor curColor)
-    {
-        cloth.curColor = curColor;
-    }
 }

@@ -5,61 +5,59 @@ using Saebom;
 using Photon.Pun;
 using Unity.VisualScripting;
 
-public class RopeManager : Mission
+namespace Youjeong
 {
-    [SerializeField]
-    private RopeController control;
-
-    public override bool GetScore()
+    public class RopeManager : Mission
     {
-        if (TimeManager.Instance.isCurNight)
+        [SerializeField]
+        protected internal RopeController control;
+
+        public override bool GetScore()
         {
-            control.moon.ResetPos();
+            if (TimeManager.Instance.isCurNight)
+            {
+                control.moon.ResetPos();
 
-            if (control.moon.MissionSuccess)
-                return true;
+                if (control.moon.MissionSuccess)
+                    return true;
+                else
+                    return false;
+
+            }
             else
-                return false;
+            {
+                control.sun.ResetPos();
 
+                if (control.sun.MissionSuccess)
+                    return true;
+                else
+                    return false;
+            }
         }
-        else
+
+        public override void OnEnable()
         {
-            control.sun.ResetPos();
-
-            if (control.sun.MissionSuccess)
-                return true;
-            else
-                return false;
+            base.OnEnable();
+            GraphicUpdate();
         }
-    }
 
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        GraphicUpdate();
-    }
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            PlayerUpdateCurMission();
+        }
 
-    public override void GraphicUpdate()
-    {
-        photonView.RPC("LoadUIRPC", RpcTarget.All, null);
-    }
+        public override void GraphicUpdate()
+        {
+            photonView.RPC("LoadUIRPC", RpcTarget.All, null);
+        }
 
-    [PunRPC]
-    private void LoadUIRPC()
-    {
-        control.LoadUIRPC();
-    }
+        public override void PlayerUpdateCurMission()
+        {
+            RopeGame[] ropeGames = control.GetComponentsInChildren<RopeGame>();
 
-    public override void PlayerUpdateCurMission()
-    {
-        RopeGame[] ropeGames = control.GetComponentsInChildren<RopeGame>();
-
-        photonView.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
-    }
-
-    [PunRPC]
-    private void SaveUIRPC(RopeGame[] ropes)
-    {
-        control.SaveUIRPC(ropes);
+            photonView.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
+        }
     }
 }
+

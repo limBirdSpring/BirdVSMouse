@@ -6,18 +6,10 @@ using Saebom;
 
 namespace Youjeong
 {
-    [RequireComponent(typeof(PhotonView))]
     public class HangariManager : Mission
     {
-        private PhotonView photon;
-
         public float waterAmount=0;
     
-        private void Awake()
-        {
-            photon = GetComponent<PhotonView>();
-        }
-
         public void ResetGame()
         {
             waterAmount= 0;
@@ -34,6 +26,12 @@ namespace Youjeong
 
         }
 
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            PlayerUpdateCurMission();
+        }
+
         public override void GraphicUpdate()
         {
             
@@ -41,15 +39,10 @@ namespace Youjeong
 
         public override void PlayerUpdateCurMission()
         {
-            photon.RPC("HangariMissionUpdate", RpcTarget.All, waterAmount);
+            photonView.RPC("HangariMissionUpdate", RpcTarget.All, waterAmount);
             
         }
 
-        [PunRPC]
-        public void HangariMissionUpdate(float water)
-        {
-            waterAmount = water;
-        }
     }
 }
 

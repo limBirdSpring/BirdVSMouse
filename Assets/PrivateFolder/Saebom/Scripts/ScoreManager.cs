@@ -135,8 +135,10 @@ namespace Saebom
 
             //스코어 UI 변경
             //점수 갱신 위에 효과 애니메이션 및 효과음 추가
+            if (score !=0)
+                SoundManager.Instance.PlayUISound(UISFXName.ScoreUp);
 
-            scoreUI.text = birdScore.ToString() + "  :  " + mouseScore.ToString();
+            scoreUI.text = birdScore.ToString() + "   :   " + mouseScore.ToString();
 
             //턴이 끝났을 경우에만 승패 여부 계산
             if (TimeManager.Instance.isCurNight)
@@ -162,6 +164,7 @@ namespace Saebom
 
             blockButton.SetActive(false);
 
+            //플레이어들이 모두 점수확인을 끝냈는지 확인
             photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
 
         }
@@ -171,7 +174,7 @@ namespace Saebom
         {
             masterCheck += check;
 
-            if (masterCheck == PhotonNetwork.PlayerList.Length)
+            if (masterCheck == 1) //수정
             {
                 TimeManager.Instance.FinishScoreTimeSet();
                 masterCheck = 0;
@@ -385,6 +388,10 @@ namespace Saebom
 
         private void EndGame(Win win)
         {
+
+            
+            SoundManager.Instance.bgm.Stop();
+
             //누가 이겼는지 나타내고 개인 승률에 반영함
             SoundManager.Instance.PlayUISound(UISFXName.Ending);
             //개인 판수 +1

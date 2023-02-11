@@ -7,7 +7,7 @@ public class InterActionAdapter : MonoBehaviour
 {
     public UnityEvent OnInterAction = null;
 
-    [HideInInspector]
+//    [HideInInspector]
     public bool isActive = false;
 
     [SerializeField]
