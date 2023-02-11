@@ -31,10 +31,11 @@ namespace SoYoon
 
         private void Start()
         {
-            RandomPlayerPanel();
+            InitializePlayerPanel();
         }
 
         #region 플레이어 패널 변경시 호출되는 함수
+
         public void RandomPlayerPanel()
         {
             int imgNum = Random.Range(0, myInfo.collectedCharacters.Length);
@@ -60,30 +61,57 @@ namespace SoYoon
 
         public void InitializePlayerPanel()
         {
-            playerImg.sprite = myInfo.lastChosenCharacter;
-            playerName.text = myInfo.lastChosenName;
-            playerBadge1.sprite = myInfo.lastChosenBadge1;
-            playerBadge2.sprite = myInfo.lastChosenBadge2;
+            if (myInfo.lastChosenCharacter != null)
+                playerImg.sprite = myInfo.lastChosenCharacter;
+            else
+                RandomCharacter();
+
+            if (myInfo.lastChosenName != null)
+                playerName.text = myInfo.lastChosenName;
+            else
+                RandomName();
+
+            if(myInfo.lastChosenBadge1 != null)
+                playerBadge1.sprite = myInfo.lastChosenBadge1;
+            else
+                playerBadge1.color = Color.clear;
+
+            if (myInfo.lastChosenBadge2 != null)
+                playerBadge2.sprite = myInfo.lastChosenBadge2;
+            else
+                playerBadge2.color = Color.clear;
         }
 
-        public void ChangePlayerImg(Sprite playerSprite)
+        public void RandomCharacter()
         {
-            playerImg.sprite = playerSprite;
+            int imgNum = Random.Range(0, myInfo.collectedCharacters.Length);
+            playerImg.sprite = myInfo.collectedCharacters[imgNum];
             myInfo.lastChosenCharacter = playerImg.sprite;
+        }
+
+        public void RandomName()
+        {
+            int adjectNum = Random.Range(0, initializeNames.adjectives.Length);
+            int nameNum = Random.Range(0, initializeNames.names.Length);
+            playerName.text = string.Format("{0} {1}", initializeNames.adjectives[adjectNum], initializeNames.names[nameNum]);
+            myInfo.lastChosenName = playerName.text;
+            PhotonNetwork.LocalPlayer.NickName = myInfo.lastChosenName;
         }
 
         public void EndChangePlayerName()
         {
-            if (playerName.text == "")
+            if (playerName.text.Replace(" ", "") == "")
             {
                 int adjectNum = Random.Range(0, initializeNames.adjectives.Length);
                 int nameNum = Random.Range(0, initializeNames.names.Length);
                 playerName.text = string.Format("{0} {1}", initializeNames.adjectives[adjectNum], initializeNames.names[nameNum]);
-                playerBadge1.gameObject.SetActive(false);
-                playerBadge2.gameObject.SetActive(false);
             }
             myInfo.lastChosenName = playerName.text;
+            PhotonNetwork.LocalPlayer.NickName = myInfo.lastChosenName;
         }
+        #endregion 
+
+        #region 플레이어 Photo
 
         public void ChangePhoto(Sprite photo)
         {
@@ -91,13 +119,15 @@ namespace SoYoon
             myInfo.lastChosenCharacter = photo;
         }
 
-        #endregion
-
         public void PhotoButtonClicked()
         {
             photoWindow.SetActive(true);
         }
 
+        #endregion 플레이어 Photo
+
+
+        #region 플레이어 Badge
         public void BadgeButton1Clicked()
         {
             targetBadgeButton = 0;
@@ -115,6 +145,7 @@ namespace SoYoon
             badgeWindow.GetComponent<BadgeSellectCanvas>().FindBadgeAndEnable(playerBadge2.sprite);
             myInfo.lastChosenBadge2 = null;
         }
+
         public void ChangeBadge1(Sprite badge)
         {
             playerBadge1.sprite = badge;
@@ -128,5 +159,7 @@ namespace SoYoon
             playerBadge2.color = Color.white;
             myInfo.lastChosenBadge2 = playerBadge2.sprite;
         }
+
+        #endregion 플레이어 Badge
     }
 }

@@ -16,5 +16,9 @@ namespace SoYoon
         public Sprite lastChosenBadge2;
         public Sprite lastChosenCharacter;
         public Sprite lastChosenFrame;      // frame 미추가시 삭제
+
+        public int win;
+        public int draw;
+        public int lose;
     }
 }
