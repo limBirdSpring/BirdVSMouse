@@ -72,12 +72,12 @@ TagManager:
   - name: Player
     uniqueID: 781335679
     locked: 0
+  - name: Filter
+    uniqueID: 2115571963
+    locked: 0
   - name: Front
     uniqueID: 331202453
     locked: 0
   - name: Collider
     uniqueID: 1408917023
-    locked: 0
-  - name: Filter
-    uniqueID: 2115571963
     locked: 0

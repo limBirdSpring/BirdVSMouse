@@ -174,7 +174,7 @@ namespace Saebom
         {
             masterCheck += check;
 
-            if (masterCheck == PhotonNetwork.CountOfPlayersInRooms)
+            if (masterCheck == 1) //¼öÁ¤
             {
                 TimeManager.Instance.FinishScoreTimeSet();
                 masterCheck = 0;
