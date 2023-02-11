@@ -32,6 +32,72 @@ public class StoreManager : MonoBehaviour
 
     //=========================================
 
+    [SerializeField]
+    private Image mainImg;
+
+    [SerializeField]
+    private TextMeshProUGUI mainPrice;
+
+    [SerializeField]
+    private TextMeshProUGUI mainName;
+
+
+    [SerializeField]
+    private Image photo1Img;
+
+    [SerializeField]
+    private TextMeshProUGUI photo1Price;
+
+    [SerializeField]
+    private TextMeshProUGUI photo1Name;
+
+    [SerializeField]
+    private Image photo2Img;
+
+    [SerializeField]
+    private TextMeshProUGUI photo2Price;
+
+    [SerializeField]
+    private TextMeshProUGUI photo2Name;
+
+    [SerializeField]
+    private Image photo3Img;
+
+    [SerializeField]
+    private TextMeshProUGUI photo3Price;
+
+    [SerializeField]
+    private TextMeshProUGUI photo3Name;
+
+
+    [SerializeField]
+    private Image badge1Img;
+
+    [SerializeField]
+    private TextMeshProUGUI badge1Price;
+
+    [SerializeField]
+    private TextMeshProUGUI badge1Name;
+
+    [SerializeField]
+    private Image badge2Img;
+
+    [SerializeField]
+    private TextMeshProUGUI badge2Price;
+
+    [SerializeField]
+    private TextMeshProUGUI badge2Name;
+
+    [SerializeField]
+    private Image badge3Img;
+
+    [SerializeField]
+    private TextMeshProUGUI badge3Price;
+
+    [SerializeField]
+    private TextMeshProUGUI badge3Name;
+
+
     private void OnEnable()
     {
         SetGoods();
@@ -39,41 +105,40 @@ public class StoreManager : MonoBehaviour
 
     private void SetGoods()
     {
-        GameObject main = GameObject.Find("Sale");
-        main.transform.GetChild(0).GetComponent<Image>().sprite = mainItem.itemIcon;
-        main.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "\\" + mainItem.price.ToString();
-        main.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = mainText;
+
+        mainImg.sprite = mainItem.itemIcon;
+        mainPrice.text = "\\" + mainItem.price.ToString();
+        mainName.text = mainText;
 
 
-        GameObject photo1 = GameObject.Find("Photo1");
-        photo1.transform.GetChild(0).GetComponent<Image>().sprite = photoItem1.itemIcon;
-        photo1.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "\\" + photoItem1.price.ToString();
-        photo1.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = photoItem1.name;
+ 
+        photo1Img.sprite = photoItem1.itemIcon;
+        photo1Price.text = "\\" + photoItem1.price.ToString();
+        photo1Name.text = photoItem1.name;
 
-        GameObject photo2 = GameObject.Find("Photo2");
-        photo2.transform.GetChild(0).GetComponent<Image>().sprite = photoItem2.itemIcon;
-        photo2.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "\\" + photoItem2.price.ToString();
-        photo2.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = photoItem2.name;
+ 
+        photo2Img.sprite = photoItem2.itemIcon;
+        photo2Price.text = "\\" + photoItem2.price.ToString();
+        photo2Name.text = photoItem2.name;
 
-        GameObject photo3 = GameObject.Find("Photo3");
-        photo3.transform.GetChild(0).GetComponent<Image>().sprite = photoItem3.itemIcon;
-        photo3.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "\\" + photoItem3.price.ToString();
-        photo3.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = photoItem3.name;
 
-        GameObject badge1 = GameObject.Find("Badge1");
-        badge1.transform.GetChild(0).GetComponent<Image>().sprite = badgeItem1.itemIcon;
-        badge1.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "\\" + badgeItem1.price.ToString();
-        badge1.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = badgeItem1.name;
+        photo3Img.sprite = photoItem3.itemIcon;
+        photo3Price.text = "\\" + photoItem3.price.ToString();
+        photo3Name.text = photoItem3.name;
 
-        GameObject badge2 = GameObject.Find("Badge2");
-        badge2.transform.GetChild(0).GetComponent<Image>().sprite = badgeItem2.itemIcon;
-        badge2.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "\\" + badgeItem2.price.ToString();
-        badge2.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = badgeItem2.name;
+        badge1Img.sprite = badgeItem1.itemIcon;
+        badge1Price.text = "\\" + badgeItem1.price.ToString();
+        badge1Name.text = badgeItem1.name;
 
-        GameObject badge3 = GameObject.Find("Badge3");
-        badge3.transform.GetChild(0).GetComponent<Image>().sprite = badgeItem3.itemIcon;
-        badge3.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "\\" + badgeItem3.price.ToString();
-        badge3.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = badgeItem3.name;
+
+        badge2Img.sprite = badgeItem2.itemIcon;
+        badge2Price.text = "\\" + badgeItem2.price.ToString();
+        badge2Name.text = badgeItem2.name;
+
+  
+        badge3Img.sprite = badgeItem3.itemIcon;
+        badge3Price.text = "\\" + badgeItem3.price.ToString();
+        badge3Name.text = badgeItem3.name;
 
 
 
