@@ -176,6 +176,8 @@ namespace Saebom
         {
             readyScene.SetActive(true);
 
+            SoundManager.Instance.PlayUISound(UISFXName.GetJob);
+
             if (!myPlayerState.isSpy)
             {
                 readyJobText.text = "¥ÁΩ≈¿∫ " + myPlayerState.name + " ¿‘¥œ¥Ÿ.";
@@ -183,6 +185,8 @@ namespace Saebom
             }
             else
             {
+                readyJobText.color = new Color(255, 0, 0, 1);
+
                 string team;
                 if (myPlayerState.isBird)
                     team = "¡„∆¿";

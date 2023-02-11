@@ -10,10 +10,8 @@ namespace SoYoon
     {
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Mouse0))
-            {
+            if(Input.anyKeyDown)
                 PhotonNetwork.ConnectUsingSettings();
-            }
         }
 
         public override void OnConnectedToMaster()

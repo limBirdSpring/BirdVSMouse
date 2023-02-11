@@ -14,6 +14,7 @@ public class Nulttuigi : MonoBehaviourPun
 
     public void Jump()
     {
+        GetComponent<AudioSource>().Play();
          missionWindow.SetActive(true);
         gameObject.GetComponent<InterActionAdapter>().isActive = true;
         photonView.RPC("NulttuigiActiveUpdate", RpcTarget.All, true);
