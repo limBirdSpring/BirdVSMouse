@@ -76,7 +76,7 @@ namespace Saebom
         //===============
 
         //방장만 업데이트
-        private TimeManager time;
+
 
 
         //게임 시작할 때 초기화
@@ -212,6 +212,8 @@ namespace Saebom
             MakePlayer();
             readyScene.SetActive(false);
             TimeManager.Instance.TimeOn();
+            SoundManager.Instance.bgm.clip = SoundManager.Instance.noon;
+            SoundManager.Instance.bgm.Play();
         }
 
         //본인 캐릭터 받아와서 초기화

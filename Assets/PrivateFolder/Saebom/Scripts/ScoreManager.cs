@@ -385,6 +385,10 @@ namespace Saebom
 
         private void EndGame(Win win)
         {
+
+            
+            SoundManager.Instance.bgm.Stop();
+
             //누가 이겼는지 나타내고 개인 승률에 반영함
             SoundManager.Instance.PlayUISound(UISFXName.Ending);
             //개인 판수 +1
