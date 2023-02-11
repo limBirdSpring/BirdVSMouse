@@ -8,6 +8,12 @@ namespace SoYoon
     {
         [SerializeField]
         private Datas datas;
+        [SerializeField]
+        private List<CollectionItem> collectionItemList;
+
+        [HideInInspector]
+        public List<CollectionItem> earnedCollectionItemList;
+        private Dictionary<string ,CollectionItem> collectionItemDic;
 
         public static DataManager Instance { get; private set; }
 
@@ -16,6 +22,18 @@ namespace SoYoon
             if (Instance == null)
             {
                 Instance = this;
+            }
+            earnedCollectionItemList = new List<CollectionItem>();
+            collectionItemDic = new Dictionary<string, CollectionItem>();
+        }
+
+        private void Start()
+        {
+            for(int i=0; i<collectionItemList.Count; i++)
+            {
+                collectionItemDic.Add(collectionItemList[i].itemName, collectionItemList[i]);
+                if (collectionItemList[i].get)
+                    earnedCollectionItemList.Add(collectionItemList[i]);
             }
         }
 
@@ -34,5 +52,11 @@ namespace SoYoon
 
             return datas.Characters[charNum];
         }
+
+        public CollectionItem GetCollectionItem(string itemName)
+        {
+            return collectionItemDic[itemName];
+        }
+
     }
 }

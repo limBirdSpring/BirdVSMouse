@@ -26,6 +26,9 @@ namespace SoYoon
         [SerializeField]
         private InitializeNames initializeNames;
 
+        [HideInInspector]
+        public int targetBadgeButton;
+
         private void Start()
         {
             RandomPlayerPanel();
@@ -39,8 +42,8 @@ namespace SoYoon
             int adjectNum = Random.Range(0, initializeNames.adjectives.Length);
             int nameNum = Random.Range(0, initializeNames.names.Length);
             playerName.text = string.Format("{0} {1}", initializeNames.adjectives[adjectNum], initializeNames.names[nameNum]);
-            playerBadge1.gameObject.SetActive(false);
-            playerBadge2.gameObject.SetActive(false);
+            //playerBadge1.gameObject.SetActive(false);
+            //playerBadge2.gameObject.SetActive(false);
 
             myInfo.lastChosenName = playerName.text;
             PhotonNetwork.LocalPlayer.NickName = myInfo.lastChosenName;
@@ -82,19 +85,12 @@ namespace SoYoon
             myInfo.lastChosenName = playerName.text;
         }
 
-        public void ChangeBadge1(Sprite badge)
+        public void ChangePhoto(Sprite photo)
         {
-            playerBadge1.sprite = badge;
-            playerBadge1.gameObject.SetActive(true);
-            myInfo.lastChosenBadge1 = playerBadge1.sprite;
+            playerImg.sprite = photo;
+            myInfo.lastChosenCharacter = photo;
         }
 
-        public void ChangeBadge2(Sprite badge)
-        {
-            playerBadge2.sprite = badge;
-            playerBadge2.gameObject.SetActive(true);
-            myInfo.lastChosenBadge2 = playerBadge2.sprite;
-        }
         #endregion
 
         public void PhotoButtonClicked()
@@ -102,9 +98,35 @@ namespace SoYoon
             photoWindow.SetActive(true);
         }
 
-        public void BadgeButtonClicked()
+        public void BadgeButton1Clicked()
         {
+            targetBadgeButton = 0;
+            playerBadge1.color = Color.clear;
             badgeWindow.SetActive(true);
+            badgeWindow.GetComponent<BadgeSellectCanvas>().FindBadgeAndEnable(playerBadge1.sprite);
+            myInfo.lastChosenBadge1 = null;
+        }
+
+        public void BadgeButton2Clicked()
+        {
+            targetBadgeButton = 1;
+            playerBadge2.color = Color.clear;
+            badgeWindow.SetActive(true);
+            badgeWindow.GetComponent<BadgeSellectCanvas>().FindBadgeAndEnable(playerBadge2.sprite);
+            myInfo.lastChosenBadge2 = null;
+        }
+        public void ChangeBadge1(Sprite badge)
+        {
+            playerBadge1.sprite = badge;
+            playerBadge1.color = Color.white;
+            myInfo.lastChosenBadge1 = playerBadge1.sprite;
+        }
+
+        public void ChangeBadge2(Sprite badge)
+        {
+            playerBadge2.sprite = badge;
+            playerBadge2.color = Color.white;
+            myInfo.lastChosenBadge2 = playerBadge2.sprite;
         }
     }
 }

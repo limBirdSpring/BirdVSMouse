@@ -5188,7 +5188,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1134307178}
         m_TargetAssemblyTypeName: SoYoon.PlayerPanel, Assembly-CSharp
-        m_MethodName: BadgeButtonClicked
+        m_MethodName: BadgeButton2Clicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5294,7 +5294,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 14dd58e0f622015458bdc0ce14513733, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8296,6 +8296,7 @@ MonoBehaviour:
   badgeWindow: {fileID: 938538312}
   myInfo: {fileID: 11400000, guid: c91681561fdf0904d8d197033ba3bbd4, type: 2}
   initializeNames: {fileID: 11400000, guid: 6bfb88b30ede49a4795e984d25ffe961, type: 2}
+  targetBadgeButton: 0
 --- !u!1 &1147945244 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8731740768200363379, guid: 0959858f9f03bf648a1d92934085d18e, type: 3}
@@ -10996,6 +10997,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   datas: {fileID: 11400000, guid: 6041f9d32b29f01469ce7b54befaa001, type: 2}
+  collectionItemList:
+  - {fileID: 11400000, guid: e788e44765039424f8f4ea853b96aa46, type: 2}
+  - {fileID: 11400000, guid: 6f0376ac5d05f084caa6b94995143a27, type: 2}
+  - {fileID: 11400000, guid: efa0956566d884d47889317726e0f9dd, type: 2}
+  - {fileID: 11400000, guid: a44917c68a81e964283cf20f582a1223, type: 2}
+  - {fileID: 11400000, guid: cf6f2ac72679a514aac12208ef1307c9, type: 2}
+  - {fileID: 11400000, guid: ddbcfcc16d056f747b6d6be3fa98ae38, type: 2}
+  - {fileID: 11400000, guid: db311f994aa712444859fcfc817080b9, type: 2}
+  - {fileID: 11400000, guid: a52ae6c5c7d914047a659bf8d2635889, type: 2}
+  - {fileID: 11400000, guid: 5d9b64481eed6e048a2bc4d68f431414, type: 2}
+  - {fileID: 11400000, guid: 8e28e9957e47f9f47ab6fe98c77c345d, type: 2}
+  - {fileID: 11400000, guid: 579a526be46035c448563a4ddb01e99e, type: 2}
+  - {fileID: 11400000, guid: 05a62ac122dda9e4f883265a6a6a540f, type: 2}
+  - {fileID: 11400000, guid: 984da98d332a3844fa61c23a10bd8f9b, type: 2}
+  - {fileID: 11400000, guid: 3b34477b146dd0e42abdd2204a4bc105, type: 2}
+  - {fileID: 11400000, guid: 4552d295019cfa84ca0e532135e0a977, type: 2}
+  - {fileID: 11400000, guid: 71e15878b2cd909428932900481c8779, type: 2}
+  - {fileID: 11400000, guid: da17d549cf88e3045ae05056211f93f0, type: 2}
+  - {fileID: 11400000, guid: 7eb8e9f45cb80e546afc3d944befdff8, type: 2}
+  - {fileID: 11400000, guid: 40a20c6bdc27cc44eb6567c44b32736b, type: 2}
+  - {fileID: 11400000, guid: 1310e31074a129549aa2000c0a7f0936, type: 2}
+  - {fileID: 11400000, guid: ff056d7dbe0b48e4da7df6bf06d351d8, type: 2}
+  - {fileID: 11400000, guid: b435e35fc9699154ea0bb93cc1329d4a, type: 2}
+  - {fileID: 11400000, guid: f437948c02558634883d308987eaf86b, type: 2}
+  - {fileID: 11400000, guid: c76eb81f86db72a4f8026eaaaa341ffc, type: 2}
+  - {fileID: 11400000, guid: 597dd50a223282340a4b9aa8903399dd, type: 2}
+  earnedCollectionItemList: []
 --- !u!4 &1511211703
 Transform:
   m_ObjectHideFlags: 0
@@ -11326,7 +11354,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1134307178}
         m_TargetAssemblyTypeName: SoYoon.PlayerPanel, Assembly-CSharp
-        m_MethodName: BadgeButtonClicked
+        m_MethodName: BadgeButton1Clicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12615,7 +12643,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 406f04774a0bb2e49b4de397f2ff0d2b, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
