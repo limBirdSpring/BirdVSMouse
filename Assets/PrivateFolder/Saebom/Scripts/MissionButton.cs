@@ -209,7 +209,7 @@ namespace Saebom
                 //ÄÞÇÃ¸®Æ® ÅØ½ºÆ® ¶ì¿ì±â
                 if (mission.GetScore())
                 {
-                    SoundManager.Instance.PlayUISound(UISFXName.ScoreUp);
+                    SoundManager.Instance.PlayUISound(UISFXName.MissionComplete);
                     completeText.SetActive(true);
                 }
                 yield return new WaitForSeconds(1f);

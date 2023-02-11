@@ -18,6 +18,7 @@ public enum UISFXName
     Error,
     Shop,
     MissionOff,
+    ItemGet,
 }
 
 [Serializable]

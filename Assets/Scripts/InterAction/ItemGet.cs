@@ -46,6 +46,7 @@ public class ItemGet : MonoBehaviourPun
     private IEnumerator ItemGetActiveBlockButton()
     {
         yield return new WaitForSeconds(waitingTime);
+        SoundManager.Instance.PlayUISound(UISFXName.ItemGet);
         Inventory.Instance.SetItem(itemData);
         //블락버튼 액티브 펄스
         blockButton.SetActive(false);
