@@ -40,6 +40,7 @@ public class SkipVote : MonoBehaviour
     public void OnSkipPressed()
     {
         VoteManager.Instance.VoteSkip();
+        Debug.Log("½ºÅµ ´­¸²");
     }
 
     public void ToggleButton(bool toggle)
