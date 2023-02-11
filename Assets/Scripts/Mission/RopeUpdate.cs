@@ -9,16 +9,16 @@ public class RopeUpdate : Mission
     [SerializeField]
     private RopeController control;
 
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PlayerUpdateCurMission();
+    }
+
     public override void PlayerUpdateCurMission()
     {
         RopeGame[] ropeGames = control.GetComponentsInChildren<RopeGame>();
 
         photonView.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
-    }
-
-    [PunRPC]
-    private void SaveUIRPC(RopeGame[] ropes)
-    {
-        control.SaveUIRPC(ropes);
     }
 }
