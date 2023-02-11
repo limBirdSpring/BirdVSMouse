@@ -11,9 +11,13 @@ public enum UISFXName
     Ending,
     GetJob,
     VoteDie,
-    Click,
+    Ok,
     ScoreUp,
-    MissionComplete
+    MissionComplete,
+    Back,
+    Error,
+    Shop,
+    MissionOff,
 }
 
 [Serializable]
@@ -50,5 +54,17 @@ public class SoundManager : SingleTon<SoundManager>
         audio.Play();
     }
 
+    public void PlayUISound(string name)
+    {
+        foreach (UISound sound in uiSounds)
+        {
+            if (sound.uiName.ToString() == name)
+            {
+                audio.clip = sound.clip;
+            }
+        }
+
+        audio.Play();
+    }
 
 }
