@@ -26,5 +26,4 @@ public class CollectionItem : ScriptableObject
     public int price;
     public ItemType type;
     public ItemGrade grade;
-    public bool get;
 }

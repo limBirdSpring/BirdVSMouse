@@ -92,10 +92,16 @@ namespace SoYoon
                 object charNum;
                 if (!player.CustomProperties.TryGetValue("CharNum", out charNum))
                     charNum = -1;
+                object badge1Num;
+                if (!player.CustomProperties.TryGetValue("Badge1Num", out badge1Num))
+                    badge1Num = -1;
+                object badge2Num;
+                if (!player.CustomProperties.TryGetValue("Badge2Num", out badge2Num))
+                    badge2Num = -1;
 
                 // TODO : 뱃지도 같은 형식으로 추가
 
-                entry.Initialize(player.ActorNumber, player.NickName, (int)charNum, 0, 0, player.IsMasterClient);
+                entry.Initialize(player.ActorNumber, player.NickName, (int)charNum, (int)badge1Num, (int)badge2Num, player.IsMasterClient);
                 object isPlayerReady;
                 if (player.CustomProperties.TryGetValue("Ready", out isPlayerReady))
                 {

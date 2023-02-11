@@ -26,6 +26,12 @@ namespace SoYoon
         {
             badgeButton.interactable = false;
 
+            if (playerPanel.CheckIfIsSameBadge(badgeButtonImg.sprite))
+            {
+                badgeCanvas.gameObject.SetActive(false);
+                return;
+            }
+
             if (playerPanel.targetBadgeButton == 0)
                 playerPanel.ChangeBadge1(badgeButtonImg.sprite);
             else

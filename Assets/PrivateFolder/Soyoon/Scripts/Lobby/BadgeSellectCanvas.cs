@@ -21,15 +21,12 @@ namespace SoYoon
 
         private void InitializeBadges()
         {
-            for (int i = 0; i < DataManager.Instance.earnedCollectionItemList.Count; i++)
+            for (int i = 0; i < DataManager.Instance.earnedBadgeCollectionItemList.Count; i++)
             {
-                if (DataManager.Instance.earnedCollectionItemList[i].type == ItemType.Badge)
-                {
-                    GameObject badgeButton = Instantiate(badge, BadgeContentTransform, false);
-                    BadgeButton badgeImg = badgeButton.GetComponent<BadgeButton>();
-                    badgeImg.badge.GetComponent<Image>().sprite = DataManager.Instance.earnedCollectionItemList[i].itemIcon;
-                    badgeButtons.Add(badgeButton);
-                }
+                GameObject badgeButton = Instantiate(badge, BadgeContentTransform, false);
+                BadgeButton badgeImg = badgeButton.GetComponent<BadgeButton>();
+                badgeImg.badge.GetComponent<Image>().sprite = DataManager.Instance.earnedBadgeCollectionItemList[i].itemIcon;
+                badgeButtons.Add(badgeButton);
             }
         }
 

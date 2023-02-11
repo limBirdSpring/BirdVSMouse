@@ -17,14 +17,11 @@ namespace SoYoon
 
         private void InitializePhotos()
         {
-            for (int i = 0; i < DataManager.Instance.earnedCollectionItemList.Count; i++)
+            for (int i = 0; i < DataManager.Instance.earnedPhotoCollectionItemList.Count; i++)
             {
-                if (DataManager.Instance.earnedCollectionItemList[i].type == ItemType.Photo)
-                {
-                    GameObject photoButton = Instantiate(photo, PhotoContentTransform, false);
-                    PhotoButton photoImg = photoButton.GetComponent<PhotoButton>();
-                    photoImg.photo.GetComponent<Image>().sprite = DataManager.Instance.earnedCollectionItemList[i].itemIcon;
-                }
+                GameObject photoButton = Instantiate(photo, PhotoContentTransform, false);
+                PhotoButton photoImg = photoButton.GetComponent<PhotoButton>();
+                photoImg.photo.GetComponent<Image>().sprite = DataManager.Instance.earnedPhotoCollectionItemList[i].itemIcon;
             }
         }
 
