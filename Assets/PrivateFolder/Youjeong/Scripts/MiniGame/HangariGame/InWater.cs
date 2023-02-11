@@ -27,7 +27,12 @@ public class InWater : MonoBehaviour
         inWater = GetComponent<Image>();
         SetWaterImage();
     }
-   
+
+    private void OnEnable()
+    {
+        SetWaterImage();
+    }
+
     private void OnDisable()
     {
         SetWaterImage();
