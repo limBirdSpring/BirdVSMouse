@@ -31,6 +31,10 @@ public class Nulttuigi : MonoBehaviourPun
         missionWindow.SetActive(false);
     }
 
-
+    [PunRPC]
+    public void NulttuigiActiveUpdate(bool active)
+    {
+        gameObject.GetComponent<InterActionAdapter>().isActive = active;
+    }
 
 }
