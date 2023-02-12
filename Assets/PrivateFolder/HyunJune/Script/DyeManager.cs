@@ -50,6 +50,7 @@ public class DyeManager : Mission
     public override void OnEnable()
     {
         base.OnEnable();
+        PlayerUpdateCurMission();
         GraphicUpdate();
     }
 
