@@ -50,17 +50,19 @@ public class DyeManager : Mission
     public override void OnEnable()
     {
         base.OnEnable();
+        PlayerUpdateCurMission();
         GraphicUpdate();
     }
 
     public override void OnDisable()
     {
-        PlayerUpdateCurMission();
         base.OnDisable();
+        PlayerUpdateCurMission();
     }
 
     public override void GraphicUpdate()
     {
+        Debug.Log("Dye, GraphicUpdate");
         cloth.clothImage.color = cloth.dicColor[cloth.curColor];
     }
 
