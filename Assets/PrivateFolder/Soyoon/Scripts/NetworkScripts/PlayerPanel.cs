@@ -113,6 +113,8 @@ namespace SoYoon
                 { "CharNum", myInfo.lastChosenCharacter },
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            DataManager.Instance.SaveToJson();
         }
 
         public void PhotoButtonClicked()
@@ -167,6 +169,8 @@ namespace SoYoon
                 { "Badge1Num", myInfo.lastChosenBadge1 },
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            DataManager.Instance.SaveToJson();
         }
 
         public void ChangeBadge2(Sprite badge)
@@ -180,6 +184,8 @@ namespace SoYoon
                 { "Badge2Num", myInfo.lastChosenBadge2 },
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            DataManager.Instance.SaveToJson();
         }
 
         public bool CheckIfIsSameBadge(Sprite targetSprite)

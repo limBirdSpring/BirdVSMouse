@@ -199,8 +199,7 @@ namespace SoYoon
         {
             Debug.Log(photonView.Owner.GetPlayerNumber() + "비활성화");
             // 비활동시기(내 활동시간이 아닐경우)
-            if(photonView.IsMine)
-                anim.SetTrigger("IsInactive");
+            anim.SetTrigger("IsInactive");
             SetPlayerState(PlayerState.Inactive);
 
         }
@@ -209,8 +208,7 @@ namespace SoYoon
         {
             Debug.Log(photonView.Owner.GetPlayerNumber() + "활성화");
             // 활동시기
-            if (photonView.IsMine)
-                anim.SetTrigger("IsActive");
+            anim.SetTrigger("IsActive");
             SetPlayerState(PlayerState.Active);
         }
 
