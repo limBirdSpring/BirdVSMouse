@@ -1,5 +1,6 @@
 using Cinemachine;
 using Photon.Pun;
+using Saebom;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,7 @@ public class Nulttuigi : MonoBehaviourPun
     public void NulttuigiActiveUpdate(bool active)
     {
         gameObject.GetComponent<InterActionAdapter>().isActive = active;
+        MissionButton.Instance.MissionButtonOn();
     }
 
 }

@@ -268,13 +268,17 @@ namespace Saebom
         [HideInInspector]
         public InterActionAdapter inter= null;
 
-
         public void MissionButtonOn()
         {
             if (inter !=null &&!inter.isActive)
             {
                 missionButton.gameObject.SetActive(true);
                 inter.OutLineOn();
+            }
+            else
+            {
+                missionButton.gameObject.SetActive(false);
+                inter.OutLineOff();
             }
         }
 
