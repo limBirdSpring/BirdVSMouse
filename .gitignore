@@ -60,3 +60,5 @@ crashlytics-build.properties
 
 /Assets/Import/
 /UserSettings/
+/Assets/data.json
+/Assets/data.json.meta

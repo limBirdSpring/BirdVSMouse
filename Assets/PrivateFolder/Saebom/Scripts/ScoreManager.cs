@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
 using SoYoon;
 using System;
 using System.Collections;
@@ -180,7 +181,8 @@ namespace Saebom
         {
             masterCheck += check;
 
-            if (masterCheck == 1) //수정
+            Debug.Log(PhotonNetwork.PlayerList.Length);
+            if (masterCheck == PhotonNetwork.PlayerList.Length) //수정
             {
                 TimeManager.Instance.FinishScoreTimeSet();
                 masterCheck = 0;

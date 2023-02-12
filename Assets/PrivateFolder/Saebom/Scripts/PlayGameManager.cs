@@ -45,6 +45,8 @@ namespace Saebom
 
         public List<PlayerControllerTest> playerController = new List<PlayerControllerTest>();
 
+        
+
         //===개인의 정보===
         public PlayerState myPlayerState;
         //해당 struct를 통해 나의 직업 및 상태 판단 가능
@@ -101,14 +103,16 @@ namespace Saebom
           GameStart();
       }
 
-       //private void Update()
-       //{
-       //    if (Input.GetKeyDown(KeyCode.F1))
-       //    {
-       //        //리스트 초기화
-       //        GameStart();
-       //    }
-       //}
+        //private void Update()
+        //{
+        //    if (Input.GetKeyDown(KeyCode.F1))
+        //    {
+        //        //리스트 초기화
+        //        GameStart();
+        //    }
+        //}
+
+
 
         public void GameStart()
         {
@@ -162,6 +166,7 @@ namespace Saebom
                 playerList[random] = playerList[i];
                 playerList[i] = player;
             }
+
 
 
            // //각자의 펀 함수 소환
@@ -237,6 +242,7 @@ namespace Saebom
                     playerList.Add(playerState);
                 }
             }
+
 
             Debug.LogError(PhotonNetwork.LocalPlayer.GetPlayerNumber());
 
