@@ -225,7 +225,8 @@ namespace Saebom
 
         public void BakMissionReset()
         {
-            missionList[0].gameObject.GetComponent<BakMissionManager>().BakMissionResetCalled();
+            BakMissionManager.Instance.BakMissionResetCalled();
+            //missionList[0].gameObject.GetComponent<BakMissionManager>().BakMissionResetCalled();
         }
 
         public void MissionScreenOff()
