@@ -28,8 +28,14 @@ namespace HyunJune
         public Image clothImage;
         public Dictionary<CurColor, Color32> dicColor;
 
+       
         //[HideInInspector]
         public CurColor curColor;
+
+        [Header("Audio Source")]
+        [SerializeField]
+        private AudioSource DyeSound;
+
 
         private void Awake()
         {
@@ -77,8 +83,9 @@ namespace HyunJune
 
         public void GraphicUpdate()
         {
-            Debug.Log("Dye, GraphicUpdate");
-            clothImage.color = dicColor[curColor];
+            Debug.Log(string.Format("Dye.GraphicUpdate : {0}", dicColor[curColor]));
+
+            clothImage.color = new Color(dicColor[curColor].r / 255f, dicColor[curColor].g / 255f, dicColor[curColor].b / 255f);
         }
 
 
@@ -103,21 +110,25 @@ namespace HyunJune
             if (Inventory.Instance.isItemSet("WhiteDye"))
             {
                 AddDye(CurColor.White);
+                DyeSound.Play();
                 Inventory.Instance.DeleteItem();
             }
             else if (Inventory.Instance.isItemSet("RedDye"))
             {
                 AddDye(CurColor.Red);
+                DyeSound.Play();
                 Inventory.Instance.DeleteItem();
             }
             else if (Inventory.Instance.isItemSet("YellowDye"))
             {
                 AddDye(CurColor.Yellow);
+                DyeSound.Play();
                 Inventory.Instance.DeleteItem();
             }
             else if (Inventory.Instance.isItemSet("BlueDye"))
             {
                 AddDye(CurColor.Blue);
+                DyeSound.Play();
                 Inventory.Instance.DeleteItem();
             }
             else
