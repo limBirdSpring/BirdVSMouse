@@ -80,6 +80,9 @@ namespace Saebom
         [SerializeField]
         private GameObject blockButton;
 
+        [SerializeField]
+        private GameObject map;
+
         //=======================================
 
         private int masterCheck = 0;
@@ -110,7 +113,12 @@ namespace Saebom
 
             yield return new WaitForSeconds(2f);
 
-            
+            //미션창 없애기
+            MissionButton.Instance.MissionScreenOff();
+
+            //지도 끄기
+            map.SetActive(false);
+
 
             StartCoroutine(MissionButton.Instance.MissionCheckCor());
 
@@ -154,8 +162,6 @@ namespace Saebom
                 Destroy(corpse[i]);
             }
 
-            //미션창 없애기
-            MissionButton.Instance.MissionScreenOff();
 
 
             //박 100%일경우 0%로 초기화
