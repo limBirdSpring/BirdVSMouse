@@ -47,23 +47,13 @@ public class DyeManager : Mission
         }
     }
 
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        GraphicUpdate();
-    }
-
     public override void OnDisable()
     {
-        PlayerUpdateCurMission();
         base.OnDisable();
+        PlayerUpdateCurMission();
     }
 
-    public override void GraphicUpdate()
-    {
-        cloth.clothImage.color = cloth.dicColor[cloth.curColor];
-    }
-
+   
     public override void PlayerUpdateCurMission()
     {
         photon.RPC("ClothCurColorRPC", RpcTarget.All, cloth.curColor);

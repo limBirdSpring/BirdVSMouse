@@ -28,11 +28,19 @@ namespace Youjeong
         }
 
         [PunRPC]
-        public void CowMissionUpdate(int birdCow, int mouseCow, bool[] birdActive, bool[] mouseActive)
+        public void CowMissionCountUpdate(int birdCow, int mouseCow)
         {
-            Debug.Log("CowMissionUpdate");
+            Debug.Log("CowMissionCountUpdate");
             cowManager.birdCowCount = birdCow;
             cowManager.mouseCowCount = mouseCow;
+            
+        }
+
+        [PunRPC]
+        public void CowMissionActiveUpdate(bool[] birdActive, bool[] mouseActive)
+        {
+            Debug.Log("CowMissionActiveUpdate");
+            
             cowManager.birdCowActive = birdActive;
             cowManager.mouseCowActive = mouseActive;
         }
@@ -52,17 +60,11 @@ namespace Youjeong
         }
 
         [PunRPC]
-        private void LoadUIRPC()
-        {
-            Debug.Log("LoadUIRPC");
-            ropeManager.control.LoadUIRPC();
-        }
-
-        [PunRPC]
-        private void SaveUIRPC(RopeGame[] ropes)
+        private void SaveUIRPC(int[] ropes)
         {
             Debug.Log("SaveUIRPC");
-            ropeManager.control.SaveUIRPC(ropes);
+            ropeManager.ropeGamesCurState = ropes;
+            /*ropeManager.control.SaveUIRPC(ropes);*/
         }
     }
 }

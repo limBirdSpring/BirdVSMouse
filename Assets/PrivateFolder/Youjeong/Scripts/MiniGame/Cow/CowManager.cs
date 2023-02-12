@@ -32,13 +32,15 @@ namespace Youjeong
 
         public override void OnDisable()
         {
-            PlayerUpdateCurMission();
             base.OnDisable();
+            PlayerUpdateCurMission();
         }
 
         public override void PlayerUpdateCurMission()
         {
-            photon.RPC("CowMissionUpdate", RpcTarget.All, birdCowCount, mouseCowCount, birdCowActive, mouseCowActive);
+            Debug.Log("Cow,PlayerUpdateCurMission");
+            photon.RPC("CowMissionCountUpdate", RpcTarget.All, birdCowCount, mouseCowCount);
+            photon.RPC("CowMissionActiveUpdate", RpcTarget.All, (bool[])birdCowActive, (bool[])mouseCowActive);
         }
 
         public void AddCow(bool isbirdHouse)

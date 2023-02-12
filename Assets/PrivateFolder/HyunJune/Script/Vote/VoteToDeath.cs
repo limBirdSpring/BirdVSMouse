@@ -111,13 +111,13 @@ public class VoteToDeath : MonoBehaviour
         // 스파이였으면
         if (state.isSpy)
         {
-            message.text = string.Format("{0}팀 {1}은 스파이였습니다...!", team, state.name);
+            message.text = string.Format("{0}팀 {1}, 그는 스파이였습니다...!", team, state.name);
             message.enabled = true;
         }
         // 스파이 아니면
         else
         {
-            message.text = string.Format("{0}팀 {1}은 스파이가 아니였습니다...!", team, state.name);
+            message.text = string.Format("{0}팀 {1}, 그는 스파이가 아니였습니다...!", team, state.name);
             message.enabled = true;
         }
     }

@@ -7,15 +7,33 @@ using Unity.Mathematics;
 
 public class RopeController : MonoBehaviour
 {
-    private RopeGame[] ropeGames;
+    public RopeGame[] ropeGames;
 
     public SunOrMoon sun;
     public SunOrMoon moon;
 
+    private RopeManager manager;
+
+    private void Awake()
+    {
+        //ropeGames = GetComponentsInChildren<RopeGame>();
+        manager = GetComponentInParent<RopeManager>();
+    }
+
+    private void OnEnable()
+    {
+        manager.GetRopeGamesCurState(ropeGames);
+        LoadUIRPC();
+    }
+
+    private void OnDisable()
+    {
+        manager.SetRopeGamesCurState(ropeGames);
+        manager.PlayerUpdateCurMission();
+    }
+
     public void ResetRope()
     {
-        ropeGames = GetComponentsInChildren<RopeGame>();
-
         for (int i = 0; i < ropeGames.Length; i++)
         {
             ropeGames[i].RopeReset();
@@ -24,23 +42,19 @@ public class RopeController : MonoBehaviour
 
     public void LoadUIRPC()
     {
-        ropeGames = GetComponentsInChildren<RopeGame>();
-
         for (int i = 0; i < ropeGames.Length; i++)
         {
             ropeGames[i].UpdateUI();
         }
     }
 
-    public void SaveUIRPC(RopeGame[] ropes)
+    /*public void SaveUIRPC(RopeGame[] ropes)
     {
-        ropeGames = GetComponentsInChildren<RopeGame>();
-
         for (int i = 0; i < ropeGames.Length; i++)
         {
             ropeGames[i].curState = ropes[i].curState;
         }
-    }
+    }*/
 
     public void SunOrMoonStart()
     {

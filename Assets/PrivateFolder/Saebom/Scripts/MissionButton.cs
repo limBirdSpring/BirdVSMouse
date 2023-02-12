@@ -62,12 +62,8 @@ namespace Saebom
         private GameObject completeText;
 
 
-        [HideInInspector]
         public int mouseEmergency = 3;
-
-        [HideInInspector]
         public int birdEmergency = 3;
-
 
 
 
@@ -90,6 +86,9 @@ namespace Saebom
             colorMissionData.Add(6, CurColor.Red | CurColor.Blue | CurColor.White);
             colorMissionData.Add(7, CurColor.Red | CurColor.Yellow | CurColor.White);
             colorMissionData.Add(8, CurColor.Yellow | CurColor.Blue | CurColor.White);
+
+
+            birdEmergency = mouseEmergency = SettingManager.Instance.emergencyCount;
         }
 
         //플레이매니저에서 역할을 정한 다음 호출

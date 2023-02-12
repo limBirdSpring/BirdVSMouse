@@ -14,6 +14,8 @@ namespace Youjeong
         private HangariManager manager;
         [SerializeField]
         private GameObject sprayWater;
+        [SerializeField]
+        private RectTransform outTransform;
 
         [Header("Audio Source")]
         [SerializeField]
@@ -57,7 +59,7 @@ namespace Youjeong
         public void OutFrog()
         {
             outFrogAudioSource.Play();
-            rectTransform.position += new Vector3(600, 0, 0);
+            rectTransform.position = outTransform.position;
         }
 
         public void InFrog()
