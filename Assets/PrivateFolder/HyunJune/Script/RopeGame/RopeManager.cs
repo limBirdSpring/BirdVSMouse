@@ -5,62 +5,85 @@ using Saebom;
 using Photon.Pun;
 using Unity.VisualScripting;
 
-namespace Youjeong
+public class RopeManager : Mission
 {
-    public class RopeManager : Mission
+    [SerializeField]
+    private PhotonView photon;
+
+    [SerializeField]
+    private RopeController control;
+
+    public int[] ropeGamesCurState;
+
+    private void Start()
     {
-        [SerializeField]
-        private PhotonView photon;
+        SetRopeGamesCurState(control.ropeGames);
+    }
 
-        [SerializeField]
-        protected internal RopeController control;
-
-        public override bool GetScore()
+    public void GetRopeGamesCurState(RopeGame[] ropeGames )
+    {
+        for(int i=0; i< ropeGames.Length; i++)
         {
-            if (TimeManager.Instance.isCurNight)
+            switch(ropeGamesCurState[i])
             {
-                control.moon.ResetPos();
-
-                if (control.moon.MissionSuccess)
-                    return true;
-                else
-                    return false;
-
+                case 0:
+                    ropeGames[i].curState = RopeState.None;
+                    break;
+                case 1:
+                    ropeGames[i].curState = RopeState.Rot;
+                    break;
+                case 2:
+                    ropeGames[i].curState = RopeState.Normal;
+                    break;
             }
+        }
+    }
+
+    public void SetRopeGamesCurState(RopeGame[] ropeGames)
+    {
+        for (int i = 0; i < ropeGames.Length; i++)
+        {
+            switch (ropeGames[i].curState)
+            {
+                case RopeState.None:
+                    
+                    break;
+                case RopeState.Rot:
+                    ropeGamesCurState[i] = 1;
+                    break;
+                case RopeState.Normal:
+                    ropeGamesCurState[i] = 2;
+                    break;
+            }
+        }
+    }
+
+    public override bool GetScore()
+    {
+        if (TimeManager.Instance.isCurNight)
+        {
+            control.moon.ResetPos();
+
+            if (control.moon.MissionSuccess)
+                return true;
             else
-            {
-                control.sun.ResetPos();
+                return false;
 
-                if (control.sun.MissionSuccess)
-                    return true;
-                else
-                    return false;
-            }
         }
-
-        public override void OnEnable()
+        else
         {
-            base.OnEnable();
-            GraphicUpdate();
-        }
+            control.sun.ResetPos();
 
-        public override void OnDisable()
-        {
-            PlayerUpdateCurMission();
-            base.OnDisable();
+            if (control.sun.MissionSuccess)
+                return true;
+            else
+                return false;
         }
+    }
 
-        public override void GraphicUpdate()
-        {
-            photon.RPC("LoadUIRPC", RpcTarget.All, null);
-        }
-
-        public override void PlayerUpdateCurMission()
-        {
-            RopeGame[] ropeGames = control.GetComponentsInChildren<RopeGame>();
-
-            photon.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
-        }
+    public override void PlayerUpdateCurMission()
+    {
+        photon.RPC("SaveUIRPC", RpcTarget.All, (int[])ropeGamesCurState);
     }
 }
 

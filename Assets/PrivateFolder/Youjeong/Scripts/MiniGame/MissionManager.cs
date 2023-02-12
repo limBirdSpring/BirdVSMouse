@@ -60,17 +60,11 @@ namespace Youjeong
         }
 
         [PunRPC]
-        private void LoadUIRPC()
-        {
-            Debug.Log("LoadUIRPC");
-            ropeManager.control.LoadUIRPC();
-        }
-
-        [PunRPC]
-        private void SaveUIRPC(RopeGame[] ropes)
+        private void SaveUIRPC(int[] ropes)
         {
             Debug.Log("SaveUIRPC");
-            ropeManager.control.SaveUIRPC(ropes);
+            ropeManager.ropeGamesCurState = ropes;
+            /*ropeManager.control.SaveUIRPC(ropes);*/
         }
     }
 }
