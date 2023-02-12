@@ -40,6 +40,11 @@ namespace HyunJune
             clothImage.color = dicColor[curColor];
         }
 
+        private void OnEnable()
+        {
+            GraphicUpdate();
+        }
+
         private void Init()
         {
             dicColor.Add(CurColor.None, new Color32(224, 216, 192, 255));
@@ -69,6 +74,13 @@ namespace HyunJune
             curColor |= color;
             UpdateColor();
         }
+
+        public void GraphicUpdate()
+        {
+            Debug.Log("Dye, GraphicUpdate");
+            clothImage.color = dicColor[curColor];
+        }
+
 
         public void UpdateColor()
         {
