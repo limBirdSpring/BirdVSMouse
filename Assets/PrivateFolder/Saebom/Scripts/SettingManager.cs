@@ -5,8 +5,7 @@ using UnityEngine;
 public class SettingManager : SingleTon<SettingManager>
 {
     //이멀젼시 횟수
-    public int mouseEmergency = 3;
-    public int birdEmergency = 3;
+    public int emergencyCount = 3;
 
     //시간이 빠르게 흐르는 데에 걸리는 방해성공 횟수
     public int successHiderance = 5;
@@ -23,7 +22,7 @@ public class SettingManager : SingleTon<SettingManager>
 
     public void OnEmergencyCountButtonClick(int count)
     {
-        mouseEmergency = birdEmergency = count;
+        emergencyCount = count;
     }
 
     public void OnHideranceCountButtonClick(int count)
