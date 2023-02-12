@@ -69,11 +69,15 @@ public class VoteManager : MonoBehaviourPun
     private int participantCount;
     private VoteRole myRole;
 
+    [Header("SkipWindow")]
+    [SerializeField]
+    private ResultNothing skipWindow;
+
     private void Awake()
     {
         Instance = this;
         //FindObjectsOfType<PlayerController>();
-        chatInputField.characterLimit = 30;
+        chatInputField.characterLimit = 50;
     }
 
     // 지워야 한다
@@ -449,8 +453,15 @@ public class VoteManager : MonoBehaviourPun
         else
         {
             // 아마 스킵
-            photonView.RPC("VotingEndRPC", RpcTarget.All, null);
+            photonView.RPC("NothingWindowOpen", RpcTarget.All, null);
         }
+    }
+
+    [PunRPC]
+    private void NothingWindowOpen()
+    {
+        skipWindow.gameObject.SetActive(true);
+        StartCoroutine(VotingEnd());
     }
 
     [PunRPC]
@@ -493,6 +504,7 @@ public class VoteManager : MonoBehaviourPun
         myRole = VoteRole.None;
         participantCount = 0;
         voteToDeathWindow.gameObject.SetActive(false);
+        skipWindow.gameObject.SetActive(false);
         TimeManager.Instance.TimeResume();
     }
 
