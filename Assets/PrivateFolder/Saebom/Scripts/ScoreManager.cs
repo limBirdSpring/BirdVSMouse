@@ -388,7 +388,17 @@ namespace Saebom
                 else if (!(birdCount == 1 && !isBirdSpyDie) && (mouseCount == 1 && !isMouseSpyDie))
                     EndGame(Win.MouseWin);
             }
-            else //승패를 결정짓는 경우가 아니면 게임 재개
+            else if(TimeManager.Instance.curRound >= SettingManager.Instance.maxRoundCount)
+            {
+                if (birdScore > mouseScore)
+                    EndGame(Win.BirdWin);
+                else if (birdScore < mouseScore)
+                    EndGame(Win.MouseWin);
+                else
+                    EndGame(Win.Draw);
+            }
+                
+            else//승패를 결정짓는 경우가 아니면 게임 재개
                 TimeManager.Instance.FinishScoreTimeSet();
 
             

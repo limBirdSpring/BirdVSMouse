@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class SettingManager : SingleTon<SettingManager>
 {
@@ -19,6 +20,13 @@ public class SettingManager : SingleTon<SettingManager>
 
     //라운드 횟수 제한 : 8, 10, 12
     public int maxRoundCount = 8;
+
+    PhotonView photonView;
+
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
 
     private void OnEnable()
     {
@@ -50,4 +58,19 @@ public class SettingManager : SingleTon<SettingManager>
         maxRoundCount = count;
     }
 
+    //방입장하기 바로전에 호출
+    public void MasterGetPlayersetting()
+    {
+        photonView.RPC("PlayerSetGameSetting", RpcTarget.All, emergencyCount, successHiderance, killCount, turnTime, maxRoundCount);
+    }
+
+    [PunRPC]
+    private void PlayerSetGameSetting(int emergencyCount, int successHiderance, int killCount, float turnTime, int maxRoundCount)
+    {
+        this.emergencyCount = emergencyCount;
+        this.successHiderance = this.curHiderance = successHiderance;
+        this.killCount = killCount;
+        this.turnTime = turnTime;
+        this.maxRoundCount = maxRoundCount;
+    }
 }
