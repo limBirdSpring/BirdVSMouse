@@ -8,7 +8,8 @@ using Photon.Pun;
 
 namespace Youjeong
 {
-    public class MissionManager : MonoBehaviourPun
+    [RequireComponent(typeof(PhotonView))]
+    public class MissionManager : MonoBehaviourPunCallbacks
     {
         public PhotonView photon { get; private set; }
 
@@ -21,9 +22,15 @@ namespace Youjeong
         [SerializeField]
         private RopeManager ropeManager;
 
+        private void Awake()
+        {
+            photon = GetComponent<PhotonView>();
+        }
+
         [PunRPC]
         public void CowMissionUpdate(int birdCow, int mouseCow, bool[] birdActive, bool[] mouseActive)
         {
+            Debug.Log("CowMissionUpdate");
             cowManager.birdCowCount = birdCow;
             cowManager.mouseCowCount = mouseCow;
             cowManager.birdCowActive = birdActive;
@@ -33,24 +40,28 @@ namespace Youjeong
         [PunRPC]
         public void ClothCurColorRPC(CurColor curColor)
         {
+            Debug.Log("ClothCurColorRPC");
             dyeManager.cloth.curColor = curColor;
         }
 
         [PunRPC]
         public void HangariMissionUpdate(float water)
         {
+            Debug.Log("HangariMissionUpdate");
             hangariManager.waterAmount = water;
         }
 
         [PunRPC]
         private void LoadUIRPC()
         {
+            Debug.Log("LoadUIRPC");
             ropeManager.control.LoadUIRPC();
         }
 
         [PunRPC]
         private void SaveUIRPC(RopeGame[] ropes)
         {
+            Debug.Log("SaveUIRPC");
             ropeManager.control.SaveUIRPC(ropes);
         }
     }

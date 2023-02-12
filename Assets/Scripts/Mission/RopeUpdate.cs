@@ -7,6 +7,9 @@ using Saebom;
 public class RopeUpdate : Mission
 {
     [SerializeField]
+    private PhotonView photon;
+
+    [SerializeField]
     private RopeController control;
 
     public override void OnDisable()
@@ -19,6 +22,6 @@ public class RopeUpdate : Mission
     {
         RopeGame[] ropeGames = control.GetComponentsInChildren<RopeGame>();
 
-        photonView.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
+        photon.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
     }
 }
