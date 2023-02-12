@@ -98,6 +98,8 @@ namespace SoYoon
             }
             myInfo.lastChosenName = playerName.text;
             PhotonNetwork.LocalPlayer.NickName = myInfo.lastChosenName;
+
+            DataManager.Instance.SaveToJson();
         }
         #endregion 
 
