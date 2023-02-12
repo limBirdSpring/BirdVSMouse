@@ -7,16 +7,26 @@ using Saebom;
 //해당 컴포넌트는 아이템 오브젝트 근처 콜리더에 추가시켜서 사용한다.
 
 
-public class ItemGet : MonoBehaviourPun
+public class ItemGet : MonoBehaviour
 {
     //해당 장소에서 얻을 아이템
     [SerializeField]
     private ItemData itemData;
 
     [SerializeField]
+    private GameObject clock;
+
+    [SerializeField]
     private GameObject blockButton;
 
+    private PhotonView photonView;
+
     private float waitingTime =0;
+
+    private void Awake()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
 
     public void GetItem()
     {
@@ -29,17 +39,13 @@ public class ItemGet : MonoBehaviourPun
         }
         else
         {
-            if (PlayGameManager.Instance.myPlayerState.isSpy)
+            if (waitingTime == 0)
             {
-                if (waitingTime == 0)
-                    photonView.RPC("ItemHindrance", RpcTarget.All, 3);
+                clock.SetActive(true);
+                photonView.RPC("ItemHindrance", RpcTarget.All, 3f);
+                StartCoroutine(ItemHimdranceEnd());
             }
-            //내가 시민일 경우엔 방해
-            else
-            {
-                if (waitingTime == 3)
-                    photonView.RPC("ItemHindrance", RpcTarget.All, 0);
-            }
+            
         }
     }
 
@@ -53,15 +59,18 @@ public class ItemGet : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void ItemHindrance(float waitTime)
+    private void ItemHindrance(float waitTime)
     {
+        Debug.Log("아이템 방해가 성공적입니다.");
         waitingTime = waitTime;
-        StartCoroutine(ItemHimdranceEnd());
+       
     }
     
     private IEnumerator ItemHimdranceEnd()
     {
         yield return new WaitForSeconds(2);
         waitingTime = 0;
+        clock.SetActive(false);
+        photonView.RPC("ItemHindrance", RpcTarget.All, 0f);
     }
 }
