@@ -8,10 +8,18 @@ namespace SoYoon
 {
     public class TitleManager : MonoBehaviourPunCallbacks
     {
+        private bool isClicked = false;
+
         private void Update()
         {
-            if(Input.anyKeyDown)
+            if (isClicked)
+                return;
+
+            if (Input.anyKeyDown)
+            {
+                isClicked = true;
                 PhotonNetwork.ConnectUsingSettings();
+            }
         }
 
         public override void OnConnectedToMaster()

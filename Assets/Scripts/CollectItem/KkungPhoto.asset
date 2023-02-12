@@ -17,3 +17,4 @@ MonoBehaviour:
   price: 0
   type: 0
   grade: 0
+  get: 1
