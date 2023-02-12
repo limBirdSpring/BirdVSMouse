@@ -28,7 +28,7 @@ namespace HyunJune
         public Image clothImage;
         public Dictionary<CurColor, Color32> dicColor;
 
-        [HideInInspector]
+        //[HideInInspector]
         public CurColor curColor;
 
         private void Awake()

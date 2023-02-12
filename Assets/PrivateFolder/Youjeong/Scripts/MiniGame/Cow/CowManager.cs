@@ -8,6 +8,9 @@ namespace Youjeong
 {
     public class CowManager : Mission
     {
+        [SerializeField]
+        private PhotonView photon;
+
         public int birdCowCount = 2;
         public int mouseCowCount= 2;
 
@@ -18,19 +21,24 @@ namespace Youjeong
         {
             birdCowActive[0] = true;
             birdCowActive[1] = true;
+            birdCowActive[2] = false;
+            birdCowActive[3] = false;
+
             mouseCowActive[0] = true;
             mouseCowActive[1] = true;
+            mouseCowActive[2] = false;
+            mouseCowActive[3] = false;
         }
 
         public override void OnDisable()
         {
-            base.OnDisable();
             PlayerUpdateCurMission();
+            base.OnDisable();
         }
 
         public override void PlayerUpdateCurMission()
         {
-            photonView.RPC("CowMissionUpdate", RpcTarget.All, birdCowCount, mouseCowCount, birdCowActive, mouseCowActive);
+            photon.RPC("CowMissionUpdate", RpcTarget.All, birdCowCount, mouseCowCount, birdCowActive, mouseCowActive);
         }
 
         public void AddCow(bool isbirdHouse)
@@ -83,6 +91,8 @@ namespace Youjeong
                     cows[i].gameObject.SetActive(mouseCowActive[i]);
                 }
         }
+
+       
     }
 }
 

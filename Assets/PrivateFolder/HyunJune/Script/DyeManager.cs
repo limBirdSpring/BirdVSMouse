@@ -10,6 +10,9 @@ using Photon.Pun;
 public class DyeManager : Mission
 {
     [SerializeField]
+    private PhotonView photon;
+
+    [SerializeField]
     public Cloth cloth;
 
     public override bool GetScore()
@@ -52,8 +55,8 @@ public class DyeManager : Mission
 
     public override void OnDisable()
     {
-        base.OnDisable();
         PlayerUpdateCurMission();
+        base.OnDisable();
     }
 
     public override void GraphicUpdate()
@@ -63,7 +66,7 @@ public class DyeManager : Mission
 
     public override void PlayerUpdateCurMission()
     {
-        photonView.RPC("ClothCurColorRPC", RpcTarget.All, cloth.curColor);
+        photon.RPC("ClothCurColorRPC", RpcTarget.All, cloth.curColor);
     }
 
 }

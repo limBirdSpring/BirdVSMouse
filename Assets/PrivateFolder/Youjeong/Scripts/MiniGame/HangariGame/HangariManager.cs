@@ -9,7 +9,10 @@ namespace Youjeong
     public class HangariManager : Mission
     {
         public float waterAmount=0;
-    
+
+        [SerializeField]
+        private PhotonView photon;
+
         public void ResetGame()
         {
             waterAmount= 0;
@@ -39,7 +42,7 @@ namespace Youjeong
 
         public override void PlayerUpdateCurMission()
         {
-            photonView.RPC("HangariMissionUpdate", RpcTarget.All, waterAmount);
+            photon.RPC("HangariMissionUpdate", RpcTarget.All, waterAmount);
             
         }
 

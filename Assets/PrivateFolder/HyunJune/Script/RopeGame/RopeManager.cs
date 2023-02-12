@@ -10,6 +10,9 @@ namespace Youjeong
     public class RopeManager : Mission
     {
         [SerializeField]
+        private PhotonView photon;
+
+        [SerializeField]
         protected internal RopeController control;
 
         public override bool GetScore()
@@ -43,20 +46,20 @@ namespace Youjeong
 
         public override void OnDisable()
         {
-            base.OnDisable();
             PlayerUpdateCurMission();
+            base.OnDisable();
         }
 
         public override void GraphicUpdate()
         {
-            photonView.RPC("LoadUIRPC", RpcTarget.All, null);
+            photon.RPC("LoadUIRPC", RpcTarget.All, null);
         }
 
         public override void PlayerUpdateCurMission()
         {
             RopeGame[] ropeGames = control.GetComponentsInChildren<RopeGame>();
 
-            photonView.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
+            photon.RPC("SaveUIRPC", RpcTarget.All, ropeGames);
         }
     }
 }
