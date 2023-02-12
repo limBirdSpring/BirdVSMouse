@@ -101,6 +101,7 @@ public class VoteManager : MonoBehaviourPun
             {
                 photonView.RPC("SendMessage", RpcTarget.All, chatInputField.text, PhotonNetwork.LocalPlayer.ActorNumber);
                 chatInputField.text = "";
+                chatInputField.ActivateInputField();
             }
             else
             {
@@ -118,6 +119,7 @@ public class VoteManager : MonoBehaviourPun
             yield return null;
         }
 
+        Debug.Log("타임오버");
         time = 0;
         timer.text = time.ToString("F0");
         photonView.RPC("FocedSkip", RpcTarget.All, null);
@@ -145,6 +147,7 @@ public class VoteManager : MonoBehaviourPun
             // 투표를 했으면 리턴
             if (voteCompletePlayerList.Contains(player.Value.ActorNumber))
                 return;
+
 
             // 강제 스킵 발동
             VoteSkip();
@@ -505,6 +508,7 @@ public class VoteManager : MonoBehaviourPun
         participantCount = 0;
         voteToDeathWindow.gameObject.SetActive(false);
         skipWindow.gameObject.SetActive(false);
+        StopCoroutine(StartTimer(0));
         TimeManager.Instance.TimeResume();
     }
 
