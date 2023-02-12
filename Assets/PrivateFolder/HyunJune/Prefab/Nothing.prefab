@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2346597760803521441}
   - component: {fileID: 2346597760803521440}
   - component: {fileID: 2346597760803521455}
-  - component: {fileID: 2346597760803521443}
+  - component: {fileID: 4557281529555933177}
   m_Layer: 5
   m_Name: Nothing
   m_TagString: Untagged
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2346597760803521443
+--- !u!114 &4557281529555933177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,16 +113,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2346597760803521454}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cade26316dea5446b7a75d811bdadd6, type: 3}
+  m_Script: {fileID: 11500000, guid: a240952d3e0889f47bcdfd1595ab9765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  birdVote: {fileID: 2346597762003272803}
-  mouseVote: {fileID: 2346597761059606073}
-  spyBird: {fileID: 0}
-  spyMouse: {fileID: 0}
-  ghostBird: {fileID: 0}
-  ghostMouse: {fileID: 0}
-  target: {fileID: 0}
+  dayTime: {fileID: 2346597762003272803}
+  night: {fileID: 2346597761059606073}
   message: {fileID: 1537044464039266522}
 --- !u!1 &2346597761059606023
 GameObject:
