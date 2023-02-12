@@ -77,7 +77,7 @@ public class VoteManager : MonoBehaviourPun
     {
         Instance = this;
         //FindObjectsOfType<PlayerController>();
-        chatInputField.characterLimit = 30;
+        chatInputField.characterLimit = 50;
     }
 
     // 지워야 한다
