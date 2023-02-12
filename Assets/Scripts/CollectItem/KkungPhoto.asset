@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: KkungPhoto
   m_EditorClassIdentifier: 
   itemName: "\uAFE9 \uCD08\uC0C1\uD654 "
-  itemIcon: {fileID: 21300000, guid: d9272a0284f619c4983dbf7809fe5fae, type: 3}
+  itemIcon: {fileID: 21300000, guid: ce3075fe30ade2f4e8dd9e8b5ddc65a0, type: 3}
   price: 0
   type: 0
   grade: 0
-  get: 1

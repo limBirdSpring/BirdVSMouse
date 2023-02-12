@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: EaglePhoto
   m_EditorClassIdentifier: 
   itemName: "\uB3C5\uC218\uB9AC \uCD08\uC0C1\uD654 "
-  itemIcon: {fileID: 21300000, guid: d9272a0284f619c4983dbf7809fe5fae, type: 3}
+  itemIcon: {fileID: 21300000, guid: ab3a540b44b98834eb8710678b0af7e7, type: 3}
   price: 0
   type: 0
   grade: 0
-  get: 1

@@ -28,6 +28,8 @@ public class GetRope : MonoBehaviour
         {
             int random = Random.Range(0, max);
 
+            SoundManager.Instance.PlayUISound(UISFXName.ItemGet);
+
             if (random == 0)
                 Inventory.Instance.SetItem(normalRope);
             else
