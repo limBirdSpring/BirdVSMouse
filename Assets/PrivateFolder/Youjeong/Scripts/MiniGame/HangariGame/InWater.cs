@@ -44,7 +44,9 @@ public class InWater : MonoBehaviour
             StopCoroutine(fillWaterCoroutine);
         cooltime = 0;
         curAmount = manager.waterAmount;
-        if(curAmount !=0)
+        if (curAmount == 0)
+            inWater.fillAmount = 0;
+        else
             inWater.fillAmount = curAmount / 90;
         SetAmountText();
     }
