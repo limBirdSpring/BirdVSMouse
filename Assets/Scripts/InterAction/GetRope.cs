@@ -16,7 +16,7 @@ public class GetRope : MonoBehaviour
 
     PhotonView photonView;
 
-    public int max=2;
+    public int max=1;
 
     private void Awake()
     {
@@ -45,7 +45,7 @@ public class GetRope : MonoBehaviour
             //내가 스파이일 경우엔 무조건 획득으로 도와줌
             if (PlayGameManager.Instance.myPlayerState.isSpy)
             {
-                if (max == 2)
+                if (max == 1)
                 {
                     clock.SetActive(true);
                     photonView.RPC("Hindrance", RpcTarget.All, 1);
@@ -54,7 +54,7 @@ public class GetRope : MonoBehaviour
             //내가 시민일 경우엔 방해
             else
             {
-                if (max == 2)
+                if (max == 1)
                 {
                     clock.SetActive(true);
                     photonView.RPC("Hindrance", RpcTarget.All, 5);
@@ -75,7 +75,7 @@ public class GetRope : MonoBehaviour
     private IEnumerator HindCor()
     {
         yield return new WaitForSeconds(3f);
-        max = 2;
+        max = 1;
         clock.SetActive(false);
     }
 

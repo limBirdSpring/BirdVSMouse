@@ -81,6 +81,8 @@ namespace Saebom
 
         private void Start()
         {
+            //전체 시간은 미리 설정된 데이타를 가져옴
+            maxTime = SettingManager.Instance.turnTime;
             halfTime = maxTime / 2;
             dangerTime = halfTime - 30f;
             dangerTime2 = maxTime - 30f;

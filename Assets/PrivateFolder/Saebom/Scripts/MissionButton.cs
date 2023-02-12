@@ -62,11 +62,6 @@ namespace Saebom
         private GameObject completeText;
 
 
-        [HideInInspector]
-        public int mouseEmergency = 3;
-
-        [HideInInspector]
-        public int birdEmergency = 3;
 
 
 
