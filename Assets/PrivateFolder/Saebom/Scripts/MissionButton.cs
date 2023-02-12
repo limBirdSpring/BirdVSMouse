@@ -276,7 +276,7 @@ namespace Saebom
                 missionButton.gameObject.SetActive(true);
                 inter.OutLineOn();
             }
-            else
+            else if (inter != null)
             {
                 missionButton.gameObject.SetActive(false);
                 inter.OutLineOff();
