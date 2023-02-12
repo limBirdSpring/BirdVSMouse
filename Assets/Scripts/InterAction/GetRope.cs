@@ -11,6 +11,9 @@ public class GetRope : MonoBehaviour
     [SerializeField]
     private ItemData rotRope;
 
+    [SerializeField]
+    private GameObject clock;
+
     PhotonView photonView;
 
     public int max=2;
@@ -43,13 +46,20 @@ public class GetRope : MonoBehaviour
             if (PlayGameManager.Instance.myPlayerState.isSpy)
             {
                 if (max == 2)
+                {
+                    clock.SetActive(true);
                     photonView.RPC("Hindrance", RpcTarget.All, 1);
+                }
             }
             //내가 시민일 경우엔 방해
             else
             {
                 if (max == 2)
+                {
+                    clock.SetActive(true);
                     photonView.RPC("Hindrance", RpcTarget.All, 5);
+                }
+            
             }
         }
     }
@@ -66,6 +76,7 @@ public class GetRope : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         max = 2;
+        clock.SetActive(false);
     }
 
 }
