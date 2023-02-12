@@ -17,6 +17,9 @@ public class ItemGet : MonoBehaviour
     private GameObject clock;
 
     [SerializeField]
+    private GameObject hiderancePrefab;
+
+    [SerializeField]
     private GameObject blockButton;
 
     private PhotonView photonView;
@@ -33,7 +36,13 @@ public class ItemGet : MonoBehaviour
         if ((PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight) ||
             (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight))
         {
-            //블락버튼 액티브
+            //만약 방해 성공하면 방해당한 플레이어에게 방해성공 띄우기
+
+            if (waitingTime == 3f)
+            {
+                Instantiate(hiderancePrefab, clock.transform.position, Quaternion.identity);
+            }
+
             blockButton.SetActive(true);
             StartCoroutine(ItemGetActiveBlockButton());
         }

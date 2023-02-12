@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TextCoroutine : MonoBehaviour
 {
+    [SerializeField]
+    private float time = 1.5f;
 
     private void OnEnable()
     {
@@ -12,7 +14,7 @@ public class TextCoroutine : MonoBehaviour
 
     private IEnumerator Cor()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(time);
         gameObject.SetActive(false);
     }
 }
