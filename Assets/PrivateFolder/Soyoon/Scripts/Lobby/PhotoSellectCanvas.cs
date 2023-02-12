@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,20 +9,46 @@ namespace SoYoon
         [SerializeField]
         private GameObject photo;
         [SerializeField]
-        private Transform PhotoContentTransform;
+        private Transform photoContentTransform;
+
+        private List<GameObject> photoButtons;
 
         private void Awake()
+        {
+            photoButtons = new List<GameObject>();
+        }
+
+        private void OnEnable()
         {
             InitializePhotos();
         }
 
         private void InitializePhotos()
         {
-            for (int i = 0; i < DataManager.Instance.earnedPhotoCollectionItemList.Count; i++)
+            for (int i = 0; i < DataManager.Instance.earnedCollectionItemList.Count; i++)
             {
-                GameObject photoButton = Instantiate(photo, PhotoContentTransform, false);
-                PhotoButton photoImg = photoButton.GetComponent<PhotoButton>();
-                photoImg.photo.GetComponent<Image>().sprite = DataManager.Instance.earnedPhotoCollectionItemList[i].itemIcon;
+                if (DataManager.Instance.earnedCollectionItemList[i].type != ItemType.Photo)
+                    continue;
+
+                if (photoButtons.Count == 0) // 처음 시작
+                {
+                    GameObject photoButton = Instantiate(photo, photoContentTransform, false);
+                    PhotoButton photoImg = photoButton.GetComponent<PhotoButton>();
+                    photoImg.photoCollectionItem = DataManager.Instance.earnedCollectionItemList[i];
+                    photoButtons.Add(photoButton);
+                }
+                else
+                {
+                    if (photoButtons.Count == DataManager.Instance.EarnedPhotosNum)
+                        break;
+                    else
+                    {
+                        GameObject photoButton = Instantiate(photo, photoContentTransform, false);
+                        PhotoButton photoImg = photoButton.GetComponent<PhotoButton>();
+                        photoImg.photoCollectionItem = DataManager.Instance.earnedCollectionItemList[i];
+                        photoButtons.Add(photoButton);
+                    }
+                }
             }
         }
 

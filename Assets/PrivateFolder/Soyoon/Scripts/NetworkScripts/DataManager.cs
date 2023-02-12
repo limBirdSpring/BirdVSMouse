@@ -10,19 +10,21 @@ namespace SoYoon
     public class DataManager : MonoBehaviour
     {
         [SerializeField]
-        private List<CollectionItem> collectionPhotoList;
-        [SerializeField]
-        private List<CollectionItem> collectionBadgeList;
+        private List<CollectionItem> collectionList;
 
         [HideInInspector]
-        public List<CollectionItem> earnedPhotoCollectionItemList;
+        public List<CollectionItem> earnedCollectionItemList;
         [HideInInspector]
-        public List<CollectionItem> earnedBadgeCollectionItemList;
+        public List<CollectionItem> mailedCollectionItemList;
 
         private Dictionary<string ,CollectionItem> collectionItemDic;
 
         public static DataManager Instance { get; private set; }
         public MyInfo myInfo;
+
+        public int EarnedPhotosNum { get; private set; }
+        public int EarnedBadgesNum { get; private set; }
+
 
         private void Awake()
         {
@@ -37,8 +39,8 @@ namespace SoYoon
                 else
                     Destroy(this.gameObject);
             }
-            earnedPhotoCollectionItemList = new List<CollectionItem>();
-            earnedBadgeCollectionItemList = new List<CollectionItem>();
+            earnedCollectionItemList = new List<CollectionItem>();
+            mailedCollectionItemList = new List<CollectionItem>();
             collectionItemDic = new Dictionary<string, CollectionItem>();
 
             string path = Path.Combine(Application.dataPath, "data.json");
@@ -48,58 +50,66 @@ namespace SoYoon
             else
                 SaveToJson();
 
-            for(int i=0; i<collectionPhotoList.Count; i++)
+            EarnedPhotosNum = 0;
+            EarnedBadgesNum = 0;
+
+            for (int i = 0; i < collectionList.Count; i++)
+                collectionItemDic.Add(collectionList[i].itemName, collectionList[i]);
+
+            for (int i = 0; i < myInfo.earnedItem.Count; i++)
             {
-                collectionItemDic.Add(collectionPhotoList[i].itemName, collectionPhotoList[i]);
-                if (myInfo.getPhoto[i])
-                {
-                    earnedPhotoCollectionItemList.Add(collectionPhotoList[i]);
-                }
+                earnedCollectionItemList.Add(collectionItemDic[myInfo.earnedItem[i]]);
+
+                if (collectionItemDic[myInfo.earnedItem[i]].type == ItemType.Photo)
+                    EarnedPhotosNum++;
+                else if (collectionItemDic[myInfo.earnedItem[i]].type == ItemType.Badge)
+                    EarnedBadgesNum++;
+
             }
 
-            for (int i = 0; i < collectionBadgeList.Count; i++)
-            {
-                collectionItemDic.Add(collectionBadgeList[i].itemName, collectionBadgeList[i]);
-                if (myInfo.getBadge[i])
-                {
-                    earnedBadgeCollectionItemList.Add(collectionBadgeList[i]);
-                }
-            }
+            for(int i=0;i< myInfo.mailedItem.Count; i++)
+                mailedCollectionItemList.Add(collectionItemDic[myInfo.mailedItem[i]]);
         }
 
-        public int FindPhotoSpriteNum(Sprite photoSprite)
+        public CollectionItem GetCollectionItem(string itemName)
         {
-            for (int i = 0; i < earnedPhotoCollectionItemList.Count; i++)
-            {
-                if (earnedPhotoCollectionItemList[i].itemIcon == photoSprite)
-                    return i;
-            }
-            return -1;
+            return collectionItemDic[itemName];
         }
 
-        public Sprite FindSpriteWithPhotoNum(int photoNum)
+        public void EarnItem(string itemName)
         {
-            if (photoNum < 0) Debug.Log("error : cannot find sprite with photo Num");
-
-            return earnedPhotoCollectionItemList[photoNum].itemIcon;
+            CollectionItem item = collectionItemDic[itemName];
+            earnedCollectionItemList.Add(item);
+            myInfo.earnedItem.Add(itemName);
+            if (item.type == ItemType.Photo)
+                EarnedPhotosNum++;
+            else if (item.type == ItemType.Badge)
+                EarnedBadgesNum++;
+            SaveToJson();
         }
 
-        public int FindBadgeSpriteNum(Sprite badgeSprite)
-        {
-            for (int i = 0; i < earnedBadgeCollectionItemList.Count; i++)
-            {
-                if (earnedBadgeCollectionItemList[i].itemIcon == badgeSprite)
-                    return i;
-            }
-            return -1;
-        }
+        //public void EarnPhoto(string photoName)
+        //{
+        //    CollectionItem earnedItem = collectionItemDic[photoName];
+        //    earnedPhotoCollectionItemList.Add(earnedItem);
+        //    int itemNum = FindPhotoSpriteNum(earnedItem.itemIcon);
+        //    if (itemNum == -1)
+        //    { Debug.Log("error : cannot find photo sprite Num"); return; }
+        //    myInfo.getPhoto[itemNum] = true;
+        //    SaveToJson();
+        //}
+        //
+        //public void EarnBadge(string badgeName)
+        //{
+        //    CollectionItem earnedItem = collectionItemDic[badgeName];
+        //    earnedBadgeCollectionItemList.Add(earnedItem);
+        //    int itemNum = FindBadgeSpriteNum(earnedItem.itemIcon);
+        //    if (itemNum == -1)
+        //    { Debug.Log("error : cannot find badge sprite Num"); return; }
+        //    myInfo.getBadge[itemNum] = true;
+        //    SaveToJson();
+        //}
 
-        public Sprite FindSpriteWithBadgeNum(int badgeSprite)
-        {
-            if (badgeSprite < 0) Debug.Log("error : cannot find sprite with badge Num");
-
-            return earnedBadgeCollectionItemList[badgeSprite].itemIcon;
-        }
 
         public void changeName(string name)
         {
@@ -134,11 +144,6 @@ namespace SoYoon
         public void Lose()
         {
 
-        }
-
-        public CollectionItem GetCollectionItem(string itemName)
-        {
-            return collectionItemDic[itemName];
         }
 
         public void SaveToJson()

@@ -9,24 +9,46 @@ namespace SoYoon
         [SerializeField]
         private GameObject badge;
         [SerializeField]
-        private Transform BadgeContentTransform;
+        private Transform badgeContentTransform;
 
         private List<GameObject> badgeButtons;
 
         private void Awake()
         {
             badgeButtons = new List<GameObject>();
+        }
+
+        private void OnEnable()
+        {
             InitializeBadges();
         }
 
         private void InitializeBadges()
         {
-            for (int i = 0; i < DataManager.Instance.earnedBadgeCollectionItemList.Count; i++)
+            for (int i = 0; i < DataManager.Instance.earnedCollectionItemList.Count; i++)
             {
-                GameObject badgeButton = Instantiate(badge, BadgeContentTransform, false);
-                BadgeButton badgeImg = badgeButton.GetComponent<BadgeButton>();
-                badgeImg.badge.GetComponent<Image>().sprite = DataManager.Instance.earnedBadgeCollectionItemList[i].itemIcon;
-                badgeButtons.Add(badgeButton);
+                if (DataManager.Instance.earnedCollectionItemList[i].type != ItemType.Badge)
+                    continue;
+
+                if(badgeButtons.Count == 0) // 처음 시작
+                {
+                    GameObject badgeButton = Instantiate(badge, badgeContentTransform, false);
+                    BadgeButton badgeImg = badgeButton.GetComponent<BadgeButton>();
+                    badgeImg.badgeCollectionItem = DataManager.Instance.earnedCollectionItemList[i];
+                    badgeButtons.Add(badgeButton);
+                }
+                else
+                {
+                    if (badgeButtons.Count == DataManager.Instance.EarnedBadgesNum)
+                        break;
+                    else
+                    {
+                        GameObject badgeButton = Instantiate(badge, badgeContentTransform, false);
+                        BadgeButton badgeImg = badgeButton.GetComponent<BadgeButton>();
+                        badgeImg.badgeCollectionItem = DataManager.Instance.earnedCollectionItemList[i];
+                        badgeButtons.Add(badgeButton);
+                    }
+                }
             }
         }
 
