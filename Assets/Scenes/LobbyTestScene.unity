@@ -6377,7 +6377,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1134307178}
         m_TargetAssemblyTypeName: SoYoon.PlayerPanel, Assembly-CSharp
-        m_MethodName: BadgeButtonClicked
+        m_MethodName: BadgeButton2Clicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6483,7 +6483,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 14dd58e0f622015458bdc0ce14513733, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10546,8 +10546,8 @@ MonoBehaviour:
   playerBadge2: {fileID: 711526432}
   photoWindow: {fileID: 2117589949}
   badgeWindow: {fileID: 938538312}
-  myInfo: {fileID: 11400000, guid: c91681561fdf0904d8d197033ba3bbd4, type: 2}
   initializeNames: {fileID: 11400000, guid: 6bfb88b30ede49a4795e984d25ffe961, type: 2}
+  targetBadgeButton: 0
 --- !u!1 &1147945244 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8731740768200363379, guid: 0959858f9f03bf648a1d92934085d18e, type: 3}
@@ -14064,51 +14064,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510594994}
   m_CullTransparentMesh: 1
---- !u!1 &1511211701
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1511211703}
-  - component: {fileID: 1511211702}
-  m_Layer: 0
-  m_Name: DataManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1511211702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511211701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f349621b4cb2bb40b51497f5373d3ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  datas: {fileID: 11400000, guid: 6041f9d32b29f01469ce7b54befaa001, type: 2}
---- !u!4 &1511211703
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511211701}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1511903194
 GameObject:
   m_ObjectHideFlags: 0
@@ -14570,7 +14525,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1134307178}
         m_TargetAssemblyTypeName: SoYoon.PlayerPanel, Assembly-CSharp
-        m_MethodName: BadgeButtonClicked
+        m_MethodName: BadgeButton1Clicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16089,7 +16044,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 406f04774a0bb2e49b4de397f2ff0d2b, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -20681,6 +20636,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b093bc7bc08da34cafba31b90472444, type: 3}
+--- !u!1001 &2745818348409752839
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577264, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577266, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: m_Name
+      value: DataManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 924531475a75062469e003e4bd677bc1, type: 3}
 --- !u!1001 &5780187052990990554
 PrefabInstance:
   m_ObjectHideFlags: 0

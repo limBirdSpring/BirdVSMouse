@@ -37,10 +37,21 @@ namespace SoYoon
             OwnerId = id;
             playerName.text = name;
             // 찾을 때 유효하지 않은 값은 제외
-            playerChar.sprite = (charNum != -1) ? DataManager.Instance.FindSpriteWithNum(charNum) : null;
-            // TODO : 뱃지도 동일하게 설정 (임시로 null)
-            playerBadge1.sprite = null;
-            playerBadge2.sprite = null;
+            if (charNum != -1)
+                playerChar.sprite = DataManager.Instance.FindSpriteWithPhotoNum(charNum);
+            else
+                playerChar.color = Color.clear;
+
+            if (badge1Num != -1)
+                playerBadge1.sprite = DataManager.Instance.FindSpriteWithBadgeNum(badge1Num);
+            else
+                playerBadge1.color = Color.clear;
+
+            if (badge2Num != -1)
+                playerBadge2.sprite = DataManager.Instance.FindSpriteWithBadgeNum(badge2Num);
+            else
+                playerBadge2.color = Color.clear;
+
             IsMaster = isMaster;
 
             if (isMaster)
