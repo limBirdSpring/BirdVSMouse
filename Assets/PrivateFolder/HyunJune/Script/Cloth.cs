@@ -77,7 +77,17 @@ namespace HyunJune
 
         public void AddDye(CurColor color)
         {
-            curColor |= color;
+            // 새로 넣는 염료를 이미 갖고 있다 -> 그럼 검정색으로 
+            if (color == (curColor & color))
+            {
+                curColor |= CurColor.Black;
+            }
+            // 새로 넣는 염료가 없었다 그럼 넣는다
+            else
+            {
+                curColor |= color;
+            }
+
             UpdateColor();
         }
 
