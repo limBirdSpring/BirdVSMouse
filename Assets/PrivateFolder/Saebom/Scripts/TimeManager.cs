@@ -170,9 +170,10 @@ namespace Saebom
             roundUI.text = "Round " + curRound.ToString();
         }
 
-
+        [PunRPC]
         public void TimeOn()
         {
+
             isHouseTime = false;
             //시작 텍스트 출력
             SoundManager.Instance.PlayUISound(UISFXName.Start);
@@ -255,7 +256,7 @@ namespace Saebom
             {
                 curTime = 0;
             }
-            TimeOn();
+            photonView.RPC("TimeOn", RpcTarget.All);
         }
 
 
