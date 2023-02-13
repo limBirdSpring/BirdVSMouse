@@ -86,7 +86,7 @@ namespace Saebom
 
         //=======================================
 
-        private int masterCheck = 0;
+        public int masterCheck = 0;
 
         private void Awake()
         {
@@ -171,8 +171,9 @@ namespace Saebom
 
             blockButton.SetActive(false);
 
+            masterCheck = 0;
             //플레이어들이 모두 점수확인을 끝냈는지 확인
-            photonView.RPC("PrivateScoreCheckFinish", RpcTarget.All, 1);
+            photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
 
         }
 
@@ -185,7 +186,6 @@ namespace Saebom
             if (masterCheck == PhotonNetwork.PlayerList.Length) //수정
             {
                 TimeManager.Instance.FinishScoreTimeSet();
-                masterCheck = 0;
             }
         }
 
