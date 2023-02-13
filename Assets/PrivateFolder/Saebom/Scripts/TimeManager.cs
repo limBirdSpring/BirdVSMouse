@@ -102,23 +102,24 @@ namespace Saebom
 
             if (!isCurNight)
             {
-                if (curTime > dangerTime && curTime < halfTime - 1)
-                    DangerScreenOn();
+                
                 if (curTime > halfTime - 1 && curTime < halfTime)
                 {
                     TimeOver();
                     isHouseTime = true;
                 }
+                else if (curTime > dangerTime && curTime < halfTime - 1)
+                    DangerScreenOn();
             }
             else
             {
-                if (curTime > dangerTime2 && curTime < maxTime - 1)
-                    DangerScreenOn();
                 if (curTime > maxTime - 1 && curTime < maxTime)
                 {
                     TimeOver();
                     isHouseTime = true;
                 }
+                else if (curTime > dangerTime2 && curTime < maxTime - 1)
+                    DangerScreenOn();
             }
         }
 

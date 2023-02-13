@@ -172,7 +172,7 @@ namespace Saebom
             blockButton.SetActive(false);
 
             //플레이어들이 모두 점수확인을 끝냈는지 확인
-            photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
+            photonView.RPC("PrivateScoreCheckFinish", RpcTarget.All, 1);
 
         }
 
@@ -264,12 +264,7 @@ namespace Saebom
         //활동시간 즉시 종료
         public void ActiveTimeOverNow()
         {
-            //즉시 활동시간이 끝난 경우에는 거점으로 이동하지 않아도 죽지 않고, 자동으로 거점으로 이동되도록 구현
-
-
-            //플레이어를 모두 거점으로 강제이동
-            PlayGameManager.Instance.PlayerGoHomeNow();
-
+           
             //활동시간끝내기
             TimeManager.Instance.TimeOver();
 
@@ -408,7 +403,7 @@ namespace Saebom
         {
             if (Input.GetKeyDown(KeyCode.F10))
             {
-                EndGame(Win.BirdWin);
+                EndGame(Win.Draw);
             }
         }
 
