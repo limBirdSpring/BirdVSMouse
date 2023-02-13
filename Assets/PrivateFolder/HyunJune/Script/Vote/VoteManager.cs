@@ -73,6 +73,8 @@ public class VoteManager : MonoBehaviourPun
     [SerializeField]
     private ResultNothing skipWindow;
 
+    private IEnumerator co;
+
     private void Awake()
     {
         Instance = this;
@@ -110,18 +112,20 @@ public class VoteManager : MonoBehaviourPun
         }
     }
 
-    private IEnumerator StartTimer(float time)
+    private IEnumerator StartTimer()
     {
+        float time = 99;
         while (time > 0)
         {
             time -= Time.deltaTime;
+            Debug.Log(time);
             photonView.RPC("UpdateTime", RpcTarget.All, time);
             yield return null;
         }
 
         Debug.Log("타임오버");
         time = 0;
-        timer.text = time.ToString("F0");
+        this.timer.text = time.ToString("F0");
         photonView.RPC("FocedSkip", RpcTarget.All, null);
     }
 
@@ -226,13 +230,16 @@ public class VoteManager : MonoBehaviourPun
     public void EmergencyReport()
     {
         // 긴급 보고
-        TimeManager.Instance.TimeStop();
         SetUpPlayerState();
         AddAlivePlayerEntry();
         SetRole();
         skipVote.Initialized();
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
-            StartCoroutine(StartTimer(99f));
+        {
+            co = StartTimer();
+            StartCoroutine(co);
+            TimeManager.Instance.TimeStop();
+        }
 
         voteWindow.gameObject.SetActive(true);
     }
@@ -497,7 +504,12 @@ public class VoteManager : MonoBehaviourPun
     private void VotingEndRPC()
     {
         // 투표 종료
-        CheckGameOver();
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            StopCoroutine(co);
+            TimeManager.Instance.TimeResume();
+            CheckGameOver();
+        }
 
         ResetText();
         voteWindow.SetActive(false);
@@ -508,8 +520,6 @@ public class VoteManager : MonoBehaviourPun
         participantCount = 0;
         voteToDeathWindow.gameObject.SetActive(false);
         skipWindow.gameObject.SetActive(false);
-        StopCoroutine(StartTimer(0));
-        TimeManager.Instance.TimeResume();
     }
 
     private void ResetText()
@@ -523,9 +533,6 @@ public class VoteManager : MonoBehaviourPun
 
     public void CheckGameOver()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-
         int spy = 0;
         int noneSpy = 0;
 
@@ -550,17 +557,24 @@ public class VoteManager : MonoBehaviourPun
         //스파이가 없으면 시민 승리
         if (spy == 0)
         {
-            ScoreManager.Instance.ActiveTimeOverNow();
+            photonView.RPC("GameOver", RpcTarget.All, null);
         }
         // 스파이와 시민이 같은 인원이면 스파이팀 승리
         else if (spy == noneSpy)
         {
-            ScoreManager.Instance.ActiveTimeOverNow();
+            photonView.RPC("GameOver", RpcTarget.All, null);
         }
         // 둘다 아니면 게임 지속
         else
             return;
     }
+
+    [PunRPC]
+    private void GameOver()
+    {
+        ScoreManager.Instance.ActiveTimeOverNow();
+    }
+
 
     public void ToggleAllButton(bool toggle)
     {

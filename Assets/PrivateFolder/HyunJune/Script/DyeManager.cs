@@ -15,6 +15,11 @@ public class DyeManager : Mission
     [SerializeField]
     public Cloth cloth;
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     public override bool GetScore()
     {
         // 지금이 밤 일떄
