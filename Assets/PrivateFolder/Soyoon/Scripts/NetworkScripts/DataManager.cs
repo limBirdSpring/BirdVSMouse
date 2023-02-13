@@ -86,7 +86,10 @@ namespace SoYoon
             if (item.type == ItemType.Photo)
                 EarnedPhotosNum++;
             else if (item.type == ItemType.Badge)
+            {
+                GameObject.Find("Canvas").transform.GetChild(6).GetChild(1).gameObject.SetActive(true);
                 EarnedBadgesNum++;
+            }
 
             mailedCollectionItemList.Remove(item);
             myInfo.mailedItem.Remove(itemName);

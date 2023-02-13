@@ -39,11 +39,11 @@ public class CollectionWindow : MonoBehaviour
 
     private void InitializeInfo()
     {
-        string info = string.Format(" °ÔÀÓ È½¼ö : {0} \n\n ½Â¸® È½¼ö : {1} \n ÆÐ¹è È½¼ö : {2} \n ¹«½ÂºÎ È½¼ö : {3} \n\n ½ºÆÄÀÌ ÇÃ·¹ÀÌ È½¼ö : {4}"
+        string info = string.Format(" °ÔÀÓ È½¼ö : {0} \n\n ½Â¸® È½¼ö : {1} \n ¹«½ÂºÎ È½¼ö : {2} \n ÆÐ¹è È½¼ö : {3} \n\n ½ºÆÄÀÌ ÇÃ·¹ÀÌ È½¼ö : {4}"
             , DataManager.Instance.myInfo.totalGame
             , DataManager.Instance.myInfo.win
-            , DataManager.Instance.myInfo.draw,
-            DataManager.Instance.myInfo.lose
+            , DataManager.Instance.myInfo.draw
+            , DataManager.Instance.myInfo.lose
             , DataManager.Instance.myInfo.totalSpy);
         infoText.text = info;
     }
