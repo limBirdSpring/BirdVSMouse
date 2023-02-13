@@ -61,7 +61,7 @@ namespace HyunJune
             dicColor.Add(CurColor.Yellow, new Color32(255, 237, 40, 255));
             
             dicColor.Add(CurColor.Red | CurColor.White, new Color32(253, 168, 225, 255));
-            dicColor.Add(CurColor.Blue | CurColor.White, new Color32(167, 140, 255, 255));
+            dicColor.Add(CurColor.Blue | CurColor.White, new Color32(107, 210, 250, 255));
             dicColor.Add(CurColor.Yellow | CurColor.White, new Color32(255, 250, 208, 255));
             dicColor.Add(CurColor.Blue | CurColor.Yellow, new Color32(29, 118, 21, 255));
             dicColor.Add(CurColor.Red | CurColor.Blue, new Color32(186, 32, 255, 255));
