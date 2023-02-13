@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,8 +39,8 @@ namespace SoYoon
 
         public void InitializePlayerPanel()
         {
-            if (myInfo.lastChosenCharacter != -1)
-                playerImg.sprite = DataManager.Instance.earnedPhotoCollectionItemList[myInfo.lastChosenCharacter].itemIcon;
+            if (myInfo.lastChosenCharacter != "")
+                playerImg.sprite = DataManager.Instance.GetCollectionItem(myInfo.lastChosenCharacter).itemIcon;
             else
                 RandomCharacter();
 
@@ -51,13 +52,13 @@ namespace SoYoon
             else
                 RandomName();
 
-            if(myInfo.lastChosenBadge1 != -1)
-                playerBadge1.sprite = DataManager.Instance.earnedBadgeCollectionItemList[myInfo.lastChosenBadge1].itemIcon;
+            if(myInfo.lastChosenBadge1 != "")
+                playerBadge1.sprite = DataManager.Instance.GetCollectionItem(myInfo.lastChosenBadge1).itemIcon;
             else
                 playerBadge1.color = Color.clear;
 
-            if (myInfo.lastChosenBadge2 != -1)
-                playerBadge2.sprite = DataManager.Instance.earnedBadgeCollectionItemList[myInfo.lastChosenBadge2].itemIcon;
+            if (myInfo.lastChosenBadge2 != "")
+                playerBadge2.sprite = DataManager.Instance.GetCollectionItem(myInfo.lastChosenBadge2).itemIcon;
             else
                 playerBadge2.color = Color.clear;
 
@@ -74,9 +75,15 @@ namespace SoYoon
 
         public void RandomCharacter()
         {
-            int imgNum = Random.Range(0, DataManager.Instance.earnedPhotoCollectionItemList.Count);
-            playerImg.sprite = DataManager.Instance.earnedPhotoCollectionItemList[imgNum].itemIcon;
-            myInfo.lastChosenCharacter = imgNum;
+            List<CollectionItem> photoItems = new List<CollectionItem>();
+            for(int i = 0; i < DataManager.Instance.earnedCollectionItemList.Count; i++)
+            {
+                if (DataManager.Instance.earnedCollectionItemList[i].type == ItemType.Photo)
+                    photoItems.Add(DataManager.Instance.earnedCollectionItemList[i]);
+            }
+            int imgNum = Random.Range(0, photoItems.Count);
+            playerImg.sprite = DataManager.Instance.earnedCollectionItemList[imgNum].itemIcon;
+            myInfo.lastChosenCharacter = DataManager.Instance.earnedCollectionItemList[imgNum].itemName;
         }
 
         public void RandomName()
@@ -98,15 +105,18 @@ namespace SoYoon
             }
             myInfo.lastChosenName = playerName.text;
             PhotonNetwork.LocalPlayer.NickName = myInfo.lastChosenName;
+
+            DataManager.Instance.SaveToJson();
         }
         #endregion 
 
         #region 플레이어 Photo
 
-        public void ChangePhoto(Sprite photo)
+        public void ChangePhoto(string photoName)
         {
-            playerImg.sprite = photo;
-            myInfo.lastChosenCharacter = DataManager.Instance.FindPhotoSpriteNum(photo);
+            CollectionItem targetItem = DataManager.Instance.GetCollectionItem(photoName);
+            playerImg.sprite = targetItem.itemIcon;
+            myInfo.lastChosenCharacter = targetItem.itemName;
 
             Hashtable props = new Hashtable()
             {
@@ -133,36 +143,7 @@ namespace SoYoon
             badgeWindow.SetActive(true);
             badgeWindow.GetComponent<BadgeSellectCanvas>().FindBadgeAndEnable(playerBadge1.sprite);
             playerBadge1.sprite = null;
-            myInfo.lastChosenBadge1 = -1;
-
-            Hashtable props = new Hashtable()
-            {
-                { "Badge1Num", myInfo.lastChosenBadge1 },
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        }
-
-        public void BadgeButton2Clicked()
-        {
-            targetBadgeButton = 1;
-            playerBadge2.color = Color.clear;
-            badgeWindow.SetActive(true);
-            badgeWindow.GetComponent<BadgeSellectCanvas>().FindBadgeAndEnable(playerBadge2.sprite);
-            playerBadge2.sprite = null;
-            myInfo.lastChosenBadge2 = -1;
-
-            Hashtable props = new Hashtable()
-            {
-                { "Badge2Num", myInfo.lastChosenBadge2 },
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        }
-
-        public void ChangeBadge1(Sprite badge)
-        {
-            playerBadge1.sprite = badge;
-            playerBadge1.color = Color.white;
-            myInfo.lastChosenBadge1 = DataManager.Instance.FindBadgeSpriteNum(badge);
+            myInfo.lastChosenBadge1 = "";
 
             Hashtable props = new Hashtable()
             {
@@ -173,11 +154,46 @@ namespace SoYoon
             DataManager.Instance.SaveToJson();
         }
 
-        public void ChangeBadge2(Sprite badge)
+        public void BadgeButton2Clicked()
         {
-            playerBadge2.sprite = badge;
+            targetBadgeButton = 1;
+            playerBadge2.color = Color.clear;
+            badgeWindow.SetActive(true);
+            badgeWindow.GetComponent<BadgeSellectCanvas>().FindBadgeAndEnable(playerBadge2.sprite);
+            playerBadge2.sprite = null;
+            myInfo.lastChosenBadge2 = "";
+
+            Hashtable props = new Hashtable()
+            {
+                { "Badge2Num", myInfo.lastChosenBadge2 },
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            DataManager.Instance.SaveToJson();
+        }
+
+        public void ChangeBadge1(string badgeName)
+        {
+            CollectionItem targetItem = DataManager.Instance.GetCollectionItem(badgeName);
+            playerBadge1.sprite = targetItem.itemIcon;
+            playerBadge1.color = Color.white;
+            myInfo.lastChosenBadge1 = targetItem.itemName;
+
+            Hashtable props = new Hashtable()
+            {
+                { "Badge1Num", myInfo.lastChosenBadge1 },
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            DataManager.Instance.SaveToJson();
+        }
+
+        public void ChangeBadge2(string badgeName)
+        {
+            CollectionItem targetItem = DataManager.Instance.GetCollectionItem(badgeName);
+            playerBadge2.sprite = targetItem.itemIcon;
             playerBadge2.color = Color.white;
-            myInfo.lastChosenBadge2 = DataManager.Instance.FindBadgeSpriteNum(badge);
+            myInfo.lastChosenBadge2 = targetItem.itemName;
 
             Hashtable props = new Hashtable()
             {

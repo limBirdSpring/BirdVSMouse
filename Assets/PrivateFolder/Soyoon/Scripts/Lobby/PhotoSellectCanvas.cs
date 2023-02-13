@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,20 +9,36 @@ namespace SoYoon
         [SerializeField]
         private GameObject photo;
         [SerializeField]
-        private Transform PhotoContentTransform;
+        private Transform photoContentTransform;
+
+        private List<GameObject> photoButtons;
 
         private void Awake()
+        {
+            photoButtons = new List<GameObject>();
+        }
+
+        private void OnEnable()
         {
             InitializePhotos();
         }
 
         private void InitializePhotos()
         {
-            for (int i = 0; i < DataManager.Instance.earnedPhotoCollectionItemList.Count; i++)
+            // 모든 포토 삭제
+            foreach (GameObject obj in photoButtons)
+                Destroy(obj);
+            photoButtons.Clear();
+
+            for (int i = 0; i < DataManager.Instance.earnedCollectionItemList.Count; i++)
             {
-                GameObject photoButton = Instantiate(photo, PhotoContentTransform, false);
+                if (DataManager.Instance.earnedCollectionItemList[i].type != ItemType.Photo)
+                    continue;
+
+                GameObject photoButton = Instantiate(photo, photoContentTransform, false);
                 PhotoButton photoImg = photoButton.GetComponent<PhotoButton>();
-                photoImg.photo.GetComponent<Image>().sprite = DataManager.Instance.earnedPhotoCollectionItemList[i].itemIcon;
+                photoImg.photoCollectionItem = DataManager.Instance.earnedCollectionItemList[i];
+                photoButtons.Add(photoButton);
             }
         }
 

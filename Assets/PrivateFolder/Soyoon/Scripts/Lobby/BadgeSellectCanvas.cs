@@ -9,23 +9,35 @@ namespace SoYoon
         [SerializeField]
         private GameObject badge;
         [SerializeField]
-        private Transform BadgeContentTransform;
+        private Transform badgeContentTransform;
 
         private List<GameObject> badgeButtons;
 
         private void Awake()
         {
             badgeButtons = new List<GameObject>();
+        }
+
+        private void OnEnable()
+        {
             InitializeBadges();
         }
 
         private void InitializeBadges()
         {
-            for (int i = 0; i < DataManager.Instance.earnedBadgeCollectionItemList.Count; i++)
+            // 모든 뱃지 삭제
+            foreach (GameObject obj in badgeButtons)
+                Destroy(obj);
+            badgeButtons.Clear();
+
+            for (int i = 0; i < DataManager.Instance.earnedCollectionItemList.Count; i++)
             {
-                GameObject badgeButton = Instantiate(badge, BadgeContentTransform, false);
+                if (DataManager.Instance.earnedCollectionItemList[i].type != ItemType.Badge)
+                    continue;
+
+                GameObject badgeButton = Instantiate(badge, badgeContentTransform, false);
                 BadgeButton badgeImg = badgeButton.GetComponent<BadgeButton>();
-                badgeImg.badge.GetComponent<Image>().sprite = DataManager.Instance.earnedBadgeCollectionItemList[i].itemIcon;
+                badgeImg.badgeCollectionItem = DataManager.Instance.earnedCollectionItemList[i];
                 badgeButtons.Add(badgeButton);
             }
         }

@@ -10,9 +10,9 @@ namespace SoYoon
     public class MyInfo
     {
         public string lastChosenName = "";
-        public int lastChosenBadge1 = -1;
-        public int lastChosenBadge2 = -1;
-        public int lastChosenCharacter = -1;
+        public string lastChosenBadge1 = "";
+        public string lastChosenBadge2 = "";
+        public string lastChosenCharacter = "";
 
         public int totalGame = 0;
         public int win = 0;
@@ -20,13 +20,7 @@ namespace SoYoon
         public int lose = 0;
         public int totalSpy = 0;
 
-        public bool[] getPhoto;
-        public bool[] getBadge;
-
-        public MyInfo(int photoNum, int badgeNum)
-        {
-            getPhoto = new bool[photoNum];
-            getBadge = new bool[badgeNum];
-        }
+        public List<string> earnedItem;
+        public List<string> mailedItem;
     }
 }
