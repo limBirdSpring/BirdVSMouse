@@ -14,7 +14,7 @@ namespace Saebom
     {
         //============수정불가 시간관련============
 
-        private float curTime;
+        public float curTime;
 
         //전체 시간
         private static float maxTime = 360f;
