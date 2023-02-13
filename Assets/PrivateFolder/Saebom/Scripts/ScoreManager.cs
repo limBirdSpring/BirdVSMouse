@@ -268,7 +268,7 @@ namespace Saebom
 
 
             //플레이어를 모두 거점으로 강제이동
-
+            PlayGameManager.Instance.PlayerGoHomeNow();
 
             //활동시간끝내기
             TimeManager.Instance.TimeOver();
