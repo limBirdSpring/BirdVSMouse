@@ -21,6 +21,12 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     [SerializeField]
     private Image dropPoint;
 
+    [Header("Audio Source")]
+    [SerializeField]
+    private AudioSource goodRopeAudioSource;
+    [SerializeField]
+    private AudioSource rotRopeAudioSource;
+
     public RopeState curState = RopeState.None;
 
     private bool itemIsOn;
@@ -33,18 +39,23 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         itemIsOn = false;
     }
 
+    private void OnEnable()
+    {
+        UpdateUI();
+    }
+
     public void InstallRope(RopeState state)
     {
         if (state == RopeState.Normal)
         {
-            goodRope.gameObject.SetActive(true);
             curState = state;
+            UpdateUI();
             itemIsOn = true;
         }
         else
         {
-            badRope.gameObject.SetActive(true);
             curState = state;
+            UpdateUI();
             itemIsOn = true;
         }
     }
@@ -52,16 +63,20 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     public void UpdateUI()
     {
         if (curState == RopeState.None)
-            return;
-
+        {
+            goodRope.gameObject.SetActive(false);
+            badRope.gameObject.SetActive(false);
+        }
         // ¾È½â¾úÀ¸¸é
-        if (curState == RopeState.Normal)
+        else if (curState == RopeState.Normal)
         {
             goodRope.gameObject.SetActive(true);
+            badRope.gameObject.SetActive(false);
         }
         // ½â¾úÀ¸¸é
         else
         {
+            goodRope.gameObject.SetActive(false);
             badRope.gameObject.SetActive(true);
         }
     }
@@ -79,11 +94,13 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         if (Inventory.Instance.isItemSet("RotRope"))
         {
             InstallRope(RopeState.Rot);
+            rotRopeAudioSource.Play();
             Inventory.Instance.DeleteItem();
         }
         else if (Inventory.Instance.isItemSet("Rope"))
         {
             InstallRope(RopeState.Normal);
+            goodRopeAudioSource.Play();
             Inventory.Instance.DeleteItem();
         }
         else

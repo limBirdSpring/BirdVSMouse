@@ -18,6 +18,7 @@ public class RopeManager : Mission
     private void Start()
     {
         SetRopeGamesCurState(control.ropeGames);
+        gameObject.SetActive(false);
     }
 
     public void GetRopeGamesCurState(RopeGame[] ropeGames )
@@ -83,7 +84,7 @@ public class RopeManager : Mission
 
     public override void PlayerUpdateCurMission()
     {
-        photon.RPC("SaveUIRPC", RpcTarget.All, (int[])ropeGamesCurState);
+        photon.RPC("SaveUIRPC", RpcTarget.All, ropeGamesCurState);
     }
 }
 
