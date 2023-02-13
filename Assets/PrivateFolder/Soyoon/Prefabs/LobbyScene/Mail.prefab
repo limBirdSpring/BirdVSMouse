@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 2561589264631794104}
   - component: {fileID: 2561589264631794110}
   - component: {fileID: 2561589264631794111}
+  - component: {fileID: 5484888214698171003}
   m_Layer: 5
   m_Name: Mail
   m_TagString: Untagged
@@ -292,6 +293,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5484888214698171003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2561589264631794105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6680e9556a08db448bc1ff5536a7c43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemImage: {fileID: 2561589265505370065}
+  itemName: {fileID: 2561589264792043872}
+  subscription: {fileID: 2561589263761813553}
+  mailedCollectionItem: {fileID: 0}
+  sub: 
 --- !u!1 &2561589264633897268
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,9 +432,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoYoon.MakeRoomUI, Assembly-CSharp
-        m_MethodName: OnCreateRoomConfirmButtonClicked
+      - m_Target: {fileID: 5484888214698171003}
+        m_TargetAssemblyTypeName: SoYoon.Mail, Assembly-CSharp
+        m_MethodName: OkayButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

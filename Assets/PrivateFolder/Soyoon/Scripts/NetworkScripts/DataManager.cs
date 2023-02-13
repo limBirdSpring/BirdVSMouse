@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
+public enum PlayResult { Play, Win, Draw, Lose, Spy }
+
 namespace SoYoon
 {
     public class DataManager : MonoBehaviour
@@ -88,62 +90,29 @@ namespace SoYoon
             SaveToJson();
         }
 
-        //public void EarnPhoto(string photoName)
-        //{
-        //    CollectionItem earnedItem = collectionItemDic[photoName];
-        //    earnedPhotoCollectionItemList.Add(earnedItem);
-        //    int itemNum = FindPhotoSpriteNum(earnedItem.itemIcon);
-        //    if (itemNum == -1)
-        //    { Debug.Log("error : cannot find photo sprite Num"); return; }
-        //    myInfo.getPhoto[itemNum] = true;
-        //    SaveToJson();
-        //}
-        //
-        //public void EarnBadge(string badgeName)
-        //{
-        //    CollectionItem earnedItem = collectionItemDic[badgeName];
-        //    earnedBadgeCollectionItemList.Add(earnedItem);
-        //    int itemNum = FindBadgeSpriteNum(earnedItem.itemIcon);
-        //    if (itemNum == -1)
-        //    { Debug.Log("error : cannot find badge sprite Num"); return; }
-        //    myInfo.getBadge[itemNum] = true;
-        //    SaveToJson();
-        //}
-
-
-        public void changeName(string name)
+        public void SaveResult(PlayResult result)
         {
-
-        }
-
-        public void changeBadge1(int badge1Num)
-        {
-
-        }
-
-        public void changeBadge2(int badge2Num)
-        {
-
-        }
-
-        public void changePhoto(int photoNum)
-        {
-
-        }
-
-        public void Win()
-        {
-
-        }
-
-        public void Draw()
-        {
-            
-        }
-
-        public void Lose()
-        {
-
+            switch(result)
+            {
+                case PlayResult.Play:
+                    myInfo.totalGame++;
+                    break;
+                case PlayResult.Win:
+                    myInfo.win++;
+                    break;
+                case PlayResult.Draw:
+                    myInfo.draw++;
+                    break;
+                case PlayResult.Lose:
+                    myInfo.lose++;
+                    break;
+                case PlayResult.Spy:
+                    myInfo.totalSpy++;
+                    break;
+                default:
+                    break;
+            }
+            SaveToJson();
         }
 
         public void SaveToJson()

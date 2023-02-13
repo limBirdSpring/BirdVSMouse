@@ -99,4 +99,6 @@ MonoBehaviour:
     - "\uD584\uC2A4\uD130 \uCD08\uC0C1\uD654"
     - "\uC2DC\uC791\uC758 \uAE30\uC068"
     - "\uBE5B\uB098\uB294 \uC2B9\uB9AC"
-    mailedItem: []
+    mailedItem:
+    - "\uC0AC\uD0D5 \uBC41\uC0C8"
+    - "\uD615\uAD11\uBE5B \uAF43\uC78E"

@@ -7,9 +7,16 @@ namespace SoYoon
     public class MailCanvas : MonoBehaviour
     {
         [SerializeField]
-        private GameObject Mail;
+        private GameObject mail;
         [SerializeField]
         private Transform mailContentTransform;
+
+        private List<GameObject> Mails;
+
+        private void Awake()
+        {
+            Mails = new List<GameObject>();
+        }
 
         private void OnEnable()
         {
@@ -18,17 +25,28 @@ namespace SoYoon
 
         private void InitializeMails()
         {
-            //for (int i = 0; i < DataManager.Instance.mailedPhotoCollectionItemList.Count; i++)
-            //{
-            //    GameObject photoButton = Instantiate(photo, PhotoContentTransform, false);
-            //    PhotoButton photoImg = photoButton.GetComponent<PhotoButton>();
-            //    photoImg.photo.GetComponent<Image>().sprite = DataManager.Instance.earnedPhotoCollectionItemList[i].itemIcon;
-            //}
-            //
-            //for(int i=0; i< DataManager.Instance.mailedBadgeCollectionItemList.Count; i++)
-            //{
-            //
-            //}
+            for (int i = 0; i < DataManager.Instance.mailedCollectionItemList.Count; i++)
+            {
+                if(Mails.Count == 0)
+                {
+                    GameObject mailObj = Instantiate(mail, mailContentTransform, false);
+                    Mail _mail = mailObj.GetComponent<Mail>();
+                    _mail.mailedCollectionItem = DataManager.Instance.mailedCollectionItemList[i];
+                    Mails.Add(mailObj);
+                }
+                else
+                {
+                    if (Mails.Count == DataManager.Instance.myInfo.mailedItem.Count)
+                        return;
+                    else
+                    {
+                        GameObject mailObj = Instantiate(mail, mailContentTransform, false);
+                        Mail _mail = mailObj.GetComponent<Mail>();
+                        _mail.mailedCollectionItem = DataManager.Instance.mailedCollectionItemList[i];
+                        Mails.Add(mailObj);
+                    }
+                }
+            }
         }
 
         public void BackButtonClicked()

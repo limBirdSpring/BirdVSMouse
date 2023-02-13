@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,29 +16,22 @@ namespace SoYoon
         [SerializeField]
         private TMP_Text subscription;
 
-        public void InitializeMail(Sprite img, string name, string sub = "상점에서 구매한 선물이에요!")
+        [HideInInspector]
+        public CollectionItem mailedCollectionItem;
+        [HideInInspector]
+        public string sub = "";
+
+        private void Start()
         {
-            itemImage.sprite = img;
-            itemName.text = name;
-            subscription.text = sub;
-        }
-
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            itemImage.sprite = mailedCollectionItem.itemIcon;
+            itemName.text = mailedCollectionItem.itemName;
+            subscription.text = string.Format("{0}이(가) 우편함에 도착했어요!", mailedCollectionItem.itemName);
         }
 
         public void OkayButtonClicked()
         {
             // 얻는 함수 구현 (sprite로 index 찾기)
+            // 리스트나 저장된 리스트에서 빼주기 -> 얻는 함수에서 하면 될듯
             Destroy(gameObject);
         }
     }
