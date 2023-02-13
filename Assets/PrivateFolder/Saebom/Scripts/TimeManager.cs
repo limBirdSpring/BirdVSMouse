@@ -170,6 +170,16 @@ namespace Saebom
             roundUI.text = "Round " + curRound.ToString();
         }
 
+        public void FinishScoreTimeSet()
+        {
+            //점수확인 끝난 후 만약 밤이면 curTime = 0, TimeOn()
+            if (isCurNight)
+            {
+                curTime = 0;
+            }
+            photonView.RPC("TimeOn", RpcTarget.All);
+        }
+
         [PunRPC]
         public void TimeOn()
         {
@@ -249,15 +259,7 @@ namespace Saebom
             }
         }
 
-        public void FinishScoreTimeSet()
-        {
-            //점수확인 끝난 후 만약 밤이면 curTime = 0, TimeOn()
-            if (isCurNight)
-            {
-                curTime = 0;
-            }
-            photonView.RPC("TimeOn", RpcTarget.All);
-        }
+
 
 
         private void TimeSlideUpdate()

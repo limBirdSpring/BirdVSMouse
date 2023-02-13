@@ -186,6 +186,7 @@ namespace Saebom
             if (masterCheck == PhotonNetwork.PlayerList.Length) //¼öÁ¤
             {
                 TimeManager.Instance.FinishScoreTimeSet();
+                masterCheck = 0;
             }
         }
 
