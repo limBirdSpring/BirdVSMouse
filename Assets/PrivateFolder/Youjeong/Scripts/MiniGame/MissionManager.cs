@@ -64,7 +64,6 @@ namespace Youjeong
         {
             Debug.Log("SaveUIRPC");
             ropeManager.ropeGamesCurState = ropes;
-            /*ropeManager.control.SaveUIRPC(ropes);*/
         }
     }
 }

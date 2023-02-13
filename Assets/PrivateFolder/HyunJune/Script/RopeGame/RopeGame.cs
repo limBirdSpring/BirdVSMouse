@@ -33,18 +33,23 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         itemIsOn = false;
     }
 
+    private void OnEnable()
+    {
+        UpdateUI();
+    }
+
     public void InstallRope(RopeState state)
     {
         if (state == RopeState.Normal)
         {
-            goodRope.gameObject.SetActive(true);
             curState = state;
+            UpdateUI();
             itemIsOn = true;
         }
         else
         {
-            badRope.gameObject.SetActive(true);
             curState = state;
+            UpdateUI();
             itemIsOn = true;
         }
     }
@@ -52,16 +57,20 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     public void UpdateUI()
     {
         if (curState == RopeState.None)
-            return;
-
+        {
+            goodRope.gameObject.SetActive(false);
+            badRope.gameObject.SetActive(false);
+        }
         // ¾È½â¾úÀ¸¸é
-        if (curState == RopeState.Normal)
+        else if (curState == RopeState.Normal)
         {
             goodRope.gameObject.SetActive(true);
+            badRope.gameObject.SetActive(false);
         }
         // ½â¾úÀ¸¸é
         else
         {
+            goodRope.gameObject.SetActive(false);
             badRope.gameObject.SetActive(true);
         }
     }
