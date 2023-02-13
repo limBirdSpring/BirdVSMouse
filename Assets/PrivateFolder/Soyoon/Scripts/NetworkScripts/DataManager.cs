@@ -66,7 +66,6 @@ namespace SoYoon
                     EarnedPhotosNum++;
                 else if (collectionItemDic[myInfo.earnedItem[i]].type == ItemType.Badge)
                     EarnedBadgesNum++;
-
             }
 
             for(int i=0;i< myInfo.mailedItem.Count; i++)
@@ -83,10 +82,14 @@ namespace SoYoon
             CollectionItem item = collectionItemDic[itemName];
             earnedCollectionItemList.Add(item);
             myInfo.earnedItem.Add(itemName);
+
             if (item.type == ItemType.Photo)
                 EarnedPhotosNum++;
             else if (item.type == ItemType.Badge)
                 EarnedBadgesNum++;
+
+            mailedCollectionItemList.Remove(item);
+            myInfo.mailedItem.Remove(itemName);
             SaveToJson();
         }
 

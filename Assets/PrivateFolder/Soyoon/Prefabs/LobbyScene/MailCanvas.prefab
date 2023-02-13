@@ -717,7 +717,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 253735147}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SoYoon.MailCanvas, Assembly-CSharp
         m_MethodName: BackButtonClicked
         m_Mode: 1

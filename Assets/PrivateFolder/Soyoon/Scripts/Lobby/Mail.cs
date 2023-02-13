@@ -30,8 +30,7 @@ namespace SoYoon
 
         public void OkayButtonClicked()
         {
-            // 얻는 함수 구현 (sprite로 index 찾기)
-            // 리스트나 저장된 리스트에서 빼주기 -> 얻는 함수에서 하면 될듯
+            DataManager.Instance.EarnItem(mailedCollectionItem.itemName);
             Destroy(gameObject);
         }
     }

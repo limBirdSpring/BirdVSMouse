@@ -25,30 +25,20 @@ namespace SoYoon
 
         private void InitializeBadges()
         {
+            // 모든 뱃지 삭제
+            foreach (GameObject obj in badgeButtons)
+                Destroy(obj);
+            badgeButtons.Clear();
+
             for (int i = 0; i < DataManager.Instance.earnedCollectionItemList.Count; i++)
             {
                 if (DataManager.Instance.earnedCollectionItemList[i].type != ItemType.Badge)
                     continue;
 
-                if(badgeButtons.Count == 0) // 처음 시작
-                {
-                    GameObject badgeButton = Instantiate(badge, badgeContentTransform, false);
-                    BadgeButton badgeImg = badgeButton.GetComponent<BadgeButton>();
-                    badgeImg.badgeCollectionItem = DataManager.Instance.earnedCollectionItemList[i];
-                    badgeButtons.Add(badgeButton);
-                }
-                else
-                {
-                    if (badgeButtons.Count == DataManager.Instance.EarnedBadgesNum)
-                        break;
-                    else
-                    {
-                        GameObject badgeButton = Instantiate(badge, badgeContentTransform, false);
-                        BadgeButton badgeImg = badgeButton.GetComponent<BadgeButton>();
-                        badgeImg.badgeCollectionItem = DataManager.Instance.earnedCollectionItemList[i];
-                        badgeButtons.Add(badgeButton);
-                    }
-                }
+                GameObject badgeButton = Instantiate(badge, badgeContentTransform, false);
+                BadgeButton badgeImg = badgeButton.GetComponent<BadgeButton>();
+                badgeImg.badgeCollectionItem = DataManager.Instance.earnedCollectionItemList[i];
+                badgeButtons.Add(badgeButton);
             }
         }
 

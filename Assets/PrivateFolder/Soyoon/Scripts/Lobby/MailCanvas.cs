@@ -11,7 +11,8 @@ namespace SoYoon
         [SerializeField]
         private Transform mailContentTransform;
 
-        private List<GameObject> Mails;
+        [HideInInspector]
+        public List<GameObject> Mails;
 
         private void Awake()
         {
@@ -25,27 +26,17 @@ namespace SoYoon
 
         private void InitializeMails()
         {
+            // 모든 메일 삭제
+            foreach (GameObject obj in Mails)
+                Destroy(obj);
+            Mails.Clear();
+
             for (int i = 0; i < DataManager.Instance.mailedCollectionItemList.Count; i++)
             {
-                if(Mails.Count == 0)
-                {
-                    GameObject mailObj = Instantiate(mail, mailContentTransform, false);
-                    Mail _mail = mailObj.GetComponent<Mail>();
-                    _mail.mailedCollectionItem = DataManager.Instance.mailedCollectionItemList[i];
-                    Mails.Add(mailObj);
-                }
-                else
-                {
-                    if (Mails.Count == DataManager.Instance.myInfo.mailedItem.Count)
-                        return;
-                    else
-                    {
-                        GameObject mailObj = Instantiate(mail, mailContentTransform, false);
-                        Mail _mail = mailObj.GetComponent<Mail>();
-                        _mail.mailedCollectionItem = DataManager.Instance.mailedCollectionItemList[i];
-                        Mails.Add(mailObj);
-                    }
-                }
+                GameObject mailObj = Instantiate(mail, mailContentTransform, false);
+                Mail _mail = mailObj.GetComponent<Mail>();
+                _mail.mailedCollectionItem = DataManager.Instance.mailedCollectionItemList[i];
+                Mails.Add(mailObj);
             }
         }
 
