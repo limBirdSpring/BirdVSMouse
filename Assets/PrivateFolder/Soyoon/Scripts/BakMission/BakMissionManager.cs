@@ -20,6 +20,10 @@ namespace SoYoon
         [SerializeField]
         private TMP_Text progressText;
 
+        [Header("Audio Source")]
+        [SerializeField]
+        private AudioSource pang;
+
         private float curBakProgress;
         public static BakMissionManager Instance { get; private set; }
 
@@ -74,6 +78,8 @@ namespace SoYoon
             {
                 if ((bool)changedProps["BakMissionComplete"])
                 {
+                    if (bakMission.gameObject.activeSelf)
+                    { pang.Play(); } // TODO : 여기에 박 터지는 소리
                     BakMissionComplete();
                 }
             }

@@ -21,6 +21,12 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
     [SerializeField]
     private Image dropPoint;
 
+    [Header("Audio Source")]
+    [SerializeField]
+    private AudioSource goodRopeAudioSource;
+    [SerializeField]
+    private AudioSource rotRopeAudioSource;
+
     public RopeState curState = RopeState.None;
 
     private bool itemIsOn;
@@ -88,11 +94,13 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
         if (Inventory.Instance.isItemSet("RotRope"))
         {
             InstallRope(RopeState.Rot);
+            rotRopeAudioSource.Play();
             Inventory.Instance.DeleteItem();
         }
         else if (Inventory.Instance.isItemSet("Rope"))
         {
             InstallRope(RopeState.Normal);
+            goodRopeAudioSource.Play();
             Inventory.Instance.DeleteItem();
         }
         else
