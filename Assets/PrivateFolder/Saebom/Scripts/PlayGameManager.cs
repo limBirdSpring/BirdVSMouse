@@ -122,14 +122,8 @@ namespace Saebom
             }
 
             
-            StartCoroutine(GameStartCor());
         }
 
-        private IEnumerator GameStartCor()
-        {
-            yield return new WaitForSeconds(2f);
-            SetReadyScene();
-        }
 
         //방장이 모든 플레이어에게 랜덤으로 역할 부여, playerList 가지고 있기
         private void SetPlayer()
@@ -175,10 +169,15 @@ namespace Saebom
                 photonView.RPC("MyPlayerSet", RpcTarget.All, i, playerList[i].jobNum, playerList[i].isBird, playerList[i].isSpy);
                 
             }
+
+            photonView.RPC("SetReadyScene", RpcTarget.All);
+
         }
 
+        [PunRPC]
         private void SetReadyScene()
         {
+
             readyScene.SetActive(true);
 
             SoundManager.Instance.PlayUISound(UISFXName.GetJob);
@@ -206,7 +205,7 @@ namespace Saebom
             readyPlayerImage.gameObject.SetActive(true);
 
             //미션 나눠주기
-            MissionButton.Instance.MissionShare();
+
 
             StartCoroutine(SetReadySceneCor());
         }
@@ -214,6 +213,7 @@ namespace Saebom
         private IEnumerator SetReadySceneCor()
         {
             yield return new WaitForSeconds(3f);
+            MissionButton.Instance.MissionShare();
             MakePlayer();
             readyScene.SetActive(false);
             TimeManager.Instance.TimeOn();
@@ -260,6 +260,8 @@ namespace Saebom
                 myPlayerState = mouseJobList[jobNum];
                 myPlayerState.isSpy = isSpy;
             }
+
+            
 
         }
 
