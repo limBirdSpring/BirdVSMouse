@@ -63,8 +63,6 @@ public class RopeManager : Mission
     {
         if (TimeManager.Instance.isCurNight)
         {
-            control.moon.ResetPos();
-
             if (control.moon.MissionSuccess)
                 return true;
             else
@@ -73,8 +71,6 @@ public class RopeManager : Mission
         }
         else
         {
-            control.sun.ResetPos();
-
             if (control.sun.MissionSuccess)
                 return true;
             else

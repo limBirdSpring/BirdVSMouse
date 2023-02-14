@@ -67,4 +67,16 @@ public class RopeController : MonoBehaviour
             sun.StartMove();
         }
     }
+
+    public void SunOrMoonReset()
+    {
+        if (TimeManager.Instance.isCurNight)
+        {
+            moon.ResetPos();
+        }
+        else
+        {
+            sun.ResetPos();
+        }
+    }
 }
