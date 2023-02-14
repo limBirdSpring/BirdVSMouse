@@ -432,7 +432,7 @@ public class VoteManager : MonoBehaviourPun
     public void VotingResult()
     {
         // 방장이 아니라면 여기서 리턴
-        if (!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.LocalPlayer.IsMasterClient)
             return;
 
         CalculateAlivePlayer();
@@ -477,8 +477,8 @@ public class VoteManager : MonoBehaviourPun
     [PunRPC]
     private void PlayerKill(int actorNumber)
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber)
-            controller.Die();
+        //if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber)
+        //    controller.Die();
         
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
         {
@@ -519,6 +519,7 @@ public class VoteManager : MonoBehaviourPun
         myRole = VoteRole.None;
         participantCount = 0;
         voteToDeathWindow.gameObject.SetActive(false);
+        voteCompletePlayerList.Clear();
         skipWindow.gameObject.SetActive(false);
     }
 
