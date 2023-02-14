@@ -172,6 +172,8 @@ namespace Saebom
 
             photonView.RPC("SetReadyScene", RpcTarget.All);
 
+            
+
         }
 
         [PunRPC]

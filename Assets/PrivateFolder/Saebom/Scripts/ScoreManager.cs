@@ -383,7 +383,7 @@ namespace Saebom
                 else if (!(birdCount == 1 && !isBirdSpyDie) && (mouseCount == 1 && !isMouseSpyDie))
                     EndGame(Win.MouseWin);
             }
-            else if(TimeManager.Instance.curRound >= SettingManager.Instance.maxRoundCount)
+            else if(TimeManager.Instance.curRound >= 11) //SettingManager.Instance.maxRoundCount
             {
                 if (birdScore > mouseScore)
                     EndGame(Win.BirdWin);

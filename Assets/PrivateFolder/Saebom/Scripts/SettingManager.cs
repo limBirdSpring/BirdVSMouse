@@ -52,7 +52,7 @@ public class SettingManager : SingleTon<SettingManager>
     {
         turnTime = time;
     }
-
+ 
     public void OnMaxRoundCountClick(int count)
     {
         maxRoundCount = count;

@@ -741,6 +741,69 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &727692711210717509
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3423344578859699011}
+  - component: {fileID: 9128048946222051214}
+  m_Layer: 5
+  m_Name: Fail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3423344578859699011
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727692711210717509}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4121061066423545764}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!61 &9128048946222051214
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727692711210717509}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 100, y: 100}
+  m_EdgeRadius: 0
 --- !u!1 &737080387892753465
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,7 +1181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4121061066423545764
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1133,6 +1196,7 @@ RectTransform:
   m_Children:
   - {fileID: 2776492229793655938}
   - {fileID: 5257938083850117310}
+  - {fileID: 3423344578859699011}
   m_Father: {fileID: 5729304812538497038}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1331,7 +1395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &556380544872159941
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2209,6 +2273,8 @@ MonoBehaviour:
   goodRope: {fileID: 4484307203221066549}
   badRope: {fileID: 1916560879793506186}
   dropPoint: {fileID: 8113022703689543393}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &5555644422399012533
 MonoBehaviour:
@@ -2495,6 +2561,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8960061115839490579}
   - component: {fileID: 1490440840741085555}
+  - component: {fileID: 1565747049}
+  - component: {fileID: 1565747050}
   m_Layer: 5
   m_Name: Moon
   m_TagString: Untagged
@@ -2541,6 +2609,53 @@ MonoBehaviour:
   moveSpeed: 200
   originalPos: {fileID: 9097085248690742008}
   identity: 1
+--- !u!50 &1565747049
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2668918868847208253}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &1565747050
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2668918868847208253}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10, y: 10}
+  m_EdgeRadius: 0
 --- !u!1 &2895651514079101460
 GameObject:
   m_ObjectHideFlags: 0
@@ -2607,6 +2722,8 @@ MonoBehaviour:
   goodRope: {fileID: 6680768370582667189}
   badRope: {fileID: 2466663419692966599}
   dropPoint: {fileID: 5907155297432597727}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &6965012531542613262
 MonoBehaviour:
@@ -2757,7 +2874,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8009565506230376893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2772,6 +2889,7 @@ RectTransform:
   m_Children:
   - {fileID: 7298763819538189984}
   - {fileID: 556380544872159941}
+  - {fileID: 8009298839717933417}
   m_Father: {fileID: 5729304812538497038}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3166,6 +3284,8 @@ MonoBehaviour:
   goodRope: {fileID: 3409769891057869973}
   badRope: {fileID: 7213388021642246786}
   dropPoint: {fileID: 514928645295550536}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &864160703839491418
 MonoBehaviour:
@@ -3467,6 +3587,8 @@ MonoBehaviour:
   goodRope: {fileID: 4055136901691448837}
   badRope: {fileID: 6271527225886253324}
   dropPoint: {fileID: 2056599381}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &1099924655
 MonoBehaviour:
@@ -3681,7 +3803,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0add1bb95944f249858fbc71f5afc77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photon: {fileID: 0}
   control: {fileID: 7603277285812282783}
+  ropeGamesCurState: 
 --- !u!1 &3714933897178467329
 GameObject:
   m_ObjectHideFlags: 0
@@ -3824,6 +3948,8 @@ MonoBehaviour:
   goodRope: {fileID: 7744108359886119701}
   badRope: {fileID: 4450028523704395647}
   dropPoint: {fileID: 3090509399934508393}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &3124195212619213984
 MonoBehaviour:
@@ -4289,6 +4415,8 @@ MonoBehaviour:
   goodRope: {fileID: 6526709727077354729}
   badRope: {fileID: 2468441536999796719}
   dropPoint: {fileID: 2918527692979056442}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &692169587880817710
 MonoBehaviour:
@@ -4652,6 +4780,7 @@ GameObject:
   - component: {fileID: 5975326048130583194}
   - component: {fileID: 286775286}
   - component: {fileID: 286775287}
+  - component: {fileID: 460409303}
   m_Layer: 5
   m_Name: Sun
   m_TagString: Untagged
@@ -4724,6 +4853,27 @@ MonoBehaviour:
   moveSpeed: 200
   originalPos: {fileID: 8318372084798540155}
   identity: 0
+--- !u!50 &460409303
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5318324218639365305}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &5497484013462851282
 GameObject:
   m_ObjectHideFlags: 0
@@ -4821,6 +4971,69 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &5549362799531965920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8009298839717933417}
+  - component: {fileID: 5071436496735492110}
+  m_Layer: 5
+  m_Name: Fail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8009298839717933417
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549362799531965920}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8009565506230376893}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!61 &5071436496735492110
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549362799531965920}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 100, y: 100}
+  m_EdgeRadius: 0
 --- !u!1 &5634233307985083804
 GameObject:
   m_ObjectHideFlags: 0
@@ -4838,7 +5051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2776492229793655938
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5503,6 +5716,8 @@ MonoBehaviour:
   goodRope: {fileID: 3045599479130311451}
   badRope: {fileID: 863518930289680170}
   dropPoint: {fileID: 5340965746151889852}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &1626257648646703489
 MonoBehaviour:
@@ -5702,6 +5917,8 @@ MonoBehaviour:
   goodRope: {fileID: 99455081353279951}
   badRope: {fileID: 1591763215086955656}
   dropPoint: {fileID: 5694910016973948310}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &6092733579704962490
 MonoBehaviour:
@@ -6258,6 +6475,8 @@ MonoBehaviour:
   goodRope: {fileID: 1365028873726374306}
   badRope: {fileID: 4288680012934967696}
   dropPoint: {fileID: 8849487292068513731}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &5500440675696650622
 MonoBehaviour:
@@ -6332,7 +6551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5257938083850117310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6479,7 +6698,7 @@ GameObject:
   - component: {fileID: 7603277285812282783}
   - component: {fileID: 4348416900835942141}
   m_Layer: 5
-  m_Name: RopeManager
+  m_Name: RopeController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6528,6 +6747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e2fd253deb71245aded7e35d9e42b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ropeGames: []
   sun: {fileID: 286775287}
   moon: {fileID: 1490440840741085555}
 --- !u!114 &4348416900835942141
@@ -6696,6 +6916,8 @@ MonoBehaviour:
   goodRope: {fileID: 7309140784187248918}
   badRope: {fileID: 2939760749531623975}
   dropPoint: {fileID: 1538714727804077108}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &2799727075811359084
 MonoBehaviour:
@@ -6985,7 +7207,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7298763819538189984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7333,6 +7555,8 @@ MonoBehaviour:
   goodRope: {fileID: 3070679362891483215}
   badRope: {fileID: 3559604707834050244}
   dropPoint: {fileID: 2854110154599075700}
+  goodRopeAudioSource: {fileID: 0}
+  rotRopeAudioSource: {fileID: 0}
   curState: 0
 --- !u!114 &3593946268746889431
 MonoBehaviour:

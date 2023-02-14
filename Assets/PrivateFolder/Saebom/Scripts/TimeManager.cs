@@ -49,7 +49,7 @@ namespace Saebom
         //===================================
 
 
-        private bool timeOn = true;
+        private bool timeOn = false;
 
         public bool isHouseTime { get; private set; } = false;
 
@@ -99,28 +99,7 @@ namespace Saebom
                 MasterTimeUpdate();
 
             //낮이면
-            if (!isCurNight)
-            {
-                
-                if (curTime > halfTime - 1 && curTime < halfTime)
-                {
-                    TimeOver();
-                    isHouseTime = true;
-                }
-                else if (curTime > dangerTime && curTime <= halfTime - 1)
-                    DangerScreenOn();
-            }
-            //밤이면
-            else
-            {
-                if (curTime > maxTime - 1 && curTime < maxTime)
-                {
-                    TimeOver();
-                    isHouseTime = true;
-                }
-                else if (curTime > dangerTime2 && curTime <= maxTime - 1)
-                    DangerScreenOn();
-            }
+            
         }
 
         // =================== 방장이 시간 더해줌 ========================
@@ -131,6 +110,31 @@ namespace Saebom
                 curTime += Time.deltaTime;
 
             photonView.RPC("PrivateTimeUpdate", RpcTarget.All, curTime);
+
+            if (!isCurNight)
+            {
+
+                if (curTime > halfTime - 1 && curTime < halfTime)
+                {
+                    photonView.RPC("TimeOver", RpcTarget.All);
+                    isHouseTime = true;
+                }
+                else if (curTime > dangerTime && curTime <= halfTime - 1)
+                    DangerScreenOn();
+            }
+            //밤이면
+            else
+            {
+                if (curTime > maxTime - 1 && curTime < maxTime)
+                {
+                    photonView.RPC("TimeOver", RpcTarget.All);
+                    isHouseTime = true;
+                }
+                else if (curTime > dangerTime2 && curTime <= maxTime - 1)
+                    DangerScreenOn();
+            }
+
+           
 
         }
 
@@ -149,6 +153,7 @@ namespace Saebom
 
         //==========================시간 종료 후 점수합산==========================
 
+        [PunRPC]
         public void TimeOver()
         {
             TimeOff();
@@ -233,6 +238,8 @@ namespace Saebom
 
             if (curTime == 0)
                 SetCurRound();
+
+            MissionButton.Instance.MasterSetEmergency();
 
             timeOn = true;
         }
