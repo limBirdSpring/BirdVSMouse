@@ -24,9 +24,11 @@ namespace SoYoon
 
         private List<PlayerEntry> playerEntries;
 
+        private AudioSource lobbyBGM;
         private void Awake()
         {
             playerEntries = new List<PlayerEntry>();
+            lobbyBGM = GameObject.FindObjectOfType<LobbyManager>().GetComponent<AudioSource>();
         }
 
         private void Start()
@@ -146,6 +148,8 @@ namespace SoYoon
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
+            if (lobbyBGM.isPlaying)
+                lobbyBGM.Stop();
             PhotonNetwork.LoadLevel("GameScene");
         }
 
