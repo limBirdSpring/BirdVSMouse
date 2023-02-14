@@ -223,7 +223,7 @@ namespace Saebom
         }
 
         [PunRPC]
-        private void TimeOn()
+        public void TimeOn()
         {
 
             isHouseTime = false;

@@ -172,6 +172,8 @@ namespace Saebom
 
             photonView.RPC("SetReadyScene", RpcTarget.All);
 
+            
+
         }
 
         [PunRPC]
@@ -216,7 +218,7 @@ namespace Saebom
             MissionButton.Instance.MissionShare();
             MakePlayer();
             readyScene.SetActive(false);
-            TimeManager.Instance.FinishScoreTimeSet();
+            TimeManager.Instance.TimeOn();
             SoundManager.Instance.bgm.clip = SoundManager.Instance.noon;
             SoundManager.Instance.bgm.Play();
         }

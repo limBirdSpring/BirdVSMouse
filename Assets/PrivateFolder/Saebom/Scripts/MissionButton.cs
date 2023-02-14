@@ -281,6 +281,9 @@ namespace Saebom
             }
             yield return new WaitForSeconds(1f);
 
+
+            ropeCheck.SunOrMoonReset();
+
             missionList[5].gameObject.SetActive(false);
             yield return new WaitForSeconds(1f);
 
