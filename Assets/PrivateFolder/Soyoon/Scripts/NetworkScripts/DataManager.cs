@@ -17,7 +17,7 @@ namespace SoYoon
         [HideInInspector]
         public List<CollectionItem> earnedCollectionItemList;
         [HideInInspector]
-        public List<CollectionItem> mailedCollectionItemList;
+        public LinkedList<CollectionItem> mailedCollectionItemList;
 
         private Dictionary<string ,CollectionItem> collectionItemDic;
 
@@ -42,7 +42,7 @@ namespace SoYoon
                     Destroy(this.gameObject);
             }
             earnedCollectionItemList = new List<CollectionItem>();
-            mailedCollectionItemList = new List<CollectionItem>();
+            mailedCollectionItemList = new LinkedList<CollectionItem>();
             collectionItemDic = new Dictionary<string, CollectionItem>();
 
             string path = Path.Combine(Application.dataPath, "data.json");
@@ -69,7 +69,7 @@ namespace SoYoon
             }
 
             for(int i=0;i< myInfo.mailedItem.Count; i++)
-                mailedCollectionItemList.Add(collectionItemDic[myInfo.mailedItem[i]]);
+                mailedCollectionItemList.AddLast(collectionItemDic[myInfo.mailedItem[i]]);
         }
 
         public CollectionItem GetCollectionItem(string itemName)
