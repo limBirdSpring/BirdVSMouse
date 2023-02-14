@@ -92,14 +92,14 @@ namespace Saebom
 
         private void Update()
         {
-
+            //시간 강제로 증가 : 마지막에 삭제할 것
             if (Input.GetKeyDown(KeyCode.F2))
                 AddTime(10);
 
             if (PhotonNetwork.IsMasterClient)
                 MasterTimeUpdate();
 
-
+            //낮이면
             if (!isCurNight)
             {
                 
@@ -108,9 +108,10 @@ namespace Saebom
                     TimeOver();
                     isHouseTime = true;
                 }
-                else if (curTime > dangerTime && curTime < halfTime - 1)
+                else if (curTime > dangerTime && curTime <= halfTime - 1)
                     DangerScreenOn();
             }
+            //밤이면
             else
             {
                 if (curTime > maxTime - 1 && curTime < maxTime)
@@ -118,7 +119,7 @@ namespace Saebom
                     TimeOver();
                     isHouseTime = true;
                 }
-                else if (curTime > dangerTime2 && curTime < maxTime - 1)
+                else if (curTime > dangerTime2 && curTime <= maxTime - 1)
                     DangerScreenOn();
             }
         }

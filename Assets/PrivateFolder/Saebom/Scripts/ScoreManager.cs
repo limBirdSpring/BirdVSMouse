@@ -166,7 +166,6 @@ namespace Saebom
 
 
             //박 100%일경우 0%로 초기화
-
             MissionButton.Instance.BakMissionReset();
 
             blockButton.SetActive(false);
@@ -457,7 +456,6 @@ namespace Saebom
                     drawBackgroundImg.SetActive(true);
                     winText.text = "무승부!";
 
-
                     break;
             }
 
@@ -471,6 +469,8 @@ namespace Saebom
             }
 
             canvas.SetActive(true);
+
+            
 
 
             //나가기 버튼 생성
