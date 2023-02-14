@@ -42,7 +42,6 @@ public class SoundManager : SingleTon<SoundManager>
     [SerializeField]
     private List<UISound> uiSounds = new List<UISound>();
 
-
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
