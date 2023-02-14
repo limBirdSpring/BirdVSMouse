@@ -98,7 +98,6 @@ namespace Saebom
             if (PhotonNetwork.IsMasterClient)
                 MasterTimeUpdate();
 
-            //³·ÀÌ¸é
             
         }
 
@@ -116,8 +115,8 @@ namespace Saebom
 
                 if (curTime > halfTime - 1 && curTime < halfTime)
                 {
-                    photonView.RPC("TimeOver", RpcTarget.All);
                     isHouseTime = true;
+                    photonView.RPC("TimeOver", RpcTarget.All);
                 }
                 else if (curTime > dangerTime && curTime <= halfTime - 1)
                     DangerScreenOn();
@@ -127,8 +126,8 @@ namespace Saebom
             {
                 if (curTime > maxTime - 1 && curTime < maxTime)
                 {
-                    photonView.RPC("TimeOver", RpcTarget.All);
                     isHouseTime = true;
+                    photonView.RPC("TimeOver", RpcTarget.All);
                 }
                 else if (curTime > dangerTime2 && curTime <= maxTime - 1)
                     DangerScreenOn();
