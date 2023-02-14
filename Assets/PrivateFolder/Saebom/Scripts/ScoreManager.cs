@@ -272,7 +272,7 @@ namespace Saebom
 
 
         //턴이 끝났을 때 결과가 나왔다면 누가 이겼는지 구현
-        private void TurnResult()
+        public void TurnResult()
         {
             //1. 한쪽의 점수가 6점을 넘겼을때 (점수가 더 큰 사람이 이김)
             if (birdScore >= 6 || mouseScore >= 6)
