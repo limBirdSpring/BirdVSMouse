@@ -97,6 +97,12 @@ namespace SoYoon
 
         public void EarnItemToMail(string itemName)
         {
+            for(int i=0;i<earnedCollectionItemList.Count;i++)
+            {
+                if (earnedCollectionItemList[i].name == itemName)
+                    return;
+            }
+
             CollectionItem item = collectionItemDic[itemName];
             mailedCollectionItemList.AddLast(item);
             myInfo.mailedItem.Add(itemName);
