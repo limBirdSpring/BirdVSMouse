@@ -11,6 +11,8 @@ namespace SoYoon
     {
         public static LobbyManager Instance { get; private set; }
 
+        private AudioSource lobbyBGM;
+
         private void Awake()
         {
             if (GameObject.Find("LobbyManager") != null)
@@ -24,6 +26,8 @@ namespace SoYoon
                 else
                     Destroy(this.gameObject);
             }
+
+            lobbyBGM = GetComponent<AudioSource>();
         }
 
         private void Start()
@@ -146,6 +150,8 @@ namespace SoYoon
         public override void OnJoinedLobby()
         {
             Debug.Log("로비 입장 완료");
+            if(!lobbyBGM.isPlaying)
+                lobbyBGM.Play();
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
