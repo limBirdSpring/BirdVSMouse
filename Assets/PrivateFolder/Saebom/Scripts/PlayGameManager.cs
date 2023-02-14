@@ -246,7 +246,7 @@ namespace Saebom
             }
 
 
-            Debug.LogError(PhotonNetwork.LocalPlayer.GetPlayerNumber());
+            //Debug.LogError(PhotonNetwork.LocalPlayer.GetPlayerNumber());
 
             if (PhotonNetwork.LocalPlayer.GetPlayerNumber() != i)
                 return;
