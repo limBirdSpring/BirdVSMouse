@@ -170,17 +170,21 @@ namespace SoYoon
         }
 
         [PunRPC]
-        public void DestroyCorpse(int playerNum)
+        public void DestroyCorpse(int playerNum, bool all = false)
         {
             GameObject[] objs = GameObject.FindGameObjectsWithTag("Corpse");
 
             foreach(GameObject obj in objs)
             {
-                if (obj.GetComponent<Corpse>().playerNum == playerNum)
+                if (!all)
                 {
-                    Destroy(obj);
-                    return;
+                    if (obj.GetComponent<Corpse>().playerNum == playerNum)
+                    {
+                        Destroy(obj);
+                        return;
+                    }
                 }
+                else Destroy(obj);
             }
         }
 

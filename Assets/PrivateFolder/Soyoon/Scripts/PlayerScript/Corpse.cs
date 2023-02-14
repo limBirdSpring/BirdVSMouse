@@ -62,6 +62,10 @@ namespace SoYoon
         private void FoundCorpse()
         {
             targetPhotonView.RPC("FoundCorpse", RpcTarget.All, playerNum);
+            targetPhotonView.RPC("DestroyCorpse", RpcTarget.All, playerNum, true);
+            GameObject[] corpses = GameObject.FindGameObjectsWithTag("Corpse");
+            for (int i = 0; i < corpses.Length; i++)
+                Destroy(corpses[i].gameObject);
             Saebom.MissionButton.Instance.MissionButtonOff();
         }
 
