@@ -144,9 +144,9 @@ namespace Saebom
 
             TimeSlideUpdate();
 
-            if (curTime <= halfTime)
+            if (curTime < halfTime)
                 isCurNight = false;
-            else
+            else if (curTime > halfTime)
                 isCurNight = true;
         }
 
@@ -163,7 +163,8 @@ namespace Saebom
                 PlayGameManager.Instance.PlayerGoHomeNow();
             else
             {
-                PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>(); //현재 거점에 있는지 확인 - 함수 추가
+                PlayGameManager.Instance.PlayerGoHomeNow();//삭제 요망
+                //PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>(); //현재 거점에 있는지 확인 - 함수 추가
             }
 
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
