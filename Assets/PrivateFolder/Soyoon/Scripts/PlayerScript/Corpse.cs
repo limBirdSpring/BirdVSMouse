@@ -62,6 +62,7 @@ namespace SoYoon
         private void FoundCorpse()
         {
             targetPhotonView.RPC("FoundCorpse", RpcTarget.All, playerNum);
+            targetPhotonView.RPC("DestroyCorpse", RpcTarget.All, playerNum, true);
             Saebom.MissionButton.Instance.MissionButtonOff();
         }
 

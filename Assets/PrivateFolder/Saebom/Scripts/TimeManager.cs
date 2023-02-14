@@ -157,17 +157,18 @@ namespace Saebom
         {
             TimeOff();
 
+            PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
 
             //만약 강제로 활동시간이 끝났다면 캐릭터 거점으로 강제이동
-            if (!isHouseTime)
+            if (!isHouseTime && (controller.state != global::PlayerState.Active))
                 PlayGameManager.Instance.PlayerGoHomeNow();
             else
             {
-                PlayGameManager.Instance.PlayerGoHomeNow();//삭제 요망
+                //PlayGameManager.Instance.PlayerGoHomeNow();//삭제 요망
+                controller.photonView.RPC("CheckIfIsInHouse", RpcTarget.All);
                 //PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>(); //현재 거점에 있는지 확인 - 함수 추가
             }
 
-            PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
             if ((int)curTime == (int)halfTime)
             {
                 Debug.Log("함수 불러옴");
