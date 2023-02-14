@@ -167,24 +167,19 @@ namespace Saebom
                 PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>(); //현재 거점에 있는지 확인 - 함수 추가
             }
 
+            PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
+            if ((int)curTime == (int)halfTime)
+            {
+                Debug.Log("함수 불러옴");
+                controller.photonView.RPC("SetActiveOrInactive", RpcTarget.All, true);
+            }
+            else if ((int)curTime == (int)maxTime)
+            {
+                controller.photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
+            }
+
             //2초 뒤 점수 확인 출력
             ScoreManager.Instance.CallScoreResultWindow();
-
-
-            for (int i = 0; i < PlayGameManager.Instance.playerList.Count; i++)
-            {
-                PlayerControllerTest controller = PlayGameManager.Instance.playerList[i].playerPrefab.GetComponent<PlayerControllerTest>();
-                Debug.Log("player list count : " + PlayGameManager.Instance.playerList.Count);
-
-                if (curTime == halfTime)
-                {
-                    controller.SetActiveOrInactive(true);
-                }
-                else if (curTime == maxTime)
-                {
-                    controller.SetActiveOrInactive(false);
-                }
-            }
         }
 
         private void TimeOff()
