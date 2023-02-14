@@ -117,6 +117,12 @@ public class SunOrMoon : MonoBehaviour
                 missionSuccess = false;
             }
         }
+
+        if (collision.gameObject.name.Equals("Fail"))
+        {
+            curState = SunOrMoonState.None;
+            missionSuccess = false;
+        }
     }
 
     public IEnumerator DelayChange(string dir)
