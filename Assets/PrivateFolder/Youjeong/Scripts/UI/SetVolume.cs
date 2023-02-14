@@ -31,6 +31,27 @@ public class SetVolume : MonoBehaviour
         mixer.SetFloat("SFX", Mathf.Log10(SetValue(sfxSound.value)) * 20);
     }
 
+    public void SoudMute(int num)
+    {
+        switch(num)
+        {
+            case 0:
+                // all sound
+                mixer.SetFloat("Master", Mathf.Log10(SetValue(0)) * 20);
+                break;
+            case 1:
+                // BGM sound
+                mixer.SetFloat("BGM", Mathf.Log10(SetValue(0)) * 20);
+                break;
+            case 2:
+                // SFX sound
+                mixer.SetFloat("SFX", Mathf.Log10(SetValue(0)) * 20);
+                break;
+            default:
+                break;
+        }
+    }
+
     private float SetValue(float value)
     {
         if (value == 0)
