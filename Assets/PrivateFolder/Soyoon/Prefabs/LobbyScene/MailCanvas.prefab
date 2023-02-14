@@ -717,10 +717,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoYoon.MailCanvas, Assembly-CSharp
-        m_MethodName: BackButtonClicked
-        m_Mode: 1
+      - m_Target: {fileID: 8731740768200363379}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -970,6 +970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mail: {fileID: 2561589264631794105, guid: bb8c87ab5a267a8409d8dc71b158a04b, type: 3}
   mailContentTransform: {fileID: 3128999748448581292}
+  Mails: []
 --- !u!1 &8731740768974539136
 GameObject:
   m_ObjectHideFlags: 0

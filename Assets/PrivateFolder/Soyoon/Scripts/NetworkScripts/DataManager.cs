@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -17,7 +18,7 @@ namespace SoYoon
         [HideInInspector]
         public List<CollectionItem> earnedCollectionItemList;
         [HideInInspector]
-        public List<CollectionItem> mailedCollectionItemList;
+        public LinkedList<CollectionItem> mailedCollectionItemList;
 
         private Dictionary<string ,CollectionItem> collectionItemDic;
 
@@ -42,7 +43,7 @@ namespace SoYoon
                     Destroy(this.gameObject);
             }
             earnedCollectionItemList = new List<CollectionItem>();
-            mailedCollectionItemList = new List<CollectionItem>();
+            mailedCollectionItemList = new LinkedList<CollectionItem>();
             collectionItemDic = new Dictionary<string, CollectionItem>();
 
             string path = Path.Combine(Application.dataPath, "data.json");
@@ -69,7 +70,7 @@ namespace SoYoon
             }
 
             for(int i=0;i< myInfo.mailedItem.Count; i++)
-                mailedCollectionItemList.Add(collectionItemDic[myInfo.mailedItem[i]]);
+                mailedCollectionItemList.AddLast(collectionItemDic[myInfo.mailedItem[i]]);
         }
 
         public CollectionItem GetCollectionItem(string itemName)
@@ -86,10 +87,21 @@ namespace SoYoon
             if (item.type == ItemType.Photo)
                 EarnedPhotosNum++;
             else if (item.type == ItemType.Badge)
+            {
+                GameObject.Find("Canvas").transform.GetChild(6).GetChild(1).gameObject.SetActive(true);
                 EarnedBadgesNum++;
+            }
 
             mailedCollectionItemList.Remove(item);
             myInfo.mailedItem.Remove(itemName);
+            SaveToJson();
+        }
+
+        public void EarnItemToMail(string itemName)
+        {
+            CollectionItem item = collectionItemDic[itemName];
+            mailedCollectionItemList.AddLast(item);
+            myInfo.mailedItem.Add(itemName);
             SaveToJson();
         }
 

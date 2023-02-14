@@ -31,11 +31,13 @@ namespace SoYoon
                 Destroy(obj);
             Mails.Clear();
 
+            LinkedListNode<CollectionItem> item = DataManager.Instance.mailedCollectionItemList.First;
             for (int i = 0; i < DataManager.Instance.mailedCollectionItemList.Count; i++)
             {
                 GameObject mailObj = Instantiate(mail, mailContentTransform, false);
                 Mail _mail = mailObj.GetComponent<Mail>();
-                _mail.mailedCollectionItem = DataManager.Instance.mailedCollectionItemList[i];
+                _mail.mailedCollectionItem = item.Value;
+                item = item.Next;
                 Mails.Add(mailObj);
             }
         }
