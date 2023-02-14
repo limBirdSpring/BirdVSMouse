@@ -195,10 +195,16 @@ namespace SoYoon
             Debug.Log("turn to night : " + turnToNight);
             if (PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird && !turnToNight)
                 OnActive();
-            else if(!(PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird) && turnToNight)
+            else if (!(PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird) && turnToNight)
+            {
+                anim.SetTrigger("IsActive");
                 OnActive();
+            }
             else
+            {
+                anim.SetTrigger("IsInactive");
                 OnInactive();
+            }
         }
 
         private void SetNamePosition()
@@ -211,7 +217,6 @@ namespace SoYoon
             Debug.Log(photonView.Owner.GetPlayerNumber() + "비활성화");
             // 비활동시기(내 활동시간이 아닐경우)
             Debug.Log(photonView.Owner.GetPlayerNumber() + " 애니메이션 비활성화");
-            anim.SetTrigger("IsInactive");
             SetPlayerState(PlayerState.Inactive);
         }
 
@@ -220,7 +225,6 @@ namespace SoYoon
             Debug.Log(photonView.Owner.GetPlayerNumber() + "활성화");
             // 활동시기
             Debug.Log(photonView.Owner.GetPlayerNumber() + " 애니메이션 활성화");
-            anim.SetTrigger("IsActive");
             SetPlayerState(PlayerState.Active);
         }
 
