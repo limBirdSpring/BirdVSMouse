@@ -10,6 +10,7 @@ using System.Linq;
 using TMPro;
 using SoYoon;
 using UnityEngine.SocialPlatforms.Impl;
+using System.Reflection;
 
 
 //방장이 미션을 뽑음
@@ -56,6 +57,9 @@ namespace Saebom
 
         [SerializeField]
         private List<Mission> missionList;
+
+        [SerializeField]
+        private RopeController ropeCheck;
 
 
         [SerializeField]
@@ -200,22 +204,63 @@ namespace Saebom
         {
             yield return new WaitForSeconds(1f);
 
-            foreach (Mission mission in missionList)
+            //박, 콩쥐, 컬러미션
+            for (int i = 0; i < 3; i++)
             {
-                mission.gameObject.SetActive(true);
+                missionList[i].gameObject.SetActive(true);
                 yield return new WaitForSeconds(1.5f);
-
-                //콤플리트 텍스트 띠우기
-                if (mission.GetScore())
+                if (missionList[i].GetScore())
                 {
                     SoundManager.Instance.PlayUISound(UISFXName.MissionComplete);
                     completeText.SetActive(true);
                 }
                 yield return new WaitForSeconds(1f);
 
-                mission.gameObject.SetActive(false);
+                missionList[i].gameObject.SetActive(false);
                 yield return new WaitForSeconds(1f);
             }
+
+            //소 미션
+            missionList[3].gameObject.SetActive(true);
+            yield return new WaitForSeconds(1.5f);
+            if (missionList[3].GetScore()&&!TimeManager.Instance.isCurNight)
+            {
+                SoundManager.Instance.PlayUISound(UISFXName.MissionComplete);
+                completeText.SetActive(true);
+            }
+            yield return new WaitForSeconds(1f);
+
+            missionList[3].gameObject.SetActive(false);
+            yield return new WaitForSeconds(1f);
+            //==============================================
+            missionList[4].gameObject.SetActive(true);
+            yield return new WaitForSeconds(1.5f);
+            if (missionList[4].GetScore() && TimeManager.Instance.isCurNight)
+            {
+                SoundManager.Instance.PlayUISound(UISFXName.MissionComplete);
+                completeText.SetActive(true);
+            }
+            yield return new WaitForSeconds(1f);
+
+            missionList[4].gameObject.SetActive(false);
+            yield return new WaitForSeconds(1f);
+
+            //로프미션
+            missionList[5].gameObject.SetActive(true);
+
+            ropeCheck.SunOrMoonStart();
+
+            yield return new WaitForSeconds(3f);
+            if (missionList[5].GetScore())
+            {
+                SoundManager.Instance.PlayUISound(UISFXName.MissionComplete);
+                completeText.SetActive(true);
+            }
+            yield return new WaitForSeconds(1f);
+
+            missionList[5].gameObject.SetActive(false);
+            yield return new WaitForSeconds(1f);
+
 
             StartCoroutine(ScoreManager.Instance.ScoreResultCalculate());
 
