@@ -61,14 +61,23 @@ namespace SoYoon
                 playerCam.Follow = this.transform;
                 playerCam.LookAt = this.transform;
                 targetPlayer = null;
+                photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
             }
 
             isInHouse = false;
 
-            if (PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird)
-                OnActive();
-            else
-                OnInactive();
+            //if (PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird)
+            //{
+            //    //if(photonView.IsMine)
+            //    //    anim.SetTrigger("IsActive");
+            //    OnActive();
+            //}
+            //else
+            //{
+            //    //if(photonView.IsMine)
+            //    //    anim.SetTrigger("IsInactive");
+            //    OnInactive();
+            //}
         }
 
         private void Update()
@@ -175,6 +184,7 @@ namespace SoYoon
             }
         }
 
+        [PunRPC]
         public void SetActiveOrInactive(bool turnToNight)
         {
             if (state == PlayerState.Ghost)
@@ -183,8 +193,9 @@ namespace SoYoon
             Debug.Log("player num : " + photonView.Owner.GetPlayerNumber());
             Debug.Log("is bird : " + PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird);
             Debug.Log("turn to night : " + turnToNight);
-            if ((PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird && !turnToNight)
-                || (!PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird && turnToNight))
+            if (PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird && !turnToNight)
+                OnActive();
+            else if(!(PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird) && turnToNight)
                 OnActive();
             else
                 OnInactive();
@@ -199,18 +210,17 @@ namespace SoYoon
         {
             Debug.Log(photonView.Owner.GetPlayerNumber() + "비활성화");
             // 비활동시기(내 활동시간이 아닐경우)
-            if (photonView.IsMine)
-                anim.SetTrigger("IsInactive");
+            Debug.Log(photonView.Owner.GetPlayerNumber() + " 애니메이션 비활성화");
+            anim.SetTrigger("IsInactive");
             SetPlayerState(PlayerState.Inactive);
-
         }
 
         public void OnActive()
         {
             Debug.Log(photonView.Owner.GetPlayerNumber() + "활성화");
             // 활동시기
-            if (photonView.IsMine)
-                anim.SetTrigger("IsActive");
+            Debug.Log(photonView.Owner.GetPlayerNumber() + " 애니메이션 활성화");
+            anim.SetTrigger("IsActive");
             SetPlayerState(PlayerState.Active);
         }
 
@@ -292,7 +302,7 @@ namespace SoYoon
                     return;
                 }
                 else if(state == PlayerState.Inactive && (collision.gameObject.name == "MouseCowHouse" || collision.gameObject.name == "BirdCowHouse"
-                    || collision.gameObject.name == "Hangari" || collision.gameObject.name == "Cloth" || collision.gameObject.name == "SunMoon" || collision.gameObject.name == "Bag"))
+                    || collision.gameObject.name == "Hangari" || collision.gameObject.name == "Cloth" || collision.gameObject.name == "SunMoon" || collision.gameObject.name == "Bag" || collision.gameObject.name == "Emergency"))
                 {
                     // !Do Nothing
                 }
