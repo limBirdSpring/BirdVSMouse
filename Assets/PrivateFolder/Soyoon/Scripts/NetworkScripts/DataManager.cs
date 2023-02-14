@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
@@ -93,6 +94,14 @@ namespace SoYoon
 
             mailedCollectionItemList.Remove(item);
             myInfo.mailedItem.Remove(itemName);
+            SaveToJson();
+        }
+
+        public void EarnItemToMail(string itemName)
+        {
+            CollectionItem item = collectionItemDic[itemName];
+            mailedCollectionItemList.AddLast(item);
+            myInfo.mailedItem.Add(itemName);
             SaveToJson();
         }
 
