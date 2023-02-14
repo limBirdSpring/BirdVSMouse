@@ -98,7 +98,6 @@ namespace Saebom
             if (PhotonNetwork.IsMasterClient)
                 MasterTimeUpdate();
 
-            //낮이면
             
         }
 
@@ -116,8 +115,8 @@ namespace Saebom
 
                 if (curTime > halfTime - 1 && curTime < halfTime)
                 {
-                    photonView.RPC("TimeOver", RpcTarget.All);
                     isHouseTime = true;
+                    photonView.RPC("TimeOver", RpcTarget.All);
                 }
                 else if (curTime > dangerTime && curTime <= halfTime - 1)
                     DangerScreenOn();
@@ -127,8 +126,8 @@ namespace Saebom
             {
                 if (curTime > maxTime - 1 && curTime < maxTime)
                 {
-                    photonView.RPC("TimeOver", RpcTarget.All);
                     isHouseTime = true;
+                    photonView.RPC("TimeOver", RpcTarget.All);
                 }
                 else if (curTime > dangerTime2 && curTime <= maxTime - 1)
                     DangerScreenOn();
@@ -145,9 +144,9 @@ namespace Saebom
 
             TimeSlideUpdate();
 
-            if (curTime <= halfTime)
+            if (curTime < halfTime)
                 isCurNight = false;
-            else
+            else if (curTime > halfTime)
                 isCurNight = true;
         }
 
@@ -164,7 +163,8 @@ namespace Saebom
                 PlayGameManager.Instance.PlayerGoHomeNow();
             else
             {
-                PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>(); //현재 거점에 있는지 확인 - 함수 추가
+                PlayGameManager.Instance.PlayerGoHomeNow();//삭제 요망
+                //PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>(); //현재 거점에 있는지 확인 - 함수 추가
             }
 
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
