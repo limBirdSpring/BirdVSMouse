@@ -101,7 +101,7 @@ namespace SoYoon
 
                 // TODO : 뱃지도 같은 형식으로 추가
 
-                entry.Initialize(player.ActorNumber, player.NickName, (int)charNum, (int)badge1Num, (int)badge2Num, player.IsMasterClient);
+                entry.Initialize(player.ActorNumber, player.NickName, (string)charNum, (string)badge1Num, (string)badge2Num, player.IsMasterClient);
                 object isPlayerReady;
                 if (player.CustomProperties.TryGetValue("Ready", out isPlayerReady))
                 {

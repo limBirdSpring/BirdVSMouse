@@ -9,6 +9,9 @@ namespace SoYoon
     {
         public GameObject photo;
 
+        [HideInInspector]
+        public CollectionItem photoCollectionItem;
+
         private Image photoButtonImg;
         private PlayerPanel playerPanel;
         private PhotoSellectCanvas photoCanvas;
@@ -19,10 +22,19 @@ namespace SoYoon
             photoCanvas = GameObject.Find("PopUpCanvas").GetComponentInChildren<PhotoSellectCanvas>();
             photoButtonImg = photo.GetComponent<Image>();
         }
+        private void Start()
+        {
+            InitializePhotoButton();
+        }
+
+        private void InitializePhotoButton()
+        {
+            photoButtonImg.sprite = photoCollectionItem.itemIcon;
+        }
 
         public void OnClickedPhotoButton()
         {
-            playerPanel.ChangePhoto(photoButtonImg.sprite);
+            playerPanel.ChangePhoto(photoCollectionItem.itemName);
             photoCanvas.gameObject.SetActive(false);
         }
     }

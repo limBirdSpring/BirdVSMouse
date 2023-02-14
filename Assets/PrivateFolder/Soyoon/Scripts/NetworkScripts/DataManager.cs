@@ -1,28 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
+
+public enum PlayResult { Play, Win, Draw, Lose, Spy }
 
 namespace SoYoon
 {
     public class DataManager : MonoBehaviour
     {
         [SerializeField]
-        private List<CollectionItem> collectionPhotoList;
-        [SerializeField]
-        private List<CollectionItem> collectionBadgeList;
+        private List<CollectionItem> collectionList;
 
         [HideInInspector]
-        public List<CollectionItem> earnedPhotoCollectionItemList;
+        public List<CollectionItem> earnedCollectionItemList;
         [HideInInspector]
-        public List<CollectionItem> earnedBadgeCollectionItemList;
+        public LinkedList<CollectionItem> mailedCollectionItemList;
 
         private Dictionary<string ,CollectionItem> collectionItemDic;
 
         public static DataManager Instance { get; private set; }
         public MyInfo myInfo;
+
+        public int EarnedPhotosNum { get; private set; }
+        public int EarnedBadgesNum { get; private set; }
+
 
         private void Awake()
         {
@@ -37,8 +42,8 @@ namespace SoYoon
                 else
                     Destroy(this.gameObject);
             }
-            earnedPhotoCollectionItemList = new List<CollectionItem>();
-            earnedBadgeCollectionItemList = new List<CollectionItem>();
+            earnedCollectionItemList = new List<CollectionItem>();
+            mailedCollectionItemList = new LinkedList<CollectionItem>();
             collectionItemDic = new Dictionary<string, CollectionItem>();
 
             string path = Path.Combine(Application.dataPath, "data.json");
@@ -48,97 +53,81 @@ namespace SoYoon
             else
                 SaveToJson();
 
-            for(int i=0; i<collectionPhotoList.Count; i++)
+            EarnedPhotosNum = 0;
+            EarnedBadgesNum = 0;
+
+            for (int i = 0; i < collectionList.Count; i++)
+                collectionItemDic.Add(collectionList[i].itemName, collectionList[i]);
+
+            for (int i = 0; i < myInfo.earnedItem.Count; i++)
             {
-                collectionItemDic.Add(collectionPhotoList[i].itemName, collectionPhotoList[i]);
-                if (myInfo.getPhoto[i])
-                {
-                    earnedPhotoCollectionItemList.Add(collectionPhotoList[i]);
-                }
+                earnedCollectionItemList.Add(collectionItemDic[myInfo.earnedItem[i]]);
+
+                if (collectionItemDic[myInfo.earnedItem[i]].type == ItemType.Photo)
+                    EarnedPhotosNum++;
+                else if (collectionItemDic[myInfo.earnedItem[i]].type == ItemType.Badge)
+                    EarnedBadgesNum++;
             }
 
-            for (int i = 0; i < collectionBadgeList.Count; i++)
-            {
-                collectionItemDic.Add(collectionBadgeList[i].itemName, collectionBadgeList[i]);
-                if (myInfo.getBadge[i])
-                {
-                    earnedBadgeCollectionItemList.Add(collectionBadgeList[i]);
-                }
-            }
-        }
-
-        public int FindPhotoSpriteNum(Sprite photoSprite)
-        {
-            for (int i = 0; i < earnedPhotoCollectionItemList.Count; i++)
-            {
-                if (earnedPhotoCollectionItemList[i].itemIcon == photoSprite)
-                    return i;
-            }
-            return -1;
-        }
-
-        public Sprite FindSpriteWithPhotoNum(int photoNum)
-        {
-            if (photoNum < 0) Debug.Log("error : cannot find sprite with photo Num");
-
-            return earnedPhotoCollectionItemList[photoNum].itemIcon;
-        }
-
-        public int FindBadgeSpriteNum(Sprite badgeSprite)
-        {
-            for (int i = 0; i < earnedBadgeCollectionItemList.Count; i++)
-            {
-                if (earnedBadgeCollectionItemList[i].itemIcon == badgeSprite)
-                    return i;
-            }
-            return -1;
-        }
-
-        public Sprite FindSpriteWithBadgeNum(int badgeSprite)
-        {
-            if (badgeSprite < 0) Debug.Log("error : cannot find sprite with badge Num");
-
-            return earnedBadgeCollectionItemList[badgeSprite].itemIcon;
-        }
-
-        public void changeName(string name)
-        {
-
-        }
-
-        public void changeBadge1(int badge1Num)
-        {
-
-        }
-
-        public void changeBadge2(int badge2Num)
-        {
-
-        }
-
-        public void changePhoto(int photoNum)
-        {
-
-        }
-
-        public void Win()
-        {
-
-        }
-
-        public void Draw()
-        {
-            
-        }
-
-        public void Lose()
-        {
-
+            for(int i=0;i< myInfo.mailedItem.Count; i++)
+                mailedCollectionItemList.AddLast(collectionItemDic[myInfo.mailedItem[i]]);
         }
 
         public CollectionItem GetCollectionItem(string itemName)
         {
             return collectionItemDic[itemName];
+        }
+
+        public void EarnItem(string itemName)
+        {
+            CollectionItem item = collectionItemDic[itemName];
+            earnedCollectionItemList.Add(item);
+            myInfo.earnedItem.Add(itemName);
+
+            if (item.type == ItemType.Photo)
+                EarnedPhotosNum++;
+            else if (item.type == ItemType.Badge)
+            {
+                GameObject.Find("Canvas").transform.GetChild(6).GetChild(1).gameObject.SetActive(true);
+                EarnedBadgesNum++;
+            }
+
+            mailedCollectionItemList.Remove(item);
+            myInfo.mailedItem.Remove(itemName);
+            SaveToJson();
+        }
+
+        public void EarnItemToMail(string itemName)
+        {
+            CollectionItem item = collectionItemDic[itemName];
+            mailedCollectionItemList.AddLast(item);
+            myInfo.mailedItem.Add(itemName);
+            SaveToJson();
+        }
+
+        public void SaveResult(PlayResult result)
+        {
+            switch(result)
+            {
+                case PlayResult.Play:
+                    myInfo.totalGame++;
+                    break;
+                case PlayResult.Win:
+                    myInfo.win++;
+                    break;
+                case PlayResult.Draw:
+                    myInfo.draw++;
+                    break;
+                case PlayResult.Lose:
+                    myInfo.lose++;
+                    break;
+                case PlayResult.Spy:
+                    myInfo.totalSpy++;
+                    break;
+                default:
+                    break;
+            }
+            SaveToJson();
         }
 
         public void SaveToJson()

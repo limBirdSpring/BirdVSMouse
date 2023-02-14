@@ -32,23 +32,23 @@ namespace SoYoon
         public int OwnerId { get; private set; }
         public bool IsMaster { get; private set; }
 
-        public void Initialize(int id, string name, int charNum, int badge1Num, int badge2Num, bool isMaster)
+        public void Initialize(int id, string name, string charNum, string badge1Num, string badge2Num, bool isMaster)
         {
             OwnerId = id;
             playerName.text = name;
             // 찾을 때 유효하지 않은 값은 제외
-            if (charNum != -1)
-                playerChar.sprite = DataManager.Instance.FindSpriteWithPhotoNum(charNum);
+            if (charNum != "")
+                playerChar.sprite = DataManager.Instance.GetCollectionItem(charNum).itemIcon;
             else
                 playerChar.color = Color.clear;
 
-            if (badge1Num != -1)
-                playerBadge1.sprite = DataManager.Instance.FindSpriteWithBadgeNum(badge1Num);
+            if (badge1Num != "")
+                playerBadge1.sprite = DataManager.Instance.GetCollectionItem(badge1Num).itemIcon;
             else
                 playerBadge1.color = Color.clear;
 
-            if (badge2Num != -1)
-                playerBadge2.sprite = DataManager.Instance.FindSpriteWithBadgeNum(badge2Num);
+            if (badge2Num != "")
+                playerBadge2.sprite = DataManager.Instance.GetCollectionItem(badge2Num).itemIcon;
             else
                 playerBadge2.color = Color.clear;
 

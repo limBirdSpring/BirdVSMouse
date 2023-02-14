@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f349621b4cb2bb40b51497f5373d3ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectionPhotoList:
+  collectionList:
   - {fileID: 11400000, guid: e788e44765039424f8f4ea853b96aa46, type: 2}
   - {fileID: 11400000, guid: 6f0376ac5d05f084caa6b94995143a27, type: 2}
   - {fileID: 11400000, guid: efa0956566d884d47889317726e0f9dd, type: 2}
@@ -63,7 +63,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 71e15878b2cd909428932900481c8779, type: 2}
   - {fileID: 11400000, guid: da17d549cf88e3045ae05056211f93f0, type: 2}
   - {fileID: 11400000, guid: 7eb8e9f45cb80e546afc3d944befdff8, type: 2}
-  collectionBadgeList:
   - {fileID: 11400000, guid: 40a20c6bdc27cc44eb6567c44b32736b, type: 2}
   - {fileID: 11400000, guid: 1310e31074a129549aa2000c0a7f0936, type: 2}
   - {fileID: 11400000, guid: ff056d7dbe0b48e4da7df6bf06d351d8, type: 2}
@@ -71,17 +70,36 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f437948c02558634883d308987eaf86b, type: 2}
   - {fileID: 11400000, guid: c76eb81f86db72a4f8026eaaaa341ffc, type: 2}
   - {fileID: 11400000, guid: 597dd50a223282340a4b9aa8903399dd, type: 2}
-  earnedPhotoCollectionItemList: []
-  earnedBadgeCollectionItemList: []
+  earnedCollectionItemList: []
+  mailedCollectionItemList: []
   myInfo:
     lastChosenName: 
-    lastChosenBadge1: -1
-    lastChosenBadge2: -1
-    lastChosenCharacter: -1
+    lastChosenBadge1: 
+    lastChosenBadge2: 
+    lastChosenCharacter: 
     totalGame: 0
     win: 0
     draw: 0
     lose: 0
     totalSpy: 0
-    getPhoto: 000101010101010100000101010101000101
-    getBadge: 01000100010000
+    earnedItem:
+    - "\uBC41\uC0C8 \uCD08\uC0C1\uD654"
+    - "\uBC15\uC950 \uCD08\uC0C1\uD654"
+    - "\uACF0\uC950 \uCD08\uC0C1\uD654"
+    - "\uCCAD\uC124\uBAA8 \uCD08\uC0C1\uD654"
+    - "\uAE4C\uB9C8\uADC0 \uCD08\uC0C1\uD654"
+    - "\uB3C5\uC218\uB9AC \uCD08\uC0C1\uD654"
+    - "\uB9F7\uBC2D\uC950 \uCD08\uC0C1\uD654"
+    - "\uD559 \uCD08\uC0C1\uD654"
+    - "\uC81C\uBE44 \uCD08\uC0C1\uD654"
+    - "\uAFE9 \uCD08\uC0C1\uD654"
+    - "\uC0DD\uC950 \uCD08\uC0C1\uD654"
+    - "\uBD80\uC5C9\uC774 \uCD08\uC0C1\uD654"
+    - "\uB2E4\uB78C\uC950 \uCD08\uC0C1\uD654"
+    - "\uD584\uC2A4\uD130 \uCD08\uC0C1\uD654"
+    - "\uC2DC\uC791\uC758 \uAE30\uC068"
+    - "\uBE5B\uB098\uB294 \uC2B9\uB9AC"
+    mailedItem:
+    - "\uC0AC\uD0D5 \uBC41\uC0C8"
+    - "\uD615\uAD11\uBE5B \uAF43\uC78E"
+    - "\uD584\uC2A4\uD130 \uBC43\uC9C0"

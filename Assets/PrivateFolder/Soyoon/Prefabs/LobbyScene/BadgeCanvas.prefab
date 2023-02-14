@@ -701,4 +701,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   badge: {fileID: 3590383407105733984, guid: 319e4174d5ef14a478da257c43aed69a, type: 3}
-  BadgeContentTransform: {fileID: 525124997}
+  badgeContentTransform: {fileID: 525124997}

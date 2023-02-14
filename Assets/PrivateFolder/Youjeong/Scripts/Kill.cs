@@ -17,6 +17,12 @@ public class Kill : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    [Header("AudioSource")]
+    [SerializeField]
+    private AudioSource punch1;
+    [SerializeField]
+    private AudioSource punch2;
+
     private bool isBrid;
     private GameObject Black;
     private Animator anim;   
@@ -31,6 +37,7 @@ public class Kill : MonoBehaviour
         Me.sprite = PlayGameManager.Instance.myPlayerState.sprite;
         Me.SetNativeSize();
         anim = Me.GetComponent<Animator>();
+        isBrid = true;
         isBrid = PlayGameManager.Instance.myPlayerState.isBird;
         FindSpy(isBrid);
         Spy.SetNativeSize();
@@ -55,6 +62,7 @@ public class Kill : MonoBehaviour
         if (timeReveal >= 0.7f&&!isReveal)
         {
             Black.SetActive(true);
+            punch1.Play();
             isReveal = true;
         }
         if ( timeReveal >0.7f&&timeReveal < 3.7f)
@@ -66,6 +74,7 @@ public class Kill : MonoBehaviour
         }
         if (timeReveal >= 1.2f&&!isDie)
         {
+            punch2.Play();
             anim.SetTrigger("IsDie");
             isDie = true;
         }

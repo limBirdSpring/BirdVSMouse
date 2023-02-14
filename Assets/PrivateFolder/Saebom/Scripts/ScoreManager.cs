@@ -86,7 +86,7 @@ namespace Saebom
 
         //=======================================
 
-        private int masterCheck = 0;
+        public int masterCheck = 0;
 
         private void Awake()
         {
@@ -171,6 +171,7 @@ namespace Saebom
 
             blockButton.SetActive(false);
 
+            masterCheck = 0;
             //플레이어들이 모두 점수확인을 끝냈는지 확인
             photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
 
@@ -264,12 +265,7 @@ namespace Saebom
         //활동시간 즉시 종료
         public void ActiveTimeOverNow()
         {
-            //즉시 활동시간이 끝난 경우에는 거점으로 이동하지 않아도 죽지 않고, 자동으로 거점으로 이동되도록 구현
-
-
-            //플레이어를 모두 거점으로 강제이동
-
-
+           
             //활동시간끝내기
             TimeManager.Instance.TimeOver();
 
@@ -404,9 +400,17 @@ namespace Saebom
             
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F10))
+            {
+                EndGame(Win.Draw);
+            }
+        }
+
         private void EndGame(Win win)
         {
-
+            
             
             SoundManager.Instance.bgm.Stop();
 
@@ -414,10 +418,20 @@ namespace Saebom
             SoundManager.Instance.PlayUISound(UISFXName.Ending);
             //개인 판수 +1
 
+            DataManager.Instance.SaveResult(PlayResult.Play);
+
+            if (PlayGameManager.Instance.myPlayerState.isSpy)
+                DataManager.Instance.SaveResult(PlayResult.Spy);
+
             switch (win)
             {
                 case Win.BirdWin:
                     //개인 승수 +1
+                    if (PlayGameManager.Instance.myPlayerState.isBird == true && PlayGameManager.Instance.myPlayerState.isSpy == false ||
+                        PlayGameManager.Instance.myPlayerState.isBird == false && PlayGameManager.Instance.myPlayerState.isSpy == true)
+                        DataManager.Instance.SaveResult(PlayResult.Win);
+                    else
+                        DataManager.Instance.SaveResult(PlayResult.Lose);
                     //개인 패수 +1
                     birdBackgroundImg.SetActive(true);
                     birdHouseImg.SetActive(true);
@@ -426,6 +440,11 @@ namespace Saebom
                     break;
                 case Win.MouseWin:
                     //개인 승수 +1
+                    if (PlayGameManager.Instance.myPlayerState.isBird == false && PlayGameManager.Instance.myPlayerState.isSpy == false ||
+                        PlayGameManager.Instance.myPlayerState.isBird == true && PlayGameManager.Instance.myPlayerState.isSpy == true)
+                        DataManager.Instance.SaveResult(PlayResult.Win);
+                    else
+                        DataManager.Instance.SaveResult(PlayResult.Lose);
                     //개인 패수 +1
                     mouseBackgroundImg.SetActive(true);
                     mouseHouseImg.SetActive(true);
@@ -434,6 +453,7 @@ namespace Saebom
                     break;
                 case Win.Draw:
                     //개인 무승부수 +1
+                    DataManager.Instance.SaveResult(PlayResult.Draw);
                     drawBackgroundImg.SetActive(true);
                     winText.text = "무승부!";
 
@@ -449,6 +469,8 @@ namespace Saebom
                 else if (!state.isBird && state.isSpy)
                     mouseSpyImg.sprite = state.sprite;
             }
+
+            canvas.SetActive(true);
 
 
             //나가기 버튼 생성

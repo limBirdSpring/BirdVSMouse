@@ -14,7 +14,7 @@ namespace Saebom
     {
         //============수정불가 시간관련============
 
-        private float curTime;
+        public float curTime;
 
         //전체 시간
         private static float maxTime = 360f;
@@ -102,23 +102,24 @@ namespace Saebom
 
             if (!isCurNight)
             {
-                if (curTime > dangerTime && curTime < halfTime - 1)
-                    DangerScreenOn();
+                
                 if (curTime > halfTime - 1 && curTime < halfTime)
                 {
                     TimeOver();
                     isHouseTime = true;
                 }
+                else if (curTime > dangerTime && curTime < halfTime - 1)
+                    DangerScreenOn();
             }
             else
             {
-                if (curTime > dangerTime2 && curTime < maxTime - 1)
-                    DangerScreenOn();
                 if (curTime > maxTime - 1 && curTime < maxTime)
                 {
                     TimeOver();
                     isHouseTime = true;
                 }
+                else if (curTime > dangerTime2 && curTime < maxTime - 1)
+                    DangerScreenOn();
             }
         }
 
@@ -169,9 +170,20 @@ namespace Saebom
             roundUI.text = "Round " + curRound.ToString();
         }
 
+        public void FinishScoreTimeSet()
+        {
+            //점수확인 끝난 후 만약 밤이면 curTime = 0, TimeOn()
+            if (isCurNight)
+            {
+                curTime = 0;
+            }
+            photonView.RPC("TimeOn", RpcTarget.All);
+        }
 
+        [PunRPC]
         public void TimeOn()
         {
+
             isHouseTime = false;
             //시작 텍스트 출력
             SoundManager.Instance.PlayUISound(UISFXName.Start);
@@ -247,15 +259,7 @@ namespace Saebom
             }
         }
 
-        public void FinishScoreTimeSet()
-        {
-            //점수확인 끝난 후 만약 밤이면 curTime = 0, TimeOn()
-            if (isCurNight)
-            {
-                curTime = 0;
-            }
-            TimeOn();
-        }
+
 
 
         private void TimeSlideUpdate()
