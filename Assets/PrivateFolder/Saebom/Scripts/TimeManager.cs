@@ -89,7 +89,6 @@ namespace Saebom
         }
 
 
-
         private void Update()
         {
             //시간 강제로 증가 : 마지막에 삭제할 것
@@ -124,15 +123,7 @@ namespace Saebom
             }
         }
 
-        public void TimeStop()
-        {
-            timeOn = false;
-        }
-
-        public void TimeResume()
-        {
-            timeOn = true;
-        }
+        // =================== 방장이 시간 더해줌 ========================
 
         private void MasterTimeUpdate()
         {
@@ -156,82 +147,13 @@ namespace Saebom
                 isCurNight = true;
         }
 
-        public void AddTime(float sec)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                curTime += sec;
-                photonView.RPC("PrivateTimeUpdate", RpcTarget.All, curTime);
-            }
-        }
-
-        private void SetCurRound()
-        {
-            curRound++;
-            roundUI.text = "Round " + curRound.ToString();
-        }
-
-        public void FinishScoreTimeSet()
-        {
-            //점수확인 끝난 후 만약 밤이면 curTime = 0, TimeOn()
-            if (isCurNight)
-            {
-                curTime = 0;
-            }
-            photonView.RPC("TimeOn", RpcTarget.All);
-        }
-
-        [PunRPC]
-        public void TimeOn()
-        {
-
-            isHouseTime = false;
-            //시작 텍스트 출력
-            SoundManager.Instance.PlayUISound(UISFXName.Start);
-            startText.SetActive(true);
-
-            if (curTime == 0)
-                SetCurRound();
-
-            timeOn = true;
-        }
-
-        private void TimeOff()
-        {
-
-            timeOn = false;
-
-            //종료 텍스트 출력
-            endText.SetActive(true);
-
-            if (!isCurNight)
-            {
-                curTime = halfTime;
-                nightSky.SetActive(true);
-                SoundManager.Instance.bgm.clip = SoundManager.Instance.night;
-                SoundManager.Instance.bgm.Play();
-            }
-            else
-            {
-                curTime = maxTime;
-                nightSky.SetActive(false);
-                SoundManager.Instance.bgm.clip = SoundManager.Instance.noon;
-                SoundManager.Instance.bgm.Play();
-            }
-            redScreenUi.gameObject.SetActive(false);
-            TimeSlideUpdate();
-            FilterUpdate(1f);
-
-
-
-
-        }
+        //==========================시간 종료 후 점수합산==========================
 
         public void TimeOver()
         {
             TimeOff();
 
-            //만약에 살아있는 캐릭터중 거점 밖에 있는 캐릭터가 있으면 강제 사망함
+
             //만약 강제로 활동시간이 끝났다면 캐릭터 거점으로 강제이동
             if (!isHouseTime)
                 PlayGameManager.Instance.PlayerGoHomeNow();
@@ -260,16 +182,101 @@ namespace Saebom
             }
         }
 
-
-
-
-        private void TimeSlideUpdate()
+        private void TimeOff()
         {
-            imgSlide.value = curTime / maxTime;
 
+            timeOn = false;
+
+            //종료 텍스트 출력
+            endText.SetActive(true);
+
+            if (!isCurNight)
+            {
+                curTime = halfTime;
+                nightSky.SetActive(true);
+                SoundManager.Instance.bgm.clip = SoundManager.Instance.night;
+                SoundManager.Instance.bgm.Play();
+            }
+            else
+            {
+                curTime = maxTime;
+                nightSky.SetActive(false);
+                SoundManager.Instance.bgm.clip = SoundManager.Instance.noon;
+                SoundManager.Instance.bgm.Play();
+            }
+            redScreenUi.gameObject.SetActive(false);
+            TimeSlideUpdate();
+            FilterUpdate(1f);
 
         }
 
+        //======================= 점수합산 끝나고 타임 On========================
+
+        public void FinishScoreTimeSet()
+        {
+            //점수확인 끝난 후 만약 밤이면 curTime = 0, TimeOn()
+            if (isCurNight)
+            {
+                curTime = 0;
+            }
+            photonView.RPC("TimeOn", RpcTarget.All);
+        }
+
+        [PunRPC]
+        public void TimeOn()
+        {
+
+            isHouseTime = false;
+            //시작 텍스트 출력
+            SoundManager.Instance.PlayUISound(UISFXName.Start);
+            startText.SetActive(true);
+
+            if (curTime == 0)
+                SetCurRound();
+
+            timeOn = true;
+        }
+
+        //==================== 시간관련 추가 함수들 ======================
+
+        private void SetCurRound()
+        {
+            curRound++;
+            roundUI.text = "Round " + curRound.ToString();
+        }
+
+        public void TimeStop()
+        {
+            timeOn = false;
+        }
+
+        public void TimeResume()
+        {
+            timeOn = true;
+        }
+
+       
+
+        public void AddTime(float sec)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                curTime += sec;
+                photonView.RPC("PrivateTimeUpdate", RpcTarget.All, curTime);
+            }
+        }
+
+      
+        //================================== 필터 관련 ========================================
+     
+
+        //타임슬라이드 업데이트
+        private void TimeSlideUpdate()
+        {
+            imgSlide.value = curTime / maxTime;
+        }
+
+        //거점이동시간 On
         private void DangerScreenOn()
         {
             redScreenUi.gameObject.SetActive(true);
@@ -278,6 +285,7 @@ namespace Saebom
             FilterUpdate(30);
         }
 
+        //밤필터 일정시간동안 투명도 조정하기
         private void FilterUpdate(float sec)
         {
 
