@@ -49,7 +49,7 @@ namespace Saebom
         //===================================
 
 
-        private bool timeOn = true;
+        private bool timeOn = false;
 
         public bool isHouseTime { get; private set; } = false;
 
@@ -223,7 +223,7 @@ namespace Saebom
         }
 
         [PunRPC]
-        public void TimeOn()
+        private void TimeOn()
         {
 
             isHouseTime = false;
