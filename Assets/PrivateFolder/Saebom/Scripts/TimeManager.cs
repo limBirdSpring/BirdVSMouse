@@ -234,6 +234,8 @@ namespace Saebom
             if (curTime == 0)
                 SetCurRound();
 
+            MissionButton.Instance.MasterSetEmergency();
+
             timeOn = true;
         }
 

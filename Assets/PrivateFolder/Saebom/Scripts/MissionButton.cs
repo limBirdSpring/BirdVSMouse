@@ -69,6 +69,8 @@ namespace Saebom
         public int mouseEmergency = 3;
         public int birdEmergency = 3;
 
+        [SerializeField]
+        private TextMeshProUGUI emergencyUI;
 
 
         private void Awake()
@@ -93,6 +95,27 @@ namespace Saebom
 
 
             birdEmergency = mouseEmergency = SettingManager.Instance.emergencyCount;
+        }
+
+        public void MasterSetEmergency()
+        {
+            photonView.RPC("SetEmergencyCountUI", RpcTarget.All, !TimeManager.Instance.isCurNight ? birdEmergency : mouseEmergency);
+        }
+
+        [PunRPC]
+        private void SetEmergencyCountUI(int emergency)
+        {
+
+            if (!TimeManager.Instance.isCurNight)
+            {
+                birdEmergency = emergency;
+                emergencyUI.text = birdEmergency.ToString();
+            }
+            else
+            {
+                mouseEmergency = emergency;
+                emergencyUI.text = mouseEmergency.ToString();
+            }
         }
 
         //플레이매니저에서 역할을 정한 다음 호출
