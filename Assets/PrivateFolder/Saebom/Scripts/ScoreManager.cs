@@ -28,9 +28,9 @@ namespace Saebom
 
         //점수합산 구현, 각 팀별로 점수 및 스파이 죽음여부, 남은사람들 수 저장
 
-        private int birdScore=0;
+        private int birdScore = 0;
 
-        private int mouseScore=0;
+        private int mouseScore = 0;
 
         private int birdCount;
 
@@ -144,7 +144,7 @@ namespace Saebom
 
             //스코어 UI 변경
             //점수 갱신 위에 효과 애니메이션 및 효과음 추가
-            if (score !=0)
+            if (score != 0)
                 SoundManager.Instance.PlayUISound(UISFXName.ScoreUp);
 
             scoreUI.text = birdScore.ToString() + "   :   " + mouseScore.ToString();
@@ -158,7 +158,7 @@ namespace Saebom
             //시체없애기
             GameObject[] corpse = GameObject.FindGameObjectsWithTag("Corpse");
 
-            for (int i=0; i<corpse.Length;i++)
+            for (int i = 0; i < corpse.Length; i++)
             {
                 Destroy(corpse[i]);
             }
@@ -264,7 +264,7 @@ namespace Saebom
         //활동시간 즉시 종료
         public void ActiveTimeOverNow()
         {
-           
+
             //활동시간끝내기
             TimeManager.Instance.TimeOver();
 
@@ -336,7 +336,7 @@ namespace Saebom
                 if (isBirdSpyDie && isMouseSpyDie)
                 {
                     //둘다 스파이가 죽었다면 현재 점수로 비교한다.
-                    if (birdScore >mouseScore)
+                    if (birdScore > mouseScore)
                         EndGame(Win.BirdWin);
                     else if (birdScore < mouseScore)
                         EndGame(Win.MouseWin);
@@ -366,10 +366,10 @@ namespace Saebom
 
             }
             //3. 한쪽팀이 스파이1명 시민1명일때
-            else if ((birdCount==1 && !isBirdSpyDie) || (mouseCount == 1 && !isMouseSpyDie))
+            else if ((birdCount <= 1 && !isBirdSpyDie) || (mouseCount <= 1 && !isMouseSpyDie))
             {
                 //둘다 스파이1명, 시민1명이 남았다면 점수로 비교한다.
-                if ((birdCount == 1 && !isBirdSpyDie) && (mouseCount == 1 && !isMouseSpyDie))
+                if ((birdCount <= 1 && !isBirdSpyDie) && (mouseCount <= 1 && !isMouseSpyDie))
                 {
                     if (birdScore > mouseScore)
                         EndGame(Win.BirdWin);
@@ -378,12 +378,12 @@ namespace Saebom
                     else
                         EndGame(Win.Draw);
                 }
-                else if ((birdCount == 1 && !isBirdSpyDie) && !(mouseCount == 1 && !isMouseSpyDie))
+                else if ((birdCount <= 1 && !isBirdSpyDie) && !(mouseCount <= 1 && !isMouseSpyDie))
                     EndGame(Win.BirdWin);
-                else if (!(birdCount == 1 && !isBirdSpyDie) && (mouseCount == 1 && !isMouseSpyDie))
+                else if (!(birdCount <= 1 && !isBirdSpyDie) && (mouseCount <= 1 && !isMouseSpyDie))
                     EndGame(Win.MouseWin);
             }
-            else if(TimeManager.Instance.curRound >= 11) //SettingManager.Instance.maxRoundCount
+            else if (TimeManager.Instance.curRound >= 11) //SettingManager.Instance.maxRoundCount
             {
                 if (birdScore > mouseScore)
                     EndGame(Win.BirdWin);
@@ -392,11 +392,11 @@ namespace Saebom
                 else
                     EndGame(Win.Draw);
             }
-                
+
             else//승패를 결정짓는 경우가 아니면 게임 재개
                 TimeManager.Instance.FinishScoreTimeSet();
 
-            
+
         }
 
         private void Update()
@@ -409,8 +409,8 @@ namespace Saebom
 
         private void EndGame(Win win)
         {
-            
-            
+
+
             SoundManager.Instance.bgm.Stop();
 
             //누가 이겼는지 나타내고 개인 승률에 반영함
@@ -470,7 +470,8 @@ namespace Saebom
 
             canvas.SetActive(true);
 
-            
+            //뱃지 얻기
+            GetBadge();
 
 
             //나가기 버튼 생성
@@ -484,6 +485,22 @@ namespace Saebom
 
         }
 
+        private void GetBadge()
+        {
+            if (DataManager.Instance.myInfo.totalGame == 10)
+                DataManager.Instance.EarnItemToMail("");
+            else if (DataManager.Instance.myInfo.totalGame == 100)
+                DataManager.Instance.EarnItemToMail("");
+            else if (DataManager.Instance.myInfo.totalGame == 500)
+                DataManager.Instance.EarnItemToMail("");
+        }
 
+
+
+
+        public void OnExitButtonClick()
+        {
+            SceneManager.LoadScene("LobbyTestScene");
+        }
     }
 }

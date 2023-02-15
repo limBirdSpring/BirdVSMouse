@@ -49,7 +49,7 @@ namespace Saebom
         //===================================
 
 
-        private bool timeOn = false;
+        public bool timeOn { get; private set; } = false;
 
         public bool isHouseTime { get; private set; } = false;
 
@@ -95,7 +95,7 @@ namespace Saebom
             if (Input.GetKeyDown(KeyCode.F2))
                 AddTime(10);
 
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.LocalPlayer.IsMasterClient)
                 MasterTimeUpdate();
 
             
@@ -110,6 +110,9 @@ namespace Saebom
 
             photonView.RPC("PrivateTimeUpdate", RpcTarget.All, curTime);
 
+            if (!timeOn)
+                return;
+
             if (!isCurNight)
             {
 
@@ -119,7 +122,8 @@ namespace Saebom
                     photonView.RPC("TimeOver", RpcTarget.All);
                 }
                 else if (curTime > dangerTime && curTime <= halfTime - 1)
-                    DangerScreenOn();
+                    photonView.RPC("DangerScreenOn", RpcTarget.All);
+
             }
             //밤이면
             else
@@ -130,7 +134,7 @@ namespace Saebom
                     photonView.RPC("TimeOver", RpcTarget.All);
                 }
                 else if (curTime > dangerTime2 && curTime <= maxTime - 1)
-                    DangerScreenOn();
+                    photonView.RPC("DangerScreenOn", RpcTarget.All);
             }
 
            
@@ -160,14 +164,12 @@ namespace Saebom
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
 
             //만약 강제로 활동시간이 끝났다면 캐릭터 거점으로 강제이동
-            if (!isHouseTime && (controller.state != global::PlayerState.Active))
-                PlayGameManager.Instance.PlayerGoHomeNow();
-            else
-            {
-                //PlayGameManager.Instance.PlayerGoHomeNow();//삭제 요망
+            if (isHouseTime && (controller.state == global::PlayerState.Active))
                 controller.photonView.RPC("CheckIfIsInHouse", RpcTarget.All);
-                //PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>(); //현재 거점에 있는지 확인 - 함수 추가
-            }
+
+
+            PlayGameManager.Instance.PlayerGoHomeNow();
+
 
             if ((int)curTime == (int)halfTime)
             {
@@ -207,7 +209,7 @@ namespace Saebom
             }
             redScreenUi.gameObject.SetActive(false);
             TimeSlideUpdate();
-            FilterUpdate(1f);
+            FilterUpdate(0.5f);
 
         }
 
@@ -280,6 +282,7 @@ namespace Saebom
         }
 
         //거점이동시간 On
+        [PunRPC]
         private void DangerScreenOn()
         {
             redScreenUi.gameObject.SetActive(true);

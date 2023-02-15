@@ -302,7 +302,7 @@ namespace Saebom
         {
             photonView.RPC("PlayerDieAndMasterPlayerListUpdate", RpcTarget.MasterClient, index);
 
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient && TimeManager.Instance.timeOn)
                 ScoreManager.Instance.MasterCurPlayerStateUpdate();
         }
 
