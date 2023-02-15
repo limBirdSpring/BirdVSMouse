@@ -22,5 +22,7 @@ namespace SoYoon
 
         public List<string> earnedItem;
         public List<string> mailedItem;
+
+        public int coin;
     }
 }

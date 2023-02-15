@@ -109,6 +109,12 @@ namespace SoYoon
             SaveToJson();
         }
 
+        public void EarnCoin(int coin)
+        {
+            myInfo.coin += coin;
+            SaveToJson();
+        }
+
         public void SaveResult(PlayResult result)
         {
             switch(result)
