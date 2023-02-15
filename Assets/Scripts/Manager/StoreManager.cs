@@ -106,6 +106,8 @@ public class StoreManager : MonoBehaviour
     private void OnEnable()
     {
         //이미 가지고있는 아이템이라면 버튼 비활성화
+        ButtonInactive();
+        DataManager.Instance.EarnCoin(100);
 
         SetGoods();
     }
@@ -151,6 +153,11 @@ public class StoreManager : MonoBehaviour
 
     }
 
+    private void ButtonInactive()
+    {
+        
+    }
+
     public void BuyItem(int num)
     {
         CollectionItem item = new CollectionItem();
@@ -189,9 +196,11 @@ public class StoreManager : MonoBehaviour
         }
         else
         {
+
             SoundManager.Instance.PlayUISound(UISFXName.Shop);
             DataManager.Instance.EarnCoin(-item.price);
-            DataManager.Instance.EarnItem(item.name);
+            DataManager.Instance.EarnItemToMail(item.itemName);
+
         }
     }
 }
