@@ -15,8 +15,11 @@ namespace SoYoon
         private SpriteRenderer spriteRenderer;
         private Animator anim;
 
+        [Header("Setting")]
         [SerializeField]
         private float moveSpeed = 10;
+        [SerializeField]
+        private float killCool = 10;
 
         [Header("Ghost")]
         [SerializeField]
@@ -282,12 +285,17 @@ namespace SoYoon
         {
             if (photonView.IsMine)
             {
-                if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
-                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
-                    isInHouse = true;
-
                 if (state == PlayerState.Ghost)
                     return;
+
+                if (PlayGameManager.Instance.myPlayerState.isSpy &&
+                    ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
+                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse")))
+                {
+                    isInHouse = true;
+                    killButtonGray.SetActive(false);
+                    return;
+                }
 
                 if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
                 {
@@ -314,9 +322,14 @@ namespace SoYoon
         {
             if (photonView.IsMine)
             {
-                if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
-                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
+                if (PlayGameManager.Instance.myPlayerState.isSpy &&
+                    ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
+                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse")))
+                {
                     isInHouse = false;
+                    killButtonGray.SetActive(true);
+                    return;
+                }
 
                 if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
                 {
