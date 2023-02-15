@@ -4,6 +4,7 @@ using Photon.Realtime;
 using Saebom;
 using SoYoon;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class ConnectManager : MonoBehaviourPunCallbacks
 {
@@ -14,10 +15,52 @@ public class ConnectManager : MonoBehaviourPunCallbacks
     //    Debug.Log(PhotonNetwork.PlayerList.Length);
     //}
 
+    private void Start()
+    {
+        Hashtable props = new Hashtable()
+        {
+            { "Load" , true },
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+    }
+
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("Load"))
+        {
+            if (CheckPlayerLoaded())
+            {
+                PlayGameManager.Instance.GameStart();
+            }
+            else
+            {
+                Debug.Log("Waiting for another players");
+            }
+        }
+    }
+
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         Saebom.PlayGameManager.Instance.PlayerDie(otherPlayer.GetPlayerNumber());
         //ScoreManager.Instance.MasterCurPlayerStateUpdate();
         //ScoreManager.Instance.TurnResult();
+    }
+
+    public bool CheckPlayerLoaded()
+    {
+        foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+        {
+            object isPlayerLoaded;
+            if (player.CustomProperties.TryGetValue("Load", out isPlayerLoaded))
+            {
+                if (!(bool)isPlayerLoaded)
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
