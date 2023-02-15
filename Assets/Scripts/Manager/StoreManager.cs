@@ -107,37 +107,37 @@ public class StoreManager : MonoBehaviour
     {
 
         mainImg.sprite = mainItem.itemIcon;
-        mainPrice.text = "\\" + mainItem.price.ToString();
+        mainPrice.text =  mainItem.price.ToString();
         mainName.text = mainText;
 
 
  
         photo1Img.sprite = photoItem1.itemIcon;
-        photo1Price.text = "\\" + photoItem1.price.ToString();
+        photo1Price.text = photoItem1.price.ToString();
         photo1Name.text = photoItem1.itemName;
 
  
         photo2Img.sprite = photoItem2.itemIcon;
-        photo2Price.text = "\\" + photoItem2.price.ToString();
+        photo2Price.text =photoItem2.price.ToString();
         photo2Name.text = photoItem2.itemName;
 
 
         photo3Img.sprite = photoItem3.itemIcon;
-        photo3Price.text = "\\" + photoItem3.price.ToString();
+        photo3Price.text = photoItem3.price.ToString();
         photo3Name.text = photoItem3.itemName;
 
         badge1Img.sprite = badgeItem1.itemIcon;
-        badge1Price.text = "\\" + badgeItem1.price.ToString();
+        badge1Price.text = badgeItem1.price.ToString();
         badge1Name.text = badgeItem1.itemName;
 
 
         badge2Img.sprite = badgeItem2.itemIcon;
-        badge2Price.text = "\\" + badgeItem2.price.ToString();
+        badge2Price.text =  badgeItem2.price.ToString();
         badge2Name.text = badgeItem2.itemName;
 
   
         badge3Img.sprite = badgeItem3.itemIcon;
-        badge3Price.text = "\\" + badgeItem3.price.ToString();
+        badge3Price.text = badgeItem3.price.ToString();
         badge3Name.text = badgeItem3.itemName;
 
 
