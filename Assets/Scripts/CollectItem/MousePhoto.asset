@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: MousePhoto
   m_EditorClassIdentifier: 
   itemName: "\uC0DD\uC950 \uCD08\uC0C1\uD654"
-  itemIcon: {fileID: 21300000, guid: 999251fa582660d4c92d4c962ef6d09f, type: 3}
+  itemIcon: {fileID: 21300000, guid: 3625ea8cb500bfb46b56f2b9741b3aa9, type: 3}
   price: 0
   type: 0
   grade: 0
-  get: 1
