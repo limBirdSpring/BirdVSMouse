@@ -5,7 +5,7 @@ using UnityEngine;
 public class TextCoroutine : MonoBehaviour
 {
     [SerializeField]
-    private float time = 1.5f;
+    private float time = 1.2f;
 
     private void OnEnable()
     {
