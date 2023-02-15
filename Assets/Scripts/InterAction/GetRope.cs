@@ -45,7 +45,7 @@ public class GetRope : MonoBehaviour
             //내가 스파이일 경우엔 무조건 획득으로 도와줌
             if (PlayGameManager.Instance.myPlayerState.isSpy)
             {
-                if (max == 1)
+                if (max == 5)
                 {
                     clock.SetActive(true);
                     photonView.RPC("Hindrance", RpcTarget.All, 1);

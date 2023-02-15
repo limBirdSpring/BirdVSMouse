@@ -40,6 +40,7 @@ public class ItemGet : MonoBehaviour
 
             if (waitingTime == 3f)
             {
+                TimeManager.Instance.HideranceAdd();
                 Instantiate(hiderancePrefab, clock.transform.position, Quaternion.identity);
             }
 
