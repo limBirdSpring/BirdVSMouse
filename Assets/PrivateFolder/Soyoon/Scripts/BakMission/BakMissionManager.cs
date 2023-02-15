@@ -114,7 +114,7 @@ namespace SoYoon
             if (curBakProgress >= 100)
             {
                 // 미션을 완료한 경우
-                BakMissionComplete();
+                BakMissionCompleteCalled();
             }
             Debug.Log(CurBakProgress);
         }
