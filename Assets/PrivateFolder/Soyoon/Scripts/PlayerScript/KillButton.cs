@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Saebom;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,13 @@ namespace SoYoon
         private Button killButton;
 
         private PlayerControllerTest controller;
+        private GameObject killButtonGray;
+
+        private void Awake()
+        {
+            Transform uiCanvas = GameObject.Find("UICanvas").transform;
+            killButtonGray = uiCanvas.GetChild(10).gameObject;
+        }
 
         private void Start()
         {
@@ -23,7 +31,7 @@ namespace SoYoon
         {
             if (controller.CanKill)
             {
-                killButton.enabled = true;
+                killButton.interactable = true;
                 Image thisImg = this.gameObject.GetComponent<Image>();
                 Image childImg = this.transform.GetChild(0).GetComponent<Image>();
                 thisImg.fillAmount = 1; thisImg.color = Color.white;
@@ -31,7 +39,7 @@ namespace SoYoon
             }
             else
             {
-                killButton.enabled = false;
+                killButton.interactable = false;
                 Image thisImg = this.gameObject.GetComponent<Image>();
                 Image childImg = this.transform.GetChild(0).GetComponent<Image>();
                 thisImg.fillAmount = controller.CurKillCoolTime / controller.KillCoolTime; thisImg.color = Color.gray;

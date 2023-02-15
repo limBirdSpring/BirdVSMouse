@@ -345,12 +345,12 @@ namespace Saebom
             if (inter !=null &&!inter.isActive)
             {
                 missionButton.gameObject.SetActive(true);
-                inter.OutLineOn();
+                inter?.OutLineOn();
             }
             else if (inter != null)
             {
                 missionButton.gameObject.SetActive(false);
-                inter.OutLineOff();
+                inter?.OutLineOff();
             }
         }
 
@@ -358,7 +358,7 @@ namespace Saebom
         {
             if (missionButton.gameObject.activeSelf == true)
             {
-                inter.OutLineOff();
+                inter?.OutLineOff();
                 inter = null;
                 missionButton.gameObject.SetActive(false);
             }
