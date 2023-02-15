@@ -1,3 +1,4 @@
+using SoYoon;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -98,8 +99,14 @@ public class StoreManager : MonoBehaviour
     private TextMeshProUGUI badge3Name;
 
 
+    [SerializeField]
+    private GameObject errorWindow;
+
+
     private void OnEnable()
     {
+        //이미 가지고있는 아이템이라면 버튼 비활성화
+
         SetGoods();
     }
 
@@ -107,18 +114,18 @@ public class StoreManager : MonoBehaviour
     {
 
         mainImg.sprite = mainItem.itemIcon;
-        mainPrice.text =  mainItem.price.ToString();
+        mainPrice.text = mainItem.price.ToString();
         mainName.text = mainText;
 
 
- 
+
         photo1Img.sprite = photoItem1.itemIcon;
         photo1Price.text = photoItem1.price.ToString();
         photo1Name.text = photoItem1.itemName;
 
- 
+
         photo2Img.sprite = photoItem2.itemIcon;
-        photo2Price.text =photoItem2.price.ToString();
+        photo2Price.text = photoItem2.price.ToString();
         photo2Name.text = photoItem2.itemName;
 
 
@@ -132,10 +139,10 @@ public class StoreManager : MonoBehaviour
 
 
         badge2Img.sprite = badgeItem2.itemIcon;
-        badge2Price.text =  badgeItem2.price.ToString();
+        badge2Price.text = badgeItem2.price.ToString();
         badge2Name.text = badgeItem2.itemName;
 
-  
+
         badge3Img.sprite = badgeItem3.itemIcon;
         badge3Price.text = badgeItem3.price.ToString();
         badge3Name.text = badgeItem3.itemName;
@@ -143,16 +150,48 @@ public class StoreManager : MonoBehaviour
 
 
     }
-    
 
-
-    public void MainOnClickItem()
+    public void BuyItem(int num)
     {
-        
-    }
+        CollectionItem item = new CollectionItem();
 
-    public void Photo1OnClickItem()
-    {
 
+        switch (num)
+        {
+            case 0:
+                item = mainItem;
+                break;
+            case 1:
+                item = photoItem1;
+                break;
+            case 2:
+                item = photoItem2;
+                break;
+            case 3:
+                item = photoItem3;
+                break;
+            case 4:
+                item = badgeItem1;
+                break;
+            case 5:
+                item = badgeItem2;
+                break;
+            case 6:
+                item = badgeItem3;
+                break;
+        }
+
+        if (DataManager.Instance.myInfo.coin < item.price)
+        {
+            //코인이 부족합니다. 경고창 생성
+            SoundManager.Instance.PlayUISound(UISFXName.Error);
+            errorWindow.SetActive(true);
+        }
+        else
+        {
+            SoundManager.Instance.PlayUISound(UISFXName.Shop);
+            DataManager.Instance.EarnCoin(-item.price);
+            DataManager.Instance.EarnItem(item.name);
+        }
     }
 }
