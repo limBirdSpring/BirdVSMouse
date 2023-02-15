@@ -163,6 +163,7 @@ namespace SoYoon
 #endif
 #if UNITY_ANDROID
             string path = Path.Combine(Application.persistentDataPath, "data.json");
+            Debug.Log(path);
             string jsonData = File.ReadAllText(path);
             myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
 #endif
