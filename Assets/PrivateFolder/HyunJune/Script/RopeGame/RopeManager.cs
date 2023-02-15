@@ -47,7 +47,7 @@ public class RopeManager : Mission
             switch (ropeGames[i].curState)
             {
                 case RopeState.None:
-                    
+                    ropeGamesCurState[i] = 0;
                     break;
                 case RopeState.Rot:
                     ropeGamesCurState[i] = 1;
