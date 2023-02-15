@@ -3,6 +3,7 @@ using SoYoon;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
@@ -74,6 +75,11 @@ namespace Saebom
 
         private PhotonView photonView;
 
+
+        public int hiderance=0;
+
+        private bool isHidering = false;
+
         private void Awake()
         {
             photonView = GetComponent<PhotonView>();
@@ -83,6 +89,7 @@ namespace Saebom
         {
             //전체 시간은 미리 설정된 데이타를 가져옴
             //maxTime = SettingManager.Instance.turnTime;
+
             halfTime = maxTime / 2;
             dangerTime = halfTime - 30f;
             dangerTime2 = maxTime - 30f;
@@ -96,17 +103,21 @@ namespace Saebom
                 AddTime(10);
 
             if (PhotonNetwork.LocalPlayer.IsMasterClient)
-                MasterTimeUpdate();
-
+            {
+                if (isHidering == false)
+                    MasterTimeUpdate();
+                else
+                    MasterTimeUpdate(10f);
+            }
             
         }
 
         // =================== 방장이 시간 더해줌 ========================
 
-        private void MasterTimeUpdate()
+        private void MasterTimeUpdate(float sec = 1)
         {
             if (timeOn)
-                curTime += Time.deltaTime;
+                curTime += Time.deltaTime * sec;
 
             photonView.RPC("PrivateTimeUpdate", RpcTarget.All, curTime);
 
@@ -189,9 +200,11 @@ namespace Saebom
 
         private void TimeOff()
         {
-
+            isHidering = false;
+            hiderance = 0;
             timeOn = false;
 
+            SoundManager.Instance.PlayUISound(UISFXName.Stop);
             //종료 텍스트 출력
             endText.SetActive(true);
 
@@ -315,7 +328,31 @@ namespace Saebom
         }
 
 
+        //============================방해관련==================================
 
+        public void HideranceAdd()
+        {
+            photonView.RPC("HideranceAddToRPC", RpcTarget.All);
+        }
+
+        [PunRPC]
+        private void HideranceAddToRPC()
+        {
+            hiderance++;
+            if (hiderance == 5) //SettingManager.Instance.successHiderance
+            {
+                isHidering = true;
+                hiderance = 0;
+
+                StartCoroutine(HideranceCor());
+            }
+        }
+
+        private IEnumerator HideranceCor()
+        {
+            yield return new WaitForSeconds(5f);
+            isHidering = false;
+        }
 
     }
 }

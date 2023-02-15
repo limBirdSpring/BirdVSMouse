@@ -20,6 +20,7 @@ public enum UISFXName
     MissionOff,
     ItemGet,
     Vote,
+    Chat,
 }
 
 [Serializable]
