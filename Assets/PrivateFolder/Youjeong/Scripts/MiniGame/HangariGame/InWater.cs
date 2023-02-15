@@ -19,7 +19,7 @@ public class InWater : MonoBehaviour
     private Coroutine fillWaterCoroutine;
     private float cooltime;
     private float finalAmount;
-    private float curAmount;
+    private float curAmount=0;
     private float gapAmount;
 
     void Start()
@@ -44,10 +44,7 @@ public class InWater : MonoBehaviour
             StopCoroutine(fillWaterCoroutine);
         cooltime = 0;
         curAmount = manager.waterAmount;
-        if (curAmount == 0)
-            inWater.fillAmount = 0;
-        else
-            inWater.fillAmount = curAmount / 90;
+        inWater.fillAmount = curAmount / 90;
         SetAmountText();
     }
 

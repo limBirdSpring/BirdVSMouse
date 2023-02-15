@@ -33,8 +33,6 @@ public class RopeGame : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoin
 
     private void Start()
     {
-        goodRope.gameObject.SetActive(false);
-        badRope.gameObject.SetActive(false);
         dropPoint.gameObject.SetActive(false);
         itemIsOn = false;
     }

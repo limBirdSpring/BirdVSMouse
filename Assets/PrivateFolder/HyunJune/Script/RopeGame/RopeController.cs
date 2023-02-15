@@ -16,14 +16,12 @@ public class RopeController : MonoBehaviour
 
     private void Awake()
     {
-        //ropeGames = GetComponentsInChildren<RopeGame>();
         manager = GetComponentInParent<RopeManager>();
     }
 
     private void OnEnable()
     {
         manager.GetRopeGamesCurState(ropeGames);
-        LoadUIRPC();
     }
 
     private void OnDisable()
@@ -47,14 +45,6 @@ public class RopeController : MonoBehaviour
             ropeGames[i].UpdateUI();
         }
     }
-
-    /*public void SaveUIRPC(RopeGame[] ropes)
-    {
-        for (int i = 0; i < ropeGames.Length; i++)
-        {
-            ropeGames[i].curState = ropes[i].curState;
-        }
-    }*/
 
     public void SunOrMoonStart()
     {
