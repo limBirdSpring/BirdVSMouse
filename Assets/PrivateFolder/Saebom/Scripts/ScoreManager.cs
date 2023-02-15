@@ -488,11 +488,18 @@ namespace Saebom
         private void GetBadge()
         {
             if (DataManager.Instance.myInfo.totalGame == 10)
-                DataManager.Instance.EarnItemToMail("");
+                DataManager.Instance.EarnItemToMail("½ÃÀÛÀÇ ±â»Ý");
             else if (DataManager.Instance.myInfo.totalGame == 100)
-                DataManager.Instance.EarnItemToMail("");
+                DataManager.Instance.EarnItemToMail("³·»õ¹ã»õ");
             else if (DataManager.Instance.myInfo.totalGame == 500)
-                DataManager.Instance.EarnItemToMail("");
+                DataManager.Instance.EarnItemToMail("°ÔÀÓÆóÀÎ");
+
+            if (DataManager.Instance.myInfo.win == 10)
+                DataManager.Instance.EarnItemToMail("ºû³ª´Â ½Â¸®");
+            else if (DataManager.Instance.myInfo.win == 100)
+                DataManager.Instance.EarnItemToMail("´«ºÎ½Å ½Â¸®");
+            else if (DataManager.Instance.myInfo.win == 500)
+                DataManager.Instance.EarnItemToMail("È²±Ýºû ½Â¸®");
         }
 
 
