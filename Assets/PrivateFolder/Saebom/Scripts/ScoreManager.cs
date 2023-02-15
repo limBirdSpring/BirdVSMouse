@@ -111,15 +111,12 @@ namespace Saebom
         {
             blockButton.SetActive(true);
 
-
-            yield return new WaitForSeconds(2f);
-
             //미션창 없애기
             MissionButton.Instance.MissionScreenOff();
 
             //지도 끄기
             map.SetActive(false);
-
+            yield return new WaitForSeconds(2f);
 
             StartCoroutine(MissionButton.Instance.MissionCheckCor());
 
