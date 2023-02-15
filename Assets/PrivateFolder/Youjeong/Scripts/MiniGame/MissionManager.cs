@@ -30,17 +30,13 @@ namespace Youjeong
         [PunRPC]
         public void CowMissionCountUpdate(int birdCow, int mouseCow)
         {
-            Debug.Log("CowMissionCountUpdate");
             cowManager.birdCowCount = birdCow;
             cowManager.mouseCowCount = mouseCow;
-            
         }
 
         [PunRPC]
         public void CowMissionActiveUpdate(bool[] birdActive, bool[] mouseActive)
         {
-            Debug.Log("CowMissionActiveUpdate");
-            
             cowManager.birdCowActive = birdActive;
             cowManager.mouseCowActive = mouseActive;
         }
@@ -48,19 +44,17 @@ namespace Youjeong
         [PunRPC]
         public void ClothCurColorRPC(CurColor curColor)
         {
-            Debug.Log("ClothCurColorRPC");
             dyeManager.cloth.curColor = curColor;
         }
 
         [PunRPC]
         public void HangariMissionUpdate(float water)
         {
-            Debug.Log("HangariMissionUpdate");
             hangariManager.waterAmount = water;
         }
 
         [PunRPC]
-        private void SaveUIRPC(int[] ropes)
+        public void SaveUIRPC(int[] ropes)
         {
             Debug.Log("SaveUIRPC");
             ropeManager.ropeGamesCurState = ropes;
