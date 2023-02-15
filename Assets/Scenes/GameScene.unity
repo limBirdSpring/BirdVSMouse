@@ -46629,7 +46629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1560679486
 RectTransform:
   m_ObjectHideFlags: 0
@@ -66259,7 +66259,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 000000008bb61addadb81c9ff3e12e15c589732645c3e2f0a9136bd36751a7ba8bf50e8f7f3c922e95bfbd131f5efa53
+  m_ApplyToSortingLayers: 000000008bb61addadb81c9ff3e12e15c589732645c3e2f0a9136bd36751a7ba8bf50e8f7f3c922e95bfbd131f5efa53734ae765
   m_LightCookieSprite: {fileID: 21300000, guid: 0ae2b74b1edd14bb18dd7b65ae916a54, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -66439,7 +66439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1851610680714310251
 Transform:
   m_ObjectHideFlags: 0
