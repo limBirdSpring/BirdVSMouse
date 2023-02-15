@@ -38,6 +38,7 @@ namespace SoYoon
         private GameObject targetPlayer;
         private Collider2D killRangeCollider;
         private WaitForSeconds killUpdateSeconds;
+        private Coroutine killCoroutine;
 
         private bool isInHouse;
 
@@ -45,6 +46,7 @@ namespace SoYoon
         public PlayerState state { get; private set; }
         public bool CanKill { get; private set; }
         public float CurKillCoolTime { get; private set; }
+        public float KillCoolTime { get { return killCool; } private set { killCool = value; } }
 
         private void Awake()
         {
@@ -351,6 +353,16 @@ namespace SoYoon
                     Saebom.MissionButton.Instance.MissionButtonOff();
                 }
             }
+        }
+
+        public void StartKillCoroutine()
+        {
+            killCoroutine = StartCoroutine(KillCoolTimeUpdate());
+        }
+
+        public void StopKillCoroutine()
+        {
+            StopCoroutine(killCoroutine);
         }
 
         public IEnumerator KillCoolTimeUpdate()

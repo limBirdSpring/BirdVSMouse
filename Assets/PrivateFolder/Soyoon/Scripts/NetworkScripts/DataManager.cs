@@ -142,16 +142,30 @@ namespace SoYoon
 
         public void SaveToJson()
         {
+#if UNITY_STANDALONE_WIN
             string jsonData = JsonUtility.ToJson(myInfo, true);
             string path = Path.Combine(Application.dataPath, "data.json");
             File.WriteAllText(path, jsonData);
+#endif
+#if UNITY_ANDROID
+            string jsonData = JsonUtility.ToJson(myInfo, true);
+            string path = Path.Combine(Application.persistentDataPath, "data.json");
+            File.WriteAllText(path, jsonData);
+#endif
         }
 
         public void LoadFromJson()
         {
+#if UNITY_STANDALONE_WIN
             string path = Path.Combine(Application.dataPath, "data.json");
             string jsonData = File.ReadAllText(path);
             myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
+#endif
+#if UNITY_ANDROID
+            string path = Path.Combine(Application.persistentDataPath, "data.json");
+            string jsonData = File.ReadAllText(path);
+            myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
+#endif
         }
     }
 }
