@@ -149,7 +149,7 @@ namespace SoYoon
 #endif
 #if UNITY_ANDROID
             string jsonData = JsonUtility.ToJson(myInfo, true);
-            string path = Path.Combine(Application.persistentDataPath, "data.json");
+            string path = Path.Combine(Application.streamingAssetsPath, "data.json");
             File.WriteAllText(path, jsonData);
 #endif
         }
@@ -162,7 +162,7 @@ namespace SoYoon
             myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
 #endif
 #if UNITY_ANDROID
-            string path = Path.Combine(Application.persistentDataPath, "data.json");
+            string path = Path.Combine(Application.streamingAssetsPath, "data.json");
             string jsonData = File.ReadAllText(path);
             myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
 #endif
