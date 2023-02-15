@@ -117,7 +117,9 @@ namespace SoYoon
         {
             if (!PhotonNetwork.IsMasterClient)
                 return;
-            //if (!(PhotonNetwork.PlayerList.Length != 12))
+            if (PhotonNetwork.PlayerList.Length % 2 != 0)
+                return;
+            //if (!(PhotonNetwork.PlayerList.Length == 10) && !(PhotonNetwork.PlayerList.Length == 12))
             //    return;
 
             if (CheckPlayerReady())
