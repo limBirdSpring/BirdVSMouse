@@ -747,7 +747,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 286, y: 238}
+  m_AnchoredPosition: {x: 269, y: 238}
   m_SizeDelta: {x: 1007.465, y: 710.9083}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &61886655
@@ -835,7 +835,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -125.881836, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5965,6 +5965,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 145956550}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayUISound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Ok
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &705412708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7141,6 +7153,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1797187287}
     m_Modifications:
+    - target: {fileID: 525124997, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 738176719, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 738176719, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 738176719, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029625309, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029625309, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7239081696430930772, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7228,6 +7264,10 @@ PrefabInstance:
     - target: {fileID: 7239081696430930773, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
       propertyPath: m_Name
       value: BadgeCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7239081696430930773, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb9c8f1aac3ee154dab64c0562622ce4, type: 3}
@@ -13592,6 +13632,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 145956550}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayUISound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Ok
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1558932424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16261,6 +16313,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 145956550}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayUISound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Ok
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1916483837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17681,6 +17745,14 @@ PrefabInstance:
     - target: {fileID: 1611614393290099940, guid: c31118cca725fe54eaca57348eb5536c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611614393816159006, guid: c31118cca725fe54eaca57348eb5536c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 145956550}
+    - target: {fileID: 1611614393816159006, guid: c31118cca725fe54eaca57348eb5536c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayUISound
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c31118cca725fe54eaca57348eb5536c, type: 3}

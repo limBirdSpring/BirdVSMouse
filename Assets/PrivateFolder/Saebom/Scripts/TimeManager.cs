@@ -204,6 +204,7 @@ namespace Saebom
             hiderance = 0;
             timeOn = false;
 
+            SoundManager.Instance.PlayUISound(UISFXName.Stop);
             //종료 텍스트 출력
             endText.SetActive(true);
 
