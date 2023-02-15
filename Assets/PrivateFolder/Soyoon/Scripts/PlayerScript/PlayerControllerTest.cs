@@ -304,7 +304,7 @@ namespace SoYoon
                 {
                     isInHouse = true;
                     killButtonGray.SetActive(false);
-                    return;
+                    killButton.SetActive(false);
                 }
 
                 if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
@@ -312,9 +312,9 @@ namespace SoYoon
                     killButton.SetActive(true);
                     targetPlayer = collision.gameObject;
                     killButton.GetComponent<KillButton>().target = targetPlayer.transform.parent.gameObject;
-                    return;
                 }
-                else if(state == PlayerState.Inactive && (collision.gameObject.name == "MouseCowHouse" || collision.gameObject.name == "BirdCowHouse"
+                
+                if(state == PlayerState.Inactive && (collision.gameObject.name == "MouseCowHouse" || collision.gameObject.name == "BirdCowHouse"
                     || collision.gameObject.name == "Hangari" || collision.gameObject.name == "Cloth" || collision.gameObject.name == "SunMoon" || collision.gameObject.name == "Bag" || collision.gameObject.name == "Emergency"))
                 {
                     // !Do Nothing
@@ -338,16 +338,15 @@ namespace SoYoon
                 {
                     isInHouse = false;
                     killButtonGray.SetActive(true);
-                    return;
                 }
 
                 if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
                 {
                     killButton.SetActive(false);
                     targetPlayer = null;
-                    return;
                 }
-                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
+                
+                if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
                 {
                     Debug.Log("exit" + collision.gameObject.name);
                     Saebom.MissionButton.Instance.MissionButtonOff();
