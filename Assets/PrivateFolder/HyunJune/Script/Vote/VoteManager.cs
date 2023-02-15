@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using Saebom;
+using SoYoon;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.UI;
 using Photon.Pun.UtilityScripts;
@@ -46,7 +47,7 @@ public class VoteManager : MonoBehaviourPun
     private TMP_Text timer;
 
     [SerializeField]
-    private PlayerController controller;
+    private PlayerControllerTest[] controllers;
 
     [Header("VoteChatting")]
     [SerializeField]
@@ -80,6 +81,7 @@ public class VoteManager : MonoBehaviourPun
         Instance = this;
         //FindObjectsOfType<PlayerController>();
         chatInputField.characterLimit = 50;
+        controllers = FindObjectsOfType<PlayerControllerTest>();
     }
 
     // 지워야 한다
@@ -186,7 +188,7 @@ public class VoteManager : MonoBehaviourPun
                 // 내가 참가자일 경우
                 case VoteRole.Participant:
                     // 채팅 보낸 플레이어가 참가자일 경우만 받는다
-                    if (participantList.Contains(actorNumeber))
+                    if (participantList.Contains(actorNumeber) && !deadList.Contains(actorNumeber))
                     {
                         TextBox text = Instantiate(otherTextBoxPrefab, chatContent);
                         text.SetMessage(player.Value, message);
@@ -316,10 +318,10 @@ public class VoteManager : MonoBehaviourPun
 
             PlayerVoteEntry entry = Instantiate(voteEntryPrefab, entryContent);
             entry.Initialized(player.Value);
-            if (deadList.Contains(player.Key))
-            {
-                entry.DeadSetting();
-            }
+            //if (deadList.Contains(player.Key))
+            //{
+            //    entry.DeadSetting();
+            //}
             playerVoteEntries.Add(entry);
         }
     }
@@ -477,8 +479,24 @@ public class VoteManager : MonoBehaviourPun
     [PunRPC]
     private void PlayerKill(int actorNumber)
     {
-        //if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber)
-        //    controller.Die();
+        // 죽은 사람이 나면
+        if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber)
+        {
+            // 컨트롤러를 모두 불러와주고
+            controllers = FindObjectsOfType<PlayerControllerTest>();
+            // 컨트롤러를 for문으로 돌려서
+            for (int i = 0; i < controllers.Length; i++)
+            {
+                // 죽은 사람의 액터넘버와 동일한 액터넘버를 갖고 있는 컨트롤러를 찾은 이후
+                if (controllers[i].photonView.OwnerActorNr == actorNumber)
+                {
+                    // 듁인다
+                    controllers[i].VoteDie();
+                }
+                else
+                    continue;
+            }
+        }
         
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
         {

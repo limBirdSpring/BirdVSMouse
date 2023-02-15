@@ -16,6 +16,7 @@ public class PlayerVoteEntry : MonoBehaviourPun
     [SerializeField] private Image finder;
     [SerializeField] private Image voteComplete;
 
+    [SerializeField]
     private Button voteButton;
 
     private int actorNumber;
@@ -33,7 +34,7 @@ public class PlayerVoteEntry : MonoBehaviourPun
 
     private void Awake()
     {
-        voteButton = GetComponent<Button>();
+        //voteButton = GetComponent<Button>();
         voteButton.onClick.AddListener(OnVotePressed);
     }
 
