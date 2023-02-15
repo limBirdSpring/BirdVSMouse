@@ -88,6 +88,8 @@ namespace Saebom
 
         public int masterCheck = 0;
 
+        private bool end;
+
         private void Awake()
         {
             photonView = GetComponent<PhotonView>();
@@ -169,7 +171,9 @@ namespace Saebom
 
             masterCheck = 0;
             //플레이어들이 모두 점수확인을 끝냈는지 확인
-            photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
+
+            if (end==false)
+                photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
 
         }
 
@@ -406,7 +410,7 @@ namespace Saebom
 
         private void EndGame(Win win)
         {
-
+            end = true;
 
             SoundManager.Instance.bgm.Stop();
 
