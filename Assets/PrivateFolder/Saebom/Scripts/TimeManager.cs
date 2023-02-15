@@ -167,10 +167,12 @@ namespace Saebom
             if (isHouseTime && (controller.state == global::PlayerState.Active))
                 controller.photonView.RPC("CheckIfIsInHouse", RpcTarget.All);
 
-
             PlayGameManager.Instance.PlayerGoHomeNow();
 
+            if (PlayGameManager.Instance.myPlayerState.isSpy)
+                controller.StopKillCoroutine();
 
+            // 플레이어들 active, inactive 결정
             if ((int)curTime == (int)halfTime)
             {
                 Debug.Log("함수 불러옴");
@@ -238,6 +240,11 @@ namespace Saebom
                 SetCurRound();
 
             MissionButton.Instance.MasterSetEmergency();
+
+
+            PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
+            if (PlayGameManager.Instance.myPlayerState.isSpy)
+                controller.StartKillCoroutine();
 
             timeOn = true;
         }

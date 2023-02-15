@@ -2,6 +2,7 @@ using Cinemachine;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Saebom;
+using System.Collections;
 using UnityEngine;
 
 //public enum PlayerState { Active, Inactive, Ghost }
@@ -19,7 +20,9 @@ namespace SoYoon
         [SerializeField]
         private float moveSpeed = 10;
         [SerializeField]
-        private float killCool = 10;
+        private float killCool = 30;
+        [SerializeField]
+        private float killUpdateTime = 0.05f;
 
         [Header("Ghost")]
         [SerializeField]
@@ -34,11 +37,16 @@ namespace SoYoon
         private GameObject killButton;
         private GameObject targetPlayer;
         private Collider2D killRangeCollider;
+        private WaitForSeconds killUpdateSeconds;
+        private Coroutine killCoroutine;
 
         private bool isInHouse;
 
         private Vector2 inputVec;
         public PlayerState state { get; private set; }
+        public bool CanKill { get; private set; }
+        public float CurKillCoolTime { get; private set; }
+        public float KillCoolTime { get { return killCool; } private set { killCool = value; } }
 
         private void Awake()
         {
@@ -65,6 +73,8 @@ namespace SoYoon
                 playerCam.LookAt = this.transform;
                 targetPlayer = null;
                 photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
+                killUpdateSeconds = new WaitForSeconds(killUpdateTime);
+                CanKill = false;
             }
 
             isInHouse = false;
@@ -343,6 +353,30 @@ namespace SoYoon
                     Saebom.MissionButton.Instance.MissionButtonOff();
                 }
             }
+        }
+
+        public void StartKillCoroutine()
+        {
+            killCoroutine = StartCoroutine(KillCoolTimeUpdate());
+        }
+
+        public void StopKillCoroutine()
+        {
+            StopCoroutine(killCoroutine);
+        }
+
+        public IEnumerator KillCoolTimeUpdate()
+        {
+            CanKill = false;
+            float killTime = killCool * (1 / killUpdateTime);
+            for(int i=0;i<killTime;i++)
+            {
+                yield return killUpdateSeconds;
+                CurKillCoolTime += killUpdateTime;
+            }
+            CanKill = true;
+            CurKillCoolTime = 0;
+            Debug.Log("Å³ ÄðÅ¸ÀÓ ÄÚ·çÆ¾ Á¾·áµÊ");
         }
     }
 }
