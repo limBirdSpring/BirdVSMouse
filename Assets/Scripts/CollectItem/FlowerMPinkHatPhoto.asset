@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uD615\uAD11\uBE5B \uAF43\uC78E"
   itemIcon: {fileID: 21300000, guid: 32444f6292de23049975519e63bb164f, type: 3}
-  price: 2000
+  price: 20
   type: 0
   grade: 1
