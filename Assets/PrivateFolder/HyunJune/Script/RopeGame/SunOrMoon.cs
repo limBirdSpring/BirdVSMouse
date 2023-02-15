@@ -63,6 +63,8 @@ public class SunOrMoon : MonoBehaviour
             case SunOrMoonState.Left:
                 transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
                 break;
+            default: 
+                break;
         }
     }
 
