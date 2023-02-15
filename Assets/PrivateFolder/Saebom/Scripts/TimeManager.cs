@@ -209,7 +209,7 @@ namespace Saebom
             }
             redScreenUi.gameObject.SetActive(false);
             TimeSlideUpdate();
-            FilterUpdate(0.5f);
+            FilterUpdate(0f);
 
         }
 
