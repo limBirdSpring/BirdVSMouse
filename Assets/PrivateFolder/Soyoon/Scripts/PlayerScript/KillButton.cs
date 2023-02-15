@@ -8,6 +8,11 @@ namespace SoYoon
         [HideInInspector]
         public GameObject target;
 
+        private void OnEnable()
+        {
+            
+        }
+
         public void OnClickedKillButton()
         {
             //target?.GetComponent<PlayerControllerTest>().Die();

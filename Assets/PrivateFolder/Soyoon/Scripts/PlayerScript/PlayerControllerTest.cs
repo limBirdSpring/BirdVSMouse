@@ -15,8 +15,11 @@ namespace SoYoon
         private SpriteRenderer spriteRenderer;
         private Animator anim;
 
+        [Header("Setting")]
         [SerializeField]
         private float moveSpeed = 10;
+        [SerializeField]
+        private float killCool = 10;
 
         [Header("Ghost")]
         [SerializeField]
