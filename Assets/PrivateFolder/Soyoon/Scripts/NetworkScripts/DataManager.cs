@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public enum PlayResult { Play, Win, Draw, Lose, Spy }
 
@@ -48,7 +46,7 @@ namespace SoYoon
             string path = Path.Combine(Application.dataPath, "data.json");
 #endif
 #if UNITY_ANDROID
-            string path = Path.Combine(Application.streamingAssetsPath, "data.json");
+            string path = Path.Combine(Application.persistentDataPath, "data.json");
 #endif
             // json file이 있다면 load 없다면 생성
             if (File.Exists(path))
@@ -155,9 +153,14 @@ namespace SoYoon
 #if UNITY_ANDROID
             
             string jsonData = JsonUtility.ToJson(myInfo, true);
-            string path = Path.Combine(Application.streamingAssetsPath, "data.json");
-            Debug.Log(path);
+            string path = Path.Combine(Application.persistentDataPath, "data.json");
             File.WriteAllText(path, jsonData);
+            //string path = Path.Combine(Application.dataPath, "data.json");
+            //FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
+            //string jsonData = JsonUtility.ToJson(myInfo, true);
+            //byte[] byteJsonData = Encoding.UTF8.GetBytes(jsonData);
+            //fs.Write(byteJsonData, 0, (int)byteJsonData.Length);
+            //fs.Close();
 #endif
         }
 
@@ -169,9 +172,13 @@ namespace SoYoon
             myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
 #endif
 #if UNITY_ANDROID
-            string path = Path.Combine(Application.streamingAssetsPath, "data.json");
+            string path = Path.Combine(Application.persistentDataPath, "data.json");
             string jsonData = File.ReadAllText(path);
             myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
+            //string path = Path.Combine(Application.dataPath, "data.json");
+            //byte[] byteJsonData = File.ReadAllBytes(path);
+            //string jsonData = Encoding.Default.GetString(byteJsonData);
+            //myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
 #endif
         }
     }
