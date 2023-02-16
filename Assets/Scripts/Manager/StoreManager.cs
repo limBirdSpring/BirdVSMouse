@@ -42,6 +42,9 @@ public class StoreManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI mainName;
 
+    [SerializeField]
+    private GameObject soldOutMain;
+
 
     [SerializeField]
     private Image photo1Img;
@@ -53,6 +56,11 @@ public class StoreManager : MonoBehaviour
     private TextMeshProUGUI photo1Name;
 
     [SerializeField]
+    private GameObject soldOutPhoto1;
+
+
+
+    [SerializeField]
     private Image photo2Img;
 
     [SerializeField]
@@ -62,6 +70,9 @@ public class StoreManager : MonoBehaviour
     private TextMeshProUGUI photo2Name;
 
     [SerializeField]
+    private GameObject soldOutPhoto2;
+
+    [SerializeField]
     private Image photo3Img;
 
     [SerializeField]
@@ -69,6 +80,9 @@ public class StoreManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI photo3Name;
+
+    [SerializeField]
+    private GameObject soldOutPhoto3;
 
 
     [SerializeField]
@@ -81,6 +95,9 @@ public class StoreManager : MonoBehaviour
     private TextMeshProUGUI badge1Name;
 
     [SerializeField]
+    private GameObject soldOutbadge1;
+
+    [SerializeField]
     private Image badge2Img;
 
     [SerializeField]
@@ -90,6 +107,9 @@ public class StoreManager : MonoBehaviour
     private TextMeshProUGUI badge2Name;
 
     [SerializeField]
+    private GameObject soldOutbadge2;
+
+    [SerializeField]
     private Image badge3Img;
 
     [SerializeField]
@@ -97,6 +117,9 @@ public class StoreManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI badge3Name;
+
+    [SerializeField]
+    private GameObject soldOutbadge3;
 
 
     [SerializeField]
@@ -162,7 +185,71 @@ public class StoreManager : MonoBehaviour
 
     private void ButtonInactive()
     {
-        
+        foreach (CollectionItem item in  DataManager.Instance.earnedCollectionItemList)
+        {
+            if (item == mainItem) 
+            {
+                soldOutMain.SetActive(true);
+            }
+            else if (item == photoItem1)
+            {
+                soldOutPhoto1.SetActive(true);
+            }
+            else if (item == photoItem2)
+            {
+                soldOutPhoto2.SetActive(true);
+            }
+            else if (item == photoItem3)
+            {
+                soldOutPhoto3.SetActive(true);
+            }
+            else if (item == badgeItem1)
+            {
+                soldOutbadge1.SetActive(true);
+            }
+            else if (item == badgeItem2)
+            {
+                soldOutbadge2.SetActive(true);
+            }
+            else if (item == badgeItem3)
+            {
+                soldOutbadge3.SetActive(true);
+            }
+
+        }
+
+        foreach (CollectionItem item in DataManager.Instance.mailedCollectionItemList)
+        {
+            if (item == mainItem)
+            {
+                soldOutMain.SetActive(true);
+            }
+            else if (item == photoItem1)
+            {
+                soldOutPhoto1.SetActive(true);
+            }
+            else if (item == photoItem2)
+            {
+                soldOutPhoto2.SetActive(true);
+            }
+            else if (item == photoItem3)
+            {
+                soldOutPhoto3.SetActive(true);
+            }
+            else if (item == badgeItem1)
+            {
+                soldOutbadge1.SetActive(true);
+            }
+            else if (item == badgeItem2)
+            {
+                soldOutbadge2.SetActive(true);
+            }
+            else if (item == badgeItem3)
+            {
+                soldOutbadge3.SetActive(true);
+            }
+
+        }
     }
 
     
@@ -214,5 +301,6 @@ public class StoreManager : MonoBehaviour
         SoundManager.Instance.PlayUISound(UISFXName.Shop);
         DataManager.Instance.EarnCoin(-item.price);
         DataManager.Instance.EarnItemToMail(item.itemName);
+        ButtonInactive();
     }
 }
