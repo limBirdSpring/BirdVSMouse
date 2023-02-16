@@ -36,6 +36,10 @@ namespace HyunJune
         [SerializeField]
         private AudioSource DyeSound;
 
+        [Header("Light Partucle")]
+        [SerializeField]
+        private LightParticle lightParticle;
+
 
         private void Awake()
         {
@@ -120,29 +124,35 @@ namespace HyunJune
             if (Inventory.Instance.isItemSet("WhiteDye"))
             {
                 AddDye(CurColor.White);
-                DyeSound.Play();
+                PlayEffect();
                 Inventory.Instance.DeleteItem();
             }
             else if (Inventory.Instance.isItemSet("RedDye"))
             {
                 AddDye(CurColor.Red);
-                DyeSound.Play();
+                PlayEffect();
                 Inventory.Instance.DeleteItem();
             }
             else if (Inventory.Instance.isItemSet("YellowDye"))
             {
                 AddDye(CurColor.Yellow);
-                DyeSound.Play();
+                PlayEffect(); ;
                 Inventory.Instance.DeleteItem();
             }
             else if (Inventory.Instance.isItemSet("BlueDye"))
             {
                 AddDye(CurColor.Blue);
-                DyeSound.Play();
+                PlayEffect();
                 Inventory.Instance.DeleteItem();
             }
             else
                 return;
+        }
+
+        private void PlayEffect()
+        {
+            DyeSound.Play();
+            lightParticle.PlayParticle();
         }
     }    
 }

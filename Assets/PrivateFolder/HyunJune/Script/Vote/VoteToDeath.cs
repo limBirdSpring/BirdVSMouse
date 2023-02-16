@@ -47,6 +47,7 @@ public class VoteToDeath : MonoBehaviour
             target.sprite = state.sprite;
             target.enabled = true;
         }
+        SoundManager.Instance.PlayUISound(UISFXName.VoteDie);
     }
 
     public void Init()

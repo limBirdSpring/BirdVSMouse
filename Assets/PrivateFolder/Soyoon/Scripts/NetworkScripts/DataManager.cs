@@ -151,6 +151,7 @@ namespace SoYoon
             File.WriteAllText(path, jsonData);
 #endif
 #if UNITY_ANDROID
+            
             string jsonData = JsonUtility.ToJson(myInfo, true);
             string path = Path.Combine(Application.persistentDataPath, "data.json");
             File.WriteAllText(path, jsonData);
