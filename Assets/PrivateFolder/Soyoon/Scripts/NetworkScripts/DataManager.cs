@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public enum PlayResult { Play, Win, Draw, Lose, Spy }
 
@@ -96,7 +97,9 @@ namespace SoYoon
 
         public void EarnItemToMail(string itemName)
         {
-            for(int i=0;i<earnedCollectionItemList.Count;i++)
+            if(mailedCollectionItemList.Contains(collectionItemDic[itemName]))
+                return;
+            for (int i=0;i<earnedCollectionItemList.Count;i++)
             {
                 if (earnedCollectionItemList[i].name == itemName)
                     return;
@@ -143,13 +146,18 @@ namespace SoYoon
         {
             string path = Path.Combine(Application.persistentDataPath, "data.json");
             string jsonData = JsonUtility.ToJson(myInfo, true);
-            File.WriteAllText(path, jsonData);
+            // ¾ÏÈ£È­
+            byte[] byteData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            string code = System.Convert.ToBase64String(byteData);
+            File.WriteAllText(path, code);
         }
 
         public void LoadFromJson()
         {
             string path = Path.Combine(Application.persistentDataPath, "data.json");
-            string jsonData = File.ReadAllText(path);
+            string code = File.ReadAllText(path);
+            byte[] byteData = System.Convert.FromBase64String(code);
+            string jsonData = System.Text.Encoding.UTF8.GetString(byteData);
             myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
         }
     }
