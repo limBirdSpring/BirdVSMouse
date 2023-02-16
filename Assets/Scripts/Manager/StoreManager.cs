@@ -169,8 +169,6 @@ public class StoreManager : MonoBehaviour
 
     public void BuyItem(int num)
     {
-        
-
 
         switch (num)
         {
