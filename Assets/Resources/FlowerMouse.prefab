@@ -129,8 +129,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1002580128338788242}
-  - {fileID: 0}
-  - {fileID: 2078078381279361404}
+  - {fileID: 3765917678780878647}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -147,6 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  killCool: 30
+  killUpdateTime: 0.05
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
 --- !u!114 &3765917678780878647
@@ -296,6 +297,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8083476807715791521, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
+      propertyPath: m_text
+      value: "\uB9F7\uBC2D\uC950\n"
+      objectReference: {fileID: 0}
     - target: {fileID: 8270762082263712471, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
       propertyPath: m_Name
       value: FlowerM
@@ -365,7 +370,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 2078078381279361404}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
