@@ -44,7 +44,12 @@ namespace SoYoon
             mailedCollectionItemList = new LinkedList<CollectionItem>();
             collectionItemDic = new Dictionary<string, CollectionItem>();
 
+#if UNITY_STANDALONE_WIN
             string path = Path.Combine(Application.dataPath, "data.json");
+#endif
+#if UNITY_ANDROID
+            string path = Path.Combine(Application.streamingAssetsPath, "data.json");
+#endif
             // json file이 있다면 load 없다면 생성
             if (File.Exists(path))
                 LoadFromJson();
