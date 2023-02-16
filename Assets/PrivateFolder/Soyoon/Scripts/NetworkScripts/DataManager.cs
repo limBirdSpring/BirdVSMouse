@@ -96,7 +96,9 @@ namespace SoYoon
 
         public void EarnItemToMail(string itemName)
         {
-            for(int i=0;i<earnedCollectionItemList.Count;i++)
+            if(mailedCollectionItemList.Contains(collectionItemDic[itemName]))
+                return;
+            for (int i=0;i<earnedCollectionItemList.Count;i++)
             {
                 if (earnedCollectionItemList[i].name == itemName)
                     return;
