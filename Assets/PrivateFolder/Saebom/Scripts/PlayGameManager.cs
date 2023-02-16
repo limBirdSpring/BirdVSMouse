@@ -124,6 +124,25 @@ namespace Saebom
         {
             int teamSum = PhotonNetwork.PlayerList.Length / 2;
 
+            for (int i = 0; i < mouseJobList.Count; i++)
+            {
+                //셔플
+                int random = Random.Range(0, mouseJobList.Count);
+                PlayerState player = mouseJobList[random];
+                mouseJobList[random] = mouseJobList[i];
+                mouseJobList[i] = player;
+            }
+
+            for (int i = 0; i < birdJobList.Count; i++)
+            {
+                //셔플
+                int random = Random.Range(0, birdJobList.Count);
+                PlayerState player = birdJobList[random];
+                birdJobList[random] = birdJobList[i];
+                birdJobList[i] = player;
+            }
+
+
             for (int i = 0; i < teamSum; i++)
             {
                 playerList.Add(mouseJobList[i]);
@@ -223,17 +242,37 @@ namespace Saebom
         {
             Debug.Log("개인 플레이어 세팅");
 
+            PlayerState playerState = new PlayerState();
+
             if (!PhotonNetwork.IsMasterClient)
             {
                 if (isBird)
                 {
-                    PlayerState playerState = birdJobList[jobNum];
+                    
+
+                    for (int j = 0; j < birdJobList.Count; j++)
+                    {
+                        if (birdJobList[j].jobNum == jobNum)
+                        {
+                            playerState = birdJobList[j];
+                            return;
+                        }
+                    }
+                    
                     playerState.isSpy = isSpy;
                     playerList.Add(playerState);
                 }
                 else
                 {
-                    PlayerState playerState = mouseJobList[jobNum];
+
+                    for (int j = 0; j < mouseJobList.Count; j++)
+                    {
+                        if (mouseJobList[j].jobNum == jobNum)
+                        {
+                            playerState = mouseJobList[j];
+                            return;
+                        }
+                    }
                     playerState.isSpy = isSpy;
                     playerList.Add(playerState);
                 }
@@ -245,17 +284,7 @@ namespace Saebom
             if (PhotonNetwork.LocalPlayer.GetPlayerNumber() != i)
                 return;
 
-
-            if (isBird)
-            {
-                myPlayerState = birdJobList[jobNum];
-                myPlayerState.isSpy = isSpy;
-            }
-            else
-            {
-                myPlayerState = mouseJobList[jobNum];
-                myPlayerState.isSpy = isSpy;
-            }
+                myPlayerState = playerState;
 
             
 
