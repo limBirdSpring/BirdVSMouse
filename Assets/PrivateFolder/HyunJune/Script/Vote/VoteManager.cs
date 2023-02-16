@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using Photon.Pun.UtilityScripts;
 using HyunJune;
 using TMPro;
+using static UnityEngine.Rendering.DebugUI;
 
 
 public enum VoteRole
@@ -114,6 +115,15 @@ public class VoteManager : MonoBehaviourPun
         }
     }
 
+    public void OnPressedSendButton()
+    {
+        if (chatInputField.text == "")
+            return;
+
+        photonView.RPC("SendMessage", RpcTarget.All, chatInputField.text, PhotonNetwork.LocalPlayer.ActorNumber);
+        chatInputField.text = "";
+    }
+
     private IEnumerator StartTimer()
     {
         float time = 99;
@@ -127,14 +137,14 @@ public class VoteManager : MonoBehaviourPun
 
         Debug.Log("타임오버");
         time = 0;
-        this.timer.text = time.ToString("F0");
+        this.timer.text = time.ToString("F0") + " s";
         photonView.RPC("FocedSkip", RpcTarget.All, null);
     }
 
     [PunRPC]
     public void UpdateTime(float time)
     {
-        timer.text = time.ToString("F0");
+        timer.text = time.ToString("F0") + " s";
     }
 
     [PunRPC]
@@ -172,6 +182,7 @@ public class VoteManager : MonoBehaviourPun
             {
                 TextBox text = Instantiate(myTextBoxPrefab, chatContent);
                 text.SetMessage(player.Value, message);
+                SoundManager.Instance.PlayUISound(UISFXName.Chat);
                 textList.Add(text);
                 return;
             }  
@@ -192,6 +203,7 @@ public class VoteManager : MonoBehaviourPun
                     {
                         TextBox text = Instantiate(otherTextBoxPrefab, chatContent);
                         text.SetMessage(player.Value, message);
+                        SoundManager.Instance.PlayUISound(UISFXName.Chat);
                         textList.Add(text);
                     }
                     break;
@@ -203,12 +215,14 @@ public class VoteManager : MonoBehaviourPun
                              
                     TextBox text2 = Instantiate(otherTextBoxPrefab, chatContent);
                     text2.SetMessage(player.Value, message);
+                    SoundManager.Instance.PlayUISound(UISFXName.Chat);
                     textList.Add(text2);
                     break;
                 // 내가 사망자일 경우 모든 채팅을 받는다
                 case VoteRole.Dead:
                     TextBox text3 = Instantiate(otherTextBoxPrefab, chatContent);
                     text3.SetMessage(player.Value, message);
+                    SoundManager.Instance.PlayUISound(UISFXName.Chat);
                     textList.Add(text3);
                     break;
             }
@@ -244,6 +258,7 @@ public class VoteManager : MonoBehaviourPun
         }
 
         voteWindow.gameObject.SetActive(true);
+        SoundManager.Instance.PlayUISound(UISFXName.Vote);
     }
 
     public void SetRole()
@@ -337,7 +352,6 @@ public class VoteManager : MonoBehaviourPun
         if (deadList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
             return;
 
-        Debug.Log("스킵 발동");
         voteComplete = true;
         ToggleAllButton(false);
         photonView.RPC("SetSkipCount", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);

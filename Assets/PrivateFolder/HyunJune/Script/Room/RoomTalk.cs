@@ -57,10 +57,18 @@ public class RoomTalk : MonoBehaviourPun
         }
     }
 
+    public void OnPressedSendButton()
+    {
+        if (inputField.text == "")
+            return;
+
+        photonView.RPC("SendMessage", RpcTarget.All, inputField.text, PhotonNetwork.LocalPlayer.ActorNumber);
+        inputField.text = "";
+    }
+
     [PunRPC]
     private void SendMessage(string message, int actorNumeber)
     {
-
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             // 채팅을 보내는 사람이 나라면 내 프리팹으로 바로 대화 생성
@@ -70,10 +78,10 @@ public class RoomTalk : MonoBehaviourPun
                 miniMessage.text = string.Format("{0} : " + message, player.Value.NickName); ;
                 TMP_Text bigMessage = Instantiate(textPrefab, bigContent);
                 bigMessage.text = string.Format("{0} : " + message, player.Value.NickName); ;
+                //SoundManager.Instance.PlayUISound(UISFXName.Chat);
                 return;
             }
         }
-
     }
 
     public void ChatOff()
