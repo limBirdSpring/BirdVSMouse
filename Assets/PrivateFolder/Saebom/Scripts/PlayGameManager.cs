@@ -284,9 +284,18 @@ namespace Saebom
             if (PhotonNetwork.LocalPlayer.GetPlayerNumber() != i)
                 return;
 
-                myPlayerState = playerState;
+            if (isBird)
+            {
+                myPlayerState = birdJobList[jobNum];
+                myPlayerState.isSpy = isSpy;
+            }
+            else
+            {
+                myPlayerState = mouseJobList[jobNum];
+                myPlayerState.isSpy = isSpy;
+            }
 
-            
+
 
         }
 
