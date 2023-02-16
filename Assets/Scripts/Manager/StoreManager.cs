@@ -102,6 +102,13 @@ public class StoreManager : MonoBehaviour
     [SerializeField]
     private GameObject errorWindow;
 
+    [SerializeField]
+    private GameObject buyWindow;
+
+    [SerializeField]
+    private TextMeshProUGUI buyText;
+
+    private CollectionItem item;
 
     private void OnEnable()
     {
@@ -158,9 +165,11 @@ public class StoreManager : MonoBehaviour
         
     }
 
+    
+
     public void BuyItem(int num)
     {
-        CollectionItem item = new CollectionItem();
+        
 
 
         switch (num)
@@ -196,11 +205,16 @@ public class StoreManager : MonoBehaviour
         }
         else
         {
-
-            SoundManager.Instance.PlayUISound(UISFXName.Shop);
-            DataManager.Instance.EarnCoin(-item.price);
-            DataManager.Instance.EarnItemToMail(item.itemName);
-
+            buyText.text = item.itemName;
+            //해당 아이템의 구매창 뜨기
+            buyWindow.SetActive(true);
         }
+    }
+
+    public void OnBuyButtonClick()
+    {
+        SoundManager.Instance.PlayUISound(UISFXName.Shop);
+        DataManager.Instance.EarnCoin(-item.price);
+        DataManager.Instance.EarnItemToMail(item.itemName);
     }
 }
