@@ -42,12 +42,8 @@ namespace SoYoon
             mailedCollectionItemList = new LinkedList<CollectionItem>();
             collectionItemDic = new Dictionary<string, CollectionItem>();
 
-#if UNITY_STANDALONE_WIN
-            string path = Path.Combine(Application.dataPath, "data.json");
-#endif
-#if UNITY_ANDROID
             string path = Path.Combine(Application.persistentDataPath, "data.json");
-#endif
+
             // json file이 있다면 load 없다면 생성
             if (File.Exists(path))
                 LoadFromJson();
@@ -145,41 +141,16 @@ namespace SoYoon
 
         public void SaveToJson()
         {
-#if UNITY_STANDALONE_WIN
-            string jsonData = JsonUtility.ToJson(myInfo, true);
-            string path = Path.Combine(Application.dataPath, "data.json");
-            File.WriteAllText(path, jsonData);
-#endif
-#if UNITY_ANDROID
-            
-            string jsonData = JsonUtility.ToJson(myInfo, true);
             string path = Path.Combine(Application.persistentDataPath, "data.json");
+            string jsonData = JsonUtility.ToJson(myInfo, true);
             File.WriteAllText(path, jsonData);
-            //string path = Path.Combine(Application.dataPath, "data.json");
-            //FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
-            //string jsonData = JsonUtility.ToJson(myInfo, true);
-            //byte[] byteJsonData = Encoding.UTF8.GetBytes(jsonData);
-            //fs.Write(byteJsonData, 0, (int)byteJsonData.Length);
-            //fs.Close();
-#endif
         }
 
         public void LoadFromJson()
         {
-#if UNITY_STANDALONE_WIN
-            string path = Path.Combine(Application.dataPath, "data.json");
-            string jsonData = File.ReadAllText(path);
-            myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
-#endif
-#if UNITY_ANDROID
             string path = Path.Combine(Application.persistentDataPath, "data.json");
             string jsonData = File.ReadAllText(path);
             myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
-            //string path = Path.Combine(Application.dataPath, "data.json");
-            //byte[] byteJsonData = File.ReadAllBytes(path);
-            //string jsonData = Encoding.Default.GetString(byteJsonData);
-            //myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
-#endif
         }
     }
 }
