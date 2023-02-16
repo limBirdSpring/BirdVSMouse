@@ -18,8 +18,6 @@ namespace SoYoon
         [SerializeField]
         private BakMissionPanel BakMissionPanel;
         [SerializeField]
-        private ScoreBakMission scoreBakMission;
-        [SerializeField]
         private TMP_Text progressText;
 
         [Header("Audio Source")]
@@ -80,8 +78,6 @@ namespace SoYoon
             {
                 if ((bool)changedProps["BakMissionComplete"])
                 {
-                    if (scoreBakMission.gameObject.activeSelf)
-                    { pang.Play(); } // TODO : 여기에 박 터지는 소리
                     BakMissionComplete();
                 }
             }
@@ -99,12 +95,12 @@ namespace SoYoon
             foreach (Player player in curBakPlayerList)
             {
                 object isSawing;
-                if(!player.CustomProperties.TryGetValue("IsSawing", out isSawing))
+                if (!player.CustomProperties.TryGetValue("IsSawing", out isSawing))
                 {
                     isSawing = false;
                 }
 
-                if((bool)isSawing)
+                if ((bool)isSawing)
                 {
                     // 실제로 움직이고 있는 경우
                     curBakProgress += bakMission.UpdateProgress();
@@ -138,6 +134,8 @@ namespace SoYoon
 
         public void BakMissionComplete()
         {
+            if (bakMission.gameObject.activeSelf)
+            { pang.Play(); } // TODO : 여기에 박 터지는 소리
             curBakProgress = 100;
             HashTable props = new HashTable();
             props.Add("IsBakMission", false);

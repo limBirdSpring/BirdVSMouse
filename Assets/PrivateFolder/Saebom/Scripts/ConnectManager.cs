@@ -4,6 +4,7 @@ using Photon.Realtime;
 using Saebom;
 using SoYoon;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class ConnectManager : MonoBehaviourPunCallbacks
@@ -44,6 +45,12 @@ public class ConnectManager : MonoBehaviourPunCallbacks
         Saebom.PlayGameManager.Instance.PlayerDie(otherPlayer.GetPlayerNumber());
         //ScoreManager.Instance.MasterCurPlayerStateUpdate();
         //ScoreManager.Instance.TurnResult();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log(string.Format("접속 해제 : {0}", cause.ToString()));
+        SceneManager.LoadScene("TitleTestScene");
     }
 
     public bool CheckPlayerLoaded()

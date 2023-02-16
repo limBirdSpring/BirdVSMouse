@@ -32,17 +32,15 @@ namespace SoYoon
 
         private void Start()
         {
-            if (PhotonNetwork.IsConnected)
+            if (PhotonNetwork.InRoom)
             {
-                OnConnectedToMaster();
-            }
-            else if (PhotonNetwork.InRoom)
-            {
+                Debug.Log("inRoom");
                 OnJoinedRoom();
             }
-            else if (PhotonNetwork.InLobby)
+            else if (PhotonNetwork.IsConnected)
             {
-                OnJoinedLobby();
+                Debug.Log("isConnected");
+                OnConnectedToMaster();
             }
             else
             {
@@ -69,6 +67,10 @@ namespace SoYoon
         {
             Debug.Log("방 접속 완료");
             SceneManager.LoadScene("RoomTestScene");
+            PhotonNetwork.CurrentRoom.IsOpen = true;
+            PhotonNetwork.CurrentRoom.IsVisible = true;
+            if (!lobbyBGM.isPlaying)
+                lobbyBGM.Play();
 
             if (PhotonNetwork.IsMasterClient)
             {
