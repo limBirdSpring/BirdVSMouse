@@ -25,6 +25,10 @@ namespace SoYoon
         private void Start()
         {
             isSawing = false;
+            minY = Screen.height * 0.25f;
+            Debug.Log(minY);
+            maxY = Screen.height * 0.75f;
+            Debug.Log(maxY);
         }
 
         private void Update()

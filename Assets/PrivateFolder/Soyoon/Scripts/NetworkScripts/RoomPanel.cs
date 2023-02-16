@@ -117,7 +117,9 @@ namespace SoYoon
         {
             if (!PhotonNetwork.IsMasterClient)
                 return;
-            //if (!(PhotonNetwork.PlayerList.Length != 12))
+            if (PhotonNetwork.PlayerList.Length % 2 != 0)
+                return;
+            //if (!(PhotonNetwork.PlayerList.Length == 10) && !(PhotonNetwork.PlayerList.Length == 12))
             //    return;
 
             if (CheckPlayerReady())
@@ -150,6 +152,17 @@ namespace SoYoon
             PhotonNetwork.CurrentRoom.IsVisible = false;
             if (lobbyBGM.isPlaying)
                 lobbyBGM.Stop();
+
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                if (player.IsMasterClient)
+                    break;
+
+                Hashtable props = new Hashtable();
+                props.Add("Ready", false);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            }
+
             PhotonNetwork.LoadLevel("GameScene");
         }
 
