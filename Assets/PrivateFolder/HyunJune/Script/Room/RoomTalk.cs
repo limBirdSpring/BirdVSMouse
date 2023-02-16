@@ -57,6 +57,15 @@ public class RoomTalk : MonoBehaviourPun
         }
     }
 
+    public void OnPressedSendButton()
+    {
+        if (inputField.text == "")
+            return;
+
+        photonView.RPC("SendMessage", RpcTarget.All, inputField.text, PhotonNetwork.LocalPlayer.ActorNumber);
+        inputField.text = "";
+    }
+
     [PunRPC]
     private void SendMessage(string message, int actorNumeber)
     {

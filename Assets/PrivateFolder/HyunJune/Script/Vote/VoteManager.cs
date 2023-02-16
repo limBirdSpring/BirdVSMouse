@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using Photon.Pun.UtilityScripts;
 using HyunJune;
 using TMPro;
+using static UnityEngine.Rendering.DebugUI;
 
 
 public enum VoteRole
@@ -114,6 +115,15 @@ public class VoteManager : MonoBehaviourPun
         }
     }
 
+    public void OnPressedSendButton()
+    {
+        if (chatInputField.text == "")
+            return;
+
+        photonView.RPC("SendMessage", RpcTarget.All, chatInputField.text, PhotonNetwork.LocalPlayer.ActorNumber);
+        chatInputField.text = "";
+    }
+
     private IEnumerator StartTimer()
     {
         float time = 99;
@@ -127,14 +137,14 @@ public class VoteManager : MonoBehaviourPun
 
         Debug.Log("타임오버");
         time = 0;
-        this.timer.text = time.ToString("F0");
+        this.timer.text = time.ToString("F0") + " s";
         photonView.RPC("FocedSkip", RpcTarget.All, null);
     }
 
     [PunRPC]
     public void UpdateTime(float time)
     {
-        timer.text = time.ToString("F0");
+        timer.text = time.ToString("F0") + " s";
     }
 
     [PunRPC]
