@@ -31,6 +31,7 @@ public class SunOrMoon : MonoBehaviour
     private Transform originalPos;
 
     private SunOrMoonState curState;
+    private Coroutine moveCoroutine;
 
     [SerializeField]
     private Identity identity;
@@ -76,6 +77,7 @@ public class SunOrMoon : MonoBehaviour
     public void ResetPos()
     {
         this.gameObject.transform.position = originalPos.transform.position;
+        curState = SunOrMoonState.None;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
