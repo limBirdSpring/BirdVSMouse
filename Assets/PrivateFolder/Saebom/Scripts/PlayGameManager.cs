@@ -242,20 +242,20 @@ namespace Saebom
         {
             Debug.Log("개인 플레이어 세팅");
 
-            PlayerState playerState = new PlayerState();
+            
 
             if (!PhotonNetwork.IsMasterClient)
             {
+                PlayerState playerState = new PlayerState();
+
                 if (isBird)
                 {
-                    
-
                     for (int j = 0; j < birdJobList.Count; j++)
                     {
                         if (birdJobList[j].jobNum == jobNum)
                         {
                             playerState = birdJobList[j];
-                            return;
+                            
                         }
                     }
                     
@@ -270,7 +270,7 @@ namespace Saebom
                         if (mouseJobList[j].jobNum == jobNum)
                         {
                             playerState = mouseJobList[j];
-                            return;
+                            
                         }
                     }
                     playerState.isSpy = isSpy;
@@ -284,9 +284,37 @@ namespace Saebom
             if (PhotonNetwork.LocalPlayer.GetPlayerNumber() != i)
                 return;
 
-                myPlayerState = playerState;
+            if (isBird)
+            {
 
-            
+
+                for (int j = 0; j < birdJobList.Count; j++)
+                {
+                    if (birdJobList[j].jobNum == jobNum)
+                    {
+                        myPlayerState = birdJobList[j];
+                        myPlayerState.isSpy = isSpy;
+                        return;
+                    }
+                }
+
+            }
+            else
+            {
+
+                for (int j = 0; j < mouseJobList.Count; j++)
+                {
+                    if (mouseJobList[j].jobNum == jobNum)
+                    {
+                        myPlayerState = mouseJobList[j];
+                        myPlayerState.isSpy = isSpy;
+                        return;
+                    }
+                }
+
+            }
+
+
 
         }
 

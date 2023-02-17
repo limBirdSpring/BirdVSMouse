@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 
 public enum PlayResult { Play, Win, Draw, Lose, Spy }
 
@@ -44,12 +43,8 @@ namespace SoYoon
             mailedCollectionItemList = new LinkedList<CollectionItem>();
             collectionItemDic = new Dictionary<string, CollectionItem>();
 
-#if UNITY_STANDALONE_WIN
-            string path = Path.Combine(Application.dataPath, "data.json");
-#endif
-#if UNITY_ANDROID
-            string path = Path.Combine(Application.streamingAssetsPath, "data.json");
-#endif
+            string path = Path.Combine(Application.persistentDataPath, "data.json");
+
             // json file이 있다면 load 없다면 생성
             if (File.Exists(path))
                 LoadFromJson();
@@ -102,7 +97,9 @@ namespace SoYoon
 
         public void EarnItemToMail(string itemName)
         {
-            for(int i=0;i<earnedCollectionItemList.Count;i++)
+            if(mailedCollectionItemList.Contains(collectionItemDic[itemName]))
+                return;
+            for (int i=0;i<earnedCollectionItemList.Count;i++)
             {
                 if (earnedCollectionItemList[i].name == itemName)
                     return;
@@ -147,32 +144,21 @@ namespace SoYoon
 
         public void SaveToJson()
         {
-#if UNITY_STANDALONE_WIN
+            string path = Path.Combine(Application.persistentDataPath, "data.json");
             string jsonData = JsonUtility.ToJson(myInfo, true);
-            string path = Path.Combine(Application.dataPath, "data.json");
-            File.WriteAllText(path, jsonData);
-#endif
-#if UNITY_ANDROID
-            
-            string jsonData = JsonUtility.ToJson(myInfo, true);
-            string path = Path.Combine(Application.streamingAssetsPath, "data.json");
-            Debug.Log(path);
-            File.WriteAllText(path, jsonData);
-#endif
+            // 암호화
+            byte[] byteData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            string code = System.Convert.ToBase64String(byteData);
+            File.WriteAllText(path, code);
         }
 
         public void LoadFromJson()
         {
-#if UNITY_STANDALONE_WIN
-            string path = Path.Combine(Application.dataPath, "data.json");
-            string jsonData = File.ReadAllText(path);
+            string path = Path.Combine(Application.persistentDataPath, "data.json");
+            string code = File.ReadAllText(path);
+            byte[] byteData = System.Convert.FromBase64String(code);
+            string jsonData = System.Text.Encoding.UTF8.GetString(byteData);
             myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
-#endif
-#if UNITY_ANDROID
-            string path = Path.Combine(Application.streamingAssetsPath, "data.json");
-            string jsonData = File.ReadAllText(path);
-            myInfo = JsonUtility.FromJson<MyInfo>(jsonData);
-#endif
         }
     }
 }
