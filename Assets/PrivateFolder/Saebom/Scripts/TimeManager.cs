@@ -18,7 +18,7 @@ namespace Saebom
         public float curTime;
 
         //전체 시간
-        private static float maxTime = 360f;
+        private static float maxTime = 500f;
 
 
         private static float halfTime;
