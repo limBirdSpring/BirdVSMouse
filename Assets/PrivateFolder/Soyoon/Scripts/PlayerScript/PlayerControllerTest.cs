@@ -169,7 +169,7 @@ namespace SoYoon
         [PunRPC]
         public void FoundCorpse(int playerNum)
         {
-            GameObject.Find("VoteCanvas").transform.GetChild(0).gameObject.SetActive(true);
+            VoteManager.Instance.FindDeadBody();
         }
 
         [PunRPC]
