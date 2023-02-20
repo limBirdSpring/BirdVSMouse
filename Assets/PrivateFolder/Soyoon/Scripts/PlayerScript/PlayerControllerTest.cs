@@ -1,8 +1,10 @@
 using Cinemachine;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 using Saebom;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 //public enum PlayerState { Active, Inactive, Ghost }
@@ -39,7 +41,7 @@ namespace SoYoon
         private WaitForSeconds killUpdateSeconds;
         private Coroutine killCoroutine;
 
-        private int targetPlayerNum;
+        public int TargetPlayerNum { get; private set; }
 
         private bool isInHouse;
 
@@ -72,7 +74,7 @@ namespace SoYoon
                 CinemachineVirtualCamera playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
                 playerCam.Follow = this.transform;
                 playerCam.LookAt = this.transform;
-                targetPlayerNum = 0;
+                TargetPlayerNum = 0;
                 photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
                 killUpdateSeconds = new WaitForSeconds(killUpdateTime);
                 CanKill = false;
@@ -310,12 +312,9 @@ namespace SoYoon
                     }
 
                     if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange"))
-                    {
-                        Debug.Log("target++");
-                        targetPlayerNum++;
-                    }
+                        TargetPlayerNum++;
 
-                    if ((targetPlayerNum > 0) && killButtonGray.activeSelf)
+                    if ((TargetPlayerNum > 0) && killButtonGray.activeSelf)
                         killButton.SetActive(true);
                 }
                 else
@@ -353,14 +352,11 @@ namespace SoYoon
                     }
 
                     if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange"))
-                    {
-                        Debug.Log("target--");
-                        targetPlayerNum--;
-                    }
+                        TargetPlayerNum--;
 
-                    if ((targetPlayerNum <= 0) && killButtonGray.activeSelf)
+                    if ((TargetPlayerNum <= 0) && killButtonGray.activeSelf)
                     {
-                        targetPlayerNum = 0;
+                        TargetPlayerNum = 0;
                         killButton.SetActive(false);
                     }
                 }
@@ -386,6 +382,7 @@ namespace SoYoon
 
         public void StopKillCoroutine()
         {
+            CurKillCoolTime = 0;
             StopCoroutine(killCoroutine);
         }
 

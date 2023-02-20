@@ -208,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6088885766306065876}
   - component: {fileID: 90259174107677448}
+  - component: {fileID: 5693889672603033496}
   m_Layer: 9
   m_Name: KillRangeCollider
   m_TagString: Untagged
@@ -246,6 +247,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 4
+--- !u!114 &5693889672603033496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6352464986738500231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 000aa665896dc374aa9eb5c3d774a7de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7007001277065867272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -297,95 +310,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8083476807715791521, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_text
-      value: "\uB9F7\uBC2D\uC950\n"
-      objectReference: {fileID: 0}
     - target: {fileID: 8270762082263712471, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
       propertyPath: m_Name
       value: FlowerM
       objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[0].Name
-      value: Speed
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[0].Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[1].Name
-      value: IsInactive
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[1].Type
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[2].Name
-      value: IsActive
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[3].Name
-      value: IsDeath
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[0].SynchronizeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[2].SynchronizeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[3].SynchronizeType
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
---- !u!1 &1439595807448855263 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8270762082263712471, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-  m_PrefabInstance: {fileID: 7007001277065867272}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3211958893711777720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1439595807448855263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 2078078381279361404}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &2078078381279361404 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9073363253847591284, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
-  m_PrefabInstance: {fileID: 7007001277065867272}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1439595807448855263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &5538344006108881032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3306196344039837824, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
