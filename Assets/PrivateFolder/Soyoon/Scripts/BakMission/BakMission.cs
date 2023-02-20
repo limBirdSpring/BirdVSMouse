@@ -53,7 +53,7 @@ namespace SoYoon
 
         public float UpdateProgress()
         {
-            Debug.Log(string.Format("개인 {0} * 부스터 {1} 의 속도로 박 자르는 중", singleProgressPerDeltaTime, boostPercent));
+            //Debug.Log(string.Format("개인 {0} * 부스터 {1} 의 속도로 박 자르는 중", singleProgressPerDeltaTime, boostPercent));
             return singleProgressPerDeltaTime * boostPercent * Time.deltaTime;
         }
 
