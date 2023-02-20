@@ -1,8 +1,10 @@
 using Cinemachine;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 using Saebom;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 //public enum PlayerState { Active, Inactive, Ghost }
@@ -35,10 +37,11 @@ namespace SoYoon
         private CullingMaskController cullingMask;
         private GameObject killButtonGray;
         private GameObject killButton;
-        private GameObject targetPlayer;
         private Collider2D killRangeCollider;
         private WaitForSeconds killUpdateSeconds;
         private Coroutine killCoroutine;
+
+        public int TargetPlayerNum { get; private set; }
 
         private bool isInHouse;
 
@@ -71,7 +74,7 @@ namespace SoYoon
                 CinemachineVirtualCamera playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
                 playerCam.Follow = this.transform;
                 playerCam.LookAt = this.transform;
-                targetPlayer = null;
+                TargetPlayerNum = 0;
                 photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
                 killUpdateSeconds = new WaitForSeconds(killUpdateTime);
                 CanKill = false;
@@ -166,7 +169,7 @@ namespace SoYoon
         [PunRPC]
         public void FoundCorpse(int playerNum)
         {
-            GameObject.Find("VoteCanvas").transform.GetChild(0).gameObject.SetActive(true);
+            VoteManager.Instance.FindDeadBody();
         }
 
         [PunRPC]
@@ -298,20 +301,27 @@ namespace SoYoon
                 if (state == PlayerState.Ghost)
                     return;
 
-                if (PlayGameManager.Instance.myPlayerState.isSpy &&
-                    ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
-                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse")))
+                if(PlayGameManager.Instance.myPlayerState.isSpy)
                 {
-                    isInHouse = true;
-                    killButtonGray.SetActive(false);
-                    killButton.SetActive(false);
-                }
+                    if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
+                        || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
+                    {
+                        isInHouse = true;
+                        killButtonGray.SetActive(false);
+                        killButton.SetActive(false);
+                    }
 
-                if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
+                    if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange"))
+                        TargetPlayerNum++;
+
+                    if ((TargetPlayerNum > 0) && killButtonGray.activeSelf)
+                        killButton.SetActive(true);
+                }
+                else
                 {
-                    killButton.SetActive(true);
-                    targetPlayer = collision.gameObject;
-                    killButton.GetComponent<KillButton>().target = targetPlayer.transform.parent.gameObject;
+                    if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
+                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
+                        isInHouse = true;
                 }
                 
                 if(state == PlayerState.Inactive && (collision.gameObject.name == "MouseCowHouse" || collision.gameObject.name == "BirdCowHouse"
@@ -332,18 +342,29 @@ namespace SoYoon
         {
             if (photonView.IsMine)
             {
-                if (PlayGameManager.Instance.myPlayerState.isSpy &&
-                    ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
-                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse")))
+                if (PlayGameManager.Instance.myPlayerState.isSpy)
                 {
-                    isInHouse = false;
-                    killButtonGray.SetActive(true);
-                }
+                    if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
+                        || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
+                    {
+                        isInHouse = false;
+                        killButtonGray.SetActive(true);
+                    }
 
-                if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange") && killButtonGray.activeSelf)
+                    if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange"))
+                        TargetPlayerNum--;
+
+                    if ((TargetPlayerNum <= 0) && killButtonGray.activeSelf)
+                    {
+                        TargetPlayerNum = 0;
+                        killButton.SetActive(false);
+                    }
+                }
+                else
                 {
-                    killButton.SetActive(false);
-                    targetPlayer = null;
+                    if ((PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "BirdHouse")
+                    || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
+                        isInHouse = false;
                 }
                 
                 if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
@@ -361,6 +382,7 @@ namespace SoYoon
 
         public void StopKillCoroutine()
         {
+            CurKillCoolTime = 0;
             StopCoroutine(killCoroutine);
         }
 

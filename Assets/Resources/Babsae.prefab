@@ -146,6 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  killCool: 30
+  killUpdateTime: 0.05
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
 --- !u!114 &3821721866762246845
@@ -206,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3240943151704562245}
   - component: {fileID: 3344057437865544609}
+  - component: {fileID: 7371221727568787197}
   m_Layer: 9
   m_Name: KillRangeCollider
   m_TagString: Untagged
@@ -244,6 +247,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 4
+--- !u!114 &7371221727568787197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8375161413075737629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 000aa665896dc374aa9eb5c3d774a7de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7246885765437906212
 PrefabInstance:
   m_ObjectHideFlags: 0
