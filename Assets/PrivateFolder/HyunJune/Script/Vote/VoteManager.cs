@@ -505,7 +505,7 @@ public class VoteManager : MonoBehaviourPun
                 if (controllers[i].photonView.OwnerActorNr == actorNumber)
                 {
                     // ä∂¿Œ¥Ÿ
-                    controllers[i].VoteDie();
+                    controllers[i].photonView.RPC("VoteDie", RpcTarget.All);
                 }
                 else
                     continue;

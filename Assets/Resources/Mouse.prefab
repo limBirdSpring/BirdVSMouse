@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 472401026487259780}
   - component: {fileID: 7255398643440934827}
+  - component: {fileID: 8382429443973085636}
   m_Layer: 9
   m_Name: KillRangeCollider
   m_TagString: Untagged
@@ -48,6 +49,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 4
+--- !u!114 &8382429443973085636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832489037636349547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 000aa665896dc374aa9eb5c3d774a7de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3234534607771640291
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +207,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  killCool: 30
+  killUpdateTime: 0.05
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
 --- !u!114 &8208086017155389460

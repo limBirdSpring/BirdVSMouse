@@ -147,7 +147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767e0bdcc55fb9d45849af016f7a8e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   killButton: {fileID: 8980796042432145332}
 --- !u!1 &8980796042943700068
 GameObject:
