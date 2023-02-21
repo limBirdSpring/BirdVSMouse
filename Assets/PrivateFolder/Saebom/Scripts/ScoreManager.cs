@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 
 
@@ -99,13 +100,18 @@ namespace Saebom
             birdScore = mouseScore = 0;
             birdCount = mouseCount = PhotonNetwork.CountOfPlayers / 2 - 1;
             isBirdSpyDie = isMouseSpyDie = false;
+
+            Hashtable hashtable = new Hashtable() {
+                { "MousePoint", 0 },
+                { "BirdPoint", 0 }
+            };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hashtable);
         }
 
 
         //각 턴이 끝나고 해당 함수를 호출하면 점수를 출력해줌
         public void CallScoreResultWindow()
         {
-            //방장이 합산해서 공유해줌
             StartCoroutine(CallScoreResultWindowCor());
 
         }
@@ -120,27 +126,19 @@ namespace Saebom
             map.SetActive(false);
             yield return new WaitForSeconds(2f);
 
+
             StartCoroutine(MissionButton.Instance.MissionCheckCor());
 
         }
 
-        public IEnumerator ScoreResultCalculate()
+        public  void ScoreResultCalculate()
         {
-            yield return null;
+            photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
+        }
 
-            int score = MissionButton.Instance.MissionResultCheck();
-
-            //점수 계산
-            if (!TimeManager.Instance.isCurNight)
-                birdScore += score;
-            else
-                mouseScore += score;
-
-            //점수계산이 끝난 후 각 변수에 현재상황 저장
-            if (PhotonNetwork.IsMasterClient)
-                photonView.RPC("PrivatePlayerStateUpdate", RpcTarget.All, birdScore, mouseScore, birdCount, mouseCount, isBirdSpyDie, isMouseSpyDie);
-
-
+        [PunRPC]
+        public void ScoreUpdate(int score)
+        { 
             //스코어 UI 변경
             //점수 갱신 위에 효과 애니메이션 및 효과음 추가
             if (score != 0)
@@ -170,10 +168,7 @@ namespace Saebom
             blockButton.SetActive(false);
 
             masterCheck = 0;
-            //플레이어들이 모두 점수확인을 끝냈는지 확인
-
-            if (end==false)
-                photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
+            //플레이어들이 모두 점수확인을 끝냈는지 확인               
 
         }
 
@@ -185,6 +180,20 @@ namespace Saebom
             Debug.Log(PhotonNetwork.PlayerList.Length);
             if (masterCheck == PhotonNetwork.PlayerList.Length) //수정
             {
+                int score = MissionButton.Instance.MissionResultCheck();
+
+                //점수 계산
+                if (!TimeManager.Instance.isCurNight)
+                    birdScore += score;
+                else
+                    mouseScore += score;
+
+                //점수계산이 끝난 후 각 변수에 현재상황 저장
+                photonView.RPC("PrivatePlayerStateUpdate", RpcTarget.All, birdScore, mouseScore, birdCount, mouseCount, isBirdSpyDie, isMouseSpyDie);
+
+                //각자 점수 UI변경 후 맵 초기화
+                photonView.RPC("ScoreUpdate", RpcTarget.All, score);
+
                 TimeManager.Instance.FinishScoreTimeSet();
                 masterCheck = 0;
             }

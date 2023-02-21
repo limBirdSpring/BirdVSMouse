@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +38,10 @@ public class SunOrMoon : MonoBehaviour
     private Identity identity;
 
     private bool missionSuccess = false;
+
+    [SerializeField]
+    private RopeController controller;
+
 
     public bool MissionSuccess
     {
@@ -106,6 +111,7 @@ public class SunOrMoon : MonoBehaviour
             {
                 missionSuccess = false;
             }
+            controller.isArrive = true;
         }
         
         if (collision.gameObject.name.Equals("ArriveMoon"))
@@ -120,12 +126,14 @@ public class SunOrMoon : MonoBehaviour
             {
                 missionSuccess = false;
             }
+            controller.isArrive = true;
         }
 
         if (collision.gameObject.name.Equals("Fail"))
         {
             curState = SunOrMoonState.None;
             missionSuccess = false;
+            controller.isArrive = true;
         }
     }
 
