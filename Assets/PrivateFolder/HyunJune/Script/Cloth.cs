@@ -100,6 +100,11 @@ namespace HyunJune
             Debug.Log(string.Format("Dye.GraphicUpdate : {0}", dicColor[curColor]));
 
             clothImage.color = new Color(dicColor[curColor].r / 255f, dicColor[curColor].g / 255f, dicColor[curColor].b / 255f);
+            if (curColor == CurColor.Black)
+            {
+                curColor = CurColor.None;
+                clothImage.color = dicColor[curColor];
+            }
         }
 
 
@@ -113,7 +118,7 @@ namespace HyunJune
 
         public IEnumerator SetDefault()
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1f);
             curColor = CurColor.None;
             clothImage.color = dicColor[curColor];
         }

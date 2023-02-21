@@ -14,10 +14,20 @@ namespace Youjeong
 
         public override bool GetScore()
         {
-            if (!TimeManager.Instance.isCurNight && manager.birdCowCount == 4 && isBirdHouse)
-                return true;
-            else if (TimeManager.Instance.isCurNight && manager.mouseCowCount == 4 && isBirdHouse)
-                return true;
+            if (!TimeManager.Instance.isCurNight && isBirdHouse)
+            {
+                if (manager.birdCowCount == 4)
+                    return true;
+            }
+            else if (!TimeManager.Instance.isCurNight && !isBirdHouse)
+                return false;
+            else if (TimeManager.Instance.isCurNight && !isBirdHouse)
+            {
+                if (manager.mouseCowCount == 4)
+                    return true;
+            }
+            else if (TimeManager.Instance.isCurNight && isBirdHouse)
+                return false;
 
             return false;
         }
