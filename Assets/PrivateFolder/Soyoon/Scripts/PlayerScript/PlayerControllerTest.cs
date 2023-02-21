@@ -41,8 +41,8 @@ namespace SoYoon
         private WaitForSeconds killUpdateSeconds;
         private Coroutine killCoroutine;
 
-        public int TargetPlayerNum { get; private set; }
-        public int TargetInteractionNum { get; set; }
+        private int targetPlayerNum;
+        private int targetInteractionNum;
 
         private bool isInHouse;
 
@@ -51,6 +51,8 @@ namespace SoYoon
         public bool CanKill { get; private set; }
         public float CurKillCoolTime { get; private set; }
         public float KillCoolTime { get { return killCool; } private set { killCool = value; } }
+
+        public LinkedList<InterActionAdapter> Interactions { get; private set; }
 
         private void Awake()
         {
@@ -65,6 +67,7 @@ namespace SoYoon
             killButtonGray = uiCanvas.GetChild(10).gameObject;
             killButton = uiCanvas.GetChild(11).gameObject;
             killRangeCollider = gameObject.transform.GetChild(1).GetComponent<Collider2D>();
+            Interactions = new LinkedList<InterActionAdapter>();
         }
 
         private void Start()
@@ -75,8 +78,8 @@ namespace SoYoon
                 CinemachineVirtualCamera playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
                 playerCam.Follow = this.transform;
                 playerCam.LookAt = this.transform;
-                TargetPlayerNum = 0;
-                TargetInteractionNum = 0;
+                targetPlayerNum = 0;
+                targetInteractionNum = 0;
                 photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
                 killUpdateSeconds = new WaitForSeconds(killUpdateTime);
                 CanKill = false;
@@ -314,9 +317,9 @@ namespace SoYoon
                     }
 
                     if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange"))
-                        TargetPlayerNum++;
+                        targetPlayerNum++;
 
-                    if ((TargetPlayerNum > 0) && killButtonGray.activeSelf)
+                    if ((targetPlayerNum > 0) && killButtonGray.activeSelf)
                         killButton.SetActive(true);
                 }
                 else
@@ -325,23 +328,30 @@ namespace SoYoon
                     || (!PlayGameManager.Instance.myPlayerState.isBird && collision.gameObject.name == "MouseHouse"))
                         isInHouse = true;
                 }
-                
-                if(state == PlayerState.Inactive && (collision.gameObject.name == "MouseCowHouse" || collision.gameObject.name == "BirdCowHouse"
+
+                if (state == PlayerState.Inactive && (collision.gameObject.name == "MouseCowHouse" || collision.gameObject.name == "BirdCowHouse"
                     || collision.gameObject.name == "Hangari" || collision.gameObject.name == "Cloth" || collision.gameObject.name == "SunMoon" || collision.gameObject.name == "Emergency"))
                 {
                     // !Do Nothing
                 }
-                else if(collision.gameObject.layer != LayerMask.NameToLayer("KillRange") || collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
+                else if (collision.gameObject.layer != LayerMask.NameToLayer("KillRange"))
                 {
-                    Debug.Log("enter" + collision.gameObject.name);
-                    TargetInteractionNum++;
-                    Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
-                    if(Saebom.MissionButton.Instance.inter != null)
-                        Saebom.MissionButton.Instance.MissionButtonOn();
+                    InterActionAdapter adapter;
+                    if (collision.TryGetComponent<InterActionAdapter>(out adapter))
+                    {
+                        Debug.Log("enter" + collision.gameObject.name);
+                        Debug.LogError("add" + collision.gameObject.name);
+                        Debug.LogError("TargetInteractionNum++");
+                        targetInteractionNum++;
+
+                        Interactions.AddLast(adapter);
+                        if(!adapter.isActive)
+                            Saebom.MissionButton.Instance.MissionButtonOn();
+                    }
                 }
             }
         }
-        
+
         private void OnTriggerExit2D(Collider2D collision)
         {
             if (photonView.IsMine)
@@ -356,11 +366,11 @@ namespace SoYoon
                     }
 
                     if (collision.gameObject.layer == LayerMask.NameToLayer("KillRange"))
-                        TargetPlayerNum--;
+                        targetPlayerNum--;
 
-                    if ((TargetPlayerNum <= 0) && killButtonGray.activeSelf)
+                    if ((targetPlayerNum <= 0) && killButtonGray.activeSelf)
                     {
-                        TargetPlayerNum = 0;
+                        targetPlayerNum = 0;
                         killButton.SetActive(false);
                     }
                 }
@@ -371,15 +381,24 @@ namespace SoYoon
                         isInHouse = false;
                 }
                 
-                if(collision.gameObject.layer != LayerMask.NameToLayer("KillRange") || collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
+                if(collision.gameObject.layer != LayerMask.NameToLayer("KillRange"))
                 {
-                    Debug.Log("exit" + collision.gameObject.name);
-                    Debug.LogError("TargetInteractionNum--");
-                    TargetInteractionNum--;
-                    if(TargetInteractionNum <= 0)
+                    InterActionAdapter adapter;
+                    if (collision.TryGetComponent<InterActionAdapter>(out adapter))
                     {
-                        TargetInteractionNum = 0;
-                        Saebom.MissionButton.Instance.MissionButtonOff();
+                        Debug.Log("exit" + collision.gameObject.name);
+                        Debug.LogError("delete" + collision.gameObject.name);
+                        Debug.LogError("TargetInteractionNum--");
+                        targetInteractionNum--;
+
+                        Interactions.Remove(adapter);
+                        if(targetInteractionNum <= 0)
+                        {
+                            targetInteractionNum = 0;
+                            Interactions.Clear();
+                            Saebom.MissionButton.Instance.inter = null;
+                            Saebom.MissionButton.Instance.MissionButtonOff();
+                        }
                     }
                 }
             }

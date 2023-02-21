@@ -29,8 +29,6 @@ namespace SoYoon
                         InterActionAdapter adapter = gameObject.GetComponent<InterActionAdapter>();
                         adapter.OnInterAction.RemoveAllListeners();
                         adapter.OnInterAction.AddListener(FoundCorpse);
-                        Saebom.MissionButton.Instance.inter = adapter;
-                        Saebom.MissionButton.Instance.MissionButtonOn();
                     }
                     else if(controller.state == PlayerState.Inactive)
                     {
@@ -38,38 +36,31 @@ namespace SoYoon
                         InterActionAdapter adapter = gameObject.GetComponent<InterActionAdapter>();
                         adapter.OnInterAction.RemoveAllListeners();
                         adapter.OnInterAction.AddListener(DestroyCorpse);
-                        Saebom.MissionButton.Instance.inter = adapter;
-                        Saebom.MissionButton.Instance.MissionButtonOn();
                     }
                 }
             }
         }
 
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || collision.gameObject.layer == LayerMask.NameToLayer("InActive"))
-            {
-                if (targetPhotonView.IsMine)
-                    Saebom.MissionButton.Instance.MissionButtonOff();
-            }
-        }
-
-        private void OnDestroy()
-        {
-            Saebom.MissionButton.Instance.MissionButtonOff();
-        }
+        //private void OnTriggerExit2D(Collider2D collision)
+        //{
+        //    if (collision.gameObject.layer == LayerMask.NameToLayer("Player") || collision.gameObject.layer == LayerMask.NameToLayer("InActive"))
+        //    {
+        //        if (targetPhotonView.IsMine)
+        //            Saebom.MissionButton.Instance.MissionButtonOff();
+        //    }
+        //}
 
         private void FoundCorpse()
         {
             targetPhotonView.RPC("FoundCorpse", RpcTarget.All, playerNum);
             targetPhotonView.RPC("DestroyCorpse", RpcTarget.All, playerNum, true);
-            Saebom.MissionButton.Instance.MissionButtonOff();
+            //Saebom.MissionButton.Instance.MissionButtonOff();
         }
 
         private void DestroyCorpse()
         {
             targetPhotonView.RPC("DestroyCorpse", RpcTarget.All, playerNum);
-            Saebom.MissionButton.Instance.MissionButtonOff();
+            //Saebom.MissionButton.Instance.MissionButtonOff();
         }
     }
 }

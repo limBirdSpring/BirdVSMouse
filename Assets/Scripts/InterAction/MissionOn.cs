@@ -40,7 +40,7 @@ public class MissionOn : MonoBehaviourPun
     public void MissionWindowActiveUpdate(bool active)
     {
         gameObject.GetComponent<InterActionAdapter>().isActive = active;
-        MissionButton.Instance.MissionButtonOn();
+        //MissionButton.Instance.MissionButtonOn();
     }
 
 }
