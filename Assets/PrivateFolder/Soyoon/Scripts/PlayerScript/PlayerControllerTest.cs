@@ -325,7 +325,7 @@ namespace SoYoon
                 }
                 
                 if(state == PlayerState.Inactive && (collision.gameObject.name == "MouseCowHouse" || collision.gameObject.name == "BirdCowHouse"
-                    || collision.gameObject.name == "Hangari" || collision.gameObject.name == "Cloth" || collision.gameObject.name == "SunMoon" || collision.gameObject.name == "Bag" || collision.gameObject.name == "Emergency"))
+                    || collision.gameObject.name == "Hangari" || collision.gameObject.name == "Cloth" || collision.gameObject.name == "SunMoon" || collision.gameObject.name == "Emergency"))
                 {
                     // !Do Nothing
                 }

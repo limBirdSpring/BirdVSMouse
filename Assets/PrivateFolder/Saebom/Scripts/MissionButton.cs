@@ -273,22 +273,25 @@ namespace Saebom
 
             ropeCheck.SunOrMoonStart();
 
-            yield return new WaitForSeconds(3f);
+            while (!ropeCheck.isArrive)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+
             if (missionList[5].GetScore())
             {
                 SoundManager.Instance.PlayUISound(UISFXName.MissionComplete);
                 completeText.SetActive(true);
             }
-            yield return new WaitForSeconds(1f);
-
 
             ropeCheck.SunOrMoonReset();
 
             missionList[5].gameObject.SetActive(false);
             yield return new WaitForSeconds(1f);
 
-
-            StartCoroutine(ScoreManager.Instance.ScoreResultCalculate());
+            ScoreManager.Instance.ScoreResultCalculate();
 
         }
 

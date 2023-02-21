@@ -14,6 +14,9 @@ public class RopeController : MonoBehaviour
 
     private RopeManager manager;
 
+    [HideInInspector]
+    public bool isArrive = false;
+
     private void Awake()
     {
         manager = GetComponentInParent<RopeManager>();
@@ -48,6 +51,7 @@ public class RopeController : MonoBehaviour
 
     public void SunOrMoonStart()
     {
+        isArrive = false;
         if (TimeManager.Instance.isCurNight)
         {
             moon.StartMove();
