@@ -42,6 +42,7 @@ namespace SoYoon
         private Coroutine killCoroutine;
 
         public int TargetPlayerNum { get; private set; }
+        public int TargetInteractionNum { get; set; }
 
         private bool isInHouse;
 
@@ -75,6 +76,7 @@ namespace SoYoon
                 playerCam.Follow = this.transform;
                 playerCam.LookAt = this.transform;
                 TargetPlayerNum = 0;
+                TargetInteractionNum = 0;
                 photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
                 killUpdateSeconds = new WaitForSeconds(killUpdateTime);
                 CanKill = false;
@@ -329,11 +331,13 @@ namespace SoYoon
                 {
                     // !Do Nothing
                 }
-                else if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
+                else if(collision.gameObject.layer != LayerMask.NameToLayer("KillRange") || collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
                 {
                     Debug.Log("enter" + collision.gameObject.name);
+                    TargetInteractionNum++;
                     Saebom.MissionButton.Instance.inter = collision.GetComponent<InterActionAdapter>();
-                    Saebom.MissionButton.Instance.MissionButtonOn();
+                    if(Saebom.MissionButton.Instance.inter != null)
+                        Saebom.MissionButton.Instance.MissionButtonOn();
                 }
             }
         }
@@ -367,10 +371,16 @@ namespace SoYoon
                         isInHouse = false;
                 }
                 
-                if(collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
+                if(collision.gameObject.layer != LayerMask.NameToLayer("KillRange") || collision.gameObject.layer != LayerMask.NameToLayer("CorpseRange"))
                 {
                     Debug.Log("exit" + collision.gameObject.name);
-                    Saebom.MissionButton.Instance.MissionButtonOff();
+                    Debug.LogError("TargetInteractionNum--");
+                    TargetInteractionNum--;
+                    if(TargetInteractionNum <= 0)
+                    {
+                        TargetInteractionNum = 0;
+                        Saebom.MissionButton.Instance.MissionButtonOff();
+                    }
                 }
             }
         }
