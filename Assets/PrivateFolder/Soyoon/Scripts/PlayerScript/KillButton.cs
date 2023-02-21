@@ -52,7 +52,7 @@ namespace SoYoon
                 Debug.LogError("Finding target");
                 myPlayer.GetComponentInChildren<KillCollider>().FoundKillTarget();
 
-                if (controller.targetPlayerNum <= 0)
+                if (controller.TargetPlayerNum <= 0)
                     this.gameObject.SetActive(false);
 
                 controller.StartKillCoroutine();
