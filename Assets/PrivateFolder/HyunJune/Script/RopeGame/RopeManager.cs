@@ -37,6 +37,7 @@ public class RopeManager : Mission
                     ropeGames[i].curState = RopeState.Normal;
                     break;
             }
+            ropeGames[i].UpdateUI();
         }
     }
 
