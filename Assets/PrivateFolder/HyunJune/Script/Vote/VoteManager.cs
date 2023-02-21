@@ -528,7 +528,7 @@ public class VoteManager : MonoBehaviourPun
 
     public IEnumerator VotingEnd()
     {
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(5);
         photonView.RPC("VotingEndRPC", RpcTarget.All, null);
     }
 
