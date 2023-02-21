@@ -53,7 +53,7 @@ public class SunOrMoon : MonoBehaviour
         curState = SunOrMoonState.None;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         switch (curState)
         {

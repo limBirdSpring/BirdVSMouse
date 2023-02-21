@@ -81,7 +81,7 @@ public class RopeManager : Mission
 
     public override void PlayerUpdateCurMission()
     {
-        photon.RPC("SaveUIRPC", RpcTarget.All, ropeGamesCurState);
+        photon.RPC("SaveUIRPC", RpcTarget.AllBuffered, ropeGamesCurState);
     }
 }
 

@@ -78,7 +78,7 @@ public class RoomTalk : MonoBehaviourPun
                 miniMessage.text = string.Format("{0} : " + message, player.Value.NickName); ;
                 TMP_Text bigMessage = Instantiate(textPrefab, bigContent);
                 bigMessage.text = string.Format("{0} : " + message, player.Value.NickName); ;
-                //SoundManager.Instance.PlayUISound(UISFXName.Chat);
+                SoundManager.Instance.PlayUISound(UISFXName.Chat);
                 return;
             }
         }
