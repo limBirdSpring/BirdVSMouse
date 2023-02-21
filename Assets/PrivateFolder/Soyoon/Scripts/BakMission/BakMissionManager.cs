@@ -1,4 +1,6 @@
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using Saebom;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -52,6 +54,7 @@ namespace SoYoon
                 if ((bool)changedProps["IsBakMission"])
                 {
                     Debug.Log("박 타는 사람 추가");
+                    // 여기서 inactive면 추가안함
                     curBakPlayerList.AddLast(targetPlayer);
                     curBakPlayerCount = curBakPlayerList.Count;
                     barUI.ChangedPlayerCount();
@@ -96,14 +99,23 @@ namespace SoYoon
             {
                 object isSawing;
                 if (!player.CustomProperties.TryGetValue("IsSawing", out isSawing))
-                {
                     isSawing = false;
-                }
 
                 if ((bool)isSawing)
                 {
                     // 실제로 움직이고 있는 경우
-                    curBakProgress += bakMission.UpdateProgress();
+                    if (PlayGameManager.Instance.playerList[player.GetPlayerNumber()].playerPrefab.GetComponent<PlayerControllerTest>().state == PlayerState.Active)
+                    {
+                        Debug.Log("박 자르는 중");
+                        curBakProgress += bakMission.UpdateProgress();
+                    }
+                    else
+                    {
+                        Debug.Log("박 방해하는 중");
+                        curBakProgress -= bakMission.UpdateProgress();
+                        if (curBakProgress <= 0)
+                            curBakProgress = 0;
+                    }
                 }
             }
 
