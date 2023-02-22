@@ -15268,15 +15268,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Thanks to\n\n\uAE40\uD1A0\uB9AC, \uCC9C\uB450\uC720, \uAC15\uD478\uB529,\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc9bfd8ac9d743d4ca33202e88e59458, type: 2}
-  m_sharedMaterial: {fileID: 4670848594929453312, guid: dc9bfd8ac9d743d4ca33202e88e59458, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 67d5a70bf81936e40af58845851bca05, type: 2}
+  m_sharedMaterial: {fileID: 4179358371416994320, guid: 67d5a70bf81936e40af58845851bca05, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283914102
-  m_fontColor: {r: 0.46226418, g: 0.34233716, b: 0.34233716, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
