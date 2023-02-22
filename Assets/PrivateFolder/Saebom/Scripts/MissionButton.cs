@@ -1,16 +1,12 @@
+using HyunJune;
+using Photon.Pun;
+using SoYoon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
-using HyunJune;
-using System.Linq;
-using TMPro;
-using SoYoon;
-using UnityEngine.SocialPlatforms.Impl;
-using System.Reflection;
 
 
 //방장이 미션을 뽑음
@@ -273,22 +269,25 @@ namespace Saebom
 
             ropeCheck.SunOrMoonStart();
 
-            yield return new WaitForSeconds(3f);
+            while (!ropeCheck.isArrive)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(1f);
+
             if (missionList[5].GetScore())
             {
                 SoundManager.Instance.PlayUISound(UISFXName.MissionComplete);
                 completeText.SetActive(true);
             }
-            yield return new WaitForSeconds(1f);
-
 
             ropeCheck.SunOrMoonReset();
 
             missionList[5].gameObject.SetActive(false);
             yield return new WaitForSeconds(1f);
 
-
-            StartCoroutine(ScoreManager.Instance.ScoreResultCalculate());
+            ScoreManager.Instance.ScoreResultCalculate();
 
         }
 
@@ -342,30 +341,50 @@ namespace Saebom
 
         public void MissionButtonOn()
         {
-            if (inter !=null &&!inter.isActive)
-            {
-                missionButton.gameObject.SetActive(true);
-                inter?.OutLineOn();
-            }
-            else if (inter != null)
-            {
-                missionButton.gameObject.SetActive(false);
-                inter?.OutLineOff();
-            }
+            missionButton.gameObject.SetActive(true);
+            //if (inter !=null &&!inter.isActive)
+            //{
+            //    missionButton.gameObject.SetActive(true);
+            //    inter?.OutLineOn();
+            //}
+            //else if (inter != null)
+            //{
+            //    missionButton.gameObject.SetActive(false);
+            //    inter?.OutLineOff();
+            //}
         }
 
         public void MissionButtonOff()
         {
-            if (missionButton.gameObject.activeSelf == true)
-            {
-                inter?.OutLineOff();
-                inter = null;
-                missionButton.gameObject.SetActive(false);
-            }
+            inter = null;
+            missionButton.gameObject.SetActive(false);
+            //if (missionButton.gameObject.activeSelf == true)
+            //{
+            //    inter?.OutLineOff();
+            //    inter = null;
+            //    missionButton.gameObject.SetActive(false);
+            //}
         }
 
         public void OnMissionButtonClicked()
         {
+            PlayerControllerTest myPlayer = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
+
+            InterActionAdapter targetAdapter = null;
+            float minDistance = float.MaxValue;
+            foreach(InterActionAdapter adapter in myPlayer.Interactions)
+            {
+                if (adapter.isActive) continue;
+
+                float distance = (myPlayer.transform.position - adapter.gameObject.transform.position).sqrMagnitude;
+                if(distance < minDistance) 
+                { 
+                    targetAdapter = adapter;
+                    minDistance = distance;
+                }
+            }
+
+            inter = targetAdapter;
             inter?.Interaction();
         }
 

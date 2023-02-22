@@ -37,6 +37,7 @@ public class RopeManager : Mission
                     ropeGames[i].curState = RopeState.Normal;
                     break;
             }
+            ropeGames[i].UpdateUI();
         }
     }
 
@@ -80,7 +81,7 @@ public class RopeManager : Mission
 
     public override void PlayerUpdateCurMission()
     {
-        photon.RPC("SaveUIRPC", RpcTarget.All, ropeGamesCurState);
+        photon.RPC("SaveUIRPC", RpcTarget.AllBuffered, ropeGamesCurState);
     }
 }
 

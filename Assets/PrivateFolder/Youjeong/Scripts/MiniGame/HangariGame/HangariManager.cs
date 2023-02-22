@@ -42,7 +42,7 @@ namespace Youjeong
 
         public override void PlayerUpdateCurMission()
         {
-            photon.RPC("HangariMissionUpdate", RpcTarget.All, waterAmount);
+            photon.RPC("HangariMissionUpdate", RpcTarget.AllBuffered, waterAmount);
             
         }
 

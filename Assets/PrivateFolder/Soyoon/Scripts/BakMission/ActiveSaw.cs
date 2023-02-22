@@ -8,9 +8,9 @@ namespace SoYoon
     public class ActiveSaw : MonoBehaviour
     {
         [SerializeField]
-        private float minY;
+        private float minY = Screen.height * 0.25f;
         [SerializeField]
-        private float maxY;
+        private float maxY = Screen.height * 0.75f;
         [SerializeField]
         private float sawingBound; // 박을 자른다고 파악하기 위한 bound
 
@@ -25,10 +25,6 @@ namespace SoYoon
         private void Start()
         {
             isSawing = false;
-            minY = Screen.height * 0.25f;
-            Debug.Log(minY);
-            maxY = Screen.height * 0.75f;
-            Debug.Log(maxY);
         }
 
         private void Update()
