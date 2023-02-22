@@ -209,7 +209,10 @@ namespace SoYoon
             Debug.Log("is bird : " + PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird);
             Debug.Log("turn to night : " + turnToNight);
             if (PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird && !turnToNight)
+            {
+                anim.SetTrigger("IsActive");
                 OnActive();
+            }
             else if (!(PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird) && turnToNight)
             {
                 anim.SetTrigger("IsActive");
