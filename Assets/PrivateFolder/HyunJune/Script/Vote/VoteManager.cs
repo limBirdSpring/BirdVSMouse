@@ -605,7 +605,8 @@ public class VoteManager : MonoBehaviourPun
     [PunRPC]
     private void GameOver()
     {
-        ScoreManager.Instance.ActiveTimeOverNow();
+        if (PhotonNetwork.IsMasterClient)
+            ScoreManager.Instance.ActiveTimeOverNow();
     }
 
 
