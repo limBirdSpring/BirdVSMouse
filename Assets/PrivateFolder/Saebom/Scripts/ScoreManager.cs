@@ -140,42 +140,6 @@ namespace Saebom
         }
 
         [PunRPC]
-        public void ScoreUpdate(int score)
-        { 
-            //스코어 UI 변경
-            //점수 갱신 위에 효과 애니메이션 및 효과음 추가
-            if (score != 0)
-                SoundManager.Instance.PlayUISound(UISFXName.ScoreUp);
-
-            scoreUI.text = birdScore.ToString() + "   :   " + mouseScore.ToString();
-
-            //턴이 끝났을 경우에만 승패 여부 계산
-            if (TimeManager.Instance.isCurNight)
-                TurnResult();
-
-            Inventory.Instance.DeleteItem();//인벤토리 비우기
-
-            //시체없애기
-            GameObject[] corpse = GameObject.FindGameObjectsWithTag("Corpse");
-
-            for (int i = 0; i < corpse.Length; i++)
-            {
-                Destroy(corpse[i]);
-            }
-
-
-
-            //박 100%일경우 0%로 초기화
-            MissionButton.Instance.BakMissionReset();
-
-            blockButton.SetActive(false);
-
-            masterCheck = 0;
-            //플레이어들이 모두 점수확인을 끝냈는지 확인               
-
-        }
-
-        [PunRPC]
         public void PrivateScoreCheckFinish(int check)
         {
             masterCheck += check;
@@ -197,10 +161,51 @@ namespace Saebom
                 //각자 점수 UI변경 후 맵 초기화
                 photonView.RPC("ScoreUpdate", RpcTarget.All, score);
 
+                //턴이 끝났을 경우에만 승패 여부 계산
+                if (TimeManager.Instance.isCurNight)
+                    photonView.RPC("TurnResult", RpcTarget.All);
+
                 TimeManager.Instance.FinishScoreTimeSet();
                 masterCheck = 0;
             }
         }
+
+
+        [PunRPC]
+        public void ScoreUpdate(int score)
+        { 
+            //스코어 UI 변경
+            //점수 갱신 위에 효과 애니메이션 및 효과음 추가
+            if (score != 0)
+                SoundManager.Instance.PlayUISound(UISFXName.ScoreUp);
+
+            scoreUI.text = birdScore.ToString() + "   :   " + mouseScore.ToString();
+
+            ////턴이 끝났을 경우에만 승패 여부 계산
+            //if (TimeManager.Instance.isCurNight)
+            //    TurnResult();
+
+            Inventory.Instance.DeleteItem();//인벤토리 비우기
+
+            //시체없애기
+            GameObject[] corpse = GameObject.FindGameObjectsWithTag("Corpse");
+
+            for (int i = 0; i < corpse.Length; i++)
+            {
+                Destroy(corpse[i]);
+            }
+
+
+
+            //박 100%일경우 0%로 초기화
+            MissionButton.Instance.BakMissionReset();
+
+            blockButton.SetActive(false);
+
+            masterCheck = 0;         
+
+        }
+
 
 
 
@@ -286,6 +291,7 @@ namespace Saebom
         }
 
 
+        [PunRPC]
         //턴이 끝났을 때 결과가 나왔다면 누가 이겼는지 구현
         public void TurnResult()
         {
