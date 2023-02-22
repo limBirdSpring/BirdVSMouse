@@ -42,6 +42,9 @@ namespace Saebom
         private bool isMouseSpyDie;
 
 
+        private int allPlayerNum;
+
+
         [SerializeField]
         private TextMeshProUGUI scoreUI;
 
@@ -98,7 +101,7 @@ namespace Saebom
         private void OnEnable()
         {
             birdScore = mouseScore = 0;
-            birdCount = mouseCount = PhotonNetwork.CountOfPlayers / 2 - 1;
+            allPlayerNum = birdCount = mouseCount = PhotonNetwork.CountOfPlayers / 2 - 1;
             isBirdSpyDie = isMouseSpyDie = false;
 
             Hashtable hashtable = new Hashtable() {
@@ -213,6 +216,8 @@ namespace Saebom
             //2. 스파이가 시민1명을 남기고 모든 사람을 죽였을때
             bool activeTimeOver = false;
 
+            birdCount = mouseCount = allPlayerNum;
+
             foreach (PlayerState state in PlayGameManager.Instance.playerList)
             {
                 if (state.isBird)
@@ -226,7 +231,7 @@ namespace Saebom
                             activeTimeOver = true;
                     }
 
-                    if (birdCount == 1 && !TimeManager.Instance.isCurNight)
+                    if (birdCount <= 1 && !TimeManager.Instance.isCurNight)
                         activeTimeOver = true;
                 }
                 else
@@ -240,7 +245,7 @@ namespace Saebom
                             activeTimeOver = true;
                     }
 
-                    if (mouseCount == 1 && TimeManager.Instance.isCurNight)
+                    if (mouseCount <= 1 && TimeManager.Instance.isCurNight)
                         activeTimeOver = true;
                 }
             }
