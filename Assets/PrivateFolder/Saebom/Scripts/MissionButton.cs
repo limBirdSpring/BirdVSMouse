@@ -90,8 +90,8 @@ namespace Saebom
             colorMissionData.Add(7, CurColor.Red | CurColor.Yellow | CurColor.White);
             colorMissionData.Add(8, CurColor.Yellow | CurColor.Blue | CurColor.White);
 
-
-            birdEmergency = mouseEmergency = SettingManager.Instance.emergencyCount;
+            birdEmergency = mouseEmergency = 3;
+            //birdEmergency = mouseEmergency = SettingManager.Instance.emergencyCount;
         }
 
         public void MasterSetEmergency()
