@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Emergency : MonoBehaviour
 {
-
     public void Emnergency()
     {
         

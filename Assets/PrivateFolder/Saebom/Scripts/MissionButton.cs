@@ -69,6 +69,7 @@ namespace Saebom
         private TextMeshProUGUI emergencyUI;
 
 
+
         private void Awake()
         {
             photonView = GetComponent<PhotonView>();

@@ -46,6 +46,9 @@ namespace Saebom
         [SerializeField]
         private GameObject nightSky;
 
+        [SerializeField]
+        private TextMeshProUGUI hideranceUI;
+
 
         //===================================
 
@@ -339,6 +342,7 @@ namespace Saebom
         private void HideranceAddToRPC()
         {
             hiderance++;
+            hideranceUI.text = "방해성공 : " + hiderance.ToString() + "번";
             if (hiderance == 5) //SettingManager.Instance.successHiderance
             {
                 isHidering = true;
