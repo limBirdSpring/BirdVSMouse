@@ -409,14 +409,6 @@ namespace Saebom
 
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F10))
-            {
-                EndGame(Win.Draw);
-            }
-        }
-
         private void EndGame(Win win)
         {
             end = true;
@@ -517,6 +509,12 @@ namespace Saebom
 
         public void OnExitButtonClick()
         {
+            Hashtable props = new Hashtable()
+            {
+                { "Load" , false }
+            };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
             SceneManager.LoadScene("LobbyTestScene");
         }
     }

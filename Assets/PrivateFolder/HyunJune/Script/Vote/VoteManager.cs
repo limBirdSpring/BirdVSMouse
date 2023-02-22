@@ -528,7 +528,7 @@ public class VoteManager : MonoBehaviourPun
 
     public IEnumerator VotingEnd()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         photonView.RPC("VotingEndRPC", RpcTarget.All, null);
     }
 
@@ -536,9 +536,10 @@ public class VoteManager : MonoBehaviourPun
     private void VotingEndRPC()
     {
         // 투표 종료
+        StopAllCoroutines();
+
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
         {
-            StopCoroutine(co);
             TimeManager.Instance.TimeResume();
             CheckGameOver();
         }
