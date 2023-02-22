@@ -590,23 +590,23 @@ public class VoteManager : MonoBehaviourPun
         //스파이가 없으면 시민 승리
         if (spy == 0)
         {
-            photonView.RPC("GameOver", RpcTarget.All, null);
+            if (PhotonNetwork.IsMasterClient)
+                GameOver();
         }
         // 스파이와 시민이 같은 인원이면 스파이팀 승리
         else if (spy == noneSpy)
         {
-            photonView.RPC("GameOver", RpcTarget.All, null);
+            if (PhotonNetwork.IsMasterClient)
+                GameOver();
         }
         // 둘다 아니면 게임 지속
         else
             return;
     }
 
-    [PunRPC]
     private void GameOver()
     {
-        if (PhotonNetwork.IsMasterClient)
-            ScoreManager.Instance.ActiveTimeOverNow();
+        ScoreManager.Instance.ActiveTimeOverNow();
     }
 
 
