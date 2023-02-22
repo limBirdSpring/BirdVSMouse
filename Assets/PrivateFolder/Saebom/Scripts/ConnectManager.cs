@@ -23,6 +23,7 @@ public class ConnectManager : MonoBehaviourPunCallbacks
             { "Load" , true },
         };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        PhotonNetwork.AutomaticallySyncScene = false;
     }
 
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
