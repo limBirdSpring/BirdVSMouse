@@ -175,7 +175,7 @@ namespace Saebom
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
 
             //만약 강제로 활동시간이 끝났다면 캐릭터 거점으로 강제이동
-            if (isHouseTime && (controller.state == global::PlayerState.Active))
+            if (isHouseTime && ((controller.state == global::PlayerState.Active) || (controller.state == global::PlayerState.Inactive)))
                 controller.photonView.RPC("CheckIfIsInHouse", RpcTarget.All);
 
             PlayGameManager.Instance.PlayerGoHomeNow();
