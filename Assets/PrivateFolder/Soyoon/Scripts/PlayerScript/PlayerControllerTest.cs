@@ -137,7 +137,8 @@ namespace SoYoon
             {
                 anim.SetTrigger("IsDeath");
                 GameObject.Find("KillCanvas").transform.GetChild(0).gameObject.SetActive(true);
-                Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
+                Saebom.PlayGameManager.Instance.gameObject.GetPhotonView().RPC("PlayerDie", RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
+                //Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
             }
         }
 
@@ -148,7 +149,8 @@ namespace SoYoon
             if (photonView.IsMine)
             {
                 anim.SetTrigger("IsDeath");
-                Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
+                Saebom.PlayGameManager.Instance.gameObject.GetPhotonView().RPC("PlayerDie", RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
+                //Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
             }
         }
 
@@ -166,7 +168,8 @@ namespace SoYoon
                 if (photonView.IsMine)
                 {
                     anim.SetTrigger("IsDeath");
-                    Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
+                    Saebom.PlayGameManager.Instance.gameObject.GetPhotonView().RPC("PlayerDie", RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
+                    //Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
                 }
             }
         }
