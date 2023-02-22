@@ -526,7 +526,6 @@ namespace Saebom
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-            PhotonNetwork.AutomaticallySyncScene = false;
             SceneManager.LoadScene("LobbyTestScene");
         }
     }
