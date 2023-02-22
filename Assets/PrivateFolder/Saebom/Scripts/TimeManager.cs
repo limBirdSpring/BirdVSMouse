@@ -186,14 +186,13 @@ namespace Saebom
             if (PlayGameManager.Instance.myPlayerState.isSpy)
                 controller.StopKillCoroutine();
 
-            int offset = 1;
             // 플레이어들 active, inactive 결정
-            if ((int)curTime <= (int)(halfTime + offset))
+            if ((int)curTime == (int)halfTime)
             {
                 Debug.Log("함수 불러옴");
                 controller.photonView.RPC("SetActiveOrInactive", RpcTarget.All, true);
             }
-            else if ((int)curTime <= (int)(maxTime + offset))
+            else if ((int)curTime == (int)maxTime)
             {
                 controller.photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
             }
