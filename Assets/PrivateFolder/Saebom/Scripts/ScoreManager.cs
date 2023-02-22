@@ -276,7 +276,7 @@ namespace Saebom
         {
 
             //활동시간끝내기
-            photonView.RPC("TimeOver", RpcTarget.All);
+            TimeManager.Instance.gameObject.GetPhotonView().RPC("TimeOver", RpcTarget.All);
             //TimeManager.Instance.TimeOver();
         }
 
