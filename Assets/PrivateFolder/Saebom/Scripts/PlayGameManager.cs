@@ -349,6 +349,7 @@ namespace Saebom
 
 
         //플레이어가 투표로 죽었을 때 호출할 함수
+        [PunRPC]
         public void PlayerDie(int index)
         {
             photonView.RPC("PlayerDieAndMasterPlayerListUpdate", RpcTarget.MasterClient, index);
