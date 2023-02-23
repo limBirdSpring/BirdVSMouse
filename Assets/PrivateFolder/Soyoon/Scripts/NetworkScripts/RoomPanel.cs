@@ -153,16 +153,6 @@ namespace SoYoon
             if (lobbyBGM.isPlaying)
                 lobbyBGM.Stop();
 
-            foreach (Player player in PhotonNetwork.PlayerList)
-            {
-                if (player.IsMasterClient)
-                    break;
-
-                Hashtable props = new Hashtable();
-                props.Add("Ready", false);
-                player.SetCustomProperties(props);
-            }
-
             PhotonNetwork.LoadLevel("GameScene");
         }
 
