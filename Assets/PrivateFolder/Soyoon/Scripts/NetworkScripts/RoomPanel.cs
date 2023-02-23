@@ -160,7 +160,7 @@ namespace SoYoon
 
                 Hashtable props = new Hashtable();
                 props.Add("Ready", false);
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                player.SetCustomProperties(props);
             }
 
             PhotonNetwork.LoadLevel("GameScene");
