@@ -135,7 +135,8 @@ namespace SoYoon
             // TODO : 킬되는 화면 뜨는 것 구현
             if (photonView.IsMine)
             {
-                anim.SetTrigger("IsDeath");
+                anim.SetBool("IsDead", true);
+                //anim.SetTrigger("IsDeath");
                 GameObject.Find("KillCanvas").transform.GetChild(0).gameObject.SetActive(true);
                 Saebom.PlayGameManager.Instance.gameObject.GetPhotonView().RPC("PlayerDie", RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
                 //Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
@@ -148,7 +149,8 @@ namespace SoYoon
             SetPlayerState(PlayerState.Ghost);
             if (photonView.IsMine)
             {
-                anim.SetTrigger("IsDeath");
+                anim.SetBool("IsDead", true);
+                //anim.SetTrigger("IsDeath");
                 Saebom.PlayGameManager.Instance.gameObject.GetPhotonView().RPC("PlayerDie", RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
                 //Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
             }
@@ -167,7 +169,8 @@ namespace SoYoon
                 SetPlayerState(PlayerState.Ghost);
                 if (photonView.IsMine)
                 {
-                    anim.SetTrigger("IsDeath");
+                    anim.SetBool("IsDead", true);
+                    //anim.SetTrigger("IsDeath");
                     Saebom.PlayGameManager.Instance.gameObject.GetPhotonView().RPC("PlayerDie", RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
                     //Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
                 }
@@ -210,17 +213,17 @@ namespace SoYoon
             Debug.Log("turn to night : " + turnToNight);
             if (PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird && !turnToNight)
             {
-                anim.SetTrigger("IsActive");
+                //anim.SetTrigger("IsActive");
                 OnActive();
             }
             else if (!(PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird) && turnToNight)
             {
-                anim.SetTrigger("IsActive");
+                //anim.SetTrigger("IsActive");
                 OnActive();
             }
             else
             {
-                anim.SetTrigger("IsInactive");
+                //anim.SetTrigger("IsInactive");
                 OnInactive();
             }
         }
@@ -235,6 +238,7 @@ namespace SoYoon
             Debug.Log(photonView.Owner.GetPlayerNumber() + "비활성화");
             // 비활동시기(내 활동시간이 아닐경우)
             Debug.Log(photonView.Owner.GetPlayerNumber() + " 애니메이션 비활성화");
+            anim.SetBool("IsActive", false);
             SetPlayerState(PlayerState.Inactive);
         }
 
@@ -243,6 +247,7 @@ namespace SoYoon
             Debug.Log(photonView.Owner.GetPlayerNumber() + "활성화");
             // 활동시기
             Debug.Log(photonView.Owner.GetPlayerNumber() + " 애니메이션 활성화");
+            anim.SetBool("IsActive", true);
             SetPlayerState(PlayerState.Active);
         }
 
