@@ -163,9 +163,9 @@ namespace Saebom
 
                 //턴이 끝났을 경우에만 승패 여부 계산
                 if (TimeManager.Instance.isCurNight)
-                    photonView.RPC("TurnResult", RpcTarget.All);
-
-                TimeManager.Instance.FinishScoreTimeSet();
+                    photonView.RPC("TurnResult", RpcTarget.MasterClient);
+                else
+                    TimeManager.Instance.FinishScoreTimeSet();
                 masterCheck = 0;
             }
         }
@@ -295,13 +295,16 @@ namespace Saebom
         //턴이 끝났을 때 결과가 나왔다면 누가 이겼는지 구현
         public void TurnResult()
         {
+
+             Win whoWin = new Win();
+
             //1. 한쪽의 점수가 6점을 넘겼을때 (점수가 더 큰 사람이 이김)
             if (birdScore >= 6 || mouseScore >= 6)
             {
                 if (birdScore > mouseScore)
-                    EndGame(Win.BirdWin);
+                    whoWin = Win.BirdWin;
                 else if (birdScore < mouseScore)
-                    EndGame(Win.MouseWin);
+                    whoWin = (Win.MouseWin);
                 else
                 {
                     //만약 동점이라면 스파이를 죽인 팀이 이긴다.
@@ -310,41 +313,41 @@ namespace Saebom
                         //둘다 스파이를 죽였다면 남은 시민의 수로 비교한다.
                         if (birdCount > mouseCount)
                         {
-                            EndGame(Win.BirdWin);
+                            whoWin = (Win.BirdWin);
                         }
                         else if (birdCount < mouseCount)
                         {
-                            EndGame(Win.MouseWin);
+                            whoWin = (Win.MouseWin);
                         }
                         else
                         {
-                            EndGame(Win.Draw);
+                            whoWin = (Win.Draw);
                         }
                     }
                     else
                     {
                         if (isBirdSpyDie)
                         {
-                            EndGame(Win.MouseWin);
+                            whoWin = (Win.MouseWin);
                         }
                         else if (isMouseSpyDie)
                         {
-                            EndGame(Win.BirdWin);
+                            whoWin = (Win.BirdWin);
                         }
                         else//둘다 스파이를 죽이지 않았다면 시민의 수로 비교한다.
                         {
                             //둘다 스파이를 죽였다면 남은 시민의 수로 비교한다.
                             if (birdCount > mouseCount)
                             {
-                                EndGame(Win.BirdWin);
+                                whoWin = (Win.BirdWin);
                             }
                             else if (birdCount < mouseCount)
                             {
-                                EndGame(Win.MouseWin);
+                                whoWin = (Win.MouseWin);
                             }
                             else
                             {
-                                EndGame(Win.Draw);
+                                whoWin = (Win.Draw);
                             }
                         }
                     }
@@ -358,32 +361,32 @@ namespace Saebom
                 {
                     //둘다 스파이가 죽었다면 현재 점수로 비교한다.
                     if (birdScore > mouseScore)
-                        EndGame(Win.BirdWin);
+                        whoWin = (Win.BirdWin);
                     else if (birdScore < mouseScore)
-                        EndGame(Win.MouseWin);
+                        whoWin = (Win.MouseWin);
                     else
                     {
                         //점수가 동점이라면 남은 시민의 수로 비교한다.
                         if (birdCount > mouseCount)
                         {
-                            EndGame(Win.BirdWin);
+                            whoWin = (Win.BirdWin);
                         }
                         else if (birdCount < mouseCount)
                         {
-                            EndGame(Win.MouseWin);
+                            whoWin = (Win.MouseWin);
                         }
                         else
                         {
-                            EndGame(Win.Draw);
+                            whoWin = (Win.Draw);
                         }
 
                     }
 
                 }
                 else if (isBirdSpyDie && !isMouseSpyDie)
-                    EndGame(Win.BirdWin);
+                    whoWin = (Win.BirdWin);
                 else if (!isBirdSpyDie && isMouseSpyDie)
-                    EndGame(Win.MouseWin);
+                    whoWin = (Win.MouseWin);
 
             }
             //3. 한쪽팀이 스파이1명 시민1명일때
@@ -393,34 +396,38 @@ namespace Saebom
                 if ((birdCount <= 1 && !isBirdSpyDie) && (mouseCount <= 1 && !isMouseSpyDie))
                 {
                     if (birdScore > mouseScore)
-                        EndGame(Win.BirdWin);
+                        whoWin = (Win.BirdWin);
                     else if (birdScore < mouseScore)
-                        EndGame(Win.MouseWin);
+                        whoWin = (Win.MouseWin);
                     else
-                        EndGame(Win.Draw);
+                        whoWin = (Win.Draw);
                 }
                 else if ((birdCount <= 1 && !isBirdSpyDie) && !(mouseCount <= 1 && !isMouseSpyDie))
-                    EndGame(Win.BirdWin);
+                    whoWin = (Win.BirdWin);
                 else if (!(birdCount <= 1 && !isBirdSpyDie) && (mouseCount <= 1 && !isMouseSpyDie))
-                    EndGame(Win.MouseWin);
+                    whoWin = (Win.MouseWin);
             }
             else if (TimeManager.Instance.curRound >= 11) //SettingManager.Instance.maxRoundCount
             {
                 if (birdScore > mouseScore)
-                    EndGame(Win.BirdWin);
+                    whoWin = (Win.BirdWin);
                 else if (birdScore < mouseScore)
-                    EndGame(Win.MouseWin);
+                    whoWin = (Win.MouseWin);
                 else
-                    EndGame(Win.Draw);
+                    whoWin = (Win.Draw);
             }
 
             else//승패를 결정짓는 경우가 아니면 게임 재개
+            {
                 TimeManager.Instance.FinishScoreTimeSet();
+                return;
+            }
 
-
+            photonView.RPC("EndGame", RpcTarget.All, (int)whoWin);
         }
 
-        private void EndGame(Win win)
+        [PunRPC]
+        private void EndGame(int win)
         {
             end = true;
 
@@ -437,7 +444,7 @@ namespace Saebom
 
             switch (win)
             {
-                case Win.BirdWin:
+                case (int)Win.BirdWin:
                     //개인 승수 +1
                     if (PlayGameManager.Instance.myPlayerState.isBird == true && PlayGameManager.Instance.myPlayerState.isSpy == false ||
                         PlayGameManager.Instance.myPlayerState.isBird == false && PlayGameManager.Instance.myPlayerState.isSpy == true)
@@ -450,7 +457,7 @@ namespace Saebom
                     winText.text = "새팀 승리!";
 
                     break;
-                case Win.MouseWin:
+                case (int)Win.MouseWin:
                     //개인 승수 +1
                     if (PlayGameManager.Instance.myPlayerState.isBird == false && PlayGameManager.Instance.myPlayerState.isSpy == false ||
                         PlayGameManager.Instance.myPlayerState.isBird == true && PlayGameManager.Instance.myPlayerState.isSpy == true)
@@ -463,7 +470,7 @@ namespace Saebom
                     winText.text = "쥐팀 승리!";
 
                     break;
-                case Win.Draw:
+                case (int)Win.Draw:
                     //개인 무승부수 +1
                     DataManager.Instance.SaveResult(PlayResult.Draw);
                     drawBackgroundImg.SetActive(true);
