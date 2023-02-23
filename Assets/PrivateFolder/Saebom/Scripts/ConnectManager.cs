@@ -2,7 +2,6 @@ using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using Saebom;
-using SoYoon;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -23,7 +22,8 @@ public class ConnectManager : MonoBehaviourPunCallbacks
             { "Load" , true },
         };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-        PhotonNetwork.AutomaticallySyncScene = false;
+        if(!PhotonNetwork.IsMasterClient)
+            PhotonNetwork.AutomaticallySyncScene = false;
     }
 
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
@@ -39,6 +39,12 @@ public class ConnectManager : MonoBehaviourPunCallbacks
                 Debug.Log("Waiting for another players");
             }
         }
+    }
+
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+        if(newMasterClient == PhotonNetwork.LocalPlayer)
+            PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)

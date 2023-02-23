@@ -522,18 +522,12 @@ namespace Saebom
                 DataManager.Instance.EarnItemToMail("È²±Ýºû ½Â¸®");
         }
 
-
-
-
         public void OnExitButtonClick()
         {
-            Hashtable props = new Hashtable()
-            {
-                { "Load" , false }
-            };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-
-            SceneManager.LoadScene("LobbyTestScene");
+            if (PhotonNetwork.IsMasterClient)
+                PhotonNetwork.LoadLevel("LobbyTestScene");
+            else
+                SceneManager.LoadScene("LobbyTestScene");
         }
     }
 }
