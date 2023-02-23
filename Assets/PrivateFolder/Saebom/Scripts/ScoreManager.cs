@@ -221,23 +221,37 @@ namespace Saebom
             //2. 스파이가 시민1명을 남기고 모든 사람을 죽였을때
             bool activeTimeOver = false;
 
-            birdCount = mouseCount = allPlayerNum;
+            birdCount = allPlayerNum;
+            mouseCount = allPlayerNum;
+            isMouseSpyDie = false;
+            isBirdSpyDie = false;
 
             foreach (PlayerState state in PlayGameManager.Instance.playerList)
             {
                 if (state.isBird)
                 {
                     if (state.isDie && !state.isSpy)
+                    {
                         birdCount--;
+                        Debug.Log(birdCount);
+                        Debug.Log(state.name);
+                    }
+                        
                     else if (state.isDie && state.isSpy)
                     {
                         isBirdSpyDie = true;
                         if (!TimeManager.Instance.isCurNight)
+                        {
                             activeTimeOver = true;
+                            
+                        }
                     }
 
                     if (birdCount <= 1 && !TimeManager.Instance.isCurNight)
+                    {
                         activeTimeOver = true;
+                         Debug.Log(activeTimeOver + "(2)"); 
+                    }
                 }
                 else
                 {
@@ -247,11 +261,17 @@ namespace Saebom
                     {
                         isMouseSpyDie = true;
                         if (TimeManager.Instance.isCurNight)
+                        {
                             activeTimeOver = true;
+                            
+                        }
                     }
 
                     if (mouseCount <= 1 && TimeManager.Instance.isCurNight)
+                    {
                         activeTimeOver = true;
+                       
+                    }
                 }
             }
 
