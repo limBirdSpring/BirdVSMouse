@@ -130,7 +130,7 @@ public class VoteManager : MonoBehaviourPun
         while (time > 0)
         {
             time -= Time.deltaTime;
-            Debug.Log(time);
+
             photonView.RPC("UpdateTime", RpcTarget.All, time);
             yield return null;
         }
