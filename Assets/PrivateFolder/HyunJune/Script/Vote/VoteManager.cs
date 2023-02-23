@@ -68,7 +68,7 @@ public class VoteManager : MonoBehaviourPun
 
     public bool deadBodyFinder = false;
     private bool voteComplete = false;
-    private int participantCount;
+    private float participantCount;
     private VoteRole myRole;
 
     [Header("SkipWindow")]
@@ -425,7 +425,7 @@ public class VoteManager : MonoBehaviourPun
         VotingResult();
     }
 
-    public int CalculateAlivePlayer()
+    public float CalculateAlivePlayer()
     {
         int alivePlayerCount = 0;
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)

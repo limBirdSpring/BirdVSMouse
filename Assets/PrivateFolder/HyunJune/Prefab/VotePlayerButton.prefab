@@ -641,5 +641,5 @@ MonoBehaviour:
   playerIcon: {fileID: 5773448602460002857}
   voteCountUI: {fileID: 5773448603054975514}
   finder: {fileID: 3197876872599399893}
-  voteComplete: {fileID: 3197876872502981980}
+  voteTarget: {fileID: 3197876872502981980}
   voteButton: {fileID: 5773448603468110154}
