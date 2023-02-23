@@ -470,9 +470,9 @@ public class VoteManager : MonoBehaviourPun
                 mostVoterPlayer = entry.ActorNumber;
             }
         }
-
-        // 최다 득표 수가 참가자의 절반 이상의 표를 받았으면 죽여버린다
-        if (mostVoterCount >= participantCount / 2)
+        
+        // 최다 득표 수가 참가자의 절반 이상의 표를 받았거나 
+        if (mostVoterCount >= participantCount / 2 && mostVoterCount > skipVote.VoteCount)
         {
             // 죽인다
             photonView.RPC("PlayerKill", RpcTarget.All, mostVoterPlayer);
