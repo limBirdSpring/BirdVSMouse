@@ -68,7 +68,7 @@ public class VoteManager : MonoBehaviourPun
 
     public bool deadBodyFinder = false;
     private bool voteComplete = false;
-    private int participantCount;
+    private float participantCount;
     private VoteRole myRole;
 
     [Header("SkipWindow")]
@@ -367,7 +367,7 @@ public class VoteManager : MonoBehaviourPun
             // 만약 투표한 사람의 액터넘버가 엔트리의 액터넘버랑 똑같다면 투표완료 업데이트
             if (entry.ActorNumber == actorNumber)
             {
-                entry.CompleteVote();
+                //entry.CompleteVote();
                 voteCompletePlayerList.Add(entry.ActorNumber);
             }
         }
@@ -393,6 +393,13 @@ public class VoteManager : MonoBehaviourPun
 
         voteComplete = true;
         ToggleAllButton(false);
+        foreach (PlayerVoteEntry entry in playerVoteEntries)
+        {
+            if (entry.ActorNumber == target)
+            {
+                entry.SetVoteTarget();
+            }
+        }
         photonView.RPC("VoteCheckRPC", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, target);
     }
 
@@ -401,12 +408,6 @@ public class VoteManager : MonoBehaviourPun
     {
         foreach (PlayerVoteEntry entry in playerVoteEntries)
         {
-            // 만약 투표한 사람의 액터넘버가 엔트리의 액터넘버랑 똑같다면 투표완료 업데이트
-            if (entry.ActorNumber == actorNumber)
-            {
-                entry.CompleteVote();
-            }
-
             // 타겟의 액터넘버가 엔트리의 엑터넘버랑 똑같다면 투표 수 상승
             if (entry.ActorNumber == target)
             {
@@ -424,7 +425,7 @@ public class VoteManager : MonoBehaviourPun
         VotingResult();
     }
 
-    public int CalculateAlivePlayer()
+    public float CalculateAlivePlayer()
     {
         int alivePlayerCount = 0;
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
