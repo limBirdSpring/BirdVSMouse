@@ -1,15 +1,14 @@
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
+using SoYoon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using Random = UnityEngine.Random;
 using UnityEngine.UI;
-using Photon.Pun.Demo.Cockpit;
-using Photon.Realtime;
-using Photon.Pun.UtilityScripts;
-using SoYoon;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Random = UnityEngine.Random;
 
 namespace Saebom
 {
@@ -113,9 +112,14 @@ namespace Saebom
             if (PhotonNetwork.IsMasterClient)
             {
                 SetPlayer();
-            }
 
-            
+                Hashtable props = new Hashtable();
+                props.Add("Ready", false);
+                props.Add("Load", false);
+
+                foreach(Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+                    player.SetCustomProperties(props);
+            }
         }
 
 
@@ -349,6 +353,7 @@ namespace Saebom
 
 
         //플레이어가 투표로 죽었을 때 호출할 함수
+        [PunRPC]
         public void PlayerDie(int index)
         {
             photonView.RPC("PlayerDieAndMasterPlayerListUpdate", RpcTarget.MasterClient, index);

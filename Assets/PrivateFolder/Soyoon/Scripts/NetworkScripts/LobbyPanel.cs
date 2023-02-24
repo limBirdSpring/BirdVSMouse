@@ -13,11 +13,11 @@ namespace SoYoon
         [SerializeField]
         private RectTransform roomContent;
 
-        private List<RoomEntry> roomEntries;
+        private Dictionary<string, RoomEntry> allRoomEntries;
 
         private void Awake()
         {
-            roomEntries = new List<RoomEntry>();
+            allRoomEntries = new Dictionary<string, RoomEntry>();
         }
 
         private void Start()
@@ -27,19 +27,29 @@ namespace SoYoon
 
         public void UpdateRoomList(List<RoomInfo> roomList)
         {
-            foreach (RoomEntry room in roomEntries)
+            foreach(RoomInfo room in roomList)
             {
-                Destroy(room.gameObject);
-            }
-            roomEntries.Clear();
-
-            foreach (RoomInfo room in roomList)
-            {
-                if (room.PlayerCount != 0)
+                if(allRoomEntries.ContainsKey(room.Name))
                 {
+                    if (room.PlayerCount == 0)
+                    {
+                        Destroy(allRoomEntries[room.Name].gameObject);
+                        allRoomEntries.Remove(room.Name);
+                    }
+                    else
+                    {
+                        RoomEntry entry = allRoomEntries[room.Name];
+                        entry.Initialized(room.Name, room.PlayerCount, room.MaxPlayers);
+                        allRoomEntries[room.Name] = entry;
+                    }
+                }
+                else
+                {
+                    if (room.PlayerCount == 0)
+                        return;
                     RoomEntry entry = Instantiate(roomEntryPrefab, roomContent);
                     entry.Initialized(room.Name, room.PlayerCount, room.MaxPlayers);
-                    roomEntries.Add(entry);
+                    allRoomEntries.Add(room.Name, entry);
                 }
             }
         }

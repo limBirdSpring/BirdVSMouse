@@ -151,13 +151,10 @@ MonoBehaviour:
     Name: Speed
   - Type: 9
     SynchronizeType: 2
-    Name: IsInactive
-  - Type: 9
-    SynchronizeType: 2
     Name: IsActive
-  - Type: 9
+  - Type: 4
     SynchronizeType: 2
-    Name: IsDeath
+    Name: IsDead
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

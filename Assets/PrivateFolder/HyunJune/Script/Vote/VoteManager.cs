@@ -68,7 +68,7 @@ public class VoteManager : MonoBehaviourPun
 
     public bool deadBodyFinder = false;
     private bool voteComplete = false;
-    private int participantCount;
+    private float participantCount;
     private VoteRole myRole;
 
     [Header("SkipWindow")]
@@ -130,7 +130,7 @@ public class VoteManager : MonoBehaviourPun
         while (time > 0)
         {
             time -= Time.deltaTime;
-            Debug.Log(time);
+
             photonView.RPC("UpdateTime", RpcTarget.All, time);
             yield return null;
         }
@@ -367,7 +367,7 @@ public class VoteManager : MonoBehaviourPun
             // 만약 투표한 사람의 액터넘버가 엔트리의 액터넘버랑 똑같다면 투표완료 업데이트
             if (entry.ActorNumber == actorNumber)
             {
-                entry.CompleteVote();
+                //entry.CompleteVote();
                 voteCompletePlayerList.Add(entry.ActorNumber);
             }
         }
@@ -393,6 +393,13 @@ public class VoteManager : MonoBehaviourPun
 
         voteComplete = true;
         ToggleAllButton(false);
+        foreach (PlayerVoteEntry entry in playerVoteEntries)
+        {
+            if (entry.ActorNumber == target)
+            {
+                entry.SetVoteTarget();
+            }
+        }
         photonView.RPC("VoteCheckRPC", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, target);
     }
 
@@ -401,12 +408,6 @@ public class VoteManager : MonoBehaviourPun
     {
         foreach (PlayerVoteEntry entry in playerVoteEntries)
         {
-            // 만약 투표한 사람의 액터넘버가 엔트리의 액터넘버랑 똑같다면 투표완료 업데이트
-            if (entry.ActorNumber == actorNumber)
-            {
-                entry.CompleteVote();
-            }
-
             // 타겟의 액터넘버가 엔트리의 엑터넘버랑 똑같다면 투표 수 상승
             if (entry.ActorNumber == target)
             {
@@ -424,7 +425,7 @@ public class VoteManager : MonoBehaviourPun
         VotingResult();
     }
 
-    public int CalculateAlivePlayer()
+    public float CalculateAlivePlayer()
     {
         int alivePlayerCount = 0;
         foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
@@ -469,9 +470,9 @@ public class VoteManager : MonoBehaviourPun
                 mostVoterPlayer = entry.ActorNumber;
             }
         }
-
-        // 최다 득표 수가 참가자의 절반 이상의 표를 받았으면 죽여버린다
-        if (mostVoterCount >= participantCount / 2)
+        
+        // 최다 득표 수가 참가자의 절반 이상의 표를 받았거나 
+        if (mostVoterCount >= participantCount / 2 && mostVoterCount > skipVote.VoteCount)
         {
             // 죽인다
             photonView.RPC("PlayerKill", RpcTarget.All, mostVoterPlayer);
@@ -591,19 +592,20 @@ public class VoteManager : MonoBehaviourPun
         //스파이가 없으면 시민 승리
         if (spy == 0)
         {
-            photonView.RPC("GameOver", RpcTarget.All, null);
+            if (PhotonNetwork.IsMasterClient)
+                GameOver();
         }
         // 스파이와 시민이 같은 인원이면 스파이팀 승리
         else if (spy == noneSpy)
         {
-            photonView.RPC("GameOver", RpcTarget.All, null);
+            if (PhotonNetwork.IsMasterClient)
+                GameOver();
         }
         // 둘다 아니면 게임 지속
         else
             return;
     }
 
-    [PunRPC]
     private void GameOver()
     {
         ScoreManager.Instance.ActiveTimeOverNow();

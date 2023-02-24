@@ -25,7 +25,7 @@ namespace SoYoon
         public override void OnConnectedToMaster()
         {
             Debug.Log("접속 성공");
-            SceneManager.LoadScene("LobbyTestScene");
+            SceneManager.LoadScene("LoadScene");
         }
     }
 }

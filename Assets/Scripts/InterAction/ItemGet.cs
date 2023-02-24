@@ -17,9 +17,6 @@ public class ItemGet : MonoBehaviour
     private GameObject clock;
 
     [SerializeField]
-    private GameObject hiderancePrefab;
-
-    [SerializeField]
     private GameObject blockButton;
 
     private PhotonView photonView;
@@ -41,7 +38,7 @@ public class ItemGet : MonoBehaviour
             if (waitingTime == 3f)
             {
                 TimeManager.Instance.HideranceAdd();
-                Instantiate(hiderancePrefab, clock.transform.position, Quaternion.identity);
+                PhotonNetwork.Instantiate("Hiderance", clock.transform.position, Quaternion.identity);
             }
 
             blockButton.SetActive(true);

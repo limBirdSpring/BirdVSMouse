@@ -14,7 +14,7 @@ public class PlayerVoteEntry : MonoBehaviourPun
     [SerializeField] private Image playerIcon;
     [SerializeField] private TMP_Text voteCountUI;
     [SerializeField] private Image finder;
-    [SerializeField] private Image voteComplete;
+    [SerializeField] private Image voteTarget;
 
     [SerializeField]
     private Button voteButton;
@@ -51,7 +51,7 @@ public class PlayerVoteEntry : MonoBehaviourPun
         voteCount = 0;
         voteCountUI.text = voteCount.ToString();
         finder.enabled = false;
-        voteComplete.enabled = false;
+        voteTarget.enabled = false;
 
         if (PlayGameManager.Instance.playerList[player.GetPlayerNumber()].isDie)
         {
@@ -78,9 +78,9 @@ public class PlayerVoteEntry : MonoBehaviourPun
         ToggleButton(false);
     }
 
-    public void CompleteVote()
+    public void SetVoteTarget()
     {
-        voteComplete.enabled = true;
+        voteTarget.enabled = true;
     }
 
     public void ToggleButton(bool toggle)

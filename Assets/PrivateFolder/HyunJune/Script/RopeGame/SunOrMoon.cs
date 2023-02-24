@@ -32,8 +32,8 @@ public class SunOrMoon : MonoBehaviour
     private Transform originalPos;
 
     private SunOrMoonState curState;
-    private Coroutine moveCoroutine;
-
+    private RectTransform recTransform;
+   
     [SerializeField]
     private Identity identity;
 
@@ -48,6 +48,11 @@ public class SunOrMoon : MonoBehaviour
         get { return missionSuccess; }
     }
 
+    private void Awake()
+    {
+        recTransform = GetComponent<RectTransform>(); 
+    }
+
     private void Start()
     {
         curState = SunOrMoonState.None;
@@ -58,16 +63,16 @@ public class SunOrMoon : MonoBehaviour
         switch (curState)
         {
             case SunOrMoonState.None:
-                transform.Translate(Vector2.zero * moveSpeed);
+                recTransform.Translate(Vector2.zero * moveSpeed);
                 break;
             case SunOrMoonState.Down:
-                transform.Translate(Vector2.down * moveSpeed * Time.deltaTime);
+                recTransform.Translate(Vector2.down * moveSpeed * Time.deltaTime);
                 break;
             case SunOrMoonState.Right:
-                transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+                recTransform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
                 break;
             case SunOrMoonState.Left:
-                transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
+                recTransform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
                 break;
             default: 
                 break;
@@ -89,18 +94,20 @@ public class SunOrMoon : MonoBehaviour
     {
         if (collision.gameObject.name.Equals("Left"))
         {
-            StartCoroutine(DelayChange("Left"));
+            recTransform.position = collision.bounds.center;
+            DelayChange("Left");
         }
 
         if (collision.gameObject.name.Equals("Right"))
         {
-            StartCoroutine(DelayChange("Right"));
+            recTransform.position = collision.bounds.center;
+            DelayChange("Right");
         }
 
         if (collision.gameObject.name.Equals("ArriveSun"))
         {
             curState = SunOrMoonState.None;
-
+            ResetPos();
             if (identity == Identity.Sun)
             {
                 Debug.Log("미션 성공");
@@ -137,10 +144,8 @@ public class SunOrMoon : MonoBehaviour
         }
     }
 
-    public IEnumerator DelayChange(string dir)
+    private void DelayChange(string dir)
     {
-        yield return new WaitForSeconds(0.01f);
-
         if (dir == "Left")
         {
             if (curState == SunOrMoonState.Down)

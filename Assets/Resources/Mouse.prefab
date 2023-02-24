@@ -310,22 +310,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[0].SynchronizeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[2].SynchronizeType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285492473500156118, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
-      propertyPath: m_SynchronizeParameters.Array.data[3].SynchronizeType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6815091132046495039, guid: a9c001cebb3c81e489255e2c1c26fd1f, type: 3}
       propertyPath: m_Name
       value: SaengM

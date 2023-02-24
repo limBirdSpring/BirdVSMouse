@@ -51,7 +51,9 @@ public class Kill : MonoBehaviour
             Black = BlackBird;
         foreach (Saebom.PlayerState player in PlayGameManager.Instance.playerList)
         {
-            if (player.isSpy && isBird)
+            if (player.isSpy && player.isBird && isBird)
+                Spy.sprite = player.sprite;
+            else if (player.isSpy && !player.isBird && !isBird)
                 Spy.sprite = player.sprite;
         }
     }

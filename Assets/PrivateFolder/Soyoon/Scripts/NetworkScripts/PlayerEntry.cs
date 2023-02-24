@@ -2,9 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SoYoon
@@ -80,7 +78,10 @@ namespace SoYoon
             if (!IsMaster)
             {
                 playerReady.SetActive(ready);
-                PhotonNetwork.AutomaticallySyncScene = ready; // 같이 씬이 넘어가도록
+                object isMasterInRoom;
+                if(PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("AbleToStartGame", out isMasterInRoom))
+                    if((bool)isMasterInRoom)
+                        PhotonNetwork.AutomaticallySyncScene = ready; // 같이 씬이 넘어가도록
             }
             else
                 playerReady.SetActive(false);

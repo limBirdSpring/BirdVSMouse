@@ -46,6 +46,9 @@ namespace Saebom
         [SerializeField]
         private GameObject nightSky;
 
+        [SerializeField]
+        private TextMeshProUGUI hideranceUI;
+
 
         //===================================
 
@@ -175,7 +178,7 @@ namespace Saebom
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
 
             //만약 강제로 활동시간이 끝났다면 캐릭터 거점으로 강제이동
-            if (isHouseTime && (controller.state == global::PlayerState.Active))
+            if (isHouseTime && ((controller.state == global::PlayerState.Active) || (controller.state == global::PlayerState.Inactive)))
                 controller.photonView.RPC("CheckIfIsInHouse", RpcTarget.All);
 
             PlayGameManager.Instance.PlayerGoHomeNow();
@@ -339,6 +342,7 @@ namespace Saebom
         private void HideranceAddToRPC()
         {
             hiderance++;
+            hideranceUI.text = "방해성공 : " + hiderance.ToString() + "번";
             if (hiderance == 5) //SettingManager.Instance.successHiderance
             {
                 isHidering = true;

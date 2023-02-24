@@ -1,12 +1,8 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
-using UnityEngine.Pool;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace SoYoon
@@ -152,16 +148,6 @@ namespace SoYoon
             PhotonNetwork.CurrentRoom.IsVisible = false;
             if (lobbyBGM.isPlaying)
                 lobbyBGM.Stop();
-
-            foreach (Player player in PhotonNetwork.PlayerList)
-            {
-                if (player.IsMasterClient)
-                    break;
-
-                Hashtable props = new Hashtable();
-                props.Add("Ready", false);
-                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-            }
 
             PhotonNetwork.LoadLevel("GameScene");
         }
