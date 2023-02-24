@@ -17,13 +17,17 @@ public class ConnectManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        Hashtable props = new Hashtable()
-        {
-            { "Load" , true },
-        };
+        Hashtable props = new Hashtable();
+        props.Add("Load", true);
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
         if(!PhotonNetwork.IsMasterClient)
             PhotonNetwork.AutomaticallySyncScene = false;
+        else
+        {
+            Hashtable roomProps = new Hashtable();
+            roomProps.Add("AbleToStartGame", false);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
+        }
     }
 
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
