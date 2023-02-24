@@ -101,7 +101,7 @@ namespace Saebom
         private void OnEnable()
         {
             birdScore = mouseScore = 0;
-            allPlayerNum = birdCount = mouseCount = PhotonNetwork.CountOfPlayers / 2 - 1;
+            allPlayerNum = birdCount = mouseCount = PhotonNetwork.CurrentRoom.PlayerCount / 2 - 1;
             isBirdSpyDie = isMouseSpyDie = false;
 
             Hashtable hashtable = new Hashtable() {
@@ -226,15 +226,18 @@ namespace Saebom
             isMouseSpyDie = false;
             isBirdSpyDie = false;
 
+            Debug.Log("새팀 전체 시민 수 :" + birdCount);
+            Debug.Log("쥐팀 전체 시민 수 :" + mouseCount);
+
             foreach (PlayerState state in PlayGameManager.Instance.playerList)
             {
+                Debug.Log("이름 : " + state.name + ", 새 : " + state.isBird + ", 죽은여부 : " + state.isDie + ", 스파이여부 : " + state.isSpy);
+
                 if (state.isBird)
                 {
                     if (state.isDie && !state.isSpy)
                     {
                         birdCount--;
-                        Debug.Log(birdCount);
-                        Debug.Log(state.name);
                     }
                         
                     else if (state.isDie && state.isSpy)
@@ -242,6 +245,7 @@ namespace Saebom
                         isBirdSpyDie = true;
                         if (!TimeManager.Instance.isCurNight)
                         {
+                            Debug.Log("승패조건 1");
                             activeTimeOver = true;
                             
                         }
@@ -249,8 +253,8 @@ namespace Saebom
 
                     if (birdCount <= 1 && !TimeManager.Instance.isCurNight)
                     {
-                        activeTimeOver = true;
-                         Debug.Log(activeTimeOver + "(2)"); 
+                         activeTimeOver = true;
+                         Debug.Log("승패조건 2"); 
                     }
                 }
                 else
@@ -262,6 +266,7 @@ namespace Saebom
                         isMouseSpyDie = true;
                         if (TimeManager.Instance.isCurNight)
                         {
+                            Debug.Log("승패조건 3");
                             activeTimeOver = true;
                             
                         }
@@ -269,11 +274,13 @@ namespace Saebom
 
                     if (mouseCount <= 1 && TimeManager.Instance.isCurNight)
                     {
+                        Debug.Log("승패조건 4");
                         activeTimeOver = true;
                        
                     }
                 }
             }
+            Debug.Log("새팀점수 : " + birdScore + " 쥐팀점수 : " + mouseScore + "남은새팀수 : " + birdCount + "남은쥐팀수 : " + mouseCount + "새팀스파이 죽음여부 :" + isBirdSpyDie + "쥐팀스파이 죽음여부 : " + isMouseSpyDie);
 
             photonView.RPC("PrivatePlayerStateUpdate", RpcTarget.All, birdScore, mouseScore, birdCount, mouseCount, isBirdSpyDie, isMouseSpyDie);
 
@@ -321,22 +328,31 @@ namespace Saebom
             //1. 한쪽의 점수가 6점을 넘겼을때 (점수가 더 큰 사람이 이김)
             if (birdScore >= 6 || mouseScore >= 6)
             {
+                Debug.Log("한쪽의 점수가 6점을 넘겼을 때");
                 if (birdScore > mouseScore)
+                {
                     whoWin = Win.BirdWin;
+                }
                 else if (birdScore < mouseScore)
+                {
                     whoWin = (Win.MouseWin);
+                }
                 else
                 {
+                    Debug.Log("한쪽의 점수가 6점을 넘겼을 때 : 동점일떄");
                     //만약 동점이라면 스파이를 죽인 팀이 이긴다.
                     if (isBirdSpyDie && isMouseSpyDie)
                     {
+                        Debug.Log("한쪽의 점수가 6점을 넘겼을 때 : 두 스파이 모두 죽었을 때");
                         //둘다 스파이를 죽였다면 남은 시민의 수로 비교한다.
                         if (birdCount > mouseCount)
                         {
+                            Debug.Log("한쪽의 점수가 6점을 넘겼을 때 : 두 스파이 모두 죽었을 때 : 새팀시민 많음");
                             whoWin = (Win.BirdWin);
                         }
                         else if (birdCount < mouseCount)
                         {
+                            Debug.Log("한쪽의 점수가 6점을 넘겼을 때 : 두 스파이 모두 죽었을 때 : 쥐팀시민 많음");
                             whoWin = (Win.MouseWin);
                         }
                         else
@@ -346,23 +362,28 @@ namespace Saebom
                     }
                     else
                     {
+                        
                         if (isBirdSpyDie)
                         {
-                            whoWin = (Win.MouseWin);
+                            Debug.Log("한쪽의 점수가 6점을 넘겼을 때 : 새스파이가 죽었을떄");
+                            whoWin = (Win.BirdWin);
                         }
                         else if (isMouseSpyDie)
                         {
-                            whoWin = (Win.BirdWin);
+                            Debug.Log("한쪽의 점수가 6점을 넘겼을 때 : 쥐스파이가 죽었을떄");
+                            whoWin = (Win.MouseWin);
                         }
                         else//둘다 스파이를 죽이지 않았다면 시민의 수로 비교한다.
                         {
                             //둘다 스파이를 죽였다면 남은 시민의 수로 비교한다.
                             if (birdCount > mouseCount)
                             {
+                                Debug.Log("한쪽의 점수가 6점을 넘겼을 때 : 새 시민이 쥐 시민보다 많이 남았을때");
                                 whoWin = (Win.BirdWin);
                             }
                             else if (birdCount < mouseCount)
                             {
+                                Debug.Log("한쪽의 점수가 6점을 넘겼을 때 : 쥐 시민이 새 시민보다 많이 남았을때");
                                 whoWin = (Win.MouseWin);
                             }
                             else
@@ -377,22 +398,33 @@ namespace Saebom
             //2. 한쪽 스파이가 죽었을때 (양쪽다 스파이가 죽었다면 점수로 비교, 아니라면 스파이를 죽인팀이 이김)
             else if (isBirdSpyDie || isMouseSpyDie)
             {
+                Debug.Log("한쪽 스파이가 죽었을때");
                 if (isBirdSpyDie && isMouseSpyDie)
                 {
+                    Debug.Log("한쪽 스파이가 죽었을때 : 둘다 죽었을때");
                     //둘다 스파이가 죽었다면 현재 점수로 비교한다.
                     if (birdScore > mouseScore)
+                    {
+                        Debug.Log("한쪽 스파이가 죽었을때 : 새팀 점수가 더 높을때");
                         whoWin = (Win.BirdWin);
+                    }
                     else if (birdScore < mouseScore)
+                    {
+                        Debug.Log("한쪽 스파이가 죽었을때 : 쥐팀 점수가 더 높을때");
                         whoWin = (Win.MouseWin);
+                    }
                     else
                     {
+                        Debug.Log("한쪽 스파이가 죽었을때 : 점수가 동점일때");
                         //점수가 동점이라면 남은 시민의 수로 비교한다.
                         if (birdCount > mouseCount)
                         {
+                            Debug.Log("한쪽 스파이가 죽었을때 : 새팀이 더 많이 남았을때");
                             whoWin = (Win.BirdWin);
                         }
                         else if (birdCount < mouseCount)
                         {
+                            Debug.Log("한쪽 스파이가 죽었을때 : 쥐팀이 더 많이 남았을떄");
                             whoWin = (Win.MouseWin);
                         }
                         else
@@ -404,37 +436,70 @@ namespace Saebom
 
                 }
                 else if (isBirdSpyDie && !isMouseSpyDie)
+                {
+                    Debug.Log("한쪽 스파이가 죽었을때 : 새스파이가 죽음");
                     whoWin = (Win.BirdWin);
+                }
                 else if (!isBirdSpyDie && isMouseSpyDie)
+                {
+                    Debug.Log("한쪽 스파이가 죽었을때 : 쥐스파이가 죽음");
                     whoWin = (Win.MouseWin);
+                }
 
             }
             //3. 한쪽팀이 스파이1명 시민1명일때
             else if ((birdCount <= 1 && !isBirdSpyDie) || (mouseCount <= 1 && !isMouseSpyDie))
             {
+                Debug.Log("한쪽팀이 스파이1명 시민1명일때");
                 //둘다 스파이1명, 시민1명이 남았다면 점수로 비교한다.
                 if ((birdCount <= 1 && !isBirdSpyDie) && (mouseCount <= 1 && !isMouseSpyDie))
                 {
+                    Debug.Log("두팀 모두 스파이1명 시민1명일때");
                     if (birdScore > mouseScore)
+                    {
+                        Debug.Log("두팀 모두 스파이1명 시민1명일때 : 새팀점수 높음");
                         whoWin = (Win.BirdWin);
+                    }
                     else if (birdScore < mouseScore)
+                    {
+                        Debug.Log("두팀 모두 스파이1명 시민1명일때 : 쥐팀점수 높음");
                         whoWin = (Win.MouseWin);
+                    }
                     else
+                    {
                         whoWin = (Win.Draw);
+                    }
                 }
                 else if ((birdCount <= 1 && !isBirdSpyDie) && !(mouseCount <= 1 && !isMouseSpyDie))
-                    whoWin = (Win.BirdWin);
-                else if (!(birdCount <= 1 && !isBirdSpyDie) && (mouseCount <= 1 && !isMouseSpyDie))
+                {
+                    Debug.Log("한쪽팀이 스파이1명 시민1명일때 : 쥐팀이 이길만함");
                     whoWin = (Win.MouseWin);
+                }
+                else if (!(birdCount <= 1 && !isBirdSpyDie) && (mouseCount <= 1 && !isMouseSpyDie))
+                {
+                    Debug.Log("한쪽팀이 스파이1명 시민1명일때 : 새팀이 이길만함");
+                    whoWin = (Win.BirdWin);
+                }
+                else
+                {
+                    Debug.Log("뭔가 잘못됨");
+                }
             }
             else if (TimeManager.Instance.curRound >= 11) //SettingManager.Instance.maxRoundCount
             {
+                Debug.Log("11라운드가 넘었을때");
                 if (birdScore > mouseScore)
+                {
                     whoWin = (Win.BirdWin);
+                }
                 else if (birdScore < mouseScore)
+                {
                     whoWin = (Win.MouseWin);
+                }
                 else
+                {
                     whoWin = (Win.Draw);
+                }
             }
 
             else//승패를 결정짓는 경우가 아니면 게임 재개
