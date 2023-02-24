@@ -101,7 +101,7 @@ namespace SoYoon
                 return;
             for (int i=0;i<earnedCollectionItemList.Count;i++)
             {
-                if (earnedCollectionItemList[i].name == itemName)
+                if (earnedCollectionItemList[i].itemName == itemName)
                     return;
             }
 
