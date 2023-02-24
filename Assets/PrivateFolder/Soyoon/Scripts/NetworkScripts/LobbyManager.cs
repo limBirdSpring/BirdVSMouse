@@ -81,6 +81,10 @@ namespace SoYoon
                     { "Load" , false },
                 };
                 PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+                Hashtable roomProps = new Hashtable();
+                roomProps.Add("AbleToStartGame", true);
+                PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
             }
             else
             {
@@ -147,6 +151,20 @@ namespace SoYoon
             RoomPanel roomPanel = GameObject.Find("Canvas").GetComponent<RoomPanel>();
             roomPanel?.UpdateRoomState();
             roomPanel?.UpdateLocalPlayerPropertiesUpdate();
+        }
+
+        public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+        {
+            if(propertiesThatChanged.ContainsKey("AbleToStartGame"))
+            {
+                if ((bool)propertiesThatChanged["AbleToStartGame"])
+                {
+                    object alreadyReady;
+                    if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("Ready", out alreadyReady))
+                        if ((bool)alreadyReady)
+                            PhotonNetwork.AutomaticallySyncScene = true;
+                }
+            }
         }
 
         public override void OnJoinedLobby()
