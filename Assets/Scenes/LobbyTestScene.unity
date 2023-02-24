@@ -22781,6 +22781,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2745818347435577265, guid: 924531475a75062469e003e4bd677bc1, type: 3}
+      propertyPath: myInfo.earnedItem.Array.size
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2745818347435577266, guid: 924531475a75062469e003e4bd677bc1, type: 3}
       propertyPath: m_Name
       value: DataManager
