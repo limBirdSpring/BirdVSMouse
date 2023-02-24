@@ -75,6 +75,10 @@ public class VoteManager : MonoBehaviourPun
     [SerializeField]
     private ResultNothing skipWindow;
 
+    [Header("StartVoteWindow")]
+    [SerializeField]
+    private GameObject startWindow;
+
     private IEnumerator co;
 
     private void Awake()
@@ -245,6 +249,8 @@ public class VoteManager : MonoBehaviourPun
     [PunRPC]
     public void EmergencyReport()
     {
+        startWindow.gameObject.SetActive(true);
+
         // 긴급 보고
         SetUpPlayerState();
         AddAlivePlayerEntry();
@@ -257,8 +263,15 @@ public class VoteManager : MonoBehaviourPun
             TimeManager.Instance.TimeStop();
         }
 
+        StartCoroutine(OpenVoteWindow());
+    }
+
+    private IEnumerator OpenVoteWindow()
+    {
+        yield return new WaitForSeconds(5);
         voteWindow.gameObject.SetActive(true);
         SoundManager.Instance.PlayUISound(UISFXName.Vote);
+        startWindow.gameObject.SetActive(false);
     }
 
     public void SetRole()
