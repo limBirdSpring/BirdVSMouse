@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public enum PlayResult { Play, Win, Draw, Lose, Spy }
 
@@ -109,6 +110,9 @@ namespace SoYoon
             mailedCollectionItemList.AddLast(item);
             myInfo.mailedItem.Add(itemName);
             SaveToJson();
+
+            if (SceneManager.GetActiveScene().name == "LobbyTestScene")
+                GameObject.Find("Canvas")?.transform.GetChild(7).GetComponent<LobbyMailButton>().OnNewButton();
         }
 
         public void EarnCoin(int coin)

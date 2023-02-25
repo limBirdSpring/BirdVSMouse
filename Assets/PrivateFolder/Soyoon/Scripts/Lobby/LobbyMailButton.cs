@@ -10,7 +10,12 @@ public class LobbyMailButton : MonoBehaviour
 
     private void Start()
     {
-        if(DataManager.Instance.myInfo.mailedItem.Count != 0)
+        OnNewButton();
+    }
+
+    public void OnNewButton()
+    {
+        if (DataManager.Instance.myInfo.mailedItem.Count != 0)
             newCanvas.SetActive(true);
     }
 }
