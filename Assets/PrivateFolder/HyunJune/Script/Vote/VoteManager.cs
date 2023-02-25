@@ -501,7 +501,13 @@ public class VoteManager : MonoBehaviourPun
     private void NothingWindowOpen()
     {
         skipWindow.gameObject.SetActive(true);
-        StartCoroutine(VotingEnd());
+        StartCoroutine(NothingVoteEnd());
+    }
+
+    private IEnumerator NothingVoteEnd()
+    {
+        yield return new WaitForSeconds(5);
+        photonView.RPC("VotingEndRPC", RpcTarget.All, null);
     }
 
     [PunRPC]
@@ -542,7 +548,7 @@ public class VoteManager : MonoBehaviourPun
 
     public IEnumerator VotingEnd()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         photonView.RPC("VotingEndRPC", RpcTarget.All, null);
     }
 
