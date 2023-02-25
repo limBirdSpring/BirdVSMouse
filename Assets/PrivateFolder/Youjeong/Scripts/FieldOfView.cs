@@ -17,8 +17,12 @@ public class FieldOfView : MonoBehaviourPun
     [SerializeField]
     private Vector2 size;
 
+    private CullingMaskController cullingMask;
+
     private void Awake()
     {
+        cullingMask = Camera.main.GetComponent<CullingMaskController>();
+
         //wallLayer = LayerMask.NameToLayer("Wall");
         shadowLayer = LayerMask.NameToLayer("Shadow");
         playerLayer = LayerMask.NameToLayer("Player");
@@ -42,6 +46,7 @@ public class FieldOfView : MonoBehaviourPun
 
             if (Physics2D.Raycast(transform.position, dirToTarget, disToTarget, wallLayer))
             {
+                // 타겟 사이에 벽이 있으면 안보이게 처리
                 if (targets[i].gameObject == this.gameObject)
                 {
                     SetTargetLayer(targets[i].gameObject, targets[i].gameObject.layer);
@@ -90,5 +95,16 @@ public class FieldOfView : MonoBehaviourPun
                     child.gameObject.SetActive(true);
             }
         }
+    }
+
+    public void InNulttuigi()
+    {
+        if(photonView.IsMine)
+            cullingMask.OnLayerMask(shadowLayer);
+    }
+    public void OutNulttuigi()
+    {
+        if (photonView.IsMine)
+            cullingMask.OffLayerMask(shadowLayer);
     }
 }

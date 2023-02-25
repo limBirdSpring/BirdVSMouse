@@ -13,12 +13,14 @@ public class Nulttuigi : MonoBehaviourPun
     [SerializeField]
     private GameObject missionWindow;
 
+   
     public void Jump()
     {
         GetComponent<AudioSource>().Play();
          missionWindow.SetActive(true);
         gameObject.GetComponent<InterActionAdapter>().isActive = true;
         photonView.RPC("NulttuigiActiveUpdate", RpcTarget.All, true);
+        PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<FieldOfView>().InNulttuigi();
         cam.Priority = 30;
         StartCoroutine(JumpCor());
     }
@@ -30,6 +32,9 @@ public class Nulttuigi : MonoBehaviourPun
         gameObject.GetComponent<InterActionAdapter>().isActive = false;
         photonView.RPC("NulttuigiActiveUpdate", RpcTarget.All, false);
         missionWindow.SetActive(false);
+        // 널뛰기 한 후 땅에 도착할 떄 카메라 컬링 마스크 원래대로
+        yield return new WaitForSeconds(2f);
+        PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<FieldOfView>().OutNulttuigi();
     }
 
     [PunRPC]
