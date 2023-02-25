@@ -1,11 +1,8 @@
 using Photon.Pun;
 using SoYoon;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 
@@ -131,10 +128,7 @@ namespace Saebom
             {
 
                 if (curTime > halfTime - 1 && curTime < halfTime)
-                {
-                    isHouseTime = true;
                     photonView.RPC("TimeOver", RpcTarget.All);
-                }
                 else if (curTime > dangerTime && curTime <= halfTime - 1)
                     photonView.RPC("DangerScreenOn", RpcTarget.All);
 
@@ -143,10 +137,7 @@ namespace Saebom
             else
             {
                 if (curTime > maxTime - 1 && curTime < maxTime)
-                {
-                    isHouseTime = true;
                     photonView.RPC("TimeOver", RpcTarget.All);
-                }
                 else if (curTime > dangerTime2 && curTime <= maxTime - 1)
                     photonView.RPC("DangerScreenOn", RpcTarget.All);
             }
@@ -166,6 +157,11 @@ namespace Saebom
                 isCurNight = false;
             else if (curTime > halfTime)
                 isCurNight = true;
+
+            if (curTime > halfTime - 1 && curTime < halfTime)
+                isHouseTime = true;
+            else if (curTime > maxTime - 1 && curTime < maxTime)
+                isHouseTime = true;
         }
 
         //==========================시간 종료 후 점수합산==========================
