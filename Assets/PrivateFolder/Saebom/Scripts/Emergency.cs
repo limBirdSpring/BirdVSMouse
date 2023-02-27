@@ -9,21 +9,20 @@ public class Emergency : MonoBehaviour
 
     private bool active = false;
 
-    public void Emnergency()
+    private void Emnergency()
     {
         
         if (active == false && PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight && MissionButton.Instance.birdEmergency > 0)
         {
-            MissionButton.Instance.birdEmergency--;
-            MissionButton.Instance.MasterSetEmergency();
+            Debug.Log("새 이머젼시 부름");
             VoteManager.Instance.FindDeadBody();
             active = true;
             StartCoroutine(Cor());
         }
         else if (active == false && !PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight && MissionButton.Instance.mouseEmergency > 0)
         {
-            MissionButton.Instance.mouseEmergency--;
-            MissionButton.Instance.MasterSetEmergency();
+
+            Debug.Log("쥐 이머젼시 부름");
             VoteManager.Instance.FindDeadBody();
             active = true;
             StartCoroutine(Cor());

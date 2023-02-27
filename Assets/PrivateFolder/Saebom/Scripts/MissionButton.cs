@@ -94,30 +94,6 @@ namespace Saebom
             //birdEmergency = mouseEmergency = SettingManager.Instance.emergencyCount;
         }
 
-        public void MasterSetEmergency()
-        {
-            Debug.Log(PlayGameManager.Instance.myPlayerState.name + birdEmergency + "(새 이머젼시)");
-            Debug.Log(PlayGameManager.Instance.myPlayerState.name + birdEmergency + "(쥐 이머젼시)");
-            photonView.RPC("SetEmergencyCountUI", RpcTarget.All, !TimeManager.Instance.isCurNight ? birdEmergency : mouseEmergency);
-        }
-
-        [PunRPC]
-        private void SetEmergencyCountUI(int emergency)
-        {
-
-            if (!TimeManager.Instance.isCurNight)
-            {
-                birdEmergency = emergency;
-                emergencyUI.text = birdEmergency.ToString();
-                Debug.Log(PlayGameManager.Instance.myPlayerState.name + emergency);
-            }
-            else
-            {
-                mouseEmergency = emergency;
-                emergencyUI.text = mouseEmergency.ToString();
-                Debug.Log(PlayGameManager.Instance.myPlayerState.name + emergency);
-            }
-        }
 
         //플레이매니저에서 역할을 정한 다음 호출
         public void MissionShare()
@@ -326,10 +302,21 @@ namespace Saebom
         }
 
         [PunRPC]
-        private void EmergencyUsed(int birdE, int mouseE)
+        public void EmergencyUsed(int birdE, int mouseE)
         {
             birdEmergency = birdE;
             mouseEmergency = mouseE;
+
+            if (!TimeManager.Instance.isCurNight)
+            {
+                emergencyUI.text = birdEmergency.ToString();
+
+            }
+            else
+            {
+                emergencyUI.text = mouseEmergency.ToString();
+
+            }
         }
 
 

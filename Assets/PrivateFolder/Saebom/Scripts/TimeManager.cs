@@ -1,6 +1,7 @@
 using Photon.Pun;
 using SoYoon;
 using System.Collections;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -246,17 +247,20 @@ namespace Saebom
                 curTime = 0;
             }
 
+           
+            photonView.RPC("TimeOn", RpcTarget.All);
+
             SetCurRound();
 
-            //이머젼시 초기화
-            MissionButton.Instance.MasterSetEmergency();
 
-            photonView.RPC("TimeOn", RpcTarget.All);
         }
 
         [PunRPC]
         public void TimeOn()
         {
+
+            isCurNight = !isCurNight;
+            MissionButton.Instance.EmergencyUsed(MissionButton.Instance.birdEmergency, MissionButton.Instance.mouseEmergency);
 
             RoundSetting();
   
@@ -272,6 +276,7 @@ namespace Saebom
                 controller.StartKillCoroutine();
 
             timeOn = true;
+        
         }
 
         //==================== 시간관련 추가 함수들 ======================
@@ -279,8 +284,6 @@ namespace Saebom
         private void SetCurRound()
         {
             curRound +=0.5f;
-            roundUI.text = "Round " + ((int)curRound).ToString();
-
             Hashtable props = new Hashtable();
             props.Add("curRound", curRound);
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
@@ -291,6 +294,7 @@ namespace Saebom
             object curRoundObj;
             PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("curRound", out curRoundObj);
             curRound = (float)curRoundObj;
+            roundUI.text = "Round " + ((int)curRound).ToString();
         }
 
 
