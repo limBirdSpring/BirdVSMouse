@@ -175,7 +175,7 @@ namespace Saebom
 
             //만약 강제로 활동시간이 끝났다면 캐릭터 거점으로 강제이동
             if (isHouseTime && ((controller.state == global::PlayerState.Active) || (controller.state == global::PlayerState.Inactive)))
-                controller.photonView.RPC("CheckIfIsInHouse", RpcTarget.All);
+                controller.gameObject.GetPhotonView().RPC("CheckIfIsInHouse", RpcTarget.All);
 
             PlayGameManager.Instance.PlayerGoHomeNow();
 
@@ -186,11 +186,11 @@ namespace Saebom
             if ((int)curTime == (int)halfTime)
             {
                 Debug.Log("함수 불러옴");
-                controller.photonView.RPC("SetActiveOrInactive", RpcTarget.All, true);
+                controller.gameObject.GetPhotonView().RPC("SetActiveOrInactive", RpcTarget.All, true);
             }
             else if ((int)curTime == (int)maxTime)
             {
-                controller.photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
+                controller.gameObject.GetPhotonView().RPC("SetActiveOrInactive", RpcTarget.All, false);
             }
 
             //2초 뒤 점수 확인 출력
