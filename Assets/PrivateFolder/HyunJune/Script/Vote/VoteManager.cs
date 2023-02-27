@@ -250,6 +250,7 @@ public class VoteManager : MonoBehaviourPun
     public void EmergencyReport()
     {
         startWindow.gameObject.SetActive(true);
+        SoundManager.Instance.PlayUISound(UISFXName.Vote);
 
         // 긴급 보고
         SetUpPlayerState();
@@ -270,7 +271,6 @@ public class VoteManager : MonoBehaviourPun
     {
         yield return new WaitForSeconds(5);
         voteWindow.gameObject.SetActive(true);
-        SoundManager.Instance.PlayUISound(UISFXName.Vote);
         startWindow.gameObject.SetActive(false);
     }
 
