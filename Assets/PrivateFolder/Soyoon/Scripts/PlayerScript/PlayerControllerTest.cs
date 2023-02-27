@@ -75,7 +75,6 @@ namespace SoYoon
         {
             if (photonView.IsMine)
             {
-                // ScoreManager.Instance.player = this;
                 CinemachineVirtualCamera playerCam = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
                 playerCam.Follow = this.transform;
                 playerCam.LookAt = this.transform;
@@ -137,10 +136,8 @@ namespace SoYoon
             if (photonView.IsMine)
             {
                 anim.SetBool("IsDead", true);
-                //anim.SetTrigger("IsDeath");
                 GameObject.Find("KillCanvas").transform.GetChild(0).gameObject.SetActive(true);
                 Saebom.PlayGameManager.Instance.gameObject.GetPhotonView().RPC("PlayerDie", RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
-                //Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
             }
         }
 
@@ -151,9 +148,7 @@ namespace SoYoon
             if (photonView.IsMine)
             {
                 anim.SetBool("IsDead", true);
-                //anim.SetTrigger("IsDeath");
                 Saebom.PlayGameManager.Instance.gameObject.GetPhotonView().RPC("PlayerDie", RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
-                //Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
             }
         }
 
@@ -161,15 +156,13 @@ namespace SoYoon
         public void CheckIfIsInHouse() // 제한 시간 내 집에 가지 못했을 시 호출되는 함수
         {
             //Debug.LogError("IsInHouse : " + isInHouse + " -> " + this.gameObject.name);
-            if (!isInHouse)// && state == PlayerState.Active)
+            if (!isInHouse)
             {
                 SetPlayerState(PlayerState.Ghost);
                 if (photonView.IsMine)
                 {
                     anim.SetBool("IsDead", true);
-                    //anim.SetTrigger("IsDeath");
                     Saebom.PlayGameManager.Instance.gameObject.GetPhotonView().RPC("PlayerDie", RpcTarget.MasterClient, photonView.Owner.GetPlayerNumber());
-                    //Saebom.PlayGameManager.Instance.PlayerDie(photonView.Owner.GetPlayerNumber());
                 }
             }
         }
@@ -209,20 +202,11 @@ namespace SoYoon
             Debug.Log("is bird : " + PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird);
             Debug.Log("turn to night : " + turnToNight);
             if (PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird && !turnToNight)
-            {
-                //anim.SetTrigger("IsActive");
                 OnActive();
-            }
             else if (!(PlayGameManager.Instance.playerList[photonView.Owner.GetPlayerNumber()].isBird) && turnToNight)
-            {
-                //anim.SetTrigger("IsActive");
                 OnActive();
-            }
             else
-            {
-                //anim.SetTrigger("IsInactive");
                 OnInactive();
-            }
         }
 
         private void SetNamePosition()
@@ -441,6 +425,7 @@ namespace SoYoon
 
         public IEnumerator KillCoolTimeUpdate()
         {
+            Debug.LogError("킬 쿨타임 시작");
             CanKill = false;
             float killTime = killCool * (1 / killUpdateTime);
             for(int i=0;i<killTime;i++)
@@ -450,7 +435,7 @@ namespace SoYoon
             }
             CanKill = true;
             CurKillCoolTime = 0;
-            Debug.Log("킬 쿨타임 코루틴 종료됨");
+            Debug.LogError("킬 쿨타임 종료됨");
         }
     }
 }
