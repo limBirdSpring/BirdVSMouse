@@ -59,7 +59,7 @@ namespace Saebom
         //=============================
 
         [HideInInspector]
-        public float curRound = 0;
+        public float curRound = 0.5f;
 
         [SerializeField]
         private TextMeshProUGUI roundUI;
@@ -240,7 +240,7 @@ namespace Saebom
             }
 
             //이머젼시 초기화
-            MissionButton.Instance.MasterSetEmergency();
+            
 
             photonView.RPC("TimeOn", RpcTarget.All);
         }
@@ -255,8 +255,8 @@ namespace Saebom
             startText.SetActive(true);
 
             SetCurRound();
+            MissionButton.Instance.MasterSetEmergency();
 
-           
 
 
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();

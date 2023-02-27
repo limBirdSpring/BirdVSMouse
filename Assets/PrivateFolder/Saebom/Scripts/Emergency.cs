@@ -6,22 +6,35 @@ using UnityEngine;
 
 public class Emergency : MonoBehaviour
 {
+
+    private bool active = false;
+
     public void Emnergency()
     {
         
-        if (PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight && MissionButton.Instance.birdEmergency > 0)
+        if (active == false && PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight && MissionButton.Instance.birdEmergency > 0)
         {
             MissionButton.Instance.birdEmergency--;
             MissionButton.Instance.MasterSetEmergency();
             VoteManager.Instance.FindDeadBody();
+            active = true;
+            StartCoroutine(Cor());
         }
-        else if (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight && MissionButton.Instance.mouseEmergency > 0)
+        else if (active == false && !PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight && MissionButton.Instance.mouseEmergency > 0)
         {
             MissionButton.Instance.mouseEmergency--;
             MissionButton.Instance.MasterSetEmergency();
             VoteManager.Instance.FindDeadBody();
+            active = true;
+            StartCoroutine(Cor());
         }
 
+    }
+
+    private IEnumerator Cor()
+    {
+        yield return new WaitForSeconds(2f);
+        active = false;
     }
 
 }
