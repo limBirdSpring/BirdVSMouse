@@ -250,6 +250,7 @@ public class VoteManager : MonoBehaviourPun
     public void EmergencyReport()
     {
         startWindow.gameObject.SetActive(true);
+        SoundManager.Instance.PlayUISound(UISFXName.Vote);
 
         // 긴급 보고
         SetUpPlayerState();
@@ -257,11 +258,7 @@ public class VoteManager : MonoBehaviourPun
         SetRole();
         skipVote.Initialized();
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            co = StartTimer();
-            StartCoroutine(co);
             TimeManager.Instance.TimeStop();
-        }
 
         StartCoroutine(OpenVoteWindow());
     }
@@ -269,8 +266,12 @@ public class VoteManager : MonoBehaviourPun
     private IEnumerator OpenVoteWindow()
     {
         yield return new WaitForSeconds(5);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            co = StartTimer();
+            StartCoroutine(co);
+        }
         voteWindow.gameObject.SetActive(true);
-        SoundManager.Instance.PlayUISound(UISFXName.Vote);
         startWindow.gameObject.SetActive(false);
     }
 
@@ -345,7 +346,7 @@ public class VoteManager : MonoBehaviourPun
                 continue;
 
             PlayerVoteEntry entry = Instantiate(voteEntryPrefab, entryContent);
-            entry.Initialized(player.Value);
+            entry.Initialized(player.Value, deadBodyFinder);
             //if (deadList.Contains(player.Key))
             //{
             //    entry.DeadSetting();
