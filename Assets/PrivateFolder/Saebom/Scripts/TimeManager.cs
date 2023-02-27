@@ -59,7 +59,7 @@ namespace Saebom
         //=============================
 
         [HideInInspector]
-        public int curRound = 0;
+        public float curRound = 0;
 
         [SerializeField]
         private TextMeshProUGUI roundUI;
@@ -248,8 +248,7 @@ namespace Saebom
             SoundManager.Instance.PlayUISound(UISFXName.Start);
             startText.SetActive(true);
 
-            if (curTime == 0)
-                SetCurRound();
+            SetCurRound();
 
             MissionButton.Instance.MasterSetEmergency();
 
@@ -265,8 +264,8 @@ namespace Saebom
 
         private void SetCurRound()
         {
-            curRound++;
-            roundUI.text = "Round " + curRound.ToString();
+            curRound+=0.5f;
+            roundUI.text = "Round " + ((int)curRound).ToString();
         }
 
         public void TimeStop()
