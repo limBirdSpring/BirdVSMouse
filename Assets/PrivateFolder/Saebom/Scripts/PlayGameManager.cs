@@ -235,9 +235,11 @@ namespace Saebom
             MissionButton.Instance.MissionShare();
             MakePlayer();
             readyScene.SetActive(false);
-            TimeManager.Instance.FinishScoreTimeSet();
             SoundManager.Instance.bgm.clip = SoundManager.Instance.noon;
             SoundManager.Instance.bgm.Play();
+
+            if(PhotonNetwork.IsMasterClient)
+                TimeManager.Instance.FinishScoreTimeSet();
         }
 
         //본인 캐릭터 받아와서 초기화

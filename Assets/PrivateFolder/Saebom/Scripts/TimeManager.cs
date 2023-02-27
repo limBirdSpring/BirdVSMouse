@@ -181,8 +181,9 @@ namespace Saebom
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
 
             //만약 강제로 활동시간이 끝났다면 캐릭터 거점으로 강제이동
+            //Debug.LogError("IsHouseTime : " + isHouseTime + " -> " + PlayGameManager.Instance.myPlayerState.playerPrefab.name);
             if (isHouseTime && ((controller.state == global::PlayerState.Active) || (controller.state == global::PlayerState.Inactive)))
-                controller.photonView.RPC("CheckIfIsInHouse", RpcTarget.All);
+                controller.gameObject.GetPhotonView().RPC("CheckIfIsInHouse", RpcTarget.All);
 
             PlayGameManager.Instance.PlayerGoHomeNow();
 
@@ -191,14 +192,9 @@ namespace Saebom
 
             // 플레이어들 active, inactive 결정
             if ((int)curTime == (int)halfTime)
-            {
-                Debug.Log("함수 불러옴");
-                controller.photonView.RPC("SetActiveOrInactive", RpcTarget.All, true);
-            }
+                controller.gameObject.GetPhotonView().RPC("SetActiveOrInactive", RpcTarget.All, true);
             else if ((int)curTime == (int)maxTime)
-            {
-                controller.photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
-            }
+                controller.gameObject.GetPhotonView().RPC("SetActiveOrInactive", RpcTarget.All, false);
 
             hiderance = 0;
             hideranceUI.text = "방해성공 : " + hiderance.ToString() + "번";
