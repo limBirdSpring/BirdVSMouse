@@ -115,8 +115,8 @@ namespace SoYoon
                 return;
             if (PhotonNetwork.PlayerList.Length % 2 != 0)
                 return;
-            if (PhotonNetwork.PlayerList.Length < 8)
-                return;
+//            if (PhotonNetwork.PlayerList.Length < 8)
+//                return;
 
             if (CheckPlayerReady())
                 startButton.interactable = true;

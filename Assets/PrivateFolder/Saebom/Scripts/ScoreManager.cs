@@ -394,7 +394,7 @@ namespace Saebom
                     }
                 }
             }
-
+            /*
             //2. 한쪽 스파이가 죽었을때 (양쪽다 스파이가 죽었다면 점수로 비교, 아니라면 스파이를 죽인팀이 이김)
             else if (isBirdSpyDie || isMouseSpyDie)
             {
@@ -447,6 +447,7 @@ namespace Saebom
                 }
 
             }
+            */
             //3. 한쪽팀이 스파이1명 시민1명일때
             else if ((birdCount <= 1 && !isBirdSpyDie) || (mouseCount <= 1 && !isMouseSpyDie))
             {

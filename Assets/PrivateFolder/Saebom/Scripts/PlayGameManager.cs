@@ -235,7 +235,7 @@ namespace Saebom
             MissionButton.Instance.MissionShare();
             MakePlayer();
             readyScene.SetActive(false);
-            TimeManager.Instance.TimeOn();
+            TimeManager.Instance.FinishScoreTimeSet();
             SoundManager.Instance.bgm.clip = SoundManager.Instance.noon;
             SoundManager.Instance.bgm.Play();
         }

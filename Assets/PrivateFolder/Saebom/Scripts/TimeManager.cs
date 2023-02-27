@@ -4,7 +4,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Saebom
 {
@@ -59,7 +59,7 @@ namespace Saebom
         //=============================
 
         [HideInInspector]
-        public int curRound = 0;
+        public float curRound = 0.5f;
 
         [SerializeField]
         private TextMeshProUGUI roundUI;
@@ -87,6 +87,12 @@ namespace Saebom
 
         private void Start()
         {
+            curRound = 0.5f;
+
+            Hashtable props = new Hashtable();
+            props.Add("curRound", curRound);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+
             //전체 시간은 미리 설정된 데이타를 가져옴
             //maxTime = SettingManager.Instance.turnTime;
 
@@ -193,6 +199,9 @@ namespace Saebom
                 controller.gameObject.GetPhotonView().RPC("SetActiveOrInactive", RpcTarget.All, false);
             }
 
+            hiderance = 0;
+            hideranceUI.text = "방해성공 : " + hiderance.ToString() + "번";
+
             //2초 뒤 점수 확인 출력
             ScoreManager.Instance.CallScoreResultWindow();
         }
@@ -200,7 +209,7 @@ namespace Saebom
         private void TimeOff()
         {
             isHidering = false;
-            hiderance = 0;
+            
             timeOn = false;
 
             SoundManager.Instance.PlayUISound(UISFXName.Stop);
@@ -227,7 +236,7 @@ namespace Saebom
 
         }
 
-        //======================= 점수합산 끝나고 타임 On========================
+        //======================= 점수합산 끝나고 타임 On ========================
 
         public void FinishScoreTimeSet()
         {
@@ -236,6 +245,12 @@ namespace Saebom
             {
                 curTime = 0;
             }
+
+            SetCurRound();
+
+            //이머젼시 초기화
+            MissionButton.Instance.MasterSetEmergency();
+
             photonView.RPC("TimeOn", RpcTarget.All);
         }
 
@@ -243,15 +258,13 @@ namespace Saebom
         public void TimeOn()
         {
 
+            RoundSetting();
+  
             isHouseTime = false;
             //시작 텍스트 출력
             SoundManager.Instance.PlayUISound(UISFXName.Start);
             startText.SetActive(true);
 
-            if (curTime == 0)
-                SetCurRound();
-
-            MissionButton.Instance.MasterSetEmergency();
 
 
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
@@ -265,9 +278,21 @@ namespace Saebom
 
         private void SetCurRound()
         {
-            curRound++;
-            roundUI.text = "Round " + curRound.ToString();
+            curRound +=0.5f;
+            roundUI.text = "Round " + ((int)curRound).ToString();
+
+            Hashtable props = new Hashtable();
+            props.Add("curRound", curRound);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
         }
+
+        private void RoundSetting()
+        {
+            object curRoundObj;
+            PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("curRound", out curRoundObj);
+            curRound = (float)curRoundObj;
+        }
+
 
         public void TimeStop()
         {
