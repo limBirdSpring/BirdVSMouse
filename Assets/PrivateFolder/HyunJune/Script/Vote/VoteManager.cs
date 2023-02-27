@@ -258,11 +258,7 @@ public class VoteManager : MonoBehaviourPun
         SetRole();
         skipVote.Initialized();
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
-        {
-            co = StartTimer();
-            StartCoroutine(co);
             TimeManager.Instance.TimeStop();
-        }
 
         StartCoroutine(OpenVoteWindow());
     }
@@ -270,6 +266,11 @@ public class VoteManager : MonoBehaviourPun
     private IEnumerator OpenVoteWindow()
     {
         yield return new WaitForSeconds(5);
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            co = StartTimer();
+            StartCoroutine(co);
+        }
         voteWindow.gameObject.SetActive(true);
         startWindow.gameObject.SetActive(false);
     }
