@@ -193,6 +193,8 @@ namespace Saebom
                 controller.photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
             }
 
+            hiderance = 0;
+
             //2초 뒤 점수 확인 출력
             ScoreManager.Instance.CallScoreResultWindow();
         }
@@ -200,7 +202,7 @@ namespace Saebom
         private void TimeOff()
         {
             isHidering = false;
-            hiderance = 0;
+            
             timeOn = false;
 
             SoundManager.Instance.PlayUISound(UISFXName.Stop);
@@ -227,7 +229,7 @@ namespace Saebom
 
         }
 
-        //======================= 점수합산 끝나고 타임 On========================
+        //======================= 점수합산 끝나고 타임 On ========================
 
         public void FinishScoreTimeSet()
         {
@@ -236,6 +238,10 @@ namespace Saebom
             {
                 curTime = 0;
             }
+
+            //이머젼시 초기화
+            MissionButton.Instance.MasterSetEmergency();
+
             photonView.RPC("TimeOn", RpcTarget.All);
         }
 
@@ -250,7 +256,7 @@ namespace Saebom
 
             SetCurRound();
 
-            MissionButton.Instance.MasterSetEmergency();
+           
 
 
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
