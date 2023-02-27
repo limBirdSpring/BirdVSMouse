@@ -59,7 +59,7 @@ namespace Saebom
         //=============================
 
         [HideInInspector]
-        public float curRound = 1f;
+        public float curRound = 0.5f;
 
         [SerializeField]
         private TextMeshProUGUI roundUI;
@@ -87,7 +87,7 @@ namespace Saebom
 
         private void Start()
         {
-            curRound = 1f;
+            curRound = 0.5f;
 
             Hashtable props = new Hashtable();
             props.Add("curRound", curRound);
@@ -257,8 +257,8 @@ namespace Saebom
         [PunRPC]
         public void TimeOn()
         {
-            if (curRound != 1f)
-                RoundSetting();
+
+            RoundSetting();
   
             isHouseTime = false;
             //시작 텍스트 출력

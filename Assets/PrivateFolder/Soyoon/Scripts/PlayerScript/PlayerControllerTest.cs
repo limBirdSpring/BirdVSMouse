@@ -166,7 +166,7 @@ namespace SoYoon
                 corpse.tag = corpse.name;
                 Corpse targetCorpse = corpse.GetComponent<Corpse>();
                 targetCorpse.playerNum = photonView.Owner.GetPlayerNumber();
-                //SetPlayerState(PlayerState.Ghost);
+                SetPlayerState(PlayerState.Ghost);
                 if (photonView.IsMine)
                 {
                     anim.SetBool("IsDead", true);
