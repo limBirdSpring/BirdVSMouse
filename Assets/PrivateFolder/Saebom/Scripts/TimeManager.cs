@@ -247,11 +247,10 @@ namespace Saebom
                 curTime = 0;
             }
 
-           
-            photonView.RPC("TimeOn", RpcTarget.All);
 
             SetCurRound();
 
+            photonView.RPC("TimeOn", RpcTarget.All);
 
         }
 
@@ -283,14 +282,20 @@ namespace Saebom
 
         private void SetCurRound()
         {
+            Debug.Log(curRound + "방장라운드");
+
             curRound +=0.5f;
+            
+            roundUI.text = "Round " + ((int)curRound).ToString();
             Hashtable props = new Hashtable();
             props.Add("curRound", curRound);
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+
         }
 
         private void RoundSetting()
         {
+            Debug.Log(curRound + "팀원라운드");
             object curRoundObj;
             PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("curRound", out curRoundObj);
             curRound = (float)curRoundObj;
