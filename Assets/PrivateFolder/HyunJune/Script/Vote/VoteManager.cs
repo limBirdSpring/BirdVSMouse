@@ -345,7 +345,7 @@ public class VoteManager : MonoBehaviourPun
                 continue;
 
             PlayerVoteEntry entry = Instantiate(voteEntryPrefab, entryContent);
-            entry.Initialized(player.Value);
+            entry.Initialized(player.Value, deadBodyFinder);
             //if (deadList.Contains(player.Key))
             //{
             //    entry.DeadSetting();
