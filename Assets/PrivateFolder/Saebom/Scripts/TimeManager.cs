@@ -157,18 +157,18 @@ namespace Saebom
                 isCurNight = false;
             else if (curTime > halfTime)
                 isCurNight = true;
-
-            if (curTime > halfTime - 1 && curTime < halfTime)
-                isHouseTime = true;
-            else if (curTime > maxTime - 1 && curTime < maxTime)
-                isHouseTime = true;
         }
 
         //==========================시간 종료 후 점수합산==========================
 
         [PunRPC]
         public void TimeOver()
-        {
+        { 
+            if (!isCurNight && (curTime > halfTime - 1 && curTime < halfTime))
+                isHouseTime = true;
+            else if (isCurNight && (curTime > maxTime - 1 && curTime < maxTime))
+                isHouseTime = true;
+
             TimeOff();
 
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
