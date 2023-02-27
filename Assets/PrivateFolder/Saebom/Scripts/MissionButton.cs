@@ -96,6 +96,8 @@ namespace Saebom
 
         public void MasterSetEmergency()
         {
+            Debug.Log(PlayGameManager.Instance.myPlayerState.name + birdEmergency + "(새 이머젼시)");
+            Debug.Log(PlayGameManager.Instance.myPlayerState.name + birdEmergency + "(쥐 이머젼시)");
             photonView.RPC("SetEmergencyCountUI", RpcTarget.All, !TimeManager.Instance.isCurNight ? birdEmergency : mouseEmergency);
         }
 
@@ -107,11 +109,13 @@ namespace Saebom
             {
                 birdEmergency = emergency;
                 emergencyUI.text = birdEmergency.ToString();
+                Debug.Log(PlayGameManager.Instance.myPlayerState.name + emergency);
             }
             else
             {
                 mouseEmergency = emergency;
                 emergencyUI.text = mouseEmergency.ToString();
+                Debug.Log(PlayGameManager.Instance.myPlayerState.name + emergency);
             }
         }
 
