@@ -43,7 +43,7 @@ public class PlayerVoteEntry : MonoBehaviourPun
         VoteManager.Instance.Vote(actorNumber);
     }
 
-    public void Initialized(Photon.Realtime.Player player)
+    public void Initialized(Photon.Realtime.Player player, bool isFinder)
     {
         actorNumber = player.ActorNumber;
         playerName.text = PlayGameManager.Instance.playerList[player.GetPlayerNumber()].name;
@@ -58,7 +58,7 @@ public class PlayerVoteEntry : MonoBehaviourPun
             ToggleButton(false);
         }
 
-        if (VoteManager.Instance.deadBodyFinder)
+        if (isFinder)
         {
             finder.enabled = true;
         }
