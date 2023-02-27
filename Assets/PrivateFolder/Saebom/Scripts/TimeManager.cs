@@ -194,6 +194,7 @@ namespace Saebom
             }
 
             hiderance = 0;
+            hideranceUI.text = "방해성공 : " + hiderance.ToString() + "번";
 
             //2초 뒤 점수 확인 출력
             ScoreManager.Instance.CallScoreResultWindow();
@@ -240,7 +241,7 @@ namespace Saebom
             }
 
             //이머젼시 초기화
-            
+            MissionButton.Instance.MasterSetEmergency();
 
             photonView.RPC("TimeOn", RpcTarget.All);
         }
@@ -255,7 +256,7 @@ namespace Saebom
             startText.SetActive(true);
 
             SetCurRound();
-            MissionButton.Instance.MasterSetEmergency();
+           
 
 
 
