@@ -4,7 +4,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Saebom
 {
@@ -59,7 +59,7 @@ namespace Saebom
         //=============================
 
         [HideInInspector]
-        public float curRound = 0.5f;
+        public float curRound = 1f;
 
         [SerializeField]
         private TextMeshProUGUI roundUI;
@@ -87,6 +87,12 @@ namespace Saebom
 
         private void Start()
         {
+            curRound = 1f;
+
+            Hashtable props = new Hashtable();
+            props.Add("curRound", curRound);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+
             //전체 시간은 미리 설정된 데이타를 가져옴
             //maxTime = SettingManager.Instance.turnTime;
 
@@ -240,6 +246,8 @@ namespace Saebom
                 curTime = 0;
             }
 
+            SetCurRound();
+
             //이머젼시 초기화
             MissionButton.Instance.MasterSetEmergency();
 
@@ -249,14 +257,13 @@ namespace Saebom
         [PunRPC]
         public void TimeOn()
         {
-
+            if (curRound != 1f)
+                RoundSetting();
+  
             isHouseTime = false;
             //시작 텍스트 출력
             SoundManager.Instance.PlayUISound(UISFXName.Start);
             startText.SetActive(true);
-
-            SetCurRound();
-           
 
 
 
@@ -271,9 +278,21 @@ namespace Saebom
 
         private void SetCurRound()
         {
-            curRound+=0.5f;
+            curRound +=0.5f;
             roundUI.text = "Round " + ((int)curRound).ToString();
+
+            Hashtable props = new Hashtable();
+            props.Add("curRound", curRound);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(props);
         }
+
+        private void RoundSetting()
+        {
+            object curRoundObj;
+            PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("curRound", out curRoundObj);
+            curRound = (float)curRoundObj;
+        }
+
 
         public void TimeStop()
         {
