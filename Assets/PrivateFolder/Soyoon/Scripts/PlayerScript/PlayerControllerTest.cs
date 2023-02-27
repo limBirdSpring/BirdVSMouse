@@ -83,6 +83,8 @@ namespace SoYoon
                 photonView.RPC("SetActiveOrInactive", RpcTarget.All, false);
                 killUpdateSeconds = new WaitForSeconds(killUpdateTime);
                 CanKill = false;
+                if (PlayGameManager.Instance.myPlayerState.isSpy)
+                    StartKillCoroutine();
             }
 
             isInHouse = true;
@@ -414,18 +416,22 @@ namespace SoYoon
 
         public void StartKillCoroutine()
         {
+            //Debug.LogError("킬 코루틴 시작");
+            StopAllCoroutines();
+            CurKillCoolTime = 0;
             killCoroutine = StartCoroutine(KillCoolTimeUpdate());
         }
 
         public void StopKillCoroutine()
         {
+            //Debug.LogError("킬 코루틴 종료");
             CurKillCoolTime = 0;
             StopCoroutine(killCoroutine);
         }
 
         public IEnumerator KillCoolTimeUpdate()
         {
-            Debug.LogError("킬 쿨타임 시작");
+            //Debug.LogError("킬 쿨타임 시작");
             CanKill = false;
             float killTime = killCool * (1 / killUpdateTime);
             for(int i=0;i<killTime;i++)
@@ -435,7 +441,7 @@ namespace SoYoon
             }
             CanKill = true;
             CurKillCoolTime = 0;
-            Debug.LogError("킬 쿨타임 종료됨");
+            //Debug.LogError("킬 쿨타임 종료");
         }
     }
 }

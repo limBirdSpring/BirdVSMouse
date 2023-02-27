@@ -267,6 +267,7 @@ namespace Saebom
 
 
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
+            Debug.LogError(controller.gameObject.name + " -> " + controller.gameObject.activeInHierarchy);
             if (PlayGameManager.Instance.myPlayerState.isSpy)
                 controller.StartKillCoroutine();
 
