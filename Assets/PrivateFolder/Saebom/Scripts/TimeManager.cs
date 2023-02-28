@@ -143,7 +143,10 @@ namespace Saebom
                 if (curTime > halfTime - 1 && curTime < halfTime)
                     photonView.RPC("TimeOver", RpcTarget.All);
                 else if (curTime > dangerTime && curTime <= halfTime - 1)
+                {
+                    Debug.Log("방장 거점이동시간 시행");
                     photonView.RPC("DangerScreenOn", RpcTarget.All);
+                }
 
             }
             //밤이면
@@ -152,7 +155,10 @@ namespace Saebom
                 if (curTime > maxTime - 1 && curTime < maxTime)
                     photonView.RPC("TimeOver", RpcTarget.All);
                 else if (curTime > dangerTime2 && curTime <= maxTime - 1)
+                {
+                    Debug.Log("방장 거점이동시간 시행 - 밤");
                     photonView.RPC("DangerScreenOn", RpcTarget.All);
+                }
             }
 
            
@@ -343,6 +349,8 @@ namespace Saebom
         [PunRPC]
         private void DangerScreenOn()
         {
+            Debug.Log("거점이동시간 스크린과 필터 업데이트");
+
             redScreenUi.gameObject.SetActive(true);
 
             //필터 이미지 업데이트
@@ -357,13 +365,13 @@ namespace Saebom
             {
                 Debug.Log("밤필터 시행");
                 float alpha = (1 / sec * Time.deltaTime);
-                nightFilter.color = new Color(255, 255, 255, nightFilter.color.a + alpha);
+                nightFilter.color = new Color(255, 255, 255, Mathf.Clamp(nightFilter.color.a + alpha, 0, 1));
             }
             else
             {
                 Debug.Log("낮필터 시행");
                 float alpha = (1 / sec * Time.deltaTime);
-                nightFilter.color = new Color(255, 255, 255, nightFilter.color.a - alpha);
+                nightFilter.color = new Color(255, 255, 255, Mathf.Clamp(nightFilter.color.a - alpha, 0, 1));
             }
         }
 
