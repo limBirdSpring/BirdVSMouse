@@ -310,6 +310,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8083476807715791521, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
+      propertyPath: m_text
+      value: "\uBA67\uBC2D\uC950\n"
+      objectReference: {fileID: 0}
     - target: {fileID: 8270762082263712471, guid: 00a652ed6a50e614ca635c140e31f150, type: 3}
       propertyPath: m_Name
       value: FlowerM
