@@ -50,11 +50,13 @@ namespace Saebom
 
         //===================================
 
-
+        [SerializeField]
         public bool timeOn { get; private set; } = false;
 
+        [SerializeField]
         public bool isHouseTime { get; private set; } = false;
 
+        [SerializeField]
         public bool isCurNight { get; private set; } = false;
 
         //=============================
@@ -261,7 +263,8 @@ namespace Saebom
             isCurNight = !isCurNight;
             MissionButton.Instance.EmergencyUsed(MissionButton.Instance.birdEmergency, MissionButton.Instance.mouseEmergency);
 
-            RoundSetting();
+            if (!PhotonNetwork.IsMasterClient)
+                RoundSetting();
   
             isHouseTime = false;
             //시작 텍스트 출력
@@ -271,7 +274,7 @@ namespace Saebom
 
 
             PlayerControllerTest controller = PlayGameManager.Instance.myPlayerState.playerPrefab.GetComponent<PlayerControllerTest>();
-            Debug.LogError(controller.gameObject.name + " -> " + controller.gameObject.activeInHierarchy);
+            //Debug.LogError(controller.gameObject.name + " -> " + controller.gameObject.activeInHierarchy);
             if (PlayGameManager.Instance.myPlayerState.isSpy)
                 controller.StartKillCoroutine();
 
@@ -284,9 +287,9 @@ namespace Saebom
         private void SetCurRound()
         {
 
-
             curRound +=0.5f;
             Debug.Log(curRound + "방장라운드");
+            roundUI.text = "Round " + ((int)curRound).ToString();
             Hashtable props = new Hashtable();
             props.Add("curRound", curRound);
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
@@ -296,10 +299,10 @@ namespace Saebom
         private void RoundSetting()
         {
             Debug.Log(curRound + "팀원라운드");
-            //object curRoundObj;
-            //PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("curRound", out curRoundObj);
-            //curRound = (float)curRoundObj;
-            //roundUI.text = "Round " + ((int)curRound).ToString();
+            object curRoundObj;
+            PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("curRound", out curRoundObj);
+            curRound = (float)curRoundObj;
+            roundUI.text = "Round " + ((int)curRound).ToString();
 
             Debug.Log(curRound + "출력된 팀원라운드");
         }
@@ -352,11 +355,13 @@ namespace Saebom
 
             if (!isCurNight)
             {
+                Debug.Log("밤필터 시행");
                 float alpha = (1 / sec * Time.deltaTime);
                 nightFilter.color = new Color(255, 255, 255, nightFilter.color.a + alpha);
             }
             else
             {
+                Debug.Log("낮필터 시행");
                 float alpha = (1 / sec * Time.deltaTime);
                 nightFilter.color = new Color(255, 255, 255, nightFilter.color.a - alpha);
             }
