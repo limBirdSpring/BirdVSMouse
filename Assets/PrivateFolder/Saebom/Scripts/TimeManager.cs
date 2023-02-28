@@ -86,13 +86,17 @@ namespace Saebom
             photonView = GetComponent<PhotonView>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             curRound = 0.5f;
 
             Hashtable props = new Hashtable();
             props.Add("curRound", curRound);
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
+        }
+
+        private void Start()
+        {
 
             //전체 시간은 미리 설정된 데이타를 가져옴
             //maxTime = SettingManager.Instance.turnTime;
@@ -279,11 +283,10 @@ namespace Saebom
 
         private void SetCurRound()
         {
-            Debug.Log(curRound + "방장라운드");
+
 
             curRound +=0.5f;
-            
-            roundUI.text = "Round " + ((int)curRound).ToString();
+            Debug.Log(curRound + "방장라운드");
             Hashtable props = new Hashtable();
             props.Add("curRound", curRound);
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
@@ -293,10 +296,12 @@ namespace Saebom
         private void RoundSetting()
         {
             Debug.Log(curRound + "팀원라운드");
-            object curRoundObj;
-            PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("curRound", out curRoundObj);
-            curRound = (float)curRoundObj;
-            roundUI.text = "Round " + ((int)curRound).ToString();
+            //object curRoundObj;
+            //PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("curRound", out curRoundObj);
+            //curRound = (float)curRoundObj;
+            //roundUI.text = "Round " + ((int)curRound).ToString();
+
+            Debug.Log(curRound + "출력된 팀원라운드");
         }
 
 
