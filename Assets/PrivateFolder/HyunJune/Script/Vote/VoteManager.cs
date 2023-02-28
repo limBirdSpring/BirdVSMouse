@@ -66,7 +66,7 @@ public class VoteManager : MonoBehaviourPun
     [SerializeField]
     private VoteToDeath voteToDeathWindow;
 
-    public bool deadBodyFinder = false;
+    public int deadBodyFinderActNum;
     private bool voteComplete = false;
     private float participantCount;
     private VoteRole myRole;
@@ -87,6 +87,7 @@ public class VoteManager : MonoBehaviourPun
         //FindObjectsOfType<PlayerController>();
         chatInputField.characterLimit = 50;
         controllers = FindObjectsOfType<PlayerControllerTest>();
+        deadBodyFinderActNum = -1;
     }
 
     // 지워야 한다
@@ -239,7 +240,7 @@ public class VoteManager : MonoBehaviourPun
         if ((PlayGameManager.Instance.myPlayerState.isBird && !TimeManager.Instance.isCurNight) ||
            (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight))
         {
-            deadBodyFinder = true;
+            deadBodyFinderActNum = PhotonNetwork.LocalPlayer.ActorNumber;
             photonView.RPC("EmergencyReport", RpcTarget.All, null);
 
         }
@@ -346,7 +347,7 @@ public class VoteManager : MonoBehaviourPun
                 continue;
 
             PlayerVoteEntry entry = Instantiate(voteEntryPrefab, entryContent);
-            entry.Initialized(player.Value, deadBodyFinder);
+            entry.Initialized(player.Value);
             //if (deadList.Contains(player.Key))
             //{
             //    entry.DeadSetting();
@@ -568,7 +569,7 @@ public class VoteManager : MonoBehaviourPun
         ResetText();
         voteWindow.SetActive(false);
         voteToDeathWindow.Init();
-        deadBodyFinder = false;
+        deadBodyFinderActNum = -1;
         voteComplete = false;
         myRole = VoteRole.None;
         participantCount = 0;
