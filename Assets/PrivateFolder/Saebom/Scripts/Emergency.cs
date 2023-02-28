@@ -16,6 +16,7 @@ public class Emergency : MonoBehaviour
         {
             Debug.Log("새 이머젼시 부름");
             VoteManager.Instance.FindDeadBody();
+            MissionButton.Instance.Emergency();
             active = true;
             StartCoroutine(Cor());
         }
@@ -24,6 +25,7 @@ public class Emergency : MonoBehaviour
 
             Debug.Log("쥐 이머젼시 부름");
             VoteManager.Instance.FindDeadBody();
+            MissionButton.Instance.Emergency();
             active = true;
             StartCoroutine(Cor());
         }

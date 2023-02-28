@@ -241,7 +241,7 @@ public class VoteManager : MonoBehaviourPun
         {
             deadBodyFinder = true;
             photonView.RPC("EmergencyReport", RpcTarget.All, null);
-            MissionButton.Instance.Emergency();
+
         }
     }
 
