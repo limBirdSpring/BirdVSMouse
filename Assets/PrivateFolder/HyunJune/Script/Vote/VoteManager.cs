@@ -504,13 +504,7 @@ public class VoteManager : MonoBehaviourPun
     {
         skipWindow.gameObject.SetActive(true);
         SoundManager.Instance.PlayUISound(UISFXName.VoteDie);
-        StartCoroutine(NothingVoteEnd());
-    }
-
-    private IEnumerator NothingVoteEnd()
-    {
-        yield return new WaitForSeconds(5);
-        photonView.RPC("VotingEndRPC", RpcTarget.All, null);
+        StartCoroutine(VotingEnd(5));
     }
 
     [PunRPC]
@@ -546,12 +540,12 @@ public class VoteManager : MonoBehaviourPun
 
 
         voteToDeathWindow.gameObject.SetActive(true);
-        StartCoroutine(VotingEnd());
+        StartCoroutine(VotingEnd(10));
     }
 
-    public IEnumerator VotingEnd()
+    public IEnumerator VotingEnd(int time)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(time);
         photonView.RPC("VotingEndRPC", RpcTarget.All, null);
     }
 
