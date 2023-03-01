@@ -241,21 +241,21 @@ public class VoteManager : MonoBehaviourPun
            (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight))
         {
             deadBodyFinderActNum = PhotonNetwork.LocalPlayer.ActorNumber;
-            photonView.RPC("EmergencyReport", RpcTarget.All, null);
+            photonView.RPC("EmergencyReport", RpcTarget.All, deadBodyFinderActNum);
 
         }
     }
 
 
     [PunRPC]
-    public void EmergencyReport()
+    public void EmergencyReport(int finderNum)
     {
         startWindow.gameObject.SetActive(true);
         SoundManager.Instance.PlayUISound(UISFXName.Vote);
 
         // 긴급 보고
         SetUpPlayerState();
-        AddAlivePlayerEntry();
+        AddAlivePlayerEntry(finderNum);
         SetRole();
         skipVote.Initialized();
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -331,7 +331,7 @@ public class VoteManager : MonoBehaviourPun
         }
     }
 
-    private void AddAlivePlayerEntry() // 참가자 플레이어 엔트리 추가
+    private void AddAlivePlayerEntry(int finderNum) // 참가자 플레이어 엔트리 추가
     {
         // playerVoteEntries 초기화
         for (int i = 0; i < playerVoteEntries.Count; i++)
@@ -347,7 +347,7 @@ public class VoteManager : MonoBehaviourPun
                 continue;
 
             PlayerVoteEntry entry = Instantiate(voteEntryPrefab, entryContent);
-            entry.Initialized(player.Value);
+            entry.Initialized(player.Value, finderNum);
             //if (deadList.Contains(player.Key))
             //{
             //    entry.DeadSetting();
