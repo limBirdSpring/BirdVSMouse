@@ -136,6 +136,7 @@ namespace Saebom
 
         public  void ScoreResultCalculate()
         {
+            masterCheck = 0;
             photonView.RPC("PrivateScoreCheckFinish", RpcTarget.MasterClient, 1);
         }
 
@@ -156,7 +157,7 @@ namespace Saebom
                     mouseScore += score;
 
                 //점수계산이 끝난 후 각 변수에 현재상황 저장
-                photonView.RPC("PrivatePlayerStateUpdate", RpcTarget.All, birdScore, mouseScore, birdCount, mouseCount, isBirdSpyDie, isMouseSpyDie);
+                photonView.RPC("PrivatePlayerStateUpdate", RpcTarget.Others, birdScore, mouseScore, birdCount, mouseCount, isBirdSpyDie, isMouseSpyDie);
 
                 //각자 점수 UI변경 후 맵 초기화
                 photonView.RPC("ScoreUpdate", RpcTarget.All, score);
@@ -166,7 +167,7 @@ namespace Saebom
                     photonView.RPC("TurnResult", RpcTarget.MasterClient);
                 else
                     TimeManager.Instance.FinishScoreTimeSet();
-                masterCheck = 0;
+                
             }
         }
 
