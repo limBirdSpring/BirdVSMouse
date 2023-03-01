@@ -250,8 +250,8 @@ public class VoteManager : MonoBehaviourPun
     [PunRPC]
     public void EmergencyReport(int finderNum)
     {
-        startWindow.gameObject.SetActive(true);
         SoundManager.Instance.PlayUISound(UISFXName.Vote);
+        startWindow.gameObject.SetActive(true);
 
         // 긴급 보고
         SetUpPlayerState();
