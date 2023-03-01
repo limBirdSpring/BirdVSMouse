@@ -503,6 +503,7 @@ public class VoteManager : MonoBehaviourPun
     private void NothingWindowOpen()
     {
         skipWindow.gameObject.SetActive(true);
+        SoundManager.Instance.PlayUISound(UISFXName.VoteDie);
         StartCoroutine(NothingVoteEnd());
     }
 
