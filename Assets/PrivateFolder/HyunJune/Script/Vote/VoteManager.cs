@@ -402,9 +402,9 @@ public class VoteManager : MonoBehaviourPun
         if (deadList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
             return;
 
-        // 나 자신이면 리턴
-        if (PhotonNetwork.LocalPlayer.ActorNumber == target)
-            return;
+        // 자신에게 투표 현재 On  /  끄기 원할 시 아래 주석을 풀어주세요.
+        //if (PhotonNetwork.LocalPlayer.ActorNumber == target)
+        //    return;
 
         voteComplete = true;
         ToggleAllButton(false);
