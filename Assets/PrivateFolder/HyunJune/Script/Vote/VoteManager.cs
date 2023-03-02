@@ -241,21 +241,21 @@ public class VoteManager : MonoBehaviourPun
            (!PlayGameManager.Instance.myPlayerState.isBird && TimeManager.Instance.isCurNight))
         {
             deadBodyFinderActNum = PhotonNetwork.LocalPlayer.ActorNumber;
-            photonView.RPC("EmergencyReport", RpcTarget.All, null);
+            photonView.RPC("EmergencyReport", RpcTarget.All, deadBodyFinderActNum);
 
         }
     }
 
 
     [PunRPC]
-    public void EmergencyReport()
+    public void EmergencyReport(int finderNum)
     {
-        startWindow.gameObject.SetActive(true);
         SoundManager.Instance.PlayUISound(UISFXName.Vote);
+        startWindow.gameObject.SetActive(true);
 
         // 긴급 보고
         SetUpPlayerState();
-        AddAlivePlayerEntry();
+        AddAlivePlayerEntry(finderNum);
         SetRole();
         skipVote.Initialized();
         if (PhotonNetwork.LocalPlayer.IsMasterClient)
@@ -331,7 +331,7 @@ public class VoteManager : MonoBehaviourPun
         }
     }
 
-    private void AddAlivePlayerEntry() // 참가자 플레이어 엔트리 추가
+    private void AddAlivePlayerEntry(int finderNum) // 참가자 플레이어 엔트리 추가
     {
         // playerVoteEntries 초기화
         for (int i = 0; i < playerVoteEntries.Count; i++)
@@ -347,7 +347,7 @@ public class VoteManager : MonoBehaviourPun
                 continue;
 
             PlayerVoteEntry entry = Instantiate(voteEntryPrefab, entryContent);
-            entry.Initialized(player.Value);
+            entry.Initialized(player.Value, finderNum);
             //if (deadList.Contains(player.Key))
             //{
             //    entry.DeadSetting();
@@ -402,9 +402,9 @@ public class VoteManager : MonoBehaviourPun
         if (deadList.Contains(PhotonNetwork.LocalPlayer.ActorNumber))
             return;
 
-        // 나 자신이면 리턴
-        if (PhotonNetwork.LocalPlayer.ActorNumber == target)
-            return;
+        // 자신에게 투표 현재 On  /  끄기 원할 시 아래 주석을 풀어주세요.
+        //if (PhotonNetwork.LocalPlayer.ActorNumber == target)
+        //    return;
 
         voteComplete = true;
         ToggleAllButton(false);
@@ -503,13 +503,8 @@ public class VoteManager : MonoBehaviourPun
     private void NothingWindowOpen()
     {
         skipWindow.gameObject.SetActive(true);
-        StartCoroutine(NothingVoteEnd());
-    }
-
-    private IEnumerator NothingVoteEnd()
-    {
-        yield return new WaitForSeconds(5);
-        photonView.RPC("VotingEndRPC", RpcTarget.All, null);
+        SoundManager.Instance.PlayUISound(UISFXName.VoteDie);
+        StartCoroutine(VotingEnd(5));
     }
 
     [PunRPC]
@@ -545,12 +540,12 @@ public class VoteManager : MonoBehaviourPun
 
 
         voteToDeathWindow.gameObject.SetActive(true);
-        StartCoroutine(VotingEnd());
+        StartCoroutine(VotingEnd(10));
     }
 
-    public IEnumerator VotingEnd()
+    public IEnumerator VotingEnd(int time)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(time);
         photonView.RPC("VotingEndRPC", RpcTarget.All, null);
     }
 

@@ -15511,7 +15511,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Thanks to\n\n\uAE40\uD1A0\uB9AC, \uCC9C\uB450\uC720, \uAC15\uD478\uB529,\n"
+  m_text: "Thanks to\n\n\uAE40\uD1A0\uB9AC, \uCC9C\uB450\uC720, \uAC15\uD478\uB529,
+    \uC815\uC7AC\uD6D9,\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 67d5a70bf81936e40af58845851bca05, type: 2}
   m_sharedMaterial: {fileID: 4179358371416994320, guid: 67d5a70bf81936e40af58845851bca05, type: 2}

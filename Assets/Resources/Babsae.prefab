@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  killCool: 30
+  killCool: 120
   killUpdateTime: 0.05
   death: {fileID: 6617898661040866409, guid: 95ac7679f97b9fd428d30488a5aad964, type: 3}
   namePosition: {x: 0, y: 2, z: 0}
