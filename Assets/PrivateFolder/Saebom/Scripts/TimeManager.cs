@@ -47,6 +47,9 @@ namespace Saebom
         [SerializeField]
         private TextMeshProUGUI hideranceUI;
 
+        [SerializeField]
+        private GameObject fastTime;
+
 
         //===================================
 
@@ -393,6 +396,7 @@ namespace Saebom
                 isHidering = true;
                 hiderance = 0;
 
+                fastTime.SetActive(true);
                 StartCoroutine(HideranceCor());
             }
         }
@@ -401,6 +405,7 @@ namespace Saebom
         {
             yield return new WaitForSeconds(5f);
             isHidering = false;
+            fastTime.SetActive(false);
         }
 
     }
