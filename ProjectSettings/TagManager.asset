@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Corpse
   layers:
   - Default
   - TransparentFX
@@ -11,14 +12,14 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Ghost
+  - Wall
+  - InActive
+  - Shadow
+  - KillRange
+  - CorpseRange
+  - Outline
   - 
   - 
   - 
@@ -62,6 +63,21 @@ TagManager:
   - name: MiddleObject3
     uniqueID: 3131527527
     locked: 0
+  - name: middleObject4
+    uniqueID: 1709656691
+    locked: 0
   - name: Mission
     uniqueID: 2400122251
+    locked: 0
+  - name: Player
+    uniqueID: 781335679
+    locked: 0
+  - name: Filter
+    uniqueID: 2115571963
+    locked: 0
+  - name: Front
+    uniqueID: 331202453
+    locked: 0
+  - name: Collider
+    uniqueID: 1408917023
     locked: 0

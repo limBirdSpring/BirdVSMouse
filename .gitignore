@@ -58,4 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-/Assets/Import
+/Assets/Import/
+/UserSettings/
+/Assets/data.json
+/Assets/data.json.meta
